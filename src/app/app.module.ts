@@ -12,10 +12,13 @@ import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';
 import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
+import { RealvalueService } from './services/realvalue.service';
+import { RealvaluePipe } from './realvalue.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RealvaluePipe
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,9 @@ import { MarketModule } from './market-module/market.module';
     MarketModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    RealvalueService
+  ],
   bootstrap: [
     AppComponent
   ]
