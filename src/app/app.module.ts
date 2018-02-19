@@ -16,9 +16,13 @@ import { AccountModule } from './account-module/account.module';
 
 import {CardService} from "app/services/card.service";
 
+import { RealvalueService } from './services/realvalue.service';
+import { RealvaluePipe } from './realvalue.pipe';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RealvaluePipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,10 @@ import {CardService} from "app/services/card.service";
     AppRoutingModule,
     AccountModule
   ],
-  providers: [CardService],
+  providers: [
+    RealvalueService,
+    CardService
+  ],
   bootstrap: [
     AppComponent
   ]
