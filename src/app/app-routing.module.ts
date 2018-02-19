@@ -1,9 +1,9 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
+import { ProfileComponent } from './account-module/profile/profile.component';
 
 const appRoutes: Routes = [
   {
@@ -15,6 +15,10 @@ const appRoutes: Routes = [
     path: 'market',
     component: MarketComponent,
     canActivate: []
+  },
+  {
+    path: 'account',
+    component: ProfileComponent,
   },
   { path: '',
     redirectTo: '/home',

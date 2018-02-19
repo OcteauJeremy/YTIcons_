@@ -12,6 +12,9 @@ import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';
 import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
+import { AccountModule } from './account-module/account.module';
+
+import {CardService} from "app/services/card.service";
 
 @NgModule({
   declarations: [
@@ -27,9 +30,10 @@ import { MarketModule } from './market-module/market.module';
     FooterModule,
     HomeModule,
     MarketModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AccountModule
   ],
-  providers: [],
+  providers: [CardService],
   bootstrap: [
     AppComponent
   ]
