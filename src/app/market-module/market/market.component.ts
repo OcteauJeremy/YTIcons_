@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Card } from '../../models/Card';
 
 @Component({
   selector: 'app-market',
@@ -7,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarketComponent implements OnInit {
 
-  constructor() { }
+  public cards = [];
+
+  constructor() {
+    this.cards.push(new Card(0));
+    this.cards.push(new Card(1));
+    this.cards.push(new Card(2));
+    this.cards.push(new Card(3));
+    this.cards.push(new Card(4));
+  }
 
   ngOnInit() {
   }

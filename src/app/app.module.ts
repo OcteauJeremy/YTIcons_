@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickModule } from 'ngx-slick';
 
@@ -12,7 +12,6 @@ import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';
 import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
