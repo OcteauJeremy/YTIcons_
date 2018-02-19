@@ -7449,7 +7449,7 @@ ul.nav-tabs.nav--tabs2 li::before {
 /***************************************
 	START FEATURED PRODUCTS AREA CSS
 *****************************************/
-/* home 3 featured area */
+/* home-module 3 featured area */
 .prod_slide_prev, .prod_slide_next {
   position: absolute;
   line-height: 50px;
