@@ -24,9 +24,6 @@ mongoose.connection.on('error', function() {
   process.exit();
 });
 
-
-
-
 var directoryRoutes = "./routes/";
 
 // Modules
