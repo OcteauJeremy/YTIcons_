@@ -13,16 +13,17 @@ import { HomeModule } from './home-module/home.module';
 import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
 import { AccountModule } from './account-module/account.module';
+import { AuthenticationModule } from './authentication-module/authentication.module';
 
-import {CardService} from "app/services/card.service";
 
 import { RealvalueService } from './services/realvalue.service';
 import { RealvaluePipe } from './realvalue.pipe';
+import {CardService} from './services/card.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RealvaluePipe
+    RealvaluePipe,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,8 @@ import { RealvaluePipe } from './realvalue.pipe';
     HomeModule,
     MarketModule,
     AppRoutingModule,
-    AccountModule
+    AccountModule,
+    AuthenticationModule
   ],
   providers: [
     RealvalueService,

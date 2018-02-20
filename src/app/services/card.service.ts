@@ -5,23 +5,23 @@ import * as Web3 from 'web3';
 declare let require: any;
 declare let window: any;
 
-let tokenAbi = require('./tokenContract.json');
+const tokenAbi = require('./tokenContract.json');
 
 @Injectable()
 export class CardService {
 
   private _account: string = null;
-  private _web3: any;
+  private _web3;
   private _tokenContract: any;
-  private _tokenContractAddress: string = "0x2E70cb3c8a81005866D474FA6fD6364B1eB11012";
+  private _tokenContractAddress = '0x2E70cb3c8a81005866D474FA6fD6364B1eB11012';
 
   constructor() {
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
-      let web3 = this._web3;
+      const web3 = this._web3;
 
-      this._web3.eth.net.getId().then(function(id) {
+      this._web3.eth.net.getId().then(function (id) {
         if (id !== 3) {
           alert('You are not connected to the right network on Metamask !');
         }
@@ -60,14 +60,13 @@ export class CardService {
   }
 
   public async getCardNumberByAddress(): Promise<number> {
-    let account = await this.getAccount();
+    const account = await this.getAccount();
 
     return new Promise((resolve, reject) => {
-      let _web3 = this._web3;
+      const _web3 = this._web3;
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
         if(err != null) {
-          console.log('mdr');
           reject(err);
         }
 

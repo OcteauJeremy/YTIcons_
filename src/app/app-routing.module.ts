@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
+import { SigninComponent } from './authentication-module/signin/signin.component';
 
 const appRoutes: Routes = [
   {
@@ -19,6 +20,10 @@ const appRoutes: Routes = [
   {
     path: 'account',
     component: ProfileComponent,
+  },
+  {
+    path: 'login',
+    component: SigninComponent,
   },
   { path: '',
     redirectTo: '/home',
