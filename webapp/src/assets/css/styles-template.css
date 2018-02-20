@@ -2035,6 +2035,9 @@ h6 {
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .product .prod_btn a {
@@ -2159,6 +2162,8 @@ h6 {
   border-top: 1px solid #ececec;
   padding: 15px 30px;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 
 .product-purchase .rating {
@@ -2167,7 +2172,6 @@ h6 {
 
 .product-purchase p {
   margin: 0;
-  font-size: 15px;
   display: inline;
   color: #555;
 }
@@ -2198,6 +2202,8 @@ h6 {
 .product-purchase .sell {
   float: right;
   display: inline-block;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .product-purchase .sell p span {

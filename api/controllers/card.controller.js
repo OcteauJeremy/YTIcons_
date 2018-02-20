@@ -16,7 +16,7 @@ exports.create = function (req, res) {
 
     if (err) {
       console.log(err.message);
-      return res.status(500).send({message: "Some error occurred while using mongoDB."});
+      return res.status(400).send({message: "Some error occurred while using mongoDB."});
     }
 
     var card = new Card();
@@ -34,7 +34,7 @@ exports.create = function (req, res) {
     card.save(function (err, card) {
       if (err) {
         console.log(err.message);
-        return res.status(500).send({message: "Some error occurred while creating the Card."});
+        return res.status(400).send({message: "Some error occurred while creating the Card."});
       } else {
         return res.status(200).send(card);
       }
@@ -45,7 +45,7 @@ exports.create = function (req, res) {
 exports.findAll = function (req, res) {
   Card.find().populate('type').exec(function (err, cards) {
     if (err) {
-      return res.status(500).send({message: "Some error occurred while retrieving notes."});
+      return res.status(400).send({message: "Some error occurred while retrieving users."});
     } else {
       return res.status(200).send(cards);
     }
@@ -56,7 +56,7 @@ exports.findAll = function (req, res) {
 exports.findOne = function (req, res) {
   Card.findById(req.params.cardId).populate('type').exec(function (err, card) {
     if (err) {
-      return res.status(500).send({message: "Could not retrieve note with id " + req.params.cardId});
+      return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
     } else {
       return res.status(200).send(card);
     }
@@ -72,7 +72,7 @@ exports.findBySmartId = function (req, res) {
     id: req.params.smartId
   }).populate('type').exec(function (err, card) {
     if (err) {
-      return res.status(500).send({message: "Could not retrieve note with id " + req.params.cardId});
+      return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
     } else {
       return res.status(200).send(card);
     }
@@ -83,7 +83,7 @@ exports.update = function (req, res) {
 
   Card.findById(req.params.cardId).populate('type').exec(function (err, card) {
     if (err) {
-      return res.status(500).send({message: "Could not retrieve note with id " + req.params.cardId});
+      return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
     }
 
     if (!card) {
@@ -123,7 +123,7 @@ exports.update = function (req, res) {
       card.save(function (err, card) {
         if (err) {
           console.log(err.message);
-          return res.status(500).send({message: "Some error occurred while creating the Card."});
+          return res.status(400).send({message: "Some error occurred while creating the Card."});
         } else {
           return res.status(200).send(card);
         }
@@ -138,7 +138,7 @@ exports.update = function (req, res) {
 
         if (err) {
           console.log(err.message);
-          return res.status(500).send({message: "Some error occurred while using mongoDB."});
+          return res.status(400).send({message: "Some error occurred while using mongoDB."});
         }
         card.type = type;
         saveCard();
@@ -152,7 +152,7 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
   Card.remove({_id: req.params.cardId}, function (err, card) {
     if (err) {
-      res.status(500).send({message: "Could not delete note with id " + req.params.cardId});
+      res.status(400).send({message: "Could not delete user with id " + req.params.cardId});
     } else {
       res.status(200).send({message: "Card deleted successfully!"})
     }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MarketComponent } from './market/market.component';
 import { CardComponent } from './card/card.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
