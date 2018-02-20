@@ -11,17 +11,16 @@ apiRoutes.post('/signin', function (req, res) {
   var connectionFunction = function (err, user) {
 
     if (!user) {
-      res.status(400).send({message: "User doesn't exist."});
+      return res.status(400).send({message: "User doesn't exist."});
     }
 
     if (err) {
       console.log(err.message);
-      res.status(500).send({message: "Some error occurred while using mongoDB.js."});
+      return res.status(500).send({message: "Some error occurred while using mongoDB.js."});
     }
 
     //TODO: GENERATE TOKEN
-    console.log('user', user);
-    res.status(200).send(user);
+    return res.status(200).send(user);
   };
 
   if (req.body.username.indexOf('@') > -1) {

@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser= require('body-parser');
 const configMongo = require('./configs/mongoDB');
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
 
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -25,9 +26,11 @@ var authModule      = require(directoryRoutes + 'authentication.routes');
 app.use(authModule.authRoutes);
 require('./routes/user.routes')(app);
 
+
 mongoose.connection.once('open', function() {
   console.log("Successfully connected to the database mongo");
 
+  app.use(morgan('dev'));
   app.listen(3000, function() {
     console.log('YTIcons API listening on 3000')
   });
