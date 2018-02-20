@@ -5,6 +5,7 @@ import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
 import { SigninComponent } from './authentication-module/signin/signin.component';
+import {SignupComponent} from './authentication-module/signup/signup.component';
 
 const appRoutes: Routes = [
   {
@@ -24,6 +25,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: SigninComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
   { path: '',
     redirectTo: '/home',

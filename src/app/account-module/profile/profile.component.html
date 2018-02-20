@@ -11,7 +11,7 @@
                         <li class="active"><a href="#">Favorites</a></li>
                     </ul>
                 </div>
-                <h1 class="page-title">Your Favourites</h1>
+                <h1 class="page-title">{{account}}</h1>
             </div><!-- end /.col-md-12 -->
         </div><!-- end /.row -->
     </div><!-- end /.container -->
@@ -35,8 +35,8 @@
                             </div>
 
                             <div class="author">
-                              <h4>{{currentUser}}</h4>
-                              <p>Signed Up: 08 April 2016</p>
+                              <h4>{{currentUser.username}}</h4>
+                              <p>Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy' }}</p>
                             </div><!-- end /.author -->
 
                             <div class="social social--color--filled">
