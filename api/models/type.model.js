@@ -1,16 +1,12 @@
 
 var mongoose = require('mongoose');
 
-var CardSchema = moongoose.Schema({
-  id: {type: Number, unique: true },
+var TypeSchema = mongoose.Schema({
   name: String,
-  image: String,
-  nationality: String,
-  nbSubscriber: Number,
-  url: String,
-  description: String,
-  citation: String,
-  type: { type: Schema.Types.ObjectId, ref: 'Type'}
+  css: String
 }, {
   timestamps: true
 });
+
+module.exports = mongoose.model('Type', TypeSchema);
+

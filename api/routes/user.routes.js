@@ -1,20 +1,20 @@
 
 module.exports = function(app) {
 
-  var notes = require('../controllers/user.controller.js');
+  var users = require('../controllers/user.controller.js');
 
   // Create a new Note
-  app.post('/users', notes.create);
+  app.post('/users', users.create);
 
   // Retrieve all Notes
-  app.get('/users', notes.findAll);
+  app.get('/users', users.findAll);
 
   // Retrieve a single Note with noteId
-  app.get('/users/:userId', notes.findOne);
+  app.get('/users/:userId', users.findOne);
 
   // Update a Note with noteId
-  app.put('/users/:userId', notes.update);
+  app.put('/users/:userId', users.update);
 
   // Delete a Note with noteId
-  app.delete('/users/:userId', notes.delete);
+  app.delete('/users/:userId', users.delete);
 };

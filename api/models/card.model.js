@@ -1,7 +1,8 @@
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var CardSchema = moongoose.Schema({
+var CardSchema = mongoose.Schema({
   id: {type: Number, unique: true },
   name: String,
   image: String,
@@ -14,3 +15,5 @@ var CardSchema = moongoose.Schema({
 }, {
   timestamps: true
 });
+
+module.exports = mongoose.model('Card', CardSchema);

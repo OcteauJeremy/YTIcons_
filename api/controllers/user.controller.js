@@ -55,6 +55,10 @@ exports.update = function(req, res) {
       return res.status(500).send({message: "Could not find a note with id " + req.params.userId});
     }
 
+    if (!user) {
+      return res.status(400).send({message: "User doesn't exist."});
+    }
+
     user.wallet = req.body.wallet;
 
     user.save(function(err, data){

@@ -16,7 +16,7 @@ apiRoutes.post('/signin', function (req, res) {
 
     if (err) {
       console.log(err.message);
-      return res.status(500).send({message: "Some error occurred while using mongoDB.js."});
+      return res.status(500).send({message: "Some error occurred while using mongoDB."});
     }
 
     //TODO: GENERATE TOKEN
