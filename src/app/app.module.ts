@@ -12,6 +12,10 @@ import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';
 import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
+import { AccountModule } from './account-module/account.module';
+
+import {CardService} from "app/services/card.service";
+
 import { RealvalueService } from './services/realvalue.service';
 import { RealvaluePipe } from './realvalue.pipe';
 
@@ -30,10 +34,12 @@ import { RealvaluePipe } from './realvalue.pipe';
     FooterModule,
     HomeModule,
     MarketModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AccountModule
   ],
   providers: [
-    RealvalueService
+    RealvalueService,
+    CardService
   ],
   bootstrap: [
     AppComponent
