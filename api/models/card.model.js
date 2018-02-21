@@ -7,7 +7,7 @@ var CardSchema = mongoose.Schema({
   name: String,
   image: String,
   nationality: String,
-  nbSubscriber: Number,
+  nbSubscribers: Number,
   url: String,
   description: String,
   citation: String,

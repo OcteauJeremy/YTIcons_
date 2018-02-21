@@ -2,7 +2,7 @@ var Card = require('../models/card.model');
 var Type = require('../models/type.model');
 
 exports.create = function (req, res) {
-  if (!req.body.name || !req.body.image || !req.body.nationality || !req.body.nbSubscriber
+  if (!req.body.name || !req.body.image || !req.body.nationality || !req.body.nbSubscribers
     || !req.body.url || !req.body.description || !req.body.citation || !req.body.type || !req.body.id) {
     return res.status(400).send({message: "Wrong parameters"});
   }

@@ -1,0 +1,32 @@
+.modal-body {
+  display: flex;
+}
+
+.modal-body .informations {
+  display: flex;
+  flex-direction: column
+}
+
+.modal-body .informations p {
+  min-width: 138px;
+  display: inline-block;
+  margin-bottom: 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.modal-body .informations .section span {
+  margin-left: 25px;
+}
+
+.modal-body .section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-around;
+}
+

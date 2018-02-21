@@ -16,9 +16,4 @@ export class CardComponent implements OnInit {
   ngOnInit() {
     console.log(this.card);
   }
-
-  openModal() {
-    console.log("yolo");
-    document.getElementById("openModalButton").click();
-  }
 }

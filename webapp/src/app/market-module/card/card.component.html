@@ -5,8 +5,7 @@
     <div class="product__thumbnail">
       <img src="{{card.image}}">
       <div class="prod_btn">
-        <a (click)="openModal()" class="transparent btn--sm btn--round">More Info</a>
-        <button id="openModalButton" data-toggle="modal" data-target="#myModal1">Open Modal</button>
+        <a data-toggle="modal" data-target="#modalCard" class="transparent btn--sm btn--round">More Info</a>
         <a href="single-product.html" class="transparent btn--sm btn--round">Buy</a>
       </div>
     </div>
@@ -20,58 +19,63 @@
   </div>
 </div>
 
-<div class="modal fade rating_modal" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="rating_modal">
+<div class="modal fade rating_modal" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="rating_modal">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="rating_modal">Rating this Item</h3>
-        <h4>Product Enquiry Extension</h4><p>by <a href="author.html">AazzTech</a></p>
-      </div><!-- end /.modal-header -->
+        <h3 class="modal-title" id="rating_modal">{{card.name}}</h3>
+        <p>Own by <a href="author.html">AazzTech</a></p>
+      </div>
 
       <div class="modal-body">
-        <form action="#">
-          <ul>
-            <li>
-              <p>Your Rating</p>
-              <div class="right_content btn btn--round btn--white btn--md">
-                <select name="rating" class="give_rating">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
-              </div>
-            </li>
-
-            <li>
-              <p>Rating Causes</p>
-              <div class="right_content">
-                <div class="select-wrap">
-                  <select name="review_reason" id="rev">
-                    <option value="design">Design Quality</option>
-                    <option value="customization">Customization</option>
-                    <option value="support">Support</option>
-                    <option value="performance">Performance</option>
-                    <option value="documentation">Well Documented</option>
-                  </select>
-
-                  <span class="lnr lnr-chevron-down"></span>
-                </div>
-              </div>
-            </li>
-          </ul>
-
-          <div class="rating_field">
-            <label for="rating_field">Comments</label>
-            <textarea name="rating_field" id="rating_field" class="text_field" placeholder="Please enter your rating reason to help the author"></textarea>
-            <p class="notice">Your review will be ​publicly visible​ and the author may reply to your comments. </p>
+        <div class="col-md-5">
+          <img src="{{card.image}}">
+          <div class="product-purchase">
+            <div class="price_love">
+              <span>{{card.price}}</span>
+            </div>
+            <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
           </div>
-          <button type="submit" class="btn btn--round btn--default">Submit Rating</button>
-          <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
-        </form><!-- end /.form -->
+        </div>
+        <div class="col-md-7 informations">
+          <div class="section">
+            <p>Youtube channel</p>
+            <span><a href="{{card.url}}" target="_blank">{{card.url}}</a></span>
+          </div>
+          <div class="section">
+            <p>Subscribers</p>
+            <span>{{card.nbSubscribers}}</span>
+          </div>
+          <div class="section">
+            <p>Nationality</p>
+            <span>{{card.nationality}}</span>
+          </div>
+          <div class="section">
+            <p>Description</p>
+            <span>{{card.description}}</span>
+          </div>
+          <div class="section">
+            <p>Citation</p>
+            <span>{{card.citation}}</span>
+          </div>
+          <div class="section">
+            <p>Transactions</p>
+          </div>
+          <div class="section">
+            <p>Price history</p>
+          </div>
+
+
+
+
+
+        </div>
       </div><!-- end /.modal-body -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn--round btn--default">Buy</button>
+        <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
