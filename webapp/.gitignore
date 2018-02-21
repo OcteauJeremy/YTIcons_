@@ -7,11 +7,11 @@
 /out-tsc
 
 # dependencies
-/node_modules
+webapp/node_modules
 api/node_modules
 
 # IDEs and editors
-/.idea
+.idea
 .project
 .classpath
 .c9/
