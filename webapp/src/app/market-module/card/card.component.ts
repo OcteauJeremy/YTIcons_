@@ -21,5 +21,4 @@ export class CardComponent implements OnInit {
     console.log("yolo");
     document.getElementById("openModalButton").click();
   }
-
 }

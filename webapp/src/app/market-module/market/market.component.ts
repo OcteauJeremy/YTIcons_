@@ -31,5 +31,4 @@ export class MarketComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscribtions.unsubscribe();
   }
-
 }

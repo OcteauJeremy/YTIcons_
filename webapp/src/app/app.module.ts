@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SlickModule } from 'ngx-slick';
 
 
@@ -30,7 +29,6 @@ import {AuthenticationService} from './services/authentication.service';
   imports: [
     BrowserModule,
     CommonModule,
-    NgbModule.forRoot(),
     SlickModule.forRoot(),
     TopbarModule,
     MenuModule,
