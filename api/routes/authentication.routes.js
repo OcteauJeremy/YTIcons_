@@ -4,7 +4,7 @@ var User = require('../models/user.model');
 
 apiRoutes.post('/signin', function (req, res) {
     if (!req.body.username || !req.body.password) {
-        res.status(400).send({message: "Wrong parameters"});
+        return res.status(400).send({message: "Wrong parameters"});
     }
 
     var connectionFunction = function (err, user) {
