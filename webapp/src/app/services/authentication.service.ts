@@ -7,8 +7,10 @@ import {CardService} from './card.service';
 export class AuthenticationService {
 
   private address: string;
+  public currentUser: any;
 
   constructor(private http: HttpClient, private cs: CardService) {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   public login(_username: string, _password: string): Observable<any> {
@@ -23,6 +25,7 @@ export class AuthenticationService {
 
   public logout() {
     localStorage.removeItem('currentUser');
+    this.currentUser = null;
   }
 
 }

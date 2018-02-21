@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { TopbarComponent } from './topbar/topbar.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   declarations: [
     TopbarComponent,

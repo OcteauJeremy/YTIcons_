@@ -1,18 +1,18 @@
-<div class="author-author__info inline has_dropdown">
+<div class="author-author__info inline has_dropdown" *ngIf="isAuthenticated()">
   <div class="author__avatar">
     <img src="assets/images/usr_avatar.png" alt="user avatar">
 
   </div>
   <div class="autor__info">
     <p class="name">
-      Jhon Doe
+      {{currentUser.username}}
     </p>
-    <p class="ammount">$20.45</p>
+    <!--<p class="ammount">$20.45</p>-->
   </div>
 
   <div class="dropdown dropdown--author">
     <ul>
-      <li><a href="/account"><span class="lnr lnr-user"></span>Profile</a></li>
+      <li><a routerLink="/account"><span class="lnr lnr-user"></span>Profile</a></li>
       <li><a href="dashboard-setting.html"><span class="lnr lnr-cog"></span> Setting</a></li>
       <!-- <li><a href="dashboard.html"><span class="lnr lnr-home"></span> Dashboard</a></li> -->
       <!-- <li><a href="cart.html"><span class="lnr lnr-cart"></span>Purchases</a></li>

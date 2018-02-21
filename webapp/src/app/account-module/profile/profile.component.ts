@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {CardService} from '../../services/card.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,19 +11,21 @@ import {CardService} from '../../services/card.service';
 export class ProfileComponent implements OnInit {
 
   public cardNumber: number;
+  public cardsUser: any;
   public currentUser: any;
-  public account: string;
 
-  constructor(cs: CardService, private _router: Router) {
-    if (localStorage.getItem('currentUser') == null) {
+  constructor(private as: AuthenticationService, private cs: CardService, private _router: Router) {
+
+    this.currentUser = this.as.currentUser;
+    if (this.currentUser == null) {
       this._router.navigate(['login']);
     }
-    this.currentUser =  JSON.parse(localStorage.getItem('currentUser'));
-    cs.getAccount().then(account => this.account = account);
-    cs.getCardNumberByAddress().then(cardNumber => this.cardNumber = cardNumber);
+    cs.getCardNumberByAddress(this.currentUser.wallet).then(cardNumber => this.cardNumber = cardNumber);
+    cs.getCardsByAddress(this.currentUser.wallet).then(cardsUser => this.cardsUser = cardsUser);
   }
 
   ngOnInit() {
+    this.currentUser = this.as.currentUser;
   }
 
 }

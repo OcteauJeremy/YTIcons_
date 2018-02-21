@@ -19,6 +19,8 @@ import { AuthenticationModule } from './authentication-module/authentication.mod
 import { RealvalueService } from './services/realvalue.service';
 import { RealvaluePipe } from './realvalue.pipe';
 import {CardService} from './services/card.service';
+import {FaqModule} from './faq-module/faq.module';
+import {AuthenticationService} from './services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -37,14 +39,16 @@ import {CardService} from './services/card.service';
     MarketModule,
     AppRoutingModule,
     AccountModule,
-    AuthenticationModule
+    AuthenticationModule,
+    FaqModule
   ],
   providers: [
     RealvalueService,
-    CardService
+    CardService,
+    AuthenticationService
   ],
   bootstrap: [
     AppComponent
   ]
 })
-export class AppModule { }
+export class AppModule {}

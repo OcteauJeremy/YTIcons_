@@ -1,0 +1,56 @@
+/*** CARD ***/
+
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 251px;
+  height: 379px;
+  background: url('assets/images/images/gold.png');
+  background-size: contain;
+  color: white;
+}
+
+.card .label-footer {
+  font-weight: 500;
+}
+
+.card .value-footer {
+  font-weight: 100;
+}
+
+.card .content-img {
+  background: url('assets/images/images/prime.jpg');
+  background-size: cover;
+  border: 2px solid white;
+  width: 128px;
+  height: 128px;
+  border-radius: 128px;
+}
+
+
+.card .card-title h4{
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.card .card-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card .footer-card {
+  margin: 40px 0px;
+  padding: 5px 15px;
+  background: white;
+  font-size: 15px;
+}
+
+.card .footer-card .card-line {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color: grey;
+}
