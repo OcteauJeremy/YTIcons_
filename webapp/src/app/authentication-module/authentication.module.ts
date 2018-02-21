@@ -4,6 +4,7 @@ import { SigninComponent } from './signin/signin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {AuthenticationService} from '../services/authentication.service';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {AuthenticationService} from '../services/authentication.service';
     HttpClientModule
   ],
   declarations: [
-    SigninComponent
+    SigninComponent,
+    SignupComponent
   ],
   exports: [
     SigninComponent

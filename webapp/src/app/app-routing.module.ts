@@ -5,6 +5,8 @@ import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
 import { SigninComponent } from './authentication-module/signin/signin.component';
+import {SignupComponent} from './authentication-module/signup/signup.component';
+import {FaqComponent} from './faq-module/faq/faq.component';
 
 const appRoutes: Routes = [
   {
@@ -22,8 +24,16 @@ const appRoutes: Routes = [
     component: ProfileComponent,
   },
   {
+    path: 'faq',
+    component: FaqComponent,
+  },
+  {
     path: 'login',
     component: SigninComponent,
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
   { path: '',
     redirectTo: '/home',
@@ -42,4 +52,6 @@ const appRoutes: Routes = [
   providers: [
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

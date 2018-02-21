@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 
@@ -9,14 +9,22 @@ import {Router} from '@angular/router';
 })
 export class UserInfoComponent implements OnInit {
 
-  constructor(private as: AuthenticationService, private _router: Router) { }
+  public currentUser: {};
+
+  constructor(private as: AuthenticationService, private _router: Router) {
+  }
 
   logout() {
     this.as.logout();
-    this._router.navigate(['login']);
+    this._router.navigateByUrl('/login');
   }
 
   ngOnInit() {
+    this.isAuthenticated();
   }
 
+  isAuthenticated() {
+    this.currentUser = this.as.currentUser;
+    return this.currentUser ? true : false;
+  }
 }

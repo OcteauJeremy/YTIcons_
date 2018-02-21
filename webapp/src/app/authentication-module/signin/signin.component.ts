@@ -14,20 +14,29 @@ export class SigninComponent implements OnInit, OnDestroy {
   public  username: string;
   private subscribtions: Subscription = new Subscription();
 
-  constructor(private cs: AuthenticationService, private _router: Router) {
-    if (localStorage.getItem('currentUser') != null) {
+  constructor(private as: AuthenticationService, private _router: Router) {
+    if (as.currentUser != null) {
       this._router.navigate(['account']);
     }
   }
 
   signin() {
-    this.subscribtions.add(this.cs.login(this.username, this.password).subscribe(res => {
-      console.log(res);
-      localStorage.setItem('currentUser', res);
-//      this._router.navigate(['account']);
+    this.subscribtions.add(this.as.login(this.username, this.password).subscribe(res => {
+
+      localStorage.setItem('currentUser', JSON.stringify(res));
+
+      this.as.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+     this._router.navigate(['account']);
+
+    },error2 => {
+      alert(error2.error.message);
     }));
   }
 
+  redirect(pagename: string) {
+    this._router.navigate(['/' + pagename]);
+  }
   ngOnInit() {
   }
 

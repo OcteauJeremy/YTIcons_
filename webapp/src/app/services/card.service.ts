@@ -15,7 +15,7 @@ export class CardService {
   private _account: string = null;
   private _web3;
   private _tokenContract: any;
-  private _tokenContractAddress = '0x2E70cb3c8a81005866D474FA6fD6364B1eB11012';
+  private _tokenContractAddress = '0x7C7F9aC11985e87CC2E1347C3da7F8F3d21B443a';
 
   constructor(private http: HttpClient) {
     if (typeof window.web3 !== 'undefined') {
@@ -36,7 +36,7 @@ export class CardService {
 
   }
 
-  private async getAccount(): Promise<string> {
+  public async getAccount(): Promise<string> {
     if (this._account == null) {
       this._account = await new Promise((resolve, reject) => {
         this._web3.eth.getAccounts((err, accs) => {
@@ -61,8 +61,7 @@ export class CardService {
     return Promise.resolve(this._account);
   }
 
-  public async getCardNumberByAddress(): Promise<number> {
-    const account = await this.getAccount();
+  public async getCardNumberByAddress(account: string): Promise<number> {
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -75,6 +74,24 @@ export class CardService {
         resolve(result);
       });
     }) as Promise<number>;
+  }
+
+  public getCardsByAddress(account: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+
+      this._tokenContract.methods.getOwnerCards(account).call(function (err, result) {
+
+        console.log(result);
+
+        if(err != null) {
+          reject(err);
+        }
+
+        resolve(result);
+      });
+    }) as Promise<any>;
+
   }
 
   public getCards() {
