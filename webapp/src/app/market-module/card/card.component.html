@@ -1,4 +1,4 @@
-<div [ngClass]="['card', card.type.css, 'product']">
+<div *ngIf="card" [ngClass]="['card', card.type.css, 'product']">
 
   <div class="card-title">
     <h4>{{card.name}}</h4>
@@ -43,7 +43,7 @@
 </div>
 <div class="product-purchase">
   <div class="price_love">
-    <span>{{card.price | currency}}</span>
+    <span>{{card.price}}</span>
   </div>
   <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
 </div>
@@ -105,7 +105,7 @@
           </div>
           <div class="product-purchase">
             <div class="price_love">
-              <span>{{card.price | currency }}</span>
+              <span>{{card.price }}</span>
             </div>
             <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
           </div>

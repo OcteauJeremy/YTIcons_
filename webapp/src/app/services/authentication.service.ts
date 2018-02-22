@@ -19,7 +19,7 @@ export class AuthenticationService extends ManagerService{
   }
 
   public login(_username: string, _password: string): Observable<any> {
-    return this.post('http://localhost:3000/signin', {username: _username, password: _password});
+    return this.post('/signin', {username: _username, password: _password});
   }
 
   public register(_email: string, _username: string, _password: string): Observable<any> {

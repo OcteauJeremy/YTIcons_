@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import * as Web3 from 'web3';
+
 import { HttpClient } from '@angular/common/http';
 import { ManagerService } from './manager.service';
 
@@ -38,29 +39,34 @@ export class CardService extends ManagerService {
   }
 
   public async getAccount(): Promise<string> {
-    if (this._account == null) {
-      this._account = await new Promise((resolve, reject) => {
-        this._web3.eth.getAccounts((err, accs) => {
-          if (err != null) {
-            alert('There was an error fetching your accounts.');
-            return;
-          }
+    this._account = await new Promise((resolve, reject) => {
+      this._web3.eth.getAccounts((err, accs) => {
+        if (err != null) {
+          alert('There was an error fetching your accounts.');
+          return;
+        }
 
-          if (accs.length === 0) {
-            alert(
-              'Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.'
-            );
-            return;
-          }
-          resolve(accs[0]);
-        })
-      }) as string;
+        if (accs.length === 0) {
+          alert(
+            'Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.'
+          );
+          return;
+        }
+        resolve(accs[0]);
+      })
+    }) as string;
 
-      this._web3.eth.defaultAccount = this._account;
-    }
-
+    this._web3.eth.defaultAccount = this._account;
     return Promise.resolve(this._account);
   }
+
+  // public async refreshWallet() {
+  //   let _self = this;
+  //   this.getAccount().then(function(res: string) {
+  //     console.log(res);
+  //     _self.http.post('http://localhost:3000/users/' + _self.as.currentUser.wallet, {wallet: res});
+  //   });
+  // }
 
   public async getCardNumberByAddress(account: string): Promise<number> {
 
@@ -68,7 +74,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
-        if(err != null) {
+        if (err != null) {
           reject(err);
         }
 
@@ -83,7 +89,7 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.getOwnerCards(account).call(function (err, result) {
 
-        if(err != null) {
+        if (err != null) {
           reject(err);
         }
 
