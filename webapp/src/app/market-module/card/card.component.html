@@ -41,36 +41,12 @@
     </div>
   </div>
 </div>
-
-<!--<div class="product product&#45;&#45;card" style="width: 200px;height: 200px;">-->
-
-  <!--<div class="product__thumbnail">-->
-    <!--<div class="prod_btn">-->
-      <!--<a data-toggle="modal" data-target="#modalCard" class="transparent btn&#45;&#45;sm btn&#45;&#45;round">More Info</a>-->
-      <!--<a href="single-product.html" class="transparent btn&#45;&#45;sm btn&#45;&#45;round">Buy</a>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
-<!--<div class="col-md-3 col-sm-6">-->
-  <!--&lt;!&ndash; start .single-product &ndash;&gt;-->
-  <!--<div class="product product&#45;&#45;card">-->
-
-    <!--<div class="product__thumbnail">-->
-      <!--<img src="{{card.image}}">-->
-      <!--<div class="prod_btn">-->
-        <!--<a data-toggle="modal" data-target="#modalCard" class="transparent btn&#45;&#45;sm btn&#45;&#45;round">More Info</a>-->
-        <!--<a href="single-product.html" class="transparent btn&#45;&#45;sm btn&#45;&#45;round">Buy</a>-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <!--&lt;!&ndash;<div class="product-purchase">&ndash;&gt;-->
-      <!--&lt;!&ndash;<div class="price_love">&ndash;&gt;-->
-        <!--&lt;!&ndash;<span>{{card.price}}</span>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-  <!--</div>-->
-<!--</div>-->
+<div class="product-purchase">
+  <div class="price_love">
+    <span>{{card.price | currency}}</span>
+  </div>
+  <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
+</div>
 
 <div class="modal fade rating_modal" id="modalCard" tabindex="-1" role="dialog" aria-labelledby="rating_modal">
   <div class="modal-dialog modal-md" role="document">
@@ -84,10 +60,52 @@
 
       <div class="modal-body">
         <div class="col-md-5">
-          <img src="{{card.image}}">
+          <div [ngClass]="['card', card.type.css, 'product', 'product--card']">
+
+            <div class="card-title">
+              <h4>{{card.name}}</h4>
+            </div>
+
+            <div class="card-img">
+              <div class="content-img" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
+            </div>
+
+            <div class="product__thumbnail">
+              <div class="prod_btn">
+                <a data-toggle="modal" data-target="#modalCard" class="transparent btn--sm btn--round">More Info</a>
+                <a href="single-product.html" class="transparent btn--sm btn--round">Buy</a>
+              </div>
+            </div>
+
+            <div class="footer-card">
+              <div class="card-line">
+                <div>
+                  <span class="label-footer">VIDS</span>
+                  <span class="value-footer">12</span>
+                </div>
+
+                <div>
+                  <span class="value-footer">9K</span>
+                  <span class="label-footer">FOLW</span>
+                </div>
+              </div>
+              <div class="card-line">
+                <div>
+                  <span class="label-footer">VIEW</span>
+                  <span class="value-footer">100K</span>
+                </div>
+
+                <div>
+                  <span class="value-footer">1W</span>
+                  <span class="label-footer">CARD</span>
+                </div>
+
+              </div>
+            </div>
+          </div>
           <div class="product-purchase">
             <div class="price_love">
-              <span>{{card.price}}</span>
+              <span>{{card.price | currency }}</span>
             </div>
             <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
           </div>

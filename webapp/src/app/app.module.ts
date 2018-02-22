@@ -13,23 +13,24 @@ import { CommonModule } from '@angular/common';
 import { MarketModule } from './market-module/market.module';
 import { AccountModule } from './account-module/account.module';
 import { AuthenticationModule } from './authentication-module/authentication.module';
-
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { RealvalueService } from './services/realvalue.service';
-import { RealvaluePipe } from './realvalue.pipe';
 import {CardService} from './services/card.service';
 import {FaqModule} from './faq-module/faq.module';
 import {AuthenticationService} from './services/authentication.service';
+import { UserService } from './services/user.service';
+import { CurrencyPipe } from './pipes/currency.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RealvaluePipe,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     SlickModule.forRoot(),
+    AngularFontAwesomeModule,
     TopbarModule,
     MenuModule,
     FooterModule,
@@ -43,7 +44,8 @@ import {AuthenticationService} from './services/authentication.service';
   providers: [
     RealvalueService,
     CardService,
-    AuthenticationService
+    AuthenticationService,
+    UserService
   ],
   bootstrap: [
     AppComponent

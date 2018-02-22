@@ -3,10 +3,13 @@ import { CommonModule } from '@angular/common';
 import { MarketComponent } from './market/market.component';
 import { CardComponent } from './card/card.component';
 import { RouterModule } from '@angular/router';
+import { CurrencyPipe } from '../pipes/currency.pipe';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PipesModule
   ],
   declarations: [
     MarketComponent,

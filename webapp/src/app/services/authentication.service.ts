@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {CardService} from './card.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class AuthenticationService {
 
   private address: string;
-  public currentUser: any;
+  public  currentUser: any;
+  public  currentUserChange: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient, private cs: CardService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUserChange.next(this.currentUser);
   }
 
   public login(_username: string, _password: string): Observable<any> {
@@ -28,4 +31,9 @@ export class AuthenticationService {
     this.currentUser = null;
   }
 
+  public  setCurrentUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUser = user;
+    this.currentUserChange.next(this.currentUser);
+  }
 }

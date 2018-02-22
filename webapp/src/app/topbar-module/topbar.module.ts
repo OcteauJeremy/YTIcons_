@@ -5,11 +5,13 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { RouterModule } from '@angular/router';
 import { CurrencySelectorComponent } from './currency-selector/currency-selector.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AngularFontAwesomeModule
   ],
   declarations: [
     TopbarComponent,

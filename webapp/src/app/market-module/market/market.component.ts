@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
   selector: 'app-market',

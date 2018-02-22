@@ -24,8 +24,7 @@ export class SigninComponent implements OnInit, OnDestroy {
     this.subscribtions.add(this.as.login(this.username, this.password).subscribe(res => {
 
       localStorage.setItem('currentUser', JSON.stringify(res));
-
-      this.as.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.as.setCurrentUser(JSON.parse(localStorage.getItem('currentUser')));
 
      this._router.navigate(['account']);
 
