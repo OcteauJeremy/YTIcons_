@@ -14,13 +14,28 @@
 
 /*** CARD ***/
 
+
 .card {
   font-family: SF, sans-serif;
   width: 251px;
   height: 379px;
-  background: url('../images/images/gold.png');
+  background: url('../images/images/cards_background/bronze.png');
   background-size: contain;
   color: white;
+  position: relative;
+}
+
+.card .product__thumbnail {
+  position: initial!important;
+}
+
+.card-gold {
+  background: url('../images/images/cards_background/gold.png');
+  background-size: contain;
+}
+.card-silver {
+  background: url('../images/images/cards_background/silver.png');
+  background-size: contain;
 }
 
 .card .label-footer {

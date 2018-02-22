@@ -4,7 +4,6 @@ import {CardService} from '../../services/card.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Card} from "../../models/Card";
 import {Subscription} from "rxjs/Subscription";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-profile',

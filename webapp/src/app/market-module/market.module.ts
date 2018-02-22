@@ -13,7 +13,8 @@ import { RouterModule } from '@angular/router';
     CardComponent
   ],
   exports: [
-    MarketComponent
+    MarketComponent,
+    CardComponent
   ]
 })
 export class MarketModule { }
