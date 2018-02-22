@@ -2,20 +2,20 @@
     START BREADCRUMB AREA
 =================================-->
 <section class="breadcrumb-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="breadcrumb">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active"><a href="#">Favorites</a></li>
-                    </ul>
-                </div>
-                <h1 class="page-title">{{currentUser.wallet}}</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="breadcrumb">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="#">Favorites</a></li>
+          </ul>
+        </div>
+        <h1 class="page-title">{{currentUser.wallet}}</h1>
 
-            </div><!-- end /.col-md-12 -->
-        </div><!-- end /.row -->
-    </div><!-- end /.container -->
+      </div><!-- end /.col-md-12 -->
+    </div><!-- end /.row -->
+  </div><!-- end /.container -->
 </section>
 <!--================================
     END BREADCRUMB AREA
@@ -25,113 +25,79 @@
     START AUTHOR AREA
 =================================-->
 <section class="author-profile-area">
-    <div class="container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <aside class="sidebar sidebar_author">
+          <div class="author-card sidebar-card">
+            <div class="author-infos">
+              <div class="author_avatar">
+                <img src="assets/images/author-avatar.jpg" alt="Presenting the broken author avatar :D">
+              </div>
+
+              <div class="author">
+                <h4>{{currentUser.username}}</h4>
+                <p>Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy' }}</p>
+              </div><!-- end /.author -->
+
+              <div class="social social--color--filled">
+                <ul>
+                  <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                  <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+                  <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
+                </ul>
+              </div><!-- end /.social -->
+
+              <div class="author-btn">
+                <!--<a href="#" class="btn btn&#45;&#45;md btn&#45;&#45;round">Follow</a>-->
+              </div><!-- end /.author-btn -->
+            </div><!-- end /.author-infos -->
+
+
+          </div><!-- end /.author-card -->
+
+        </aside>
+      </div><!-- end /.sidebar -->
+
+      <div class="col-md-8">
         <div class="row">
-            <div class="col-md-4">
-                <aside class="sidebar sidebar_author">
-                    <div class="author-card sidebar-card">
-                        <div class="author-infos">
-                            <div class="author_avatar">
-                                <img src="assets/images/author-avatar.jpg" alt="Presenting the broken author avatar :D">
-                            </div>
+          <div class="col-md-4 col-sm-4">
+            <div class="author-info mcolorbg4">
+              <p>Total Items</p>
+              <h3>{{cardNumber}}</h3>
+            </div>
+          </div><!-- end /.col-md-4 -->
 
-                            <div class="author">
-                              <h4>{{currentUser.username}}</h4>
-                              <p>Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy' }}</p>
-                            </div><!-- end /.author -->
+          <!-- <div class="col-md-4 col-sm-4">
+              <div class="author-info pcolorbg">
+                  <p>Total sales</p>
+                  <h3>36,957</h3>
+              </div>
+          </div> -->
 
-                            <div class="social social--color--filled">
-                                <ul>
-                                    <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-                                    <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                                    <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
-                                </ul>
-                            </div><!-- end /.social -->
+          <div class="col-md-12 col-sm-12">
 
-                            <div class="author-btn">
-                                <!--<a href="#" class="btn btn&#45;&#45;md btn&#45;&#45;round">Follow</a>-->
-                            </div><!-- end /.author-btn -->
-                        </div><!-- end /.author-infos -->
-
-
-                    </div><!-- end /.author-card -->
-
-                </aside>
-            </div><!-- end /.sidebar -->
-
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                       <div class="author-info mcolorbg4">
-                           <p>Total Items</p>
-                           <h3>{{cardNumber}}</h3>
-                       </div>
-                    </div><!-- end /.col-md-4 -->
-
-                    <!-- <div class="col-md-4 col-sm-4">
-                        <div class="author-info pcolorbg">
-                            <p>Total sales</p>
-                            <h3>36,957</h3>
-                        </div>
-                    </div> -->
-
-                    <div class="col-md-12 col-sm-12">
-
-                        <div class="author_module about_author">
-                            <!--<h2>About <span>AazzTech</span></h2>-->
-                            <!--<p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra,-->
-                                <!--justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Prae sent pharetra, justo ut scelerisque the mattisleo quam aliquet congue.</p>-->
-                                <!--<p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra.</p>-->
-                        </div>
-                    </div>
-                </div><!-- end /.row -->
+            <div class="author_module about_author">
+              <!--<h2>About <span>AazzTech</span></h2>-->
+              <!--<p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra,-->
+              <!--justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Prae sent pharetra, justo ut scelerisque the mattisleo quam aliquet congue.</p>-->
+              <!--<p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra.</p>-->
+            </div>
+          </div>
+        </div><!-- end /.row -->
 
 
-              <div class="row">
-                    <!-- start .col-md-4 -->
-                    <div *ngFor="let card of cardsUser; let i = index" class="col-md-4 col-sm-4">
-                      <div class="card">
-                        <div class="card-title">
-                          <h4>PRIME</h4>
-                        </div>
-
-                        <div class="card-img">
-                          <div class="content-img"></div>
-                        </div>
-
-                        <div class="footer-card">
-                          <div class="card-line">
-                            <div>
-                              <span class="label-footer">VIDS</span>
-                              <span class="value-footer">12</span>
-                            </div>
-
-                            <div>
-                              <span class="value-footer">9K</span>
-                              <span class="label-footer">FOLW</span>
-                            </div>
-                          </div>
-                          <div class="card-line">
-                            <div>
-                              <span class="label-footer">VIEW</span>
-                              <span class="value-footer">100K</span>
-                            </div>
-
-                            <div>
-                              <span class="value-footer">1W</span>
-                              <span class="label-footer">CARD</span>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div><!-- end /.col-md-4 -->
-
-                </div><!-- end /.row -->
-            </div><!-- end /.col-md-8 -->
+        <div class="row">
+          <!-- start .col-md-4 -->
+          <div *ngFor="let card of cardsUser; let i = index" class="col-md-6 col-sm-6">
+            <card [card]="card"></card>
+          </div><!-- end /.col-md-4 -->
 
         </div><!-- end /.row -->
-    </div><!-- end /.container -->
+      </div><!-- end /.col-md-8 -->
+
+    </div><!-- end /.row -->
+  </div><!-- end /.container -->
 </section>
 <!--================================
     END AUTHOR AREA
