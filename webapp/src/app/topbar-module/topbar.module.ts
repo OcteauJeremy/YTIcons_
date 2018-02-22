@@ -4,6 +4,7 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { RouterModule } from '@angular/router';
+import { CurrencySelectorComponent } from './currency-selector/currency-selector.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     TopbarComponent,
     UserInfoComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    CurrencySelectorComponent
   ],
   exports: [
     TopbarComponent

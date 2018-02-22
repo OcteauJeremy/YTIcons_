@@ -61,6 +61,7 @@ exports.update = function(req, res) {
 
     user.wallet = req.body.wallet;
 
+
     user.save(function(err, data){
       if(err) {
         return res.status(400).send({message: "Could not update users with id " + req.params.userId});
