@@ -23,6 +23,7 @@ import { UserService } from './services/user.service';
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { TypeService } from './services/type.service';
 import { ManagerService } from './services/manager.service';
+import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ManagerService } from './services/manager.service';
     AppRoutingModule,
     AccountModule,
     AuthenticationModule,
-    FaqModule
+    FaqModule,
+    LeaderboardModule
   ],
   providers: [
     RealvalueService,

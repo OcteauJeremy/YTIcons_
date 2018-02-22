@@ -107,4 +107,8 @@ export class CardService extends ManagerService {
     return this.get('/cards');
   }
 
+  public getCardsQuery(query) {
+    return this.getQuery('/cards', query);
+  }
+
 }

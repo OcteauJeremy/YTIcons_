@@ -5,7 +5,7 @@ module.exports = function(app) {
 
   app.post('/cards', cards.create);
 
-  app.get('/cards', cards.findAll);
+  app.get('/cards', cards.getByQuery);
 
   app.get('/cards/:cardId', cards.findOne);
 
