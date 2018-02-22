@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be633ef5-6c42-4b47-9260-f33250d91d31" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/app/faq-module/faq.module.ts" afterPath="$PROJECT_DIR$/webapp/src/app/faq-module/faq.module.ts" />
       <change beforePath="$PROJECT_DIR$/webapp/src/app/faq-module/faq/faq.component.html" afterPath="$PROJECT_DIR$/webapp/src/app/faq-module/faq/faq.component.html" />
-      <change beforePath="$PROJECT_DIR$/webapp/src/assets/css/styles.css" afterPath="$PROJECT_DIR$/webapp/src/assets/css/styles.css" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -26,8 +23,8 @@
       <file leaf-file-name="faq.component.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webapp/src/app/faq-module/faq/faq.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="75" column="25" lean-forward="true" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
+            <state relative-caret-position="2430">
+              <caret line="162" column="74" lean-forward="true" selection-start-line="162" selection-start-column="74" selection-end-line="162" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -79,8 +76,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>js</find>
-      <find>font</find>
       <find>all</find>
       <find>router-outl</find>
       <find>go_top</find>
@@ -109,6 +104,8 @@
       <find>`</find>
       <find>modal-he</find>
       <find>getcards</find>
+      <find>@YT_Icons</find>
+      <find>@YTIcons</find>
     </findStrings>
     <replaceStrings>
       <replace>../assets/images/</replace>
@@ -427,7 +424,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57827000" />
+    <option name="totallyTimeSpent" value="58523000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="953" extended-state="6" />
@@ -808,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webapp/src/app/faq-module/faq/faq.component.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="75" column="25" lean-forward="true" selection-start-line="75" selection-start-column="25" selection-end-line="75" selection-end-column="25" />
+        <state relative-caret-position="2430">
+          <caret line="162" column="74" lean-forward="true" selection-start-line="162" selection-start-column="74" selection-end-line="162" selection-end-column="74" />
           <folding />
         </state>
       </provider>
