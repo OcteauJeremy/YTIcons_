@@ -4,12 +4,22 @@
   src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf);
 }
 @font-face {
+  font-family: SFSemiBold;
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-SemiBold.otf);
+}
+
+@font-face {
   font-family: SF;
   src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf);
 }
 @font-face {
   font-family: SFLight;
   src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf);
+}
+
+@font-face {
+  font-family: SFMedium;
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf);
 }
 
 /*** FAQ ***/
@@ -21,7 +31,11 @@
 
 /*** CARD ***/
 
-
+.card.product {
+  -moz-window-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 .card {
   font-family: SF, sans-serif;
   width: 251px;
@@ -30,6 +44,8 @@
   background-size: contain;
   color: white;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card .product__thumbnail {
@@ -45,31 +61,50 @@
   background-size: contain;
 }
 
+.label-vids {
+  margin-right: 4px;
+}
+
+.label-view {
+  margin-right: 2px;
+}
+
+.value-folw, .value-card {
+  margin-right: 4px;
+}
 .card .label-footer {
   font-family: SFLight, sans-serif;
 }
 
 .card .value-footer {
-  font-family: SFBold, sans-serif;
+  font-size: 14px;
+  font-family: SFMedium, sans-serif;
 }
 
 .card .content-img {
   background: url('../images/images/prime.jpg');
   background-size: cover;
   border: 2px solid white;
-  width: 128px;
-  height: 128px;
-  border-radius: 128px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 
+.card .card-title {
+  height: 100px;
+}
+
 .card .card-title h4{
-  font-family: SFBold, sans-serif;
+  font-family: SFSemiBold, sans-serif;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100px;
+  padding-top: 33px;
+  text-transform: uppercase;
+  font-size: 20px;
 }
 
 .card .card-img {
@@ -79,15 +114,15 @@
 }
 
 .card .footer-card {
-  margin: 40px 0px;
-  padding: 5px 15px;
+  margin: 29px 0px;
+  padding: 3px 20px;
   background: white;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .card .footer-card .card-line {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  color: grey;
+  color: #201f1c;
 }
