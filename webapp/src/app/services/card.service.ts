@@ -82,8 +82,6 @@ export class CardService {
 
       this._tokenContract.methods.getOwnerCards(account).call(function (err, result) {
 
-        console.log(result);
-
         if(err != null) {
           reject(err);
         }
@@ -92,6 +90,10 @@ export class CardService {
       });
     }) as Promise<any>;
 
+  }
+
+  public getCardByIdSmartContract(id: number) {
+    return this.http.get('http://localhost:3000/cards/BySmartId/' + id);
   }
 
   public getCards() {

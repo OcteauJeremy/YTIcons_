@@ -1,57 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: SFBold;
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf);
+}
+@font-face {
+  font-family: SF;
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf);
+}
+@font-face {
+  font-family: SFLight;
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf);
+}
+
 /*** CARD ***/
 
 .card {
-    fontfamily: applesystem, BlinkMacSystemFont, sansserif;
-    width: 251px;
-    height: 379px;
-    background: url('assets/images/images/gold.png');
-    backgroundsize: contain;
-    color: white;
-  }
+  font-family: SF, sans-serif;
+  width: 251px;
+  height: 379px;
+  background: url('../images/images/gold.png');
+  background-size: contain;
+  color: white;
+}
 
-.card .labelfooter {
-     fontweight: 500;
-   }
+.card .label-footer {
+  font-family: SFLight, sans-serif;
+}
 
-.card .valuefooter {
-     fontweight: 100;
-   }
+.card .value-footer {
+  font-family: SFBold, sans-serif;
+}
 
-.card .contentimg {
-     background: url('assets/images/images/prime.jpg');
-     backgroundsize: cover;
-     border: 2px solid white;
-     width: 128px;
-     height: 128px;
-     borderradius: 128px;
-   }
+.card .content-img {
+  background: url('../images/images/prime.jpg');
+  background-size: cover;
+  border: 2px solid white;
+  width: 128px;
+  height: 128px;
+  border-radius: 128px;
+}
 
 
-.card .cardtitle h4{
-     color: white;
-     display: flex;
-     justifycontent: center;
-     alignitems: center;
-     height: 100px;
-   }
+.card .card-title h4{
+  font-family: SFBold, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
 
-.card .cardimg {
-     display: flex;
-     justifycontent: center;
-     alignitems: center;
-   }
+.card .card-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.card .footercard {
-     margin: 40px 0px;
-     padding: 5px 15px;
-     background: white;
-     fontsize: 15px;
-   }
+.card .footer-card {
+  margin: 40px 0px;
+  padding: 5px 15px;
+  background: white;
+  font-size: 15px;
+}
 
-.card .footercard .cardline {
-     display: flex;
-     flexflow: row nowrap;
-     justifycontent: spacebetween;
-     color: grey;
-   }
-
+.card .footer-card .card-line {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  color: grey;
+}

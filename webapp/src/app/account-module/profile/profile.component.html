@@ -89,14 +89,14 @@
 
               <div class="row">
                     <!-- start .col-md-4 -->
-                    <div *ngFor="let card of cardsUser; let i = index" class="col-md-4 col-sm-4">
+                <div *ngFor="let card of cardsUser; let i = index" class="col-md-6 col-sm-6">
                       <div class="card">
                         <div class="card-title">
-                          <h4>PRIME</h4>
+                          <h4>{{card.name}}</h4>
                         </div>
 
                         <div class="card-img">
-                          <div class="content-img"></div>
+                          <div class="content-img" style="background: url('{{card.image}}')"></div>
                         </div>
 
                         <div class="footer-card">
