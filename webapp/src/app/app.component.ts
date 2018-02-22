@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { RealvalueService } from './services/realvalue.service';
 
 @Component({
@@ -8,6 +9,5 @@ import { RealvalueService } from './services/realvalue.service';
 })
 export class AppComponent {
   constructor(private realValueService: RealvalueService) {
-
   }
 }

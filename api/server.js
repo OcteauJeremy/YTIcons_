@@ -32,6 +32,7 @@ var authModule      = require(directoryRoutes + 'authentication.routes');
 app.use(authModule.authRoutes);
 require('./routes/user.routes')(app);
 require('./routes/card.routes')(app);
+require('./routes/type.routes')(app);
 
 
 mongoose.connection.once('open', function() {

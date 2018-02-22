@@ -21,6 +21,8 @@ import {FaqModule} from './faq-module/faq.module';
 import {AuthenticationService} from './services/authentication.service';
 import { UserService } from './services/user.service';
 import { CurrencyPipe } from './pipes/currency.pipe';
+import { TypeService } from './services/type.service';
+import { ManagerService } from './services/manager.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { CurrencyPipe } from './pipes/currency.pipe';
     RealvalueService,
     CardService,
     AuthenticationService,
-    UserService
+    UserService,
+    TypeService,
+    ManagerService
   ],
   bootstrap: [
     AppComponent

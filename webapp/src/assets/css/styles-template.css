@@ -8304,7 +8304,7 @@ span.counter {
 ****************************************/
 .search-area2, .breadcrumb-area {
   position: relative;
-  padding-top: 64px;
+  padding-top: 30px;
 }
 
 .search-area2:before, .breadcrumb-area:before {
@@ -8323,6 +8323,7 @@ span.counter {
 
 .search {
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .search .search__title {

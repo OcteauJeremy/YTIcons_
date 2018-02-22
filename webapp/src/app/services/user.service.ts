@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ManagerService } from './manager.service';
 
 @Injectable()
-export class UserService {
+export class UserService extends ManagerService {
 
-  constructor(private http: HttpClient) { }
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   modifyUser(user) {
-    return this.http.put<any>('http://localhost:3000/users/' + user._id, user);
+    return this.put('/users/' + user._id, user);
   }
 
   getUser(user) {
-    return this.http.get<any>('http://localhost:3000/users/' + user._id);
+    return this.get('/users/' + user._id);
   }
 
 }

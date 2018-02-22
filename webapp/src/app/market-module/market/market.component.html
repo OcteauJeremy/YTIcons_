@@ -8,26 +8,20 @@
       <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
           <div class="search">
-            <div class="search__title"><h3><span>35,270</span> website templates from our creative community</h3></div>
+            <div class="search__title"><h3>Search your youtubers</h3></div>
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input class="relative-field rounded" type="text" placeholder="Search your products">
+                  <input class="relative-field rounded" type="text" placeholder="Search your youtubeurs">
                   <button class="btn btn--round" type="submit">Search</button>
                 </div>
               </form>
             </div>
-            <div class="breadcrumb">
-              <ul>
-                <li><a href="#">Home</a></li>
-                <li class="active"><a href="#">All Products</a></li>
-              </ul>
-            </div>
           </div>
         </div>
-      </div><!-- end /.row -->
-    </div><!-- end /.container -->
-  </div><!-- end /.search-area2 -->
+      </div>
+    </div>
+  </div>
 </section>
 
 <div class="filter-area">
@@ -38,14 +32,11 @@
           <div class="filter__option filter--dropdown">
             <a href="#" id="drop1" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories <span class="lnr lnr-chevron-down"></span></a>
             <ul class="dropdown dropdown-menu" aria-labelledby="drop1">
-              <li><a href="#">Wordpress <span>35</span></a></li>
-              <li><a href="#">Landing Page<span>45</span></a></li>
-              <li><a href="#">Psd Template <span>13</span></a></li>
-              <li><a href="#">Plugins <span>08</span></a></li>
-              <li><a href="#">HTML Template <span>34</span></a></li>
-              <li><a href="#">Components <span>78</span></a></li>
+              <div *ngFor="let type of types">
+                <li><a href="#">{{type.name | capitalize}}</a></li>
+              </div>
             </ul>
-          </div><!-- end /.filter__option -->
+          </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="drop2" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter By <span class="lnr lnr-chevron-down"></span></a>
@@ -56,7 +47,7 @@
               <li><a href="#">Best seller </a></li>
               <li><a href="#">Best rating </a></li>
             </ul>
-          </div><!-- end /.filter__option -->
+          </div>
 
           <div class="filter__option filter--dropdown filter--range">
             <a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>
@@ -68,7 +59,7 @@
                 <span class="to rounded">$300</span>
               </div>
             </div>
-          </div><!-- end /.filter__option -->
+          </div>
 
           <div class="filter__option filter--select">
             <div class="select-wrap">
@@ -78,30 +69,11 @@
               </select>
               <span class="lnr lnr-chevron-down"></span>
             </div>
-          </div><!-- end /.filter__option -->
+          </div>
 
-          <div class="filter__option filter--select">
-            <div class="select-wrap">
-              <select name="price">
-                <option value="12">12 Items per page</option>
-                <option value="15">15 Items per page</option>
-                <option value="25">25 Items per page</option>
-              </select>
-              <span class="lnr lnr-chevron-down"></span>
-            </div>
-          </div><!-- end /.filter__option -->
-
-          <div class="filter__option filter--layout">
-            <a href="all-products.html">
-              <div class="svg-icon"><img class="svg" src="assets/images/svg/grid.svg" alt="it's just a layout control folks!"></div>
-            </a>
-            <a href="all-products-list.html">
-              <div class="svg-icon"><img class="svg" src="assets/images/svg/list.svg" alt="it's just a layout control folks!"></div>
-            </a>
-          </div><!-- end /.filter__option -->
-        </div><!-- end /.filter-bar -->
-      </div><!-- end /.col-md-12 -->
-    </div><!-- end filter-bar -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -128,8 +100,8 @@
           </nav>
         </div>
       </div>
-    </div><!-- end /.row -->
-  </div><!-- end /.container -->
+    </div>
+  </div>
 </section>
 
 <section class="call-to-action bgimage">

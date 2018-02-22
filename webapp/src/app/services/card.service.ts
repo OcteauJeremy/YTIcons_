@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 
 import * as Web3 from 'web3';
-import { HttpService } from './http.service';
 import { HttpClient } from '@angular/common/http';
+import { ManagerService } from './manager.service';
 
 declare let require: any;
 declare let window: any;
 
-const tokenAbi = require('./tokenContract.json');
+const tokenAbi = require('./token/tokenContract.json');
 
 @Injectable()
-export class CardService {
+export class CardService extends ManagerService {
 
   private _account: string = null;
   private _web3;
   private _tokenContract: any;
   private _tokenContractAddress = '0x7C7F9aC11985e87CC2E1347C3da7F8F3d21B443a';
 
-  constructor(private http: HttpClient) {
+  constructor(http: HttpClient) {
+    super(http);
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
@@ -93,11 +94,11 @@ export class CardService {
   }
 
   public getCardByIdSmartContract(id: number) {
-    return this.http.get('http://localhost:3000/cards/BySmartId/' + id);
+    return this.get('/cards/BySmartId/' + id);
   }
 
   public getCards() {
-    return this.http.get('http://localhost:3000/cards');
+    return this.get('/cards');
   }
 
 }
