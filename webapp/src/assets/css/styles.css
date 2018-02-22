@@ -12,6 +12,13 @@
   src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf);
 }
 
+/*** FAQ ***/
+
+.section-faq-padding {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 /*** CARD ***/
 
 
