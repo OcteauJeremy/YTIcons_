@@ -14,6 +14,5 @@ export class CardComponent implements OnInit {
   constructor(private realvalueService: RealvalueService) { }
 
   ngOnInit() {
-    console.log(this.card);
   }
 }

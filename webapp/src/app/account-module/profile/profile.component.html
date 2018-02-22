@@ -11,7 +11,7 @@
             <li class="active"><a href="#">Favorites</a></li>
           </ul>
         </div>
-        <h1 class="page-title">{{currentUser.wallet}}</h1>
+        <h1 class="page-title"><a (click)="refreshWallet()">{{currentUser.wallet}} <i class="fa fa-refresh" aria-hidden="true"></i></a></h1>
 
       </div><!-- end /.col-md-12 -->
     </div><!-- end /.row -->
@@ -58,7 +58,7 @@
         <div class="row">
           <!-- start .col-md-4 -->
           <div *ngFor="let card of cardsUser; let i = index" class="col-md-6 col-sm-6">
-            <card [card]="card"></card>
+            <card *ngIf="card" [card]="card"></card>
           </div><!-- end /.col-md-4 -->
 
         </div><!-- end /.row -->
