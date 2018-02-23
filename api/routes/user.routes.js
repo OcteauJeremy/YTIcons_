@@ -7,6 +7,8 @@ module.exports = function(app) {
 
   app.get('/users', users.findAll);
 
+  app.get('/users/byWallet/:wallet', users.findByWallet);
+
   app.get('/users/:userId', users.findOne);
 
   app.put('/users/:userId', users.update);

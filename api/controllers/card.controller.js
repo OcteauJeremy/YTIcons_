@@ -37,18 +37,21 @@ exports.create = function (req, res) {
 };
 
 exports.findAll = function (req, res) {
-    Card.find().populate('type').exec(function (err, cards) {
+    var findObj = Card.find();
+
+    populateItem().exec(function (err, cards) {
         if (err) {
             return res.status(400).send({message: "Some error occurred while retrieving users."});
-        } else {
-            return res.status(200).send(cards);
         }
+        return res.status(200).send(cards);
     });
 
 };
 
 exports.findOne = function (req, res) {
-    Card.findById(req.params.cardId).populate('type').exec(function (err, card) {
+    var findObj = Card.findById(req.params.cardId);
+
+    populateItem(findObj).populate('type').exec(function (err, card) {
         if (err) {
             return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
         } else {
@@ -62,9 +65,11 @@ exports.findBySmartId = function (req, res) {
         return res.status(400).send({message: "Wrong parameters."});
     }
 
-    Card.findOne({
+    var findObj = Card.findOne({
         id: req.params.smartId
-    }).populate('type').exec(function (err, card) {
+    });
+
+    populateItem(findObj).populate('type').exec(function (err, card) {
         if (err) {
             return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
         } else {
@@ -86,7 +91,7 @@ exports.getByQuery = function (req, res) {
     };
 
     if (req.query.name) {
-        // TODO: OR owner
+        // TODO: OR owner name
         paramSearch.$and.push({
             "name": new RegExp(req.query.name, "i")
         });
@@ -159,7 +164,8 @@ exports.getByQuery = function (req, res) {
         findObj = Card.find();
     }
 
-    findObj.populate('type')
+
+    populateItem(findObj)
         .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
         .limit(pageOpt.perPage)
         .exec(function (err, cards) {
@@ -171,12 +177,11 @@ exports.getByQuery = function (req, res) {
         if (!cards) {
             return res.status(400).send({message: "Card doesn't exist."});
         }
-        console.log(cards);
         Card.count().exec(function (err, count) {
             return res.status(200).send({
                 cards: cards,
                 current: pageOpt.page,
-                pages: Math.ceil(count / pageOpt.perPage)
+                pages: 50 //Math.ceil(count / pageOpt.perPage)
             });
         });
 
@@ -184,8 +189,9 @@ exports.getByQuery = function (req, res) {
 };
 
 exports.update = function (req, res) {
+    var findObj = Card.findById(req.params.cardId);
 
-    Card.findById(req.params.cardId).populate('type').exec(function (err, card) {
+    populateItem(findObj).exec(function (err, card) {
         if (err) {
             return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
         }
@@ -261,4 +267,13 @@ exports.delete = function (req, res) {
             res.status(200).send({message: "Card deleted successfully!"})
         }
     });
+};
+
+var populateItem = function (findObj, id) {
+    findObj.populate('type').populate('transactions');
+    // {
+    //     path: "transactions.id",
+    //     match: { card: "id"}
+    // });
+    return findObj;
 };

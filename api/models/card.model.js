@@ -8,7 +8,7 @@ var CardSchema = mongoose.Schema({
     nationality: String,
     nbSubscribers: Number,
     nbViews: Number,
-    nbTransactions: Number, // TODO: count of collection transactions
+    transactions: [{type: Schema.Types.ObjectId, ref: "Transaction"}], // TODO: count of collection transactions
     nbVideos: Number,
     category: String,
     url: String,
@@ -36,6 +36,12 @@ CardSchema.methods.fromBody = function(body) {
     this.citation = body.citation;
     this.price = body.price;
     this.type = type;
-}
+    this.nbTransactions = 0;
+    if (body.transactions) {
+        this.transactions = body.transactions;
+    } else {
+        this.transactions = [];
+    }
+};
 
 module.exports = mongoose.model('Card', CardSchema);

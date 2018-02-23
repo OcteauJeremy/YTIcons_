@@ -9,7 +9,7 @@ module.exports = function(app) {
 
   app.get('/cards/:cardId', cards.findOne);
 
-  app.get('/cards/BySmartId/:smartId', cards.findBySmartId);
+  app.get('/cards/bySmartId/:smartId', cards.findBySmartId);
 
   app.put('/cards/:cardId', cards.update);
 

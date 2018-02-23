@@ -33,7 +33,7 @@ app.use(authModule.authRoutes);
 require('./routes/user.routes')(app);
 require('./routes/card.routes')(app);
 require('./routes/type.routes')(app);
-
+require('./routes/transaction.route')(app);
 
 mongoose.connection.once('open', function() {
   console.log("Successfully connected to the database mongo");
