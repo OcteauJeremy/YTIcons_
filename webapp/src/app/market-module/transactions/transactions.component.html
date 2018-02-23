@@ -1,0 +1,27 @@
+
+<div class="withdraw_module withdraw_history">
+  <div class="table-responsive">
+    <table class="table withdraw__table">
+      <thead>
+      <tr>
+        <th>From</th>
+        <th>Price</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let tx of transactions">
+        <td><a [routerLink]="['/account', tx.to.wallet]" target="_blank">{{tx.to.username}}</a></td>
+        <td class="bold">{{tx.price}}</td>
+        <td>{{tx.createdAt | date: 'MMM d, y, HH:mm'}}</td>
+      </tr>
+
+      <tr *ngIf="transactions.length == 0">
+        <td>No transaction yet.</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
