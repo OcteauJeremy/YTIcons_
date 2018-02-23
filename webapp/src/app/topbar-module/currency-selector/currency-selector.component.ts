@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UserService } from '../../services/user.service';
+import { CurrencyService } from '../../services/currency.service';
 
 @Component({
   selector: 'currency-selector',
@@ -9,24 +10,39 @@ import { UserService } from '../../services/user.service';
 })
 export class CurrencySelectorComponent implements OnInit {
 
-  public  currentUser;
+  public currency = "ETH";
+  public currentUser;
 
-  constructor(private authenticationService: AuthenticationService, private userService: UserService) {
+  constructor(private authenticationService: AuthenticationService, private currencyService: CurrencyService, private userService: UserService) {
+
     this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;
+      this.currency = user.currency;
+    });
+
+    this.currencyService.currentCurrencyChange.subscribe((currency) => {
+      this.currency = currency;
+      this.currentUser = this.authenticationService.getLocalUser();
+      if (this.currentUser) {
+        this.userService.modifyUser(this.currentUser).subscribe(res => {
+          this.authenticationService.setCurrentUser(res);
+        });
+      }
     });
 
     this.currentUser = this.authenticationService.currentUser;
+    if (this.currentUser) {
+      this.currency = this.currentUser.currency;
+    } else {
+      this.currency = currencyService.currentCurrency;
+    }
   }
 
   ngOnInit() {
   }
 
   setCurrency(currency) {
-    this.currentUser.currency = currency;
-    this.userService.modifyUser(this.currentUser).subscribe(res => {
-      this.authenticationService.setCurrentUser(res);
-    });
+    this.currencyService.setCurrency(currency);
   }
 
 }

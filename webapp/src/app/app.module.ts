@@ -28,6 +28,7 @@ import { PrivacyPolicyModule } from "./privacypolicy-module/privacypolicy.module
 import { LegalModule } from "./legal-module/legal.module";
 import {NationalityService} from "./services/nationality.service";
 import {CategoryService} from "./services/category.service";
+import { CurrencyService } from './services/currency.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {CategoryService} from "./services/category.service";
     TypeService,
     ManagerService,
     NationalityService,
-    CategoryService
+    CategoryService,
+    CurrencyService
   ],
   bootstrap: [
     AppComponent

@@ -10,7 +10,7 @@ export class AuthenticationService extends ManagerService{
 
   private address: string;
   public  currentUser: any;
-  public  currentUserChange: Subject<boolean> = new Subject<boolean>();
+  public  currentUserChange: Subject<any> = new Subject<any>();
 
   constructor(http: HttpClient, private cs: CardService) {
     super(http);
@@ -37,5 +37,10 @@ export class AuthenticationService extends ManagerService{
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUser = user;
     this.currentUserChange.next(this.currentUser);
+  }
+
+  public getLocalUser() {
+    var localUser = JSON.parse(localStorage.getItem('currentUser'));
+    return localUser;
   }
 }
