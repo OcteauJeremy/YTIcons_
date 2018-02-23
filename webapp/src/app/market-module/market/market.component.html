@@ -1,9 +1,9 @@
 
 <section class="search-wrapper">
   <div class="search-area2 bgimage">
-    <div class="bg_image_holder">
-      <img src="images/search.jpg" alt="">
-    </div>
+    <!--<div class="bg_image_holder">-->
+      <!--<img src="images/search.jpg" alt="">-->
+    <!--</div>-->
     <div class="container content_above">
       <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
@@ -12,7 +12,7 @@
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input class="relative-field rounded" type="text" placeholder="Search your youtubeurs">
+                  <input class="relative-field rounded" type="text" placeholder="Search your youtubers">
                   <button class="btn btn--round" type="submit">Search</button>
                 </div>
               </form>
@@ -30,11 +30,26 @@
       <div class="col-md-12">
         <div class="filter-bar">
           <div class="filter__option filter--dropdown">
-            <a href="#" id="drop1" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
-            <ul class="dropdown dropdown-menu" aria-labelledby="drop1">
-              <div *ngFor="let type of types">
-                <li><a (click)="selectType(type)">{{type.name | capitalize}}</a></li>
-              </div>
+            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectType('')"><a>All</a></li>
+              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name}}</a></li>
+            </ul>
+          </div>
+
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nationality<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectNationality('')"><a>All</a></li>
+              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality}}</a></li>
+            </ul>
+          </div>
+
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channel category<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectCategory('')"><a>All</a></li>
+              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category}}</a></li>
             </ul>
           </div>
 

@@ -72,6 +72,11 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.getCards();
   }
 
+  selectNationality(nationality) {
+    this.filters.nationality = nationality;
+    this.getCards();
+  }
+
   prevPage() {
     if (this.filters.page > 1) {
       --this.filters.page;
