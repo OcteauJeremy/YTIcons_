@@ -12,7 +12,6 @@ export class TransactionsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('transactions', this.transactions)
   }
 
 }

@@ -17,7 +17,8 @@ import { AbbreviateNumberPipe } from './abbreviate-number.pipe';
   exports: [
     CurrencyPipe,
     CapitalizePipe,
-    DatePipe
+    DatePipe,
+    AbbreviateNumberPipe
   ]
 })
 export class PipesModule { }
