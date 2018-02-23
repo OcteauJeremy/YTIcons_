@@ -139,19 +139,19 @@ exports.getByQuery = function (req, res) {
 
     if (req.query.nbSubscribers) {
         paramSearch.$and.push({
-            "nbSubscribers": { $gte: req.query.nbSubscribers}
+            "nbSubscribers": {$gte: req.query.nbSubscribers}
         });
     }
 
     if (req.query.nbViews) {
         paramSearch.$and.push({
-            "nbViews": { $gte: req.query.nbViews}
+            "nbViews": {$gte: req.query.nbViews}
         });
     }
 
     if (req.query.nbTransactions) {
         paramSearch.$and.push({
-            "nbTransactions": { $gte: req.query.nbTransactions}
+            "nbTransactions": {$gte: req.query.nbTransactions}
         });
     }
 
@@ -169,23 +169,22 @@ exports.getByQuery = function (req, res) {
         .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
         .limit(pageOpt.perPage)
         .exec(function (err, cards) {
-        if (err) {
-            console.log(err);
-            return res.status(400).send({message: "Could not retrieve user with id "});
-        }
+            if (err) {
+                console.log(err);
+                return res.status(400).send({message: "Could not retrieve user with id "});
+            }
 
-        if (!cards) {
-            return res.status(400).send({message: "Card doesn't exist."});
-        }
-        Card.count().exec(function (err, count) {
-            return res.status(200).send({
-                cards: cards,
-                current: pageOpt.page,
-                pages: 50 //Math.ceil(count / pageOpt.perPage)
+            if (!cards) {
+                return res.status(400).send({message: "Card doesn't exist."});
+            }
+            Card.count().exec(function (err, count) {
+                return res.status(200).send({
+                    cards: cards,
+                    current: pageOpt.page,
+                    pages: Math.ceil(count / pageOpt.perPage)
+                });
             });
         });
-
-    });
 };
 
 exports.update = function (req, res) {
@@ -262,10 +261,33 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     Card.remove({_id: req.params.cardId}, function (err, card) {
         if (err) {
-            res.status(400).send({message: "Could not delete user with id " + req.params.cardId});
-        } else {
-            res.status(200).send({message: "Card deleted successfully!"})
+            return res.status(400).send({message: "Could not delete user with id " + req.params.cardId});
         }
+        return res.status(200).send({message: "Card deleted successfully!"})
+    });
+};
+
+
+exports.getBoundsPrice = function (req, res) {
+    var bounds = {
+        max: 0,
+        min: 0
+    };
+
+    Card.findOne().sort({price: -1}).limit(1).exec(function (err, card) {
+        if (err) {
+            return res.status(400).send({message: "Could not get bounds."});
+        }
+
+        bounds.max = card.price;
+        Card.findOne().sort({price: 1}).limit(1).exec(function (err, card) {
+            if (err) {
+                return res.status(400).send({message: "Could not get bounds."});
+            }
+
+            bounds.min = card.price;
+            return res.status(200).send(bounds);
+        });
     });
 };
 
