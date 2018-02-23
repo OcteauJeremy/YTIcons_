@@ -86,13 +86,21 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="maxPages > 0">
       <div class="col-md-12">
         <div class="pagination-area">
           <nav class="navigation pagination" role="navigation">
             <div class="nav-links">
-              <a class="prev page-numbers" [class.disabled]="filters.page == 1" (click)="prevPage()"><span class="lnr lnr-arrow-left"></span></a>
-              <a *ngFor="let in of counter(maxPages); let idxPage = index" class="page-numbers" [class.current]="idxPage + 1 == filters.page">{{idxPage + 1}}</a>
+              <a class="prev page-numbers" (click)="prevPage()"><span class="lnr lnr-arrow-left"></span></a>
+
+              <a class="prev page-numbers" *ngIf="maxPages > 4" [class.disabled]="filters.page == 1" (click)="loadPage(1)">First</a>
+
+              <a *ngFor="let in of counter(maxPages); let idxPage = index" class="page-numbers"
+                 [class.current]="idxPage + 1 == filters.page" (click)="loadPage(idxPage + 1)">
+                {{idxPage + 1}}
+              </a>
+
+              <a class="prev page-numbers" *ngIf="maxPages > 4" (click)="loadPage(maxPages)">Last</a>
               <a class="next page-numbers" [class.disabled]="filters.page == maxPages" (click)="nextPage()"><span class="lnr lnr-arrow-right"></span></a>
             </div>
           </nav>
