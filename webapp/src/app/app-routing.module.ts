@@ -25,6 +25,10 @@ const appRoutes: Routes = [
     component: ProfileComponent,
   },
   {
+    path: 'account/:address',
+    component: ProfileComponent,
+  },
+  {
     path: 'leaderboard',
     component: LeaderboardComponent,
   },

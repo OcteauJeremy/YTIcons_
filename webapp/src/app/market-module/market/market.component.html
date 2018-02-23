@@ -1,9 +1,9 @@
 
 <section class="search-wrapper">
   <div class="search-area2 bgimage">
-    <div class="bg_image_holder">
-      <img src="images/search.jpg" alt="">
-    </div>
+    <!--<div class="bg_image_holder">-->
+      <!--<img src="images/search.jpg" alt="">-->
+    <!--</div>-->
     <div class="container content_above">
       <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
@@ -12,7 +12,7 @@
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input class="relative-field rounded" type="text" placeholder="Search your youtubeurs">
+                  <input (input)="onSearchChange($event.target.value)" name="search" class="relative-field rounded" type="text" placeholder="Search your youtubers">
                   <button class="btn btn--round" type="submit">Search</button>
                 </div>
               </form>
@@ -30,42 +30,71 @@
       <div class="col-md-12">
         <div class="filter-bar">
           <div class="filter__option filter--dropdown">
-            <a href="#" id="drop1" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
-            <ul class="dropdown dropdown-menu" aria-labelledby="drop1">
-              <div *ngFor="let type of types">
-                <li><a (click)="selectType(type)">{{type.name | capitalize}}</a></li>
-              </div>
+            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectType('')"><a>All</a></li>
+              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name}}</a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="drop2" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter By <span class="lnr lnr-chevron-down"></span></a>
-            <ul class="dropdown dropdown-menu" aria-labelledby="drop2">
-              <li><a href="#">Trending items</a></li>
-              <li><a href="#">Popular items</a></li>
-              <li><a href="#">New items </a></li>
-              <li><a href="#">Best seller </a></li>
-              <li><a href="#">Best rating </a></li>
+            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nationality<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectNationality('')"><a>All</a></li>
+              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality}}</a></li>
             </ul>
           </div>
 
-          <div class="filter__option filter--dropdown filter--range">
-            <a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>
-            <div class="dropdown dropdown-menu" aria-labelledby="drop3">
-              <div class="range-slider price-range"></div>
-
-              <div class="price-ranges">
-                <span class="from rounded">$30</span>
-                <span class="to rounded">$300</span>
-              </div>
-            </div>
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channel category<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectCategory('')"><a>All</a></li>
+              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category}}</a></li>
+            </ul>
           </div>
+
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="follower" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Followers<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectFollower('')"><a>All</a></li>
+              <li *ngFor="let follower of followers" (click)="selectFollowoer(follower)"><a>{{follower}}</a></li>
+            </ul>
+          </div>
+
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="video" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Videos<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectVideo('')"><a>All</a></li>
+              <li *ngFor="let video of videos" (click)="selectVideo(video)"><a>{{video}}</a></li>
+            </ul>
+          </div>
+
+
+          <!--<div class="filter__option filter&#45;&#45;dropdown filter&#45;&#45;range">-->
+            <!--<a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>-->
+            <!--<div class="dropdown dropdown-menu" aria-labelledby="drop3">-->
+              <!--<div class="range-slider price-range"></div>-->
+
+              <!--<div class="price-ranges">-->
+                <!--<span class="from rounded">$30</span>-->
+                <!--<span class="to rounded">$300</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
           <div class="filter__option filter--select">
             <div class="select-wrap">
               <select name="price">
                 <option value="low">Price : Low to High</option>
                 <option value="high">Price : High to low</option>
+                <option value="low">Rarety : Low to High</option>
+                <option value="high">Rarety : High to low</option>
+                <option value="low">Follower number : Low to High</option>
+                <option value="high">Follower number : High to low</option>
+                <option value="low">Video number : Low to High</option>
+                <option value="high">Video number : High to low</option>
+                <option value="low">Transaction number : Low to High</option>
+                <option value="high">Transaction number : High to low</option>
               </select>
               <span class="lnr lnr-chevron-down"></span>
             </div>

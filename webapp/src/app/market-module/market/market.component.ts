@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { Subscription } from 'rxjs/Subscription';
-import { AuthenticationService } from "../../services/authentication.service";
 import { TypeService } from '../../services/type.service';
+
 
 @Component({
   selector: 'app-market',
@@ -14,8 +14,13 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   public  cards = [];
   public  types = [];
+  public  followers = ['0 - 50K', '50K - 100k', '100k - 500K','500k - 1M','1M - 10M','More than 10M'];
+  public  videos = ['0 - 100', '100 - 500', '500 - 1 000','1 000 - 10 000','10 000 - 100 000','More than 100 000'];
+
+
   private subscribtions: Subscription = new Subscription();
   private maxPages = 0;
+  private search: string;
 
   private filters = {
     page: 1,
@@ -71,6 +76,11 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.getCards();
   }
 
+  selectNationality(nationality) {
+    this.filters.nationality = nationality;
+    this.getCards();
+  }
+
   prevPage() {
     if (this.filters.page > 1) {
       --this.filters.page;
@@ -93,6 +103,11 @@ export class MarketComponent implements OnInit, OnDestroy {
   counter(max) {
     var counters = new Array(max);
     return counters;
+  }
+
+  onSearchChange(searchValue : string ) {
+    this.filters.name = searchValue;
+    this.getCards();
   }
 
   ngOnDestroy() {

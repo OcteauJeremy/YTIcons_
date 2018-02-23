@@ -4,8 +4,9 @@ import { MarketComponent } from './market/market.component';
 import { CardComponent } from './card/card.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PipesModule } from '../pipes/pipes.module';
-import { TransactionsComponent } from './transactions/transactions.component';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TransactionsComponent } from './transactions/transactions.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
 
 @NgModule({
@@ -13,7 +14,8 @@ import { PriceChartComponent } from './price-chart/price-chart.component';
     CommonModule,
     RouterModule,
     PipesModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   declarations: [
     MarketComponent,
