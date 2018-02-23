@@ -29,6 +29,8 @@ import { LegalModule } from "./legal-module/legal.module";
 import {NationalityService} from "./services/nationality.service";
 import {CategoryService} from "./services/category.service";
 import { CurrencyService } from './services/currency.service';
+import { AdminModule } from './admin-module/admin.module';
+import { YoutubeService } from './services/youtube.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { CurrencyService } from './services/currency.service';
     LeaderboardModule,
     PrivacyPolicyModule,
     LegalModule,
+    AdminModule,
     NgbModule.forRoot()
   ],
   providers: [
@@ -62,7 +65,8 @@ import { CurrencyService } from './services/currency.service';
     ManagerService,
     NationalityService,
     CategoryService,
-    CurrencyService
+    CurrencyService,
+    YoutubeService
   ],
   bootstrap: [
     AppComponent

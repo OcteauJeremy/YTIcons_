@@ -29,6 +29,8 @@ var directoryRoutes = "./routes/";
 // Modules
 var authModule = require(directoryRoutes + 'authentication.routes');
 
+require('./configs/youtube');
+
 app.use(authModule.authRoutes);
 require('./routes/user.routes')(app);
 require('./routes/card.routes')(app);
@@ -36,6 +38,7 @@ require('./routes/type.routes')(app);
 require('./routes/transaction.route')(app);
 require('./routes/nationality.route')(app);
 require('./routes/category.route')(app);
+require('./routes/youtube.route')(app);
 
 
 // Static access

@@ -10,9 +10,11 @@ import { RealvalueService } from '../../services/realvalue.service';
 export class CardComponent implements OnInit {
 
   @Input("card") card: Card;
+  @Input() modalShow: Boolean = true;
 
   constructor(private realvalueService: RealvalueService) { }
 
   ngOnInit() {
+    console.log('modalShow', this.modalShow);
   }
 }
