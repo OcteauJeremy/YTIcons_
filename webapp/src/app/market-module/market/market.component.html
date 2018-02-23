@@ -12,7 +12,7 @@
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input class="relative-field rounded" type="text" placeholder="Search your youtubers">
+                  <input (input)="onSearchChange($event.target.value)" name="search" class="relative-field rounded" type="text" placeholder="Search your youtubers">
                   <button class="btn btn--round" type="submit">Search</button>
                 </div>
               </form>
@@ -54,33 +54,47 @@
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="drop2" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter By <span class="lnr lnr-chevron-down"></span></a>
-            <ul class="dropdown dropdown-menu" aria-labelledby="drop2">
-              <li><a href="#">Trending items</a></li>
-              <li><a href="#">Popular items</a></li>
-              <li><a href="#">New items </a></li>
-              <li><a href="#">Best seller </a></li>
-              <li><a href="#">Best rating </a></li>
+            <a href="#" id="follower" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Followers<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectFollower('')"><a>All</a></li>
+              <li *ngFor="let follower of followers" (click)="selectFollowoer(follower)"><a>{{follower}}</a></li>
             </ul>
           </div>
 
-          <div class="filter__option filter--dropdown filter--range">
-            <a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>
-            <div class="dropdown dropdown-menu" aria-labelledby="drop3">
-              <div class="range-slider price-range"></div>
-
-              <div class="price-ranges">
-                <span class="from rounded">$30</span>
-                <span class="to rounded">$300</span>
-              </div>
-            </div>
+          <div class="filter__option filter--dropdown">
+            <a href="#" id="video" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Videos<span class="lnr lnr-chevron-down"></span></a>
+            <ul  class="dropdown dropdown-menu">
+              <li (click)="selectVideo('')"><a>All</a></li>
+              <li *ngFor="let video of videos" (click)="selectVideo(video)"><a>{{video}}</a></li>
+            </ul>
           </div>
+
+
+          <!--<div class="filter__option filter&#45;&#45;dropdown filter&#45;&#45;range">-->
+            <!--<a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>-->
+            <!--<div class="dropdown dropdown-menu" aria-labelledby="drop3">-->
+              <!--<div class="range-slider price-range"></div>-->
+
+              <!--<div class="price-ranges">-->
+                <!--<span class="from rounded">$30</span>-->
+                <!--<span class="to rounded">$300</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
           <div class="filter__option filter--select">
             <div class="select-wrap">
               <select name="price">
                 <option value="low">Price : Low to High</option>
                 <option value="high">Price : High to low</option>
+                <option value="low">Rarety : Low to High</option>
+                <option value="high">Rarety : High to low</option>
+                <option value="low">Follower number : Low to High</option>
+                <option value="high">Follower number : High to low</option>
+                <option value="low">Video number : Low to High</option>
+                <option value="high">Video number : High to low</option>
+                <option value="low">Transaction number : Low to High</option>
+                <option value="high">Transaction number : High to low</option>
               </select>
               <span class="lnr lnr-chevron-down"></span>
             </div>

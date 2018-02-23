@@ -5,11 +5,14 @@ import { CardComponent } from './card/card.component';
 import { RouterModule } from '@angular/router';
 import { CurrencyPipe } from '../pipes/currency.pipe';
 import { PipesModule } from '../pipes/pipes.module';
+import { FormsModule } from '@angular/forms';
+import { InputDebounceComponent } from './input-debounce/input-debounce.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    PipesModule
+    PipesModule,
+    FormsModule
   ],
   declarations: [
     MarketComponent,
