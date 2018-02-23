@@ -24,6 +24,8 @@ import { CurrencyPipe } from './pipes/currency.pipe';
 import { TypeService } from './services/type.service';
 import { ManagerService } from './services/manager.service';
 import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
+import {PrivacyPolicyModule} from "./privacypolicy-module/privacypolicy.module";
+import {LegalModule} from "./legal-module/legal.module";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
     AccountModule,
     AuthenticationModule,
     FaqModule,
-    LeaderboardModule
+    LeaderboardModule,
+    PrivacyPolicyModule,
+    LegalModule
   ],
   providers: [
     RealvalueService,
