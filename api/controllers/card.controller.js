@@ -292,7 +292,14 @@ exports.getBoundsPrice = function (req, res) {
 };
 
 var populateItem = function (findObj, id) {
-    findObj.populate('type').populate('transactions');
+    findObj.populate('type').populate({
+        path: 'transactions',
+        populate: [{
+          path: 'from'
+        }, {
+            path: 'to'
+        }]
+    });
     // {
     //     path: "transactions.id",
     //     match: { card: "id"}

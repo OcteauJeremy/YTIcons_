@@ -29,6 +29,7 @@
         "assets/css/styles.css"
       ],
       "scripts": [
+        "assets/js/Chart.bundle.min.js",
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
