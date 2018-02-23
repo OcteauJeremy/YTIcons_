@@ -79,11 +79,9 @@ exports.findBySmartId = function (req, res) {
 };
 
 exports.getByQuery = function (req, res) {
-    console.log("QUERY:", req.query);
-
     var pageOpt = {
         page: req.query.page ? req.query.page : 1,
-        perPage: 3
+        perPage: 20
     };
 
     var paramSearch = {
@@ -159,14 +157,6 @@ exports.getByQuery = function (req, res) {
         });
     }
 
-    if (req.query.sort) {
-        // filter.sort = req.query.sort;
-    }
-
-    if (req.query.order) {
-        // filter.order = req.query.order;
-    }
-
     console.log('paramSearch', paramSearch);
 
     var findObj;
@@ -176,6 +166,20 @@ exports.getByQuery = function (req, res) {
         findObj = Card.find();
     }
 
+    var keyObj = 'price';
+    if (req.query.sort) {
+        keyObj = req.query.sort;
+    }
+
+    var order = 'desc';
+    if (req.query.order) {
+        order = req.query.order;
+    }
+
+    var tmp = {};
+    tmp[keyObj] = order.toLowerCase();
+    console.log(tmp);
+    findObj.sort(tmp);
 
     populateItem(findObj)
         .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)

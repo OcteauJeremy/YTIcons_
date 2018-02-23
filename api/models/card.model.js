@@ -8,6 +8,7 @@ var CardSchema = mongoose.Schema({
     nationality: {type: Schema.Types.ObjectId, ref: "Nationality"},
     nbSubscribers: Number,
     nbViews: Number,
+    nbTransactions: Number,
     transactions: [{type: Schema.Types.ObjectId, ref: "Transaction"}], // TODO: count of collection transactions
     nbVideos: Number,
     category: {type: Schema.Types.ObjectId, ref: "Category"},

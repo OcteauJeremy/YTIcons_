@@ -17,7 +17,6 @@ export class MarketComponent implements OnInit, OnDestroy {
   public  followers = ['0 - 50K', '50K - 100k', '100k - 500K','500k - 1M','1M - 10M','More than 10M'];
   public  videos = ['0 - 100', '100 - 500', '500 - 1 000','1 000 - 10 000','10 000 - 100 000','More than 100 000'];
 
-
   private subscribtions: Subscription = new Subscription();
   private maxPages = 0;
   private search: string;
