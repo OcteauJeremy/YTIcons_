@@ -38,8 +38,8 @@ export class MarketComponent implements OnInit, OnDestroy {
     minTransactions: null,
     maxTransactions: null,
     nationality: null, //ID
-    sort: "nbTransactions",
-    order: "ASC",
+    sort: "price",
+    order: "DESC",
     nbViews: null,
     nbTransactions: null
   };
@@ -109,15 +109,16 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   selectVideo(min:number, max:number) {
-    this.filters.maxViews = max;
-    this.filters.minViews = min;
+    this.filters.maxVideos = max;
+    this.filters.minVideos = min;
     this.getCards();
   }
 
-  selectSort(sort:string, order:string) {
-    console.log('sort = ');
-    this.filters.sort = sort;
-    this.filters.order = order;
+  selectSort(sort: string) {
+    let sort_array =  sort.split("_");
+
+    this.filters.sort = sort_array[0];
+    this.filters.order = sort_array[1];
     this.getCards();
   }
 
