@@ -24,6 +24,10 @@ const appRoutes: Routes = [
     component: ProfileComponent,
   },
   {
+    path: 'account/:address',
+    component: ProfileComponent,
+  },
+  {
     path: 'faq',
     component: FaqComponent,
   },
