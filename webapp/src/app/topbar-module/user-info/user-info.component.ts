@@ -9,9 +9,11 @@ import {Router} from '@angular/router';
 })
 export class UserInfoComponent implements OnInit {
 
-  public currentUser: {};
+  public  currentUser: {};
+  public  baseUrl;
 
   constructor(private as: AuthenticationService, private _router: Router) {
+    this.baseUrl = as.baseUrl;
   }
 
   logout() {

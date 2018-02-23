@@ -7,6 +7,7 @@ var UserSchema = mongoose.Schema({
     password: String,
     rememberMe: Boolean,
     currency: String,
+    avatar: String,
     wallet: {type: String, unique: true}
 }, {
     timestamps: true

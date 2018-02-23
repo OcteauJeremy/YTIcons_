@@ -1,4 +1,7 @@
 var User = require('../models/user.model');
+const fs = require('fs');
+var uploadOptions   = require('../configs/multer');
+
 
 exports.create = function (req, res) {
     if (!req.body.username || !req.body.email || !req.body.password || !req.body.wallet) {
@@ -11,6 +14,18 @@ exports.create = function (req, res) {
     user.email = req.body.email;
     user.wallet = req.body.wallet;
     user.password = user.generateHash(req.body.password);
+
+    if (!req.file) {
+        var files = [];
+
+        console.log(__dirname + '/../ressources/avatars/default');
+        fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
+            files.push(file);
+        });
+        user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
+    } else {
+        user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
+    }
 
     user.save(function (err, user) {
         if (err) {
@@ -68,9 +83,20 @@ exports.update = function (req, res) {
         }
 
         for (var key in req.body) {
-            if (user[key]) {
+            if (user[key] && key != "password") {
                 user[key] = req.body[key];
             }
+        }
+
+        if (req.file) {
+            var tmp = user.avatar.split('/');
+            var fileName = tmp[tmp.length - 1];
+
+            if (fileName.indexOf('default') < 0) {
+                console.log('unlink');
+                fs.unlink(__dirname + '/../ressources/avatars/user/' + fileName, function () {});
+            }
+            user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
         }
 
         user.save(function (err, data) {
