@@ -2,7 +2,6 @@ var Card = require('../models/card.model');
 var Type = require('../models/type.model');
 
 exports.create = function (req, res) {
-    console.log('body', req.body);
     if (!req.body.id || !req.body.name || !req.body.image || !req.body.nationality || !req.body.nbSubscribers ||
         !req.body.nbViews || !req.body.category || !req.body.nbVideos || !req.body.url || !req.body.description ||
         !req.body.citation || !req.body.type || !req.body.price) {

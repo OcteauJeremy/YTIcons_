@@ -18,8 +18,6 @@ export class MarketComponent implements OnInit, OnDestroy {
   public  types = [];
   public  nationalities = [];
   public  categories = [];
-  // public  followers = ['0 - 50K', '50K - 100k', '100k - 500K','500k - 1M','1M - 10M','More than 10M'];
-  // public  videos = ['0 - 100', '100 - 500', '500 - 1 000','1 000 - 10 000','10 000 - 100 000','More than 100 000'];
 
   private subscribtions: Subscription = new Subscription();
   private maxPages = 0;
@@ -113,6 +111,13 @@ export class MarketComponent implements OnInit, OnDestroy {
   selectVideo(min:number, max:number) {
     this.filters.maxViews = max;
     this.filters.minViews = min;
+    this.getCards();
+  }
+
+  selectSort(sort:string, order:string) {
+    console.log('sort = ');
+    this.filters.sort = sort;
+    this.filters.order = order;
     this.getCards();
   }
 

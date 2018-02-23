@@ -97,16 +97,16 @@
           <div class="filter__option filter--select">
             <div class="select-wrap">
               <select name="price">
-                <option value="low">Price : Low to High</option>
-                <option value="high">Price : High to low</option>
-                <option value="low">Rarety : Low to High</option>
-                <option value="high">Rarety : High to low</option>
-                <option value="low">Follower number : Low to High</option>
-                <option value="high">Follower number : High to low</option>
-                <option value="low">Video number : Low to High</option>
-                <option value="high">Video number : High to low</option>
-                <option value="low">Transaction number : Low to High</option>
-                <option value="high">Transaction number : High to low</option>
+                <option (click)="selectSort('price', 'asc')" value="low">Price : Low to High</option>
+                <option (click)="selectSort('price', 'desc')" value="high">Price : High to low</option>
+                <option (click)="selectSort('nbViews', 'asc')" value="low">Rarety : Low to High</option>
+                <option (click)="selectSort('nbViews', 'desc')" value="high">Rarety : High to low</option>
+                <option (click)="selectSort('nbFollower', 'asc')" value="low">Follower number : Low to High</option>
+                <option (click)="selectSort('nbFollower', 'desc')" value="high">Follower number : High to low</option>
+                <option (click)="selectSort('nbVideo', 'asc')" value="low">Video number : Low to High</option>
+                <option (click)="selectSort('nbVideo', 'desc')" value="high">Video number : High to low</option>
+                <option (click)="selectSort('nbTransaction', 'asc')" value="low">Transaction number : Low to High</option>
+                <option (click)="selectSort('nbTransaction', 'desc')" value="high">Transaction number : High to low</option>
               </select>
               <span class="lnr lnr-chevron-down"></span>
             </div>

@@ -68,11 +68,9 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.address == null) {
-      console.log('pass');
       this.refreshProfileInfo(this.as.currentUser.wallet);
     }
     else {
-      console.log('pass 2');
       this.subscribtions.add(this.us.getUserByWallet(this.address).subscribe(res => {
         _self.userProfile = res;
         _self.refreshProfileInfo(_self.address);

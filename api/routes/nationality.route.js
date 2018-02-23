@@ -6,5 +6,4 @@ module.exports = function(app) {
     app.get('/nationalities', nationalities.findAll);
 
     app.post('/nationalities', nationalities.create);
-
 };
