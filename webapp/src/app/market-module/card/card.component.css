@@ -30,3 +30,11 @@
   justify-content: space-around;
 }
 
+.modal-header {
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+
+.modal .modal-title {
+  margin-bottom: 0px;
+}

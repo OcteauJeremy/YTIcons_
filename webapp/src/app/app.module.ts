@@ -20,7 +20,7 @@ import {CardService} from './services/card.service';
 import {FaqModule} from './faq-module/faq.module';
 import {AuthenticationService} from './services/authentication.service';
 import { UserService } from './services/user.service';
-import { CurrencyPipe } from './pipes/currency.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TypeService } from './services/type.service';
 import { ManagerService } from './services/manager.service';
 import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
@@ -43,7 +43,8 @@ import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
     AccountModule,
     AuthenticationModule,
     FaqModule,
-    LeaderboardModule
+    LeaderboardModule,
+    NgbModule.forRoot()
   ],
   providers: [
     RealvalueService,

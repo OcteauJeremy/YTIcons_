@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurrencyPipe } from './currency.pipe';
 import { CapitalizePipe } from './capitalize.pipe';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { CapitalizePipe } from './capitalize.pipe';
   ],
   exports: [
     CurrencyPipe,
-    CapitalizePipe
+    CapitalizePipe,
+    DatePipe
   ]
 })
 export class PipesModule { }

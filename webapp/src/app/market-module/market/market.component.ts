@@ -41,7 +41,6 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
   }
 
   generateQueryParams() {
