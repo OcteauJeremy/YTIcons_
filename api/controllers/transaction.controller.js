@@ -1,4 +1,3 @@
-
 var Transaction = require('../models/transaction.model');
 
 exports.create = function (req, res) {
@@ -16,30 +15,33 @@ exports.create = function (req, res) {
 
         txRes.populate("from", function (err) {
             txRes.populate("to", function (err) {
-               txRes.populate({
-                   path: "card",
-                   populate: [{
-                       path: "type"
-                   }, {
-                       path: "transactions"
-                   }]}, function (err) {
-                   var txResClone = JSON.parse(JSON.stringify(txRes));
+                txRes.populate({
+                    path: "card",
+                    populate: [{
+                        path: "type"
+                    }, {
+                        path: "transactions"
+                    }]
+                }, function (err) {
+                    var txResClone = JSON.parse(JSON.stringify(txRes));
 
-                   txResClone.card = null;
+                    txResClone.card = null;
 
-                   txRes.card.transactions.push(txResClone);
+                    txRes.card.transactions.push(txResClone);
 
+                    txRes.save(function (err, txFinal) {
+                        if (err) {
+                            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+                        }
+                        txFinal.populate("transactions", function (err) {
+                            txFinal.card.save(function (err, toto) {
 
-                   txRes.save(function (err) {
-                       if (err) {
-                           return res.status(400).send({message: "Some error occurred while retrieving transactions."});
-                       }
-                       txRes.populate("transactions", function (err) {
-                           return res.status(200).send(txRes);
+                                return res.status(200).send(txFinal);
+                            });
 
-                       });
-                   })
-               })
+                        });
+                    })
+                })
             });
         });
 
@@ -68,7 +70,7 @@ exports.findOne = function (req, res) {
     });
 };
 
-var populateItem = function(findObj) {
+var populateItem = function (findObj) {
     findObj.populate("from").populate("to").populate({
         path: "card",
         populate: {

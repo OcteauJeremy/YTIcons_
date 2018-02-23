@@ -86,6 +86,11 @@ export class MarketComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadPage(idx) {
+    this.filters.page = idx;
+    this.getCards();
+  }
+
   counter(max) {
     var counters = new Array(max);
     return counters;
