@@ -32,52 +32,52 @@
           <div class="filter__option filter--dropdown">
             <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectType('')"><a>All</a></li>
-              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name}}</a></li>
+              <li (click)="selectType('')"><a>All <i *ngIf="!filters.type" class="fa fa-check"></i></a></li>
+              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name}} <i *ngIf="filters.type == type._id" class="fa fa-check"></i></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nationality<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectNationality('')"><a>All</a></li>
-              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality.name}}</a></li>
+              <li (click)="selectNationality('')"><a>All <i *ngIf="!filters.nationality" class="fa fa-check"></i></a></li>
+              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality.name}} <i *ngIf="filters.nationality == nationality._id" class="fa fa-check"></i></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channel category<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectCategory('')"><a>All</a></li>
-              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category.name}}</a></li>
+              <li (click)="selectCategory('')"><a>All <i *ngIf="!filters.category" class="fa fa-check"></i></a></li>
+              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category.name}} <i *ngIf="filters.category == category._id" class="fa fa-check"></i></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="follower" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Followers<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectFollower('')"><a>All</a></li>
-              <li  (click)="selectFollower(0,50000)"><a>0 - 50K</a></li>
-              <li  (click)="selectFollower(50000,100000)"><a>50K - 100K</a></li>
-              <li  (click)="selectFollower(100000,500000)"><a>100K - 500K</a></li>
-              <li  (click)="selectFollower(500000,1000000)"><a>500K - 1M</a></li>
-              <li  (click)="selectFollower(1000000,10000000)"><a>1M - 10M</a></li>
-              <li  (click)="selectFollower(10000000,null)"><a>More than 10M</a></li>
+              <li (click)="selectFollower('')"><a>All <i *ngIf="!filters.minSubscribers && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(0,50000)"><a>0 - 50K <i *ngIf="filters.minSubscribers == 0 && filters.maxSubscribers == 50000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(50000,100000)"><a>50K - 100K <i *ngIf="filters.minSubscribers == 50000 && filters.maxSubscribers == 100000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(100000,500000)"><a>100K - 500K <i *ngIf="filters.minSubscribers == 100000 && filters.maxSubscribers == 500000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(500000,1000000)"><a>500K - 1M <i *ngIf="filters.minSubscribers == 500000 && filters.maxSubscribers == 1000000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(1000000,10000000)"><a>1M - 10M <i *ngIf="filters.minSubscribers == 1000000 && filters.maxSubscribers == 10000000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectFollower(10000000,null)"><a>More than 10M <i *ngIf="filters.minSubscribers == 10000000 && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="video" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Videos<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectVideo('')"><a>All</a></li>
-              <li  (click)="selectVideo(0,100)"><a>0 - 100</a></li>
-              <li  (click)="selectVideo(100,200)"><a>100 - 200</a></li>
-              <li  (click)="selectVideo(200,500)"><a>200 - 500</a></li>
-              <li  (click)="selectVideo(500,1000)"><a>500 - 1 000</a></li>
-              <li  (click)="selectVideo(1000,5000)"><a>1 000 - 5 000</a></li>
-              <li  (click)="selectVideo(5000,10000)"><a>5 000 - 10 000</a></li>
-              <li  (click)="selectVideo(10000,50000)"><a>10 000 - 50 000</a></li>
-              <li  (click)="selectVideo(50000,null)"><a>More than 50 000</a></li>
+              <li (click)="selectVideo('')"><a>All <i *ngIf="!filters.minVideos && !filters.maxVideos" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(0,100)"><a>0 - 100 <i *ngIf="filters.minVideos == 0 && filters.maxVideos == 100" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(100,200)"><a>100 - 200 <i *ngIf="filters.minVideos == 100 && filters.maxVideos == 200" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(200,500)"><a>200 - 500 <i *ngIf="filters.minVideos == 200 && filters.maxVideos == 500" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(500,1000)"><a>500 - 1 000 <i *ngIf="filters.minVideos == 500 && filters.maxVideos == 1000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(1000,5000)"><a>1 000 - 5 000 <i *ngIf="filters.minVideos == 1000 && filters.maxVideos == 5000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(5000,10000)"><a>5 000 - 10 000 <i *ngIf="filters.minVideos == 5000 && filters.maxVideos == 10000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(10000,50000)"><a>10 000 - 50 000 <i *ngIf="filters.minVideos == 10000 && filters.maxVideos == 50000" class="fa fa-check"></i></a></li>
+              <li  (click)="selectVideo(50000,null)"><a>More than 50 000 <i *ngIf="filters.minVideos == 50000 && !filters.maxVideos" class="fa fa-check"></i></a></li>
             </ul>
           </div>
 
@@ -96,17 +96,15 @@
 
           <div class="filter__option filter--select">
             <div class="select-wrap">
-              <select name="price">
-                <option (click)="selectSort('price', 'asc')" value="low">Price : Low to High</option>
-                <option (click)="selectSort('price', 'desc')" value="high">Price : High to low</option>
-                <option (click)="selectSort('nbViews', 'asc')" value="low">Rarety : Low to High</option>
-                <option (click)="selectSort('nbViews', 'desc')" value="high">Rarety : High to low</option>
-                <option (click)="selectSort('nbFollower', 'asc')" value="low">Follower number : Low to High</option>
-                <option (click)="selectSort('nbFollower', 'desc')" value="high">Follower number : High to low</option>
-                <option (click)="selectSort('nbVideo', 'asc')" value="low">Video number : Low to High</option>
-                <option (click)="selectSort('nbVideo', 'desc')" value="high">Video number : High to low</option>
-                <option (click)="selectSort('nbTransaction', 'asc')" value="low">Transaction number : Low to High</option>
-                <option (click)="selectSort('nbTransaction', 'desc')" value="high">Transaction number : High to low</option>
+              <select (change)="selectSort($event.target.value)" name="price">
+                <option value="price_desc">Price : High to low</option>
+                <option value="price_asc">Price : Low to High</option>
+                <option value="nbSubscribers_desc">Rarety : High to low</option>
+                <option value="nbSubscribers_asc">Rarety : Low to High</option>
+                <option value="nbVideos_desc">Video number : High to low</option>
+                <option value="nbVideos_asc">Video number : Low to High</option>
+                <option value="nbTransactions_desc">Transaction number : High to low</option>
+                <option value="nbTransactions_asc">Transaction number : Low to High</option>
               </select>
               <span class="lnr lnr-chevron-down"></span>
             </div>
