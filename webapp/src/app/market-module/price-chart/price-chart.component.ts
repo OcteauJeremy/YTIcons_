@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
 
 @Component({
   selector: 'price-chart',
@@ -24,9 +24,9 @@ export class PriceChartComponent implements OnInit {
 
     var ctx = document.getElementById("chart-" + this.card.id);
     console.log(ctx);
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: this.datas
-    });
+    // var myChart = new Chart(ctx, {
+    //   type: 'line',
+    //   data: this.datas
+    // });
   }
 }

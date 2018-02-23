@@ -3,6 +3,8 @@ import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TypeService } from '../../services/type.service';
+import {NationalityService} from "../../services/nationality.service";
+import {CategoryService} from "../../services/category.service";
 
 
 @Component({
@@ -14,25 +16,28 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   public  cards = [];
   public  types = [];
-  public  followers = ['0 - 50K', '50K - 100k', '100k - 500K','500k - 1M','1M - 10M','More than 10M'];
-  public  videos = ['0 - 100', '100 - 500', '500 - 1 000','1 000 - 10 000','10 000 - 100 000','More than 100 000'];
+  public  nationalities = [];
+  public  categories = [];
+  // public  followers = ['0 - 50K', '50K - 100k', '100k - 500K','500k - 1M','1M - 10M','More than 10M'];
+  // public  videos = ['0 - 100', '100 - 500', '500 - 1 000','1 000 - 10 000','10 000 - 100 000','More than 100 000'];
 
 
   private subscribtions: Subscription = new Subscription();
   private maxPages = 0;
-  private search: string;
 
   private filters = {
     page: 1,
     name: null,
     type: null, //ID
-    categorie: null, //ID
+    category: null, //ID
     minPrice: null,
     maxPrice: null,
     minSubscribers: null,
     maxSubscribers: null,
     minViews: null,
     maxViews: null,
+    minVideos: null,
+    maxVideos: null,
     minTransactions: null,
     maxTransactions: null,
     nationality: null, //ID
@@ -42,12 +47,21 @@ export class MarketComponent implements OnInit, OnDestroy {
     nbTransactions: null
   };
 
-  constructor(private cardService: CardService, private typeService: TypeService) {
+  constructor(private cardService: CardService, private typeService: TypeService,private nationalityService: NationalityService,private categoryService: CategoryService) {
     this.getCards();
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
       this.types = res;
     }));
+
+    this.subscribtions.add(this.nationalityService.getNationalities().subscribe(res => {
+      this.nationalities = res;
+    }));
+
+    this.subscribtions.add(this.categoryService.getCategories().subscribe(res => {
+      this.categories = res;
+    }));
+
   }
 
   ngOnInit() {
@@ -82,7 +96,24 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   selectNationality(nationality) {
-    this.filters.nationality = nationality;
+    this.filters.nationality = nationality._id;
+    this.getCards();
+  }
+
+  selectCategory(category) {
+    this.filters.category = category._id;
+    this.getCards();
+  }
+
+  selectFollower(min:number, max:number) {
+    this.filters.maxSubscribers = max;
+    this.filters.minSubscribers = min;
+    this.getCards();
+  }
+
+  selectVideo(min:number, max:number) {
+    this.filters.maxViews = max;
+    this.filters.minViews = min;
     this.getCards();
   }
 

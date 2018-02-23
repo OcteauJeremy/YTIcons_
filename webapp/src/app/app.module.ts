@@ -26,6 +26,8 @@ import { ManagerService } from './services/manager.service';
 import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
 import { PrivacyPolicyModule } from "./privacypolicy-module/privacypolicy.module";
 import { LegalModule } from "./legal-module/legal.module";
+import {NationalityService} from "./services/nationality.service";
+import {CategoryService} from "./services/category.service";
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { LegalModule } from "./legal-module/legal.module";
     AuthenticationService,
     UserService,
     TypeService,
-    ManagerService
+    ManagerService,
+    NationalityService,
+    CategoryService
   ],
   bootstrap: [
     AppComponent
