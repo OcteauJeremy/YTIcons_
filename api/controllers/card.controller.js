@@ -140,6 +140,17 @@ exports.getByQuery = function (req, res) {
         paramSearch.$and.push(nbViewsQuery);
     }
 
+    var nbVideosQuery = {"nbVideos": {}};
+    if (req.query.minVideos) {
+        nbVideosQuery.nbVideos["$gte"] = req.query.minVideos;
+    }
+    if (req.query.maxVideos) {
+        nbVideosQuery.nbVideos["$lte"] = req.query.maxVideos;
+    }
+    if (Object.keys(nbVideosQuery.nbVideos).length > 0) {
+        paramSearch.$and.push(nbVideosQuery);
+    }
+
     var nbTransactionsQuery = {"nbTransactions": {}};
     if (req.query.minTransactions) {
         nbTransactionsQuery.nbTransactions["$gte"] = req.query.minTransactions;
