@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CurrencyPipe } from './currency.pipe';
 import { CapitalizePipe } from './capitalize.pipe';
 import { DatePipe } from '@angular/common';
+import { AbbreviateNumberPipe } from './abbreviate-number.pipe';
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { DatePipe } from '@angular/common';
   ],
   declarations: [
     CurrencyPipe,
-    CapitalizePipe
+    CapitalizePipe,
+    AbbreviateNumberPipe
   ],
   exports: [
     CurrencyPipe,

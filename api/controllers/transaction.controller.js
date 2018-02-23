@@ -7,7 +7,6 @@ exports.create = function (req, res) {
 
     var saveObj = tx.save();
 
-    console.log('TEEEEEST');
     tx.save(function (err, txRes) {
         if (err) {
             return res.status(400).send({message: "Some error occurred while retrieving transactions."});
@@ -34,6 +33,7 @@ exports.create = function (req, res) {
                             return res.status(400).send({message: "Some error occurred while retrieving transactions."});
                         }
                         txFinal.populate("transactions", function (err) {
+                            txFinal.card.nbTransactions = txFinal.card.transactions.length;
                             txFinal.card.save(function (err, toto) {
 
                                 return res.status(200).send(txFinal);
