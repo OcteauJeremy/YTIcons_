@@ -110,18 +110,48 @@ exports.getByQuery = function (req, res) {
     }
 
     var priceQuery = {"price": {}};
-    if (req.query.min) {
-        priceQuery.price["$gte"] = req.query.min;
+    if (req.query.minPrice) {
+        priceQuery.price["$gte"] = req.query.minPrice;
     }
-
-    if (req.query.max) {
-        priceQuery.price["$lte"] = req.query.max;
+    if (req.query.maxPrice) {
+        priceQuery.price["$lte"] = req.query.maxPrice;
     }
-
     if (Object.keys(priceQuery.price).length > 0) {
         paramSearch.$and.push(priceQuery);
     }
 
+    var nbSubscribersQuery = {"nbSubscribers": {}};
+    if (req.query.minSubscribers) {
+        nbSubscribersQuery.nbSubscribers["$gte"] = req.query.minSubscribers;
+    }
+    if (req.query.maxSubscribers) {
+        nbSubscribersQuery.nbSubscribers["$lte"] = req.query.maxSubscribers;
+    }
+    if (Object.keys(nbSubscribersQuery.nbSubscribers).length > 0) {
+        paramSearch.$and.push(nbSubscribersQuery);
+    }
+
+    var nbViewsQuery = {"nbViews": {}};
+    if (req.query.minViews) {
+        nbViewsQuery.nbViews["$gte"] = req.query.minViews;
+    }
+    if (req.query.maxViews) {
+        nbViewsQuery.nbViews["$lte"] = req.query.maxViews;
+    }
+    if (Object.keys(nbViewsQuery.nbViews).length > 0) {
+        paramSearch.$and.push(nbViewsQuery);
+    }
+
+    var nbTransactionsQuery = {"nbTransactions": {}};
+    if (req.query.minTransactions) {
+        nbTransactionsQuery.nbTransactions["$gte"] = req.query.minTransactions;
+    }
+    if (req.query.maxTransactions) {
+        nbTransactionsQuery.nbTransactions["$lte"] = req.query.maxTransactions;
+    }
+    if (Object.keys(nbTransactionsQuery.nbTransactions).length > 0) {
+        paramSearch.$and.push(nbTransactionsQuery);
+    }
 
     if (req.query.nationality) {
         paramSearch.$and.push({
@@ -135,24 +165,6 @@ exports.getByQuery = function (req, res) {
 
     if (req.query.order) {
         // filter.order = req.query.order;
-    }
-
-    if (req.query.nbSubscribers) {
-        paramSearch.$and.push({
-            "nbSubscribers": {$gte: req.query.nbSubscribers}
-        });
-    }
-
-    if (req.query.nbViews) {
-        paramSearch.$and.push({
-            "nbViews": {$gte: req.query.nbViews}
-        });
-    }
-
-    if (req.query.nbTransactions) {
-        paramSearch.$and.push({
-            "nbTransactions": {$gte: req.query.nbTransactions}
-        });
     }
 
     console.log('paramSearch', paramSearch);
@@ -177,7 +189,15 @@ exports.getByQuery = function (req, res) {
             if (!cards) {
                 return res.status(400).send({message: "Card doesn't exist."});
             }
-            Card.count().exec(function (err, count) {
+
+            var countObj;
+            if (paramSearch.$and.length > 0) {
+                countObj = Card.count(paramSearch);
+            } else {
+                countObj = Card.count();
+            }
+
+            populateItem(countObj).exec(function (err, count) {
                 return res.status(200).send({
                     cards: cards,
                     current: pageOpt.page,
@@ -292,7 +312,7 @@ exports.getBoundsPrice = function (req, res) {
 };
 
 var populateItem = function (findObj, id) {
-    findObj.populate('type').populate({
+    findObj.populate('type').populate('category').populate('nationality').populate({
         path: 'transactions',
         populate: [{
           path: 'from'

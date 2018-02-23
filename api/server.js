@@ -34,6 +34,8 @@ require('./routes/user.routes')(app);
 require('./routes/card.routes')(app);
 require('./routes/type.routes')(app);
 require('./routes/transaction.route')(app);
+require('./routes/nationality.route')(app);
+require('./routes/category.route')(app);
 
 mongoose.connection.once('open', function() {
   console.log("Successfully connected to the database mongo");

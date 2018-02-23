@@ -25,14 +25,19 @@ export class MarketComponent implements OnInit, OnDestroy {
   private filters = {
     page: 1,
     name: null,
-    type: null,
-    categorie: null,
-    min: null,
-    max: null,
-    nationality: null,
+    type: null, //ID
+    categorie: null, //ID
+    minPrice: null,
+    maxPrice: null,
+    minSubscribers: null,
+    maxSubscribers: null,
+    minViews: null,
+    maxViews: null,
+    minTransactions: null,
+    maxTransactions: null,
+    nationality: null, //ID
     sort: "nbTransactions",
     order: "ASC",
-    nbSubscribers: null,
     nbViews: null,
     nbTransactions: null
   };

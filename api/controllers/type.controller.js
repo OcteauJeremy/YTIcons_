@@ -1,6 +1,5 @@
 var Type = require('../models/type.model');
 
-
 exports.findAll = function (req, res) {
     Type.find(function (err, types) {
         if (err) {
@@ -9,5 +8,4 @@ exports.findAll = function (req, res) {
             return res.status(200).send(types);
         }
     });
-
 };
