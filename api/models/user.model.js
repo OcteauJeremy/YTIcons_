@@ -5,7 +5,7 @@ var UserSchema = mongoose.Schema({
     username: {type: String, unique: true},
     email: {type: String, unique: true},
     password: String,
-    rememberMe: String,
+    rememberMe: Boolean,
     currency: String,
     wallet: {type: String, unique: true}
 }, {

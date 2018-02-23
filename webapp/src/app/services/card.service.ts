@@ -100,11 +100,15 @@ export class CardService extends ManagerService {
   }
 
   public getCardByIdSmartContract(id: number) {
-    return this.get('/cards/BySmartId/' + id);
+    return this.get('/cards/bySmartId/' + id);
   }
 
   public getCards() {
     return this.get('/cards');
+  }
+
+  public getCardsQuery(query) {
+    return this.getQuery('/cards', query);
   }
 
 }

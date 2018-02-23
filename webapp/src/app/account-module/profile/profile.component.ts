@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     let _self = this;
+    this.currentUser = this.as.currentUser;
 
     this.subscribtions.add(this.route.params.subscribe(params => {
       this.address = params['address'];

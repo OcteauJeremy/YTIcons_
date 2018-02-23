@@ -30,16 +30,29 @@ exports.findAll = function (req, res) {
             return res.status(200).send(users);
         }
     });
-
 };
 
 exports.findOne = function (req, res) {
     User.findById(req.params.userId, function (err, user) {
         if (err) {
             return res.status(400).send({message: "Could not retrieve users with id " + req.params.userId});
-        } else {
-            return res.status(200).send(user);
         }
+        return res.status(200).send(user);
+    });
+};
+
+exports.findByWallet = function (req, res) {
+    if (!req.params.wallet) {
+        return res.status(400).send({message: "Wrong parameters."});
+    }
+
+    User.findOne({
+        wallet: req.params.wallet
+    }, function (err, user) {
+        if (err) {
+            return res.status(400).send({message: "Could not retrieve users with wallet " + req.params.wallet});
+        }
+        return res.status(200).send(user);
     });
 };
 

@@ -30,10 +30,10 @@
       <div class="col-md-12">
         <div class="filter-bar">
           <div class="filter__option filter--dropdown">
-            <a href="#" id="drop1" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories <span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="drop1" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Type <span class="lnr lnr-chevron-down"></span></a>
             <ul class="dropdown dropdown-menu" aria-labelledby="drop1">
               <div *ngFor="let type of types">
-                <li><a href="#">{{type.name | capitalize}}</a></li>
+                <li><a (click)="selectType(type)">{{type.name | capitalize}}</a></li>
               </div>
             </ul>
           </div>
@@ -91,11 +91,9 @@
         <div class="pagination-area">
           <nav class="navigation pagination" role="navigation">
             <div class="nav-links">
-              <a class="prev page-numbers" href="#"><span class="lnr lnr-arrow-left"></span></a>
-              <a class="page-numbers current" href="#">1</a>
-              <a class="page-numbers" href="#">2</a>
-              <a class="page-numbers" href="#">3</a>
-              <a class="next page-numbers" href="#"><span class="lnr lnr-arrow-right"></span></a>
+              <a class="prev page-numbers" [class.disabled]="filters.page == 1" (click)="prevPage()"><span class="lnr lnr-arrow-left"></span></a>
+              <a *ngFor="let in of counter(maxPages); let idxPage = index" class="page-numbers" [class.current]="idxPage + 1 == filters.page">{{idxPage + 1}}</a>
+              <a class="next page-numbers" [class.disabled]="filters.page == maxPages" (click)="nextPage()"><span class="lnr lnr-arrow-right"></span></a>
             </div>
           </nav>
         </div>

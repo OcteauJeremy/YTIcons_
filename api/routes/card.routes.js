@@ -5,11 +5,11 @@ module.exports = function(app) {
 
   app.post('/cards', cards.create);
 
-  app.get('/cards', cards.findAll);
+  app.get('/cards', cards.getByQuery);
 
   app.get('/cards/:cardId', cards.findOne);
 
-  app.get('/cards/BySmartId/:smartId', cards.findBySmartId);
+  app.get('/cards/bySmartId/:smartId', cards.findBySmartId);
 
   app.put('/cards/:cardId', cards.update);
 

@@ -34,8 +34,10 @@
             <div class="author-infos">
 
               <div class="author">
-                <h4>{{currentUser.username}}</h4>
-                <p>Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy' }}</p>
+                <h4 *ngIf="address">{{userProfile ? userProfile.username : 'Anonymous'}}</h4>
+                <h4 *ngIf="!address">{{currentUser.username}}</h4>
+                <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') : 'Unknown'}}</p>
+                <p *ngIf="!address">Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy'}}</p>
               </div><!-- end /.author -->
             </div><!-- end /.author-infos -->
 

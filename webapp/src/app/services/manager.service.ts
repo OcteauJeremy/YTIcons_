@@ -12,6 +12,12 @@ export class ManagerService {
     return this.http.get<any>(this.baseUrl + url);
   }
 
+  getQuery(url, queryParams) {
+    return this.http.get<any>(this.baseUrl + url, {
+      params: queryParams
+    });
+  }
+
   post(url, body) {
     return this.http.post<any>(this.baseUrl + url, body);
   }

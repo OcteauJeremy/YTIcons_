@@ -7,6 +7,7 @@ import { ProfileComponent } from './account-module/profile/profile.component';
 import { SigninComponent } from './authentication-module/signin/signin.component';
 import {SignupComponent} from './authentication-module/signup/signup.component';
 import {FaqComponent} from './faq-module/faq/faq.component';
+import { LeaderboardComponent } from './leaderboard-module/leaderboard/leaderboard.component';
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
   {
     path: 'account/:address',
     component: ProfileComponent,
+  },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent,
   },
   {
     path: 'faq',
