@@ -14,7 +14,6 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     AngularFontAwesomeModule
   ],
   declarations: [
-    TopbarComponent,
     UserInfoComponent,
     NotificationsComponent,
     CurrencySelectorComponent
