@@ -22,10 +22,11 @@ export class AuthenticationService extends ManagerService{
     return this.post('/signin', {username: _username, password: _password});
   }
 
-  public register(_email: string, _username: string, _password: string): Observable<any> {
+  public register(_formData: FormData): Observable<any> {
     this.cs.getAccount().then(account => this.address = account);
-    return this.post('/users', {username: _username, email: _email, password: _password,
-    wallet: this.address});
+    if (this.address)
+      _formData.append('wallet', this.address);
+    return this.post('/users', _formData);
   }
 
   public logout() {
