@@ -32,8 +32,8 @@ import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
 import {ContactModule} from './contact-module/contact.module';
-import {BountyProgramModule} from './bountyprogram-module/bountyprogram';
-import {CharityModule} from './charity-module/charity';
+import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
+import {CharityModule} from './charity-module/charity.module';
 import {DirectivesModule} from "./directives/directives.module";
 
 @NgModule({
@@ -60,7 +60,7 @@ import {DirectivesModule} from "./directives/directives.module";
     NgbModule.forRoot(),
     ContactModule,
     BountyProgramModule,
-    CharityModule
+    CharityModule,
     DirectivesModule
   ],
   providers: [
