@@ -4,23 +4,27 @@
 }
 
 .home {
-  display: flex;
   padding: 91px 0px;
 }
 
 .hook {
-  margin: 10px 0px 10px;
+  margin: 10px 0px 15px;
 }
 
 .description_container {
-  flex-basis: 60%;
+  flex-basis: 50%;
   align-self: center;
 }
 
 .picture_container {
-  flex-basis: 40%;
+  flex-basis: 50%;
   align-self: baseline;
   height: 100%;
+  text-align: end;
+}
+
+.home_picture {
+  width: 80%;
 }
 
 .cards_block, .about_block, .content_block1 {
@@ -60,9 +64,27 @@
   color: #fff;
 }
 
-/*, .btn-light, .btn--light, .btn.btn--white:hover, .btn-light:hover, .btn--light:hover*/
+.home-text {
+  text-align: justify;
+}
 
 @media (max-width: 767px) {
+  .description_container, .picture_container, .content_area--title {
+    text-align: center;
+  }
+
+  .home {
+    padding: 75px 0px;
+  }
+
+  h1 {
+    font-size: 30px !important;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
   .container.flex {
     flex-direction: column;
   }
@@ -70,11 +92,12 @@
   .picture_container {
     align-self: center;
     width: 90%;
+    margin-top: 30px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   h1 {
-    font-size: 31px;
+    font-size: 30px;
   }
 }

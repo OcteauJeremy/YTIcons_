@@ -1,9 +1,17 @@
-.logs_container {
-  float: right;
-  padding: 17px 0;
+.flex {
+  display: flex;
+  align-items: center;
 }
 
-.logs_wrap {
+.logs_container, .profile_container {
+  float: right;
+}
+
+.profile_container {
+  padding: 0;
+}
+
+.logs_wrap, .profile_wrap {
   position: relative;
 }
 
@@ -19,6 +27,36 @@
   transition: 0.3s;
 }
 
-.logs_button.login {
-  margin-right: 30px;
+.navbar-toggle {
+  padding: 9px 0;
 }
+
+.mainmenu__menu .navbar-collapse {
+  height: auto;
+}
+
+.logs_infos_container {
+  display: none;
+}
+
+.collapse.navbar-collapse {
+  margin-right: auto;
+}
+
+.logs_container, .profile_container {
+  margin-left: auto;
+  justify-content: center;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .mainmenu__menu .navbar-nav > li {
+    margin-right: 30px;
+  }
+}
+
+@media (max-width: 991px) {
+  .logs_infos_container {
+    display: initial;
+  }
+}
+

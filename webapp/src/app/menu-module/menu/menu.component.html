@@ -6,26 +6,31 @@
     <div class="row">
       <!-- start .col-md-12 -->
       <div class="col-md-12">
-        <div class="navbar-header">
+
+        <!-- NAVBAR RESPONSIVE -->
+        <div class="navbar-header flex">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="lnr lnr-menu"></span>
           </button>
 
-          <!-- start mainmenu__search -->
-          <div class="mainmenu__search hidden-sm hidden-md hidden-lg">
-            <!--<a *ngIf="!isAuthenticated()" routerLink="/login" href="" class="author-area__seller-btn inline">Login</a>-->
-            <!--<a *ngIf="!isAuthenticated()" routerLink="/signup" href="" class="author-area__seller-btn inline">Become a Seller</a>-->
-            <!--<form action="#">-->
-              <!--<div class="searc-wrap">-->
-                <!--<input type="text" placeholder="Search product">-->
-                <!--<button type="submit" class="search-wrap__btn"><span class="lnr lnr-magnifier"></span></button>-->
-              <!--</div>-->
-            <!--</form>-->
-          </div><!-- start mainmenu__search -->
-        </div>
+          <div *ngIf="!isAuthenticated()" class="logs_container hidden-lg hidden-md hidden-sm">
+            <div class="logs_wrap">
+              <a routerLink="/login" href="" class="logs_button inline">Login</a>
+            </div>
+          </div><!-- end logs -->
 
-        <nav class="navbar navbar-default mainmenu__menu">
+          <!-- start profile -->
+          <div *ngIf="isAuthenticated()" class="profile_container hidden-lg hidden-md hidden-sm">
+            <div class="profile_wrap">
+              <app-user-info></app-user-info>
+            </div>
+          </div><!-- end profile -->
+
+        </div>
+        <!-- END NAVBAR RESPONSIVE -->
+
+        <nav class="navbar navbar-default mainmenu__menu flex">
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -44,16 +49,20 @@
             </ul>
           </div><!-- /.navbar-collapse -->
 
-          <!-- start mainmenu__search -->
-          <div class="logs_container hidden-xs">
-            <form action="#">
-              <div class="logs_wrap">
-                <a *ngIf="!isAuthenticated()" routerLink="/login" href="" class="logs_button login inline">Login</a>
-                <a *ngIf="!isAuthenticated()" routerLink="/signup" href="" class="logs_button inline">Become a collector</a>
-                <app-user-info></app-user-info>
-              </div>
-            </form>
-          </div><!-- start mainmenu__search -->
+          <!-- start logs -->
+          <div *ngIf="!isAuthenticated()" class="logs_container hidden-xs">
+            <div class="logs_wrap">
+              <a routerLink="/login" href="" class="logs_button inline">Login</a>
+            </div>
+          </div><!-- end logs -->
+
+          <!-- start profile -->
+          <div *ngIf="isAuthenticated()" class="profile_container hidden-xs">
+            <div class="profile_wrap">
+              <app-user-info></app-user-info>
+            </div>
+          </div><!-- end profile -->
+
         </nav>
       </div><!-- end /.col-md-12 -->
     </div><!-- end /.row-->
