@@ -60,8 +60,8 @@ import {DirectivesModule} from "./directives/directives.module";
     NgbModule.forRoot(),
     ContactModule,
     BountyProgramModule,
-    CharityModule
-    DirectivesModule
+    CharityModule,
+    DirectivesModule,
   ],
   providers: [
     RealvalueService,
