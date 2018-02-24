@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   public  types;
   public  nationalities;
   public  categories;
+  public  createOrigin = true;
   public  responseYoutube = {};
 
   public  cardYoutuber = {
@@ -110,9 +111,9 @@ export class AdminComponent implements OnInit {
       this.cardYoutuber.image = res.snippet.thumbnails.medium.url;
       this.cardYoutuber.description = res.snippet.description;
 
-      this.cardYoutuber.nbSubscribers = res.statistics.subscriberCount;
-      this.cardYoutuber.nbVideos = res.statistics.videoCount;
-      this.cardYoutuber.nbViews = res.statistics.viewCount;
+      this.cardYoutuber.nbSubscribers = parseInt(res.statistics.subscriberCount);
+      this.cardYoutuber.nbVideos = parseInt(res.statistics.videoCount);
+      this.cardYoutuber.nbViews = parseInt(res.statistics.viewCount);
       this.cardYoutuber.url = this.urlChannel;
       this.attributeType();
 
@@ -152,6 +153,12 @@ export class AdminComponent implements OnInit {
       }
 
     })
+  }
+
+  createCard() {
+    this.cs.createCardSC(this.cardYoutuber).then(function(res) {
+      console.log(res);
+    });
   }
 
   createCardFromName(name: string) {

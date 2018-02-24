@@ -36,7 +36,7 @@ CardSchema.methods.fromBody = function(body) {
     this.description = body.description;
     this.citation = body.citation;
     this.price = body.price;
-    this.type = type;
+    this.type = body.type;
     this.nbTransactions = 0;
     if (body.transactions) {
         this.transactions = body.transactions;

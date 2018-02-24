@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import * as Web3 from 'web3';
 
@@ -17,6 +17,7 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _tokenContractAddress = '0x305C0325C8652eb114251080c56020924055C8e2';
+  private _self;
 
   constructor(http: HttpClient) {
     super(http);
@@ -75,7 +76,7 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
         if (err != null) {
-         reject(err);
+          reject(err);
           resolve(0);
         }
 
@@ -92,14 +93,14 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
 
       this._tokenContract.methods.purchase(_idCard).send({
-        from:account,
-        gas:4000000,
+        from: account,
+        gas: 4000000,
         value: this._web3.utils.toWei(_price.toString(), 'ether')
-      },function (error, result){ //get callback from function which is your transaction key
-        if(!error){
+      }, function (error, result) { //get callback from function which is your transaction key
+        if (!error) {
           alert('Transaction ok');
           resolve(1);
-        } else{
+        } else {
           alert('Transaction closed');
           console.log(error);
           resolve(0);
@@ -115,14 +116,44 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
 
       this._tokenContract.methods.createCardFromName(name).send({
-        from:account,
-        gas:4000000,
+        from: account,
+        gas: 4000000,
         value: 0
-      },function (error, result){ //get callback from function which is your transaction key
-        if(!error){
+      }, function (error, result) { //get callback from function which is your transaction key
+        if (!error) {
           alert('Creation de carte ok');
           resolve(1);
-        } else{
+        } else {
+          alert('Creation de carte annulee');
+          console.log(error);
+          resolve(0);
+        }
+      });
+    }) as Promise<any>;
+  }
+
+  public async createCardSC(card) {
+    let account = await this.getAccount();
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      let self = this;
+
+      this._tokenContract.methods.createCard(card.name, card.price, null, null, false).send({
+        from: account,
+        gas: 4000000,
+        value: 0
+      }, function (error, result) { //get callback from function which is your transaction key
+        if (!error) {
+          self.getCountCards().subscribe(res => {
+            card.id = res.count;
+            self.createCard(card).subscribe(res => {
+              console.log('Card created');
+            });
+          });
+
+          resolve(1);
+        } else {
           alert('Creation de carte annulee');
           console.log(error);
           resolve(0);
@@ -147,8 +178,16 @@ export class CardService extends ManagerService {
 
   }
 
+  public  getCountCards() {
+    return this.get('/cards/count');
+  }
+
   public getCardByIdSmartContract(id: number) {
     return this.get('/cards/bySmartId/' + id);
+  }
+
+  public  createCard(card) {
+    return this.post('/cards', card);
   }
 
   public getCards() {

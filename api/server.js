@@ -40,6 +40,9 @@ require('./routes/nationality.route')(app);
 require('./routes/category.route')(app);
 require('./routes/youtube.route')(app);
 
+// Load SC listeners
+require('./controllers/web3.controller');
+
 
 // Static access
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/default'));

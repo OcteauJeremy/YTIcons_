@@ -10,7 +10,7 @@ exports.getChannel = function (req, res) {
     }
 
     var optionRequest = {
-        part: 'snippet,statistics,topicDetails'
+        part: 'snippet,statistics'
     };
 
     var splitUrl = req.body.url.split('/');
@@ -34,7 +34,6 @@ exports.getChannel = function (req, res) {
             if (channels.length == 0) {
                 return res.status(400).send({message: "Channel url invalid."});
             }
-            console.log(channels);
             return res.status(200).send(channels[0]);
         })
     });

@@ -1,3 +1,8 @@
 .dashboard_contents {
   background: #eff1f5;
 }
+
+.admin_validation {
+  display: flex;
+  justify-content: space-evenly;
+}

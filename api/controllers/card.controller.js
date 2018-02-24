@@ -2,36 +2,17 @@ var Card = require('../models/card.model');
 var Type = require('../models/type.model');
 
 exports.create = function (req, res) {
-    if (!req.body.id || !req.body.name || !req.body.image || !req.body.nationality || !req.body.nbSubscribers ||
-        !req.body.nbViews || !req.body.category || !req.body.nbVideos || !req.body.url || !req.body.description ||
-        !req.body.citation || !req.body.type || !req.body.price) {
-        return res.status(400).send({message: "Wrong parameters"});
-    }
+    var card = new Card();
 
-    Type.findOne({
-        name: req.body.type
-    }, function (err, type) {
-        if (!type) {
-            return res.status(400).send({message: "Type doesn't exist."});
-        }
+    card.fromBody(req.body);
 
+    card.save(function (err, card) {
         if (err) {
             console.log(err.message);
-            return res.status(400).send({message: "Some error occurred while using mongoDB."});
+            return res.status(400).send({message: "Some error occurred while creating the Card."});
+        } else {
+            return res.status(200).send(card);
         }
-
-        var card = new Card();
-
-        card.fromBody(req.body);
-
-        card.save(function (err, card) {
-            if (err) {
-                console.log(err.message);
-                return res.status(400).send({message: "Some error occurred while creating the Card."});
-            } else {
-                return res.status(200).send(card);
-            }
-        });
     });
 };
 
@@ -167,8 +148,6 @@ exports.getByQuery = function (req, res) {
         });
     }
 
-    console.log('paramSearch', paramSearch);
-
     var findObj;
     if (paramSearch.$and.length > 0) {
         findObj = Card.find(paramSearch);
@@ -188,7 +167,6 @@ exports.getByQuery = function (req, res) {
 
     var tmp = {};
     tmp[keyObj] = order.toLowerCase();
-    console.log(tmp);
     findObj.sort(tmp);
 
     populateItem(findObj)
@@ -325,6 +303,15 @@ exports.getBoundsPrice = function (req, res) {
     });
 };
 
+exports.getCount = function (req, res) {
+    Card.count().exec(function (err, nb) {
+        if (err) {
+            return res.status(400).send({message: "Could not get bounds."});
+        }
+        return res.status(200).send({count: nb});
+    });
+};
+
 var populateItem = function (findObj, id) {
     findObj.populate('type').populate('category').populate('nationality').populate({
         path: 'transactions',
@@ -340,3 +327,4 @@ var populateItem = function (findObj, id) {
     // });
     return findObj;
 };
+

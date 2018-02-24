@@ -4,7 +4,7 @@ var uploadOptions   = require('../configs/multer');
 
 
 exports.create = function (req, res) {
-    if (!req.body.username || !req.body.email || !req.body.password || !req.body.wallet) {
+    if (!req.body.username || !req.body.email || !req.body.password) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
@@ -12,7 +12,7 @@ exports.create = function (req, res) {
 
     user.username = req.body.username;
     user.email = req.body.email;
-    user.wallet = req.body.wallet;
+    user.wallet = "";
     user.password = user.generateHash(req.body.password);
 
     if (!req.file) {

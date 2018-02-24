@@ -13,7 +13,8 @@
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input [(ngModel)]="urlChannel" name="urlChannel" (keyup.enter)="loadChannel()" class="relative-field rounded" type="text" placeholder="Search your channel">
+                  <input [(ngModel)]="urlChannel" name="urlChannel" (keyup.enter)="loadChannel()"
+                         class="relative-field rounded" type="text" placeholder="Search your channel">
                   <button class="btn btn--round" type="submit" (click)="loadChannel()">Search</button>
                 </div>
               </form>
@@ -31,7 +32,8 @@
       <div class="row">
         <div class="col-md-12">
           <div class="information_module">
-            <a class="toggle_title" href="#collapseInformations" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+            <a class="toggle_title" href="#collapseInformations" role="button" data-toggle="collapse"
+               aria-expanded="false" aria-controls="collapse1">
               <h4>Card Informations <span class="lnr lnr-chevron-down"></span></h4>
             </a>
 
@@ -39,17 +41,20 @@
               <div class="information_wrapper form--fields">
                 <div class="form-group">
                   <label for="cardName">Card Name:</label>
-                  <input name="cardName" type="text" id="cardName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.name">
+                  <input name="cardName" type="text" id="cardName" class="text_field" placeholder="Card Name"
+                         [(ngModel)]="cardYoutuber.name">
                 </div>
 
                 <div class="form-group">
                   <label for="citationCard">Citation:</label>
-                  <textarea name="citationCard" id="citationCard" class="text_field" placeholder="Channel's citation" [(ngModel)]="cardYoutuber.citation"></textarea>
+                  <textarea name="citationCard" id="citationCard" class="text_field" placeholder="Channel's citation"
+                            [(ngModel)]="cardYoutuber.citation"></textarea>
                 </div>
 
                 <div class="form-group">
                   <label for="descriptionCard">Description:</label>
-                  <textarea name="descriptionCard" id="descriptionCard" class="text_field" placeholder="Channel's description" [(ngModel)]="cardYoutuber.description"></textarea>
+                  <textarea name="descriptionCard" id="descriptionCard" class="text_field"
+                            placeholder="Channel's description" [(ngModel)]="cardYoutuber.description"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -66,13 +71,15 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="codeCountry">Country code:</label>
-                      <input name="codeCountry" type="text" id="codeCountry" class="text_field" placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
+                      <input name="codeCountry" type="text" id="codeCountry" class="text_field"
+                             placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="nameCountry">Country name:</label>
-                      <input name="nameCountry" type="text" id="nameCountry" class="text_field" placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
+                      <input name="nameCountry" type="text" id="nameCountry" class="text_field"
+                             placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
                     </div>
                   </div>
                 </div>
@@ -88,7 +95,8 @@
                 </div>
                 <div class="form-group">
                   <label for="categoryName">Category Name:</label>
-                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.category.name">
+                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Card Name"
+                         [(ngModel)]="cardYoutuber.category.name">
                 </div>
               </div>
             </div>
@@ -97,7 +105,8 @@
 
         <div class="col-md-12">
           <div class="information_module">
-            <a class="toggle_title" href="#collapseStatistics" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+            <a class="toggle_title" href="#collapseStatistics" role="button" data-toggle="collapse"
+               aria-expanded="false" aria-controls="collapse1">
               <h4>Card Statistics <span class="lnr lnr-chevron-down"></span></h4>
             </a>
 
@@ -107,21 +116,24 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="nbSubscribers">Number Subscribers:<sup>*</sup></label>
-                      <input name="nbSubscribers" type="text" id="nbSubscribers" class="text_field" placeholder="Number of subscribers" [(ngModel)]="cardYoutuber.nbSubscribers">
+                      <input name="nbSubscribers" type="number" id="nbSubscribers" class="text_field"
+                             placeholder="Number of subscribers" [(ngModel)]="cardYoutuber.nbSubscribers">
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="nbVideos">Number Videos:</label>
-                      <input name="nbVideos" id="nbVideos" class="text_field" placeholder="Number of videos" [(ngModel)]="cardYoutuber.nbVideos">
+                      <input name="nbVideos" type="number" id="nbVideos" class="text_field" placeholder="Number of videos"
+                             [(ngModel)]="cardYoutuber.nbVideos">
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="nbViews">Number Views:</label>
-                      <input name="nbViews" id="nbViews" class="text_field" placeholder="Number of views" [(ngModel)]="cardYoutuber.nbViews">
+                      <input name="nbViews" type="number" id="nbViews" class="text_field" placeholder="Number of views"
+                             [(ngModel)]="cardYoutuber.nbViews">
                     </div>
                   </div>
                 </div>
@@ -153,7 +165,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="cardPrice">Card Price:</label>
-                      <input name="cardPrice" (input)="priceChanged()" type="number" id="cardPrice" class="text_field" placeholder="Card price" [(ngModel)]="cardYoutuber.price">
+                      <input name="cardPrice" (input)="priceChanged()" type="number" id="cardPrice" class="text_field"
+                             placeholder="Card price" [(ngModel)]="cardYoutuber.price">
                     </div>
                   </div>
                 </div>
@@ -164,12 +177,35 @@
       </div>
     </form>
 
-    <div class="row">
+    <div *ngIf="createOrigin" class="row">
       <div class="col-md-offset-2 col-md-4">
         <card [card]="cardYoutuber" [modal]="false"></card>
       </div>
       <div class="col-md-offset- col-md-4">
         <card [card]="cardOriginYoutuber" [modal]="false"></card>
+      </div>
+    </div>
+    <div *ngIf="!createOrigin" class="row">
+      <div class="col-md-offset-4 col-md-4">
+        <card [card]="cardYoutuber" [modal]="false"></card>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="dashboard_title_area">
+          <div class="dashboard__title admin_validation">
+            <div class="custom_checkbox">
+              <input type="checkbox" id="opt1" class="" name="mail_rating_reminder" [(ngModel)]="createOrigin" checked>
+              <label for="opt1">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Create Origin</span>
+              </label>
+            </div>
+            <button type="submit" class="btn btn--round btn--md" (click)="createCard()">Create card</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
