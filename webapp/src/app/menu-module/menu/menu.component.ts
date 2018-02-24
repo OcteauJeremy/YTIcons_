@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  public currentUser: {};
 
-  ngOnInit() {}
+  constructor(private as: AuthenticationService) { }
+
+  ngOnInit() {
+    this.isAuthenticated();
+  }
+
+  isAuthenticated() {
+    this.currentUser = this.as.currentUser;
+    return this.currentUser ? true : false;
+  }
 
 }

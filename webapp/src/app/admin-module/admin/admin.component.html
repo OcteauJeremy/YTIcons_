@@ -38,22 +38,22 @@
             <div class="information__set toggle_module collapse" id="collapseInformations">
               <div class="information_wrapper form--fields">
                 <div class="form-group">
-                  <label for="cardName">Card Name</label>
+                  <label for="cardName">Card Name:</label>
                   <input name="cardName" type="text" id="cardName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.name">
                 </div>
 
                 <div class="form-group">
-                  <label for="citationCard">Citation</label>
+                  <label for="citationCard">Citation:</label>
                   <textarea name="citationCard" id="citationCard" class="text_field" placeholder="Channel's citation" [(ngModel)]="cardYoutuber.citation"></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label for="descriptionCard">Description</label>
+                  <label for="descriptionCard">Description:</label>
                   <textarea name="descriptionCard" id="descriptionCard" class="text_field" placeholder="Channel's description" [(ngModel)]="cardYoutuber.description"></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label for="country">Nationalities</label>
+                  <label for="country">Nationalities:</label>
                   <div class="select-wrap select-wrap2">
                     <select [(ngModel)]="cardYoutuber.nationality" name="country" id="country" class="text_field">
                       <option *ngFor="let nat of nationalities" [ngValue]="nat">{{nat.name}}</option>
@@ -65,16 +65,30 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="codeCountry">Country code</label>
+                      <label for="codeCountry">Country code:</label>
                       <input name="codeCountry" type="text" id="codeCountry" class="text_field" placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="nameCountry">Country name</label>
+                      <label for="nameCountry">Country name:</label>
                       <input name="nameCountry" type="text" id="nameCountry" class="text_field" placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
                     </div>
                   </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="category">Category:</label>
+                  <div class="select-wrap select-wrap2">
+                    <select [(ngModel)]="cardYoutuber.category" name="category" id="category" class="text_field">
+                      <option *ngFor="let cat of categories" [ngValue]="cat">{{cat.name}}</option>
+                    </select>
+                    <span class="lnr lnr-chevron-down"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="categoryName">Category Name:</label>
+                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.category.name">
                 </div>
               </div>
             </div>
@@ -111,9 +125,41 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="information_module">
+            <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse">
+              <h4>Type and Price <span class="lnr lnr-chevron-down"></span></h4>
+            </a>
+
+            <div class="information__set toggle_module collapse in" id="collapseType">
+              <div class="information_wrapper form--fields">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="type">Type:</label>
+                      <div class="select-wrap select-wrap2">
+                        <select [(ngModel)]="cardYoutuber.type" name="type" id="type" class="text_field">
+                          <option *ngFor="let type of types" [ngValue]="type">{{type.name}}</option>
+                        </select>
+                        <span class="lnr lnr-chevron-down"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="cardPrice">Card Price:</label>
+                      <input name="cardPrice" (input)="priceChanged()" type="number" id="cardPrice" class="text_field" placeholder="Card price" [(ngModel)]="cardYoutuber.price">
+                    </div>
+                  </div>
+                </div>
               </div><!-- end /.information_wrapper -->
             </div><!-- end /.information__set -->
-          </div><!-- end /.information_module -->
+          </div>
         </div>
       </div>
     </form>

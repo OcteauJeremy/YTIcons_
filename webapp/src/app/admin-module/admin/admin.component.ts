@@ -4,6 +4,7 @@ import { TypeService } from '../../services/type.service';
 import { NationalityService } from '../../services/nationality.service';
 import { HttpClient } from '@angular/common/http';
 import {CardService} from "../../services/card.service";
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +16,9 @@ export class AdminComponent implements OnInit {
   public  urlChannel;
   public  types;
   public  nationalities;
+  public  categories;
   public  responseYoutube = {};
+
   public  cardYoutuber = {
     name: "",
     image: "",
@@ -28,13 +31,18 @@ export class AdminComponent implements OnInit {
     nbTransactions: 0,
     transactions: [],
     nbVideos: 0,
-    category: null,
+    category: {
+      name: ''
+    },
     url: "",
     description: "",
     citation: "",
     price: 0.001,
     owner: null,
-    type: null
+    type: {
+      name: "origin",
+      css: "card-origin"
+    }
   };
 
   public  cardOriginYoutuber = {
@@ -55,8 +63,9 @@ export class AdminComponent implements OnInit {
     type: null
   };
 
-  constructor(private youtubeService: YoutubeService, private cs: CardService, private typeService: TypeService,
-              private nationalityService: NationalityService, private http: HttpClient) {
+  constructor(private youtubeService: YoutubeService, private typeService: TypeService,
+              private nationalityService: NationalityService, private http: HttpClient,
+              private categoryService: CategoryService,private cs: CardService,) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
@@ -64,7 +73,11 @@ export class AdminComponent implements OnInit {
 
     nationalityService.getNationalities().subscribe(res => {
       this.nationalities = res;
-    })
+    });
+
+    this.categoryService.getCategories().subscribe( res => {
+      this.categories = res;
+    });
 
   }
 
@@ -146,6 +159,10 @@ export class AdminComponent implements OnInit {
 
   selectCountry(value) {
     this.cardYoutuber.nationality = value;
+  }
+
+  priceChanged() {
+    this.cardOriginYoutuber.price = this.cardYoutuber.price;
   }
 
   getOriginType() {

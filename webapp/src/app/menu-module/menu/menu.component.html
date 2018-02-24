@@ -14,12 +14,14 @@
 
           <!-- start mainmenu__search -->
           <div class="mainmenu__search hidden-sm hidden-md hidden-lg">
-            <form action="#">
-              <div class="searc-wrap">
-                <input type="text" placeholder="Search product">
-                <button type="submit" class="search-wrap__btn"><span class="lnr lnr-magnifier"></span></button>
-              </div>
-            </form>
+            <!--<a *ngIf="!isAuthenticated()" routerLink="/login" href="" class="author-area__seller-btn inline">Login</a>-->
+            <!--<a *ngIf="!isAuthenticated()" routerLink="/signup" href="" class="author-area__seller-btn inline">Become a Seller</a>-->
+            <!--<form action="#">-->
+              <!--<div class="searc-wrap">-->
+                <!--<input type="text" placeholder="Search product">-->
+                <!--<button type="submit" class="search-wrap__btn"><span class="lnr lnr-magnifier"></span></button>-->
+              <!--</div>-->
+            <!--</form>-->
           </div><!-- start mainmenu__search -->
         </div>
 
@@ -28,26 +30,27 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li>
-                <a routerLink="/home" >home</a>
+                <a routerLink="/home" >Home</a>
               </li>
               <li>
-                <a routerLink="/market">market</a>
+                <a routerLink="/market">Market</a>
               </li>
               <li>
                 <a routerLink="/leaderboard">Leaderboard</a>
               </li>
               <li>
-                <a routerLink="/faq">faq</a>
+                <a routerLink="/faq">FAQ</a>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
 
           <!-- start mainmenu__search -->
-          <div class="mainmenu__search hidden-xs">
+          <div class="logs_container hidden-xs">
             <form action="#">
-              <div class="searc-wrap">
-                <input type="text" placeholder="Search product here...">
-                <button type="submit" class="search-wrap__btn"><span class="lnr lnr-magnifier"></span></button>
+              <div class="logs_wrap">
+                <a *ngIf="!isAuthenticated()" routerLink="/login" href="" class="logs_button login inline">Login</a>
+                <a *ngIf="!isAuthenticated()" routerLink="/signup" href="" class="logs_button inline">Become a collector</a>
+                <app-user-info></app-user-info>
               </div>
             </form>
           </div><!-- start mainmenu__search -->
