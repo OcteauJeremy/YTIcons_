@@ -108,6 +108,29 @@ export class CardService extends ManagerService {
     }) as Promise<any>;
   }
 
+  public async createCardFromName(name: string) {
+    let account = await this.getAccount();
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+
+      this._tokenContract.methods.createCardFromName(name).send({
+        from:account,
+        gas:4000000,
+        value: 0
+      },function (error, result){ //get callback from function which is your transaction key
+        if(!error){
+          alert('Creation de carte ok');
+          resolve(1);
+        } else{
+          alert('Creation de carte annulee');
+          console.log(error);
+          resolve(0);
+        }
+      });
+    }) as Promise<any>;
+  }
+
   public getCardsByAddress(account: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;

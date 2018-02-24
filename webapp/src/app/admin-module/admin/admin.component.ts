@@ -3,6 +3,7 @@ import { YoutubeService } from '../../services/youtube.service';
 import { TypeService } from '../../services/type.service';
 import { NationalityService } from '../../services/nationality.service';
 import { HttpClient } from '@angular/common/http';
+import {CardService} from "../../services/card.service";
 import { CategoryService } from '../../services/category.service';
 
 @Component({
@@ -67,7 +68,7 @@ export class AdminComponent implements OnInit {
 
   constructor(private youtubeService: YoutubeService, private typeService: TypeService,
               private nationalityService: NationalityService, private http: HttpClient,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,private cs: CardService,) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
@@ -151,6 +152,12 @@ export class AdminComponent implements OnInit {
       }
 
     })
+  }
+
+  createCardFromName(name: string) {
+    this.cs.createCardFromName(name).then(function(res) {
+      console.log(res);
+    });
   }
 
   selectCountry(value) {
