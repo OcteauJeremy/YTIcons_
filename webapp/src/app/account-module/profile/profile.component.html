@@ -33,6 +33,11 @@
           <div class="author-card sidebar-card">
             <div class="author-infos">
 
+              <div class="author_avatar">
+                <div class="profile-avatar" *ngIf="!address" src="images/author-avatar.jpg" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>
+                <div class="profile-avatar" *ngIf="address && userProfile" src="images/author-avatar.jpg" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
+              </div>
+
               <div class="author">
                 <h4 *ngIf="address">{{userProfile ? userProfile.username : 'Anonymous'}}</h4>
                 <h4 *ngIf="!address">{{currentUser.username}}</h4>

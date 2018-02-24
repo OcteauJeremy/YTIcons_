@@ -15,8 +15,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   public password: string;
   public conPassword: string;
   private subscribtions: Subscription = new Subscription();
+  public fileList: FileList = null;
 
-  constructor(private cs: AuthenticationService, private _router: Router) { }
+  public url: string = 'assets/images/authplc.png';
+
+  constructor(private as: AuthenticationService, private _router: Router) { }
 
   redirect(pagename: string) {
     this._router.navigate(['/' + pagename]);
@@ -24,7 +27,17 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     signup() {
       if (this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
-        this.subscribtions.add(this.cs.register(this.email, this.username, this.password).subscribe(res => {
+
+        let formData: FormData = new FormData();
+        if (this.fileList && this.fileList.length > 0) {
+          let file: File = this.fileList[0];
+          formData.append('avatar',file);
+        }
+
+        formData.append('email', this.email);
+        formData.append('username', this.username);
+        formData.append('password', this.password);
+        this.subscribtions.add(this.as.register(formData).subscribe(res => {
             this._router.navigate(['login']);
         }, error2 => {
           alert(error2.error.message);
@@ -34,6 +47,20 @@ export class SignupComponent implements OnInit, OnDestroy {
         alert('Check your form');
       }
     }
+
+  readUrl(event:any) {
+    this.fileList = event.target.files;
+
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
 
   ngOnInit() {
   }

@@ -37,24 +37,52 @@
 
             <div class="login--form">
 
+
+              <div class="form-group">
+                <!--<div class="float-label-control">-->
+                  <!--<a class="btn btn-sm btn-primary" href="javascript:;">Upload Contract File-->
+                    <!--<input class="uploadfile-style" (change)="fileChange($event)" name="CContractorFPath" size="10" type="file">-->
+                  <!--</a>-->
+                <!--</div>-->
+                <div class="information__set profile_images toggle_module collapse in">
+
+                  <div class="profile_image_area">
+                    <div class="signup-avatar" [ngStyle]="{'background-image': 'url(' + url + ')'}"
+                         alt="Author profile area"></div>
+                    <div class="img_info">
+                      <p class="bold">Profile Image</p>
+                      <p class="subtitle">JPG, GIF or PNG</p>
+                    </div>
+                    <label for="cover_photo" class="upload_btn">
+                      <input style="display: none" (change)="readUrl($event)" type="file" type="file" id="cover_photo">
+                      <span class="btn btn--sm btn--round" aria-hidden="true">Upload Image</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="email_ad">Email Address</label>
-                <input [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field" placeholder="Enter your email address" required>
+                <input [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
+                       placeholder="Enter your email address" required>
               </div>
 
               <div class="form-group">
                 <label for="user_name">Username</label>
-                <input [(ngModel)]="username" name="username" id="user_name" type="text" class="text_field" placeholder="Enter your username..." required>
+                <input [(ngModel)]="username" name="username" id="user_name" type="text" class="text_field"
+                       placeholder="Enter your username..." required>
               </div>
 
               <div class="form-group">
                 <label for="password">Password</label>
-                <input [(ngModel)]="password" name="password" id="password" type="password" class="text_field" placeholder="Enter your password..." required>
+                <input [(ngModel)]="password" name="password" id="password" type="password" class="text_field"
+                       placeholder="Enter your password..." required>
               </div>
 
               <div class="form-group">
                 <label for="con_pass">Confirm Password</label>
-                <input [(ngModel)]="conPassword" name="conPassword" id="con_pass" type="password" class="text_field" placeholder="Confirm password" required>
+                <input [(ngModel)]="conPassword" name="conPassword" id="con_pass" type="password" class="text_field"
+                       placeholder="Confirm password" required>
               </div>
 
               <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit">Register Now</button>

@@ -75,7 +75,8 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
         if (err != null) {
-          reject(err);
+//          reject(err);
+          resolve(0);
         }
 
         resolve(result);
