@@ -8,7 +8,7 @@
     <div class="content-img" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
   </div>
 
-  <div class="product__thumbnail" *ngIf="modalShow">
+  <div class="product__thumbnail" *ngIf="modal">
     <div class="prod_btn">
       <a data-toggle="modal" [attr.data-target]="'#modal-' + card.id" class="transparent btn--sm btn--round">More
         Info</a>
