@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   public  nationalities;
   public  categories;
   public  responseYoutube = {};
+
   public  cardYoutuber = {
     name: "",
     image: "",
@@ -30,14 +31,17 @@ export class AdminComponent implements OnInit {
     transactions: [],
     nbVideos: 0,
     category: {
-      name: ""
+      name: ''
     },
     url: "",
     description: "",
     citation: "",
     price: 0.001,
     owner: null,
-    type: null
+    type: {
+      name: "origin",
+      css: "card-origin"
+    }
   };
 
   public  cardOriginYoutuber = {
@@ -148,6 +152,10 @@ export class AdminComponent implements OnInit {
 
   selectCountry(value) {
     this.cardYoutuber.nationality = value;
+  }
+
+  priceChanged() {
+    this.cardOriginYoutuber.price = this.cardYoutuber.price;
   }
 
   getOriginType() {
