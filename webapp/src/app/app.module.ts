@@ -31,6 +31,7 @@ import { CategoryService } from './services/category.service';
 import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
+import {DirectivesModule} from "./directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { YoutubeService } from './services/youtube.service';
     PrivacyPolicyModule,
     LegalModule,
     AdminModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    DirectivesModule
   ],
   providers: [
     RealvalueService,

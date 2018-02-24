@@ -63,26 +63,75 @@
 
               <div class="form-group">
                 <label for="email_ad">Email Address</label>
-                <input [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
-                       placeholder="Enter your email address" required>
+                <input #emailCheck="ngModel" [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
+                       placeholder="Enter your email address" required emailValidatorDirective="">
+
+                <div *ngIf="emailCheck.invalid && (emailCheck.dirty || emailCheck.touched)" class="alert alert-danger">
+
+                  <div *ngIf="emailCheck.errors.required">
+                    Email is required.
+                  </div>
+                  <div *ngIf="!emailCheck.errors.required && emailCheck.errors.emailvalidator">
+                    Email is not valid.
+                  </div>
+
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="user_name">Username</label>
-                <input [(ngModel)]="username" name="username" id="user_name" type="text" class="text_field"
-                       placeholder="Enter your username..." required>
+                <input #usernameCheck="ngModel" [(ngModel)]="username" name="username" id="user_name" type="text" class="text_field"
+                       minlength="4"  maxlength="12" placeholder="Enter your username..." required>
+
+                <div *ngIf="usernameCheck.invalid && (usernameCheck.dirty || usernameCheck.touched)" class="alert alert-danger">
+
+                  <div *ngIf="usernameCheck.errors.required">
+                    Username is required.
+                  </div>
+                  <div *ngIf="usernameCheck.errors.minlength">
+                    Username must be at least 4 characters
+                  </div>
+                  <div *ngIf="usernameCheck.errors.maxlength">
+                    Username must be less than 12 characters
+                  </div>
+
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="password">Password</label>
-                <input [(ngModel)]="password" name="password" id="password" type="password" class="text_field"
-                       placeholder="Enter your password..." required>
+                <label for="passworda">Password</label>
+                <input #passworda="ngModel" [(ngModel)]="password" name="passworda" id="passworda" type="password" class="text_field"
+                       minlength="6" maxlength="64" placeholder="Enter your password..." equalValidatorDirective="confirmPassword" reverse="true" required>
+
+                <div *ngIf="passworda.invalid && (passworda.dirty || passworda.touched)" class="alert alert-danger">
+
+                  <div *ngIf="passworda.errors.required">
+                    Password is required.
+                  </div>
+                  <div *ngIf="passworda.errors.minlength">
+                    Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="passworda.errors.maxlength">
+                    Password must be less than 64 characters
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="con_pass">Confirm Password</label>
-                <input [(ngModel)]="conPassword" name="conPassword" id="con_pass" type="password" class="text_field"
+                <input #confirmPassword="ngModel" equalValidatorDirective="passworda" [(ngModel)]="conPassword" name="confirmPassword" id="con_pass" type="password" class="text_field"
                        placeholder="Confirm password" required>
+
+                <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert alert-danger">
+
+                  <div *ngIf="confirmPassword.errors.required">
+                    Password match is required.
+                  </div>
+                  <div *ngIf="!confirmPassword.errors.required">
+                    Password must match
+                  </div>
+
+                </div>
               </div>
 
               <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit">Register Now</button>
