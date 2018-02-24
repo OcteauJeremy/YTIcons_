@@ -13,8 +13,9 @@ exports.findAll = function (req, res) {
 exports.create = function (req, res) {
 
     var net = new Nationality();
-    net.code = "DE";
-    net.name = "Germany";
+    net.code = req.body.code.toUpperCase();
+    net.name = req.body.name.toLowerCase();
+
     net.save(function (err, nation) {
         return res.status(200).send(nation);
     });

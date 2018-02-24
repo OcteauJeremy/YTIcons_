@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { YoutubeService } from '../../services/youtube.service';
 import { TypeService } from '../../services/type.service';
+import { NationalityService } from '../../services/nationality.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin',
@@ -11,11 +13,15 @@ export class AdminComponent implements OnInit {
 
   public  urlChannel;
   public  types;
+  public  nationalities;
   public  responseYoutube = {};
   public  cardYoutuber = {
     name: "",
     image: "",
-    nationality: null,
+    nationality: {
+      code: '',
+      name: ''
+    },
     nbSubscribers: 0,
     nbViews: 0,
     nbTransactions: 0,
@@ -48,11 +54,17 @@ export class AdminComponent implements OnInit {
     type: null
   };
 
-  constructor(private youtubeService: YoutubeService, private typeService: TypeService) {
+  constructor(private youtubeService: YoutubeService, private typeService: TypeService,
+              private nationalityService: NationalityService, private http: HttpClient) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
+    });
+
+    nationalityService.getNationalities().subscribe(res => {
+      this.nationalities = res;
     })
+
   }
 
   ngOnInit() {
@@ -63,12 +75,13 @@ export class AdminComponent implements OnInit {
       if (type.minSubscribers && type.maxSubscribers && this.cardYoutuber.nbSubscribers != 0) {
         this.cardYoutuber.nbSubscribers = Number(this.cardYoutuber.nbSubscribers);
 
-
         if (this.cardYoutuber.nbSubscribers >= type.minSubscribers && this.cardYoutuber.nbSubscribers <= type.maxSubscribers) {
           this.cardYoutuber.type = type;
+          return ;
         }
       }
     }
+    this.cardYoutuber.type = this.types[0];
   }
 
   loadChannel() {
@@ -86,9 +99,46 @@ export class AdminComponent implements OnInit {
       this.cardYoutuber.url = this.urlChannel;
       this.attributeType();
 
-      this.cardOriginYoutuber = JSON.parse(JSON.stringify(this.cardYoutuber));
-      this.cardOriginYoutuber.type = this.getOriginType();
+      this.linkNationality(res.snippet.country, function (self) {
+        self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
+        self.cardOriginYoutuber.type = self.getOriginType();
+      });
+
     });
+  }
+
+  linkNationality(code, cb) {
+    if (!code || typeof code == 'undefined') {
+      cb(this);
+      return ;
+    }
+
+    this.http.get<any>('https://restcountries.eu/rest/v2/alpha/' + code).subscribe(res => {
+      var countryInfo = res;
+
+      for (let nat of this.nationalities) {
+        if (nat.code.toLowerCase() == countryInfo.alpha2Code.toLowerCase()) {
+          this.cardYoutuber.nationality = nat;
+          cb(this);
+          return ;
+        }
+      }
+
+      if (this.cardYoutuber.nationality == null) {
+        this.nationalityService.createNationality({
+          name: countryInfo.name.toLowerCase(),
+          code: countryInfo.alpha2Code.toUpperCase()
+        }).subscribe(res => {
+          this.cardYoutuber.nationality = res;
+          cb(this);
+        });
+      }
+
+    })
+  }
+
+  selectCountry(value) {
+    this.cardYoutuber.nationality = value;
   }
 
   getOriginType() {
@@ -99,5 +149,4 @@ export class AdminComponent implements OnInit {
     }
     return this.types[0];
   }
-
 }
