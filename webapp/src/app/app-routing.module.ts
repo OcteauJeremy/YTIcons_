@@ -11,6 +11,9 @@ import { LeaderboardComponent } from './leaderboard-module/leaderboard/leaderboa
 import { PrivacyPolicyComponent } from "./privacypolicy-module/privacypolicy/privacypolicy.component";
 import {LegalComponent} from "./legal-module/legal/legal.component";
 import { AdminComponent } from './admin-module/admin/admin.component';
+import {ContactComponent} from './contact-module/contact/contact.component';
+import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bountyprogram.component';
+import {CharityComponent} from './charity-module/charity/charity.component';
 
 const appRoutes: Routes = [
   {
@@ -38,6 +41,18 @@ const appRoutes: Routes = [
   {
     path: 'faq',
     component: FaqComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+  },
+  {
+    path: 'charity',
+    component: CharityComponent,
+  },
+  {
+    path: 'bountyprogram',
+    component: BountyProgramComponent,
   },
   {
     path: 'login',
