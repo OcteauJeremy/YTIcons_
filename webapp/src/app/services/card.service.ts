@@ -75,13 +75,37 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
         if (err != null) {
-//          reject(err);
+         reject(err);
           resolve(0);
         }
 
         resolve(result);
       });
     }) as Promise<number>;
+  }
+
+  public async purchaseCard(_idCard: number, _price: number): Promise<any> {
+
+    let account = await this.getAccount();
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+
+      this._tokenContract.methods.purchase(_idCard).send({
+        from:account,
+        gas:4000000,
+        value: this._web3.utils.toWei(_price.toString(), 'ether')
+      },function (error, result){ //get callback from function which is your transaction key
+        if(!error){
+          alert('Transaction ok');
+          resolve(1);
+        } else{
+          alert('Transaction closed');
+          console.log(error);
+          resolve(0);
+        }
+      });
+    }) as Promise<any>;
   }
 
   public getCardsByAddress(account: string): Promise<any> {

@@ -12,7 +12,7 @@
     <div class="prod_btn">
       <a data-toggle="modal" [attr.data-target]="'#modal-' + card.id" class="transparent btn--sm btn--round">More
         Info</a>
-      <a href="#" class="transparent btn--sm btn--round">Buy</a>
+      <a (click)="purchaseCard(card.id, card.price)" class="transparent btn--sm btn--round">Buy</a>
     </div>
   </div>
 
@@ -35,7 +35,7 @@
       </div>
 
       <div>
-        <span class="value-footer value-card">1W</span>
+        <span class="value-footer value-card">{{card.createdAt | timeBetween}}</span>
         <span class="label-footer">CARD</span>
       </div>
 
@@ -46,7 +46,7 @@
   <div class="price_love">
     <span>{{card.price | currency}}</span>
   </div>
-  <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
+  <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
 </div>
 
 <div class="modal fade rating_modal" id="{{ 'modal-' + card.id}}" tabindex="-1" role="dialog">
@@ -138,7 +138,7 @@
       </div>
     </div><!-- end /.modal-body -->
     <div class="modal-footer">
-      <button type="submit" class="btn btn--round btn--default">Buy</button>
+      <button (click)="purchaseCard(card.id, card.price)" class="btn btn--round btn--default">Buy</button>
       <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
     </div>
   </div>

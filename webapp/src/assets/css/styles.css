@@ -87,6 +87,10 @@ a {
   background-size: contain;
 }
 
+.card-origin .card-title h4 {
+  color: #201f1c!important;
+}
+
 .card-bronze {
   background: url('../images/images/cards_background/bronze.png');
   background-size: contain;
