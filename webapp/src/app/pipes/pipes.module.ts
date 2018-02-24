@@ -4,6 +4,7 @@ import { CurrencyPipe } from './currency.pipe';
 import { CapitalizePipe } from './capitalize.pipe';
 import { DatePipe } from '@angular/common';
 import { AbbreviateNumberPipe } from './abbreviate-number.pipe';
+import { TimeBetweenPipe } from './time-between.pipe';
 
 @NgModule({
   imports: [
@@ -12,12 +13,14 @@ import { AbbreviateNumberPipe } from './abbreviate-number.pipe';
   declarations: [
     CurrencyPipe,
     CapitalizePipe,
-    AbbreviateNumberPipe
+    AbbreviateNumberPipe,
+    TimeBetweenPipe
   ],
   exports: [
     CurrencyPipe,
     CapitalizePipe,
     DatePipe,
+    TimeBetweenPipe,
     AbbreviateNumberPipe
   ]
 })

@@ -35,7 +35,7 @@
       </div>
 
       <div>
-        <span class="value-footer value-card">1W</span>
+        <span class="value-footer value-card">{{card.createdAt | timeBetween}}</span>
         <span class="label-footer">CARD</span>
       </div>
 
@@ -46,7 +46,7 @@
   <div class="price_love">
     <span>{{card.price | currency}}</span>
   </div>
-  <div class="sell"><p><span class="lnr lnr-cart"></span><span>16</span></p></div>
+  <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
 </div>
 
 <div class="modal fade rating_modal" id="{{ 'modal-' + card.id}}" tabindex="-1" role="dialog">

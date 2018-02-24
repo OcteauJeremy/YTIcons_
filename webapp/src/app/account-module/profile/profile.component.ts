@@ -56,6 +56,28 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  refreshAvatar(event:any) {
+    let fileList = event.target.files;
+    let _self = this;
+
+    if (fileList && fileList.length > 0) {
+      let file: File = fileList[0];
+      _self.as.currentUser.avatar = file;
+      _self.subscribtions.add(_self.us.modifyUser(_self.as.currentUser).subscribe(res => {
+        _self.as.setCurrentUser(res);
+        _self.refreshProfileInfo(_self.as.currentUser.wallet);
+      }));
+    }
+
+  }
+
+  purchaseCard(idCard: number) {
+    this.cs.purchaseCard(idCard).then(function(res) {
+      console.log(res);
+    });
+
+  }
+
   ngOnInit() {
     let _self = this;
     this.currentUser = this.as.currentUser;

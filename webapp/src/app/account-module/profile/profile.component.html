@@ -11,8 +11,12 @@
             <li class="active"><a href="#">Favorites</a></li>
           </ul>
         </div>
-        <h1 *ngIf="address" class="page-title"><a target="_blank" href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a></h1>
-        <h1 *ngIf="!address" class="page-title"><a target="_blank" href="https://ropsten.etherscan.io/address/{{currentUser.wallet}}">{{currentUser.wallet}}</a> <a (click)="refreshWallet()"><i class="fa fa-refresh" aria-hidden="true"></i></a></h1>
+        <h1 *ngIf="address" class="page-title"><a target="_blank"
+                                                  href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
+        </h1>
+        <h1 *ngIf="!address" class="page-title"><a target="_blank"
+                                                   href="https://ropsten.etherscan.io/address/{{currentUser.wallet}}">{{currentUser.wallet}}</a>
+          <a (click)="refreshWallet()"><i class="fa fa-refresh" aria-hidden="true"></i></a></h1>
 
       </div><!-- end /.col-md-12 -->
     </div><!-- end /.row -->
@@ -33,15 +37,24 @@
           <div class="author-card sidebar-card">
             <div class="author-infos">
 
+              <div (click)="purchaseCard(0)">BUY CARD</div>
               <div class="author_avatar">
-                <div class="profile-avatar" *ngIf="!address" src="images/author-avatar.jpg" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>
-                <div class="profile-avatar" *ngIf="address && userProfile" src="images/author-avatar.jpg" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
+                <div class="profile-avatar" *ngIf="!address" src="images/author-avatar.jpg"
+                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>
+                <div class="profile-avatar" *ngIf="address && userProfile" src="images/author-avatar.jpg"
+                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
               </div>
+                  <label for="cover_photo" class="upload_btn">
+                    <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
+                           id="cover_photo">
+                    <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
+                  </label>
 
               <div class="author">
                 <h4 *ngIf="address">{{userProfile ? userProfile.username : 'Anonymous'}}</h4>
                 <h4 *ngIf="!address">{{currentUser.username}}</h4>
-                <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') : 'Unknown'}}</p>
+                <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') :
+                  'Unknown'}}</p>
                 <p *ngIf="!address">Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy'}}</p>
               </div><!-- end /.author -->
             </div><!-- end /.author-infos -->
@@ -58,7 +71,7 @@
         </div>
       </div><!-- end /.col-md-4 -->
     </div>
-  <div class="row">
+    <div class="row">
       <div class="col-md-12">
         <div class="row">
         </div><!-- end /.row -->
