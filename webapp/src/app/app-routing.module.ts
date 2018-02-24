@@ -10,6 +10,7 @@ import {FaqComponent} from './faq-module/faq/faq.component';
 import { LeaderboardComponent } from './leaderboard-module/leaderboard/leaderboard.component';
 import { PrivacyPolicyComponent } from "./privacypolicy-module/privacypolicy/privacypolicy.component";
 import {LegalComponent} from "./legal-module/legal/legal.component";
+import { AdminComponent } from './admin-module/admin/admin.component';
 
 const appRoutes: Routes = [
   {
@@ -41,6 +42,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: SigninComponent,
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
   },
   {
     path: 'signup',

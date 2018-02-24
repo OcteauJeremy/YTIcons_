@@ -9,7 +9,7 @@ var CardSchema = mongoose.Schema({
     nbSubscribers: Number,
     nbViews: Number,
     nbTransactions: Number,
-    transactions: [{type: Schema.Types.ObjectId, ref: "Transaction"}], // TODO: count of collection transactions
+    transactions: [{type: Schema.Types.ObjectId, ref: "Transaction"}],
     nbVideos: Number,
     category: {type: Schema.Types.ObjectId, ref: "Category"},
     url: String,

@@ -2,8 +2,10 @@
 var mongoose = require('mongoose');
 
 var TypeSchema = mongoose.Schema({
-  name: String,
-  css: String
+    name: String,
+    css: String,
+    minSubscribers: Number,
+    maxSubscribers: Number
 }, {
   timestamps: true
 });

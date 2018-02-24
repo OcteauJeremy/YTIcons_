@@ -27,7 +27,6 @@ export class AbbreviateNumberPipe implements PipeTransform {
 
       if (size <= number) {
         number = Math.round(number * decPlaces / size) / decPlaces;
-        console.log(numberOrigin, size, number, number % size);
 
         if ((number === 1000) && (i < this.units.length - 1)) {
           number = 1;
