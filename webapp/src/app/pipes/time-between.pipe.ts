@@ -15,9 +15,13 @@ export class TimeBetweenPipe implements PipeTransform {
       var diffDays: number = date2.getDate() - date1.getDate();
       var diffWeeks: number = Math.floor(diffDays / 7);
       var diffYears: number = date2.getFullYear() - date1.getFullYear();
-      diffMonths += 12* diffYears
+      var diffHours: number = date2.getHours() - date1.getHours();
 
+      diffMonths += 12* diffYears;
 
+      if (diffHours >= 0 && !diffDays && !diffWeeks && !diffMonths && !diffYears) {
+        return diffHours + 'H';
+      }
       if (diffWeeks > 0 && !diffMonths && !diffYears) {
         return diffWeeks + 'W';
       }

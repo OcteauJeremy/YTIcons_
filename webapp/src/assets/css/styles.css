@@ -33,6 +33,18 @@ a {
   cursor: pointer;
 }
 
+.dropdown-trigger {
+  white-space: nowrap;
+  max-width: 11.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#category {
+  max-width: 14em;
+}
+.filter-bar .filter--select {
+  width: 185px;
+}
 /** SIGNUP **/
 
 .profile-avatar {
