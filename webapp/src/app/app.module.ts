@@ -34,6 +34,7 @@ import { YoutubeService } from './services/youtube.service';
 import {ContactModule} from './contact-module/contact.module';
 import {BountyProgramModule} from './bountyprogram-module/bountyprogram';
 import {CharityModule} from './charity-module/charity';
+import {DirectivesModule} from "./directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {CharityModule} from './charity-module/charity';
     ContactModule,
     BountyProgramModule,
     CharityModule
+    DirectivesModule
   ],
   providers: [
     RealvalueService,

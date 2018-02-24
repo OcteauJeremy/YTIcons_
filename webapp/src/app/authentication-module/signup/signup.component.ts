@@ -43,8 +43,6 @@ export class SignupComponent implements OnInit, OnDestroy {
           alert(error2.error.message);
         }));
 
-      } else {
-        alert('Check your form');
       }
     }
 

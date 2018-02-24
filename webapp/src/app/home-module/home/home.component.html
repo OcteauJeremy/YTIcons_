@@ -10,13 +10,13 @@
       <p class="hook">Buy, collect and sell your favorite YouTuber unique cards ! </p>
 
       <div class="about_hero_btns">
-        <a href="#" routerLink="/signup" class="btn btn--blue btn--lg btn--round">Marketplace</a>
+        <a routerLink="/market" class="btn btn--blue btn--lg btn--round">Marketplace</a>
       </div>
     </div><!-- end /.description_container -->
 
     <div class="picture_container">
       <!--<div class="bg_image_holder">-->
-        <img class="home_picture" src="assets/images/homePicture.png" alt="">
+        <img class="home_picture" src="assets/images/home/homePicture.png" alt="">
       <!--</div>-->
     </div>
   </div><!-- end /.container -->
@@ -75,13 +75,12 @@
   <div class="cards_block">
     <div class="container">
       <div class="row">
-        <div class="col-md-5 col-sm-6">
-          <div class="content_area">
-            <h1 class="content_area--title">How does it <span class="highlight">work</span> ?</h1>
-            <p class="home-text">YTIcons uses the same blockchain technology as Ethereum which features the smart contract functionality : each and every YTIcon is linked to an unique token on the blockchain.
-              To purchase a YTIcon, you can simply send Ether to the contract using MetaMask.
-              You can download the latter's extension on most of the browsers (e.g. Chrome or Firefox).
-              If you want to learn more about it, please refer to this <b><a routerLink="/faq">link</a></b>.</p>
+        <div class="col-md-12">
+          <div class="content_area card-flex">
+            <!--<h1 class="content_area&#45;&#45;title">How does it <span class="highlight">work</span> ?</h1>-->
+            <img class="card_picture" src="assets/images/home/cardModel0.png" alt="">
+            <img class="card_picture" src="assets/images/home/cardModel1.png" alt="">
+            <img class="card_picture" src="assets/images/home/cardModel2.png" alt="">
           </div>
         </div><!-- end /.col-md-5 -->
       </div><!-- end /.row -->
@@ -96,17 +95,14 @@
 <!--================================
     START CALL TO ACTION AREA
 =================================-->
-<section class="call-to-action bgimage">
-  <div class="bg_image_holder">
-    <img src="assets/images/calltobg.jpg" alt="">
-  </div>
+<section class="call-to-action">
   <div class="container content_above">
     <div class="row">
       <div class="col-md-12">
         <div class="call-to-wrap">
-          <h1 class="text--white">Ready to Join Our Marketplace!</h1>
-          <h4 class="text--white">Over 25,000 designers and developers trust the MartPlace.</h4>
-          <a href="#" class="btn btn--lg btn--round btn--white callto-action-btn">Join Us Today</a>
+          <h1 class="text--white">The marketplace is only waiting for you !</h1>
+          <h4 class="text--white">Buy your first YTIcon and be part of the collectors’ community !</h4>
+          <a routerLink="/market" class="btn btn--lg btn--round btn--white callto-action-btn">Marketplace</a>
         </div>
       </div>
     </div>
