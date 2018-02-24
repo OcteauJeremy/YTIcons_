@@ -61,20 +61,21 @@ export class ProfileComponent implements OnInit {
     let _self = this;
 
     if (fileList && fileList.length > 0) {
+
+      let formData: FormData = new FormData();
       let file: File = fileList[0];
-      _self.as.currentUser.avatar = file;
-      _self.subscribtions.add(_self.us.modifyUser(_self.as.currentUser).subscribe(res => {
+      formData.append('avatar',file);
+      formData.append('username', _self.as.currentUser.username);
+      formData.append('email', _self.as.currentUser.email);
+      formData.append('wallet', _self.as.currentUser.wallet);
+      formData.append('currency', _self.as.currentUser.currency);
+      formData.append('password', _self.as.currentUser.password);
+
+      _self.subscribtions.add(_self.us.modifyUserFormData(formData, _self.as.currentUser).subscribe(res => {
         _self.as.setCurrentUser(res);
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
       }));
     }
-
-  }
-
-  purchaseCard(idCard: number) {
-    this.cs.purchaseCard(idCard).then(function(res) {
-      console.log(res);
-    });
 
   }
 

@@ -84,7 +84,7 @@ export class CardService extends ManagerService {
     }) as Promise<number>;
   }
 
-  public async purchaseCard(_idCard: number): Promise<any> {
+  public async purchaseCard(_idCard: number, _price: number): Promise<any> {
 
     let account = await this.getAccount();
 
@@ -94,7 +94,7 @@ export class CardService extends ManagerService {
       this._tokenContract.methods.purchase(_idCard).send({
         from:account,
         gas:4000000,
-        value: this._web3.utils.toWei('0.01', 'ether')
+        value: this._web3.utils.toWei(_price.toString(), 'ether')
       },function (error, result){ //get callback from function which is your transaction key
         if(!error){
           alert('Transaction ok');

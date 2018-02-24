@@ -13,6 +13,10 @@ export class UserService extends ManagerService {
     return this.put('/users/' + user._id, user);
   }
 
+  modifyUserFormData(formData: FormData, user) {
+    return this.put('/users/' + user._id, formData);
+  }
+
   getUser(user) {
     return this.get('/users/' + user._id);
   }
