@@ -5,7 +5,11 @@
 
 .home {
   display: flex;
-  padding: 70px 0px;
+  padding: 91px 0px;
+}
+
+.hook {
+  margin: 10px 0px 10px;
 }
 
 .description_container {
@@ -19,22 +23,44 @@
   height: 100%;
 }
 
-.content_block1, .content_block2 {
-  min-height: 0;
+.cards_block, .about_block, .content_block1 {
+  min-height: 0px;
 }
 
-.about_block {
+.about_block, .cards_block {
   background-color: #f6f7fb;
 }
 
-.about_block .content_area, .content_block2 .content_area {
-  padding: 5% 0;
+.about_block .content_area, .content_block1 .content_area, .cards_block .content_area {
+  padding: 9% 0;
 }
 
 .about_block .content_area .content_area--title .highlight,
-.content_block1 .content_area .content_area--title .highlight {
+.content_block1 .content_area .content_area--title .highlight,
+.cards_block .content_area .content_area--title .highlight {
   color: #0674ec;
 }
+
+.about_block .content_area .content_area--title,
+.content_block1 .content_area .content_area--title,
+.cards_block .content_area .content_area--title {
+  font-size: 36px;
+  line-height: 46px;
+  margin-bottom: 23px;
+  color: #000;
+}
+
+.btn.btn--blue:hover {
+  background: #7347c1;
+  color: #fff;
+}
+
+.btn.btn--blue {
+  background: #0674ec;
+  color: #fff;
+}
+
+/*, .btn-light, .btn--light, .btn.btn--white:hover, .btn-light:hover, .btn--light:hover*/
 
 @media (max-width: 767px) {
   .container.flex {

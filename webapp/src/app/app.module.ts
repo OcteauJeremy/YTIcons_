@@ -24,10 +24,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TypeService } from './services/type.service';
 import { ManagerService } from './services/manager.service';
 import { LeaderboardModule } from './leaderboard-module/leaderboard.module';
-import { PrivacyPolicyModule } from "./privacypolicy-module/privacypolicy.module";
-import { LegalModule } from "./legal-module/legal.module";
-import {NationalityService} from "./services/nationality.service";
-import {CategoryService} from "./services/category.service";
+import { PrivacyPolicyModule } from './privacypolicy-module/privacypolicy.module';
+import { LegalModule } from './legal-module/legal.module';
+import { NationalityService } from './services/nationality.service';
+import { CategoryService } from './services/category.service';
 import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
@@ -41,7 +41,6 @@ import { YoutubeService } from './services/youtube.service';
     CommonModule,
     SlickModule.forRoot(),
     AngularFontAwesomeModule,
-    TopbarModule,
     MenuModule,
     FooterModule,
     HomeModule,

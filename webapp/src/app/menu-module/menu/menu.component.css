@@ -1,0 +1,24 @@
+.logs_container {
+  float: right;
+  padding: 17px 0;
+}
+
+.logs_wrap {
+  position: relative;
+}
+
+.logs_button {
+  background: #0674ec;
+  color: #fff;
+  padding: 0 17px;
+  display: inline-block;
+  line-height: 34px;
+  border-radius: 21px;
+  font-weight: 500;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.logs_button.login {
+  margin-right: 30px;
+}
