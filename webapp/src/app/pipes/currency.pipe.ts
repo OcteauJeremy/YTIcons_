@@ -1,26 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { RealvalueService } from '../services/realvalue.service';
+import { CurrencyService } from '../services/currency.service';
 
 @Pipe({
   name: 'currency',
   pure: false
 })
 export class CurrencyPipe implements PipeTransform {
-  public  currentUser;
+  public  currentCurrency;
 
-  constructor(private authenticationService: AuthenticationService, private realvalueService: RealvalueService) {
-    this.authenticationService.currentUserChange.subscribe((user) => {
-      this.currentUser = user;
+  constructor(private currencyService: CurrencyService, private realvalueService: RealvalueService) {
+    this.currencyService.currentCurrencyChange.subscribe((currency) => {
+      this.currentCurrency = currency;
     });
 
-    this.currentUser = this.authenticationService.currentUser;
+    this.currentCurrency = this.currencyService.currentCurrency;
   }
 
   transform(value: any, args?: any): any {
-    let currentUser = this.authenticationService.currentUser;
 
-    switch (currentUser.currency) {
+    switch (this.currentCurrency) {
       case "ETH":
         return (value).toString() + " ETH";
       case "USD":

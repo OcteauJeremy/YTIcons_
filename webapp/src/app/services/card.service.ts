@@ -16,7 +16,7 @@ export class CardService extends ManagerService {
   private _account: string = null;
   private _web3;
   private _tokenContract: any;
-  private _tokenContractAddress = '0x7C7F9aC11985e87CC2E1347C3da7F8F3d21B443a';
+  private _tokenContractAddress = '0x305C0325C8652eb114251080c56020924055C8e2';
 
   constructor(http: HttpClient) {
     super(http);
@@ -75,7 +75,8 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.balanceOf(account).call(function (err, result) {
         if (err != null) {
-          reject(err);
+//          reject(err);
+          resolve(0);
         }
 
         resolve(result);

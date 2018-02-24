@@ -28,6 +28,9 @@ import { PrivacyPolicyModule } from "./privacypolicy-module/privacypolicy.module
 import { LegalModule } from "./legal-module/legal.module";
 import {NationalityService} from "./services/nationality.service";
 import {CategoryService} from "./services/category.service";
+import { CurrencyService } from './services/currency.service';
+import { AdminModule } from './admin-module/admin.module';
+import { YoutubeService } from './services/youtube.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import {CategoryService} from "./services/category.service";
     LeaderboardModule,
     PrivacyPolicyModule,
     LegalModule,
+    AdminModule,
     NgbModule.forRoot()
   ],
   providers: [
@@ -60,7 +64,9 @@ import {CategoryService} from "./services/category.service";
     TypeService,
     ManagerService,
     NationalityService,
-    CategoryService
+    CategoryService,
+    CurrencyService,
+    YoutubeService
   ],
   bootstrap: [
     AppComponent

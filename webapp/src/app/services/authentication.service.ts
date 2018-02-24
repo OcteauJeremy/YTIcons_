@@ -10,7 +10,7 @@ export class AuthenticationService extends ManagerService{
 
   private address: string;
   public  currentUser: any;
-  public  currentUserChange: Subject<boolean> = new Subject<boolean>();
+  public  currentUserChange: Subject<any> = new Subject<any>();
 
   constructor(http: HttpClient, private cs: CardService) {
     super(http);
@@ -22,10 +22,11 @@ export class AuthenticationService extends ManagerService{
     return this.post('/signin', {username: _username, password: _password});
   }
 
-  public register(_email: string, _username: string, _password: string): Observable<any> {
+  public register(_formData: FormData): Observable<any> {
     this.cs.getAccount().then(account => this.address = account);
-    return this.post('/users', {username: _username, email: _email, password: _password,
-    wallet: this.address});
+    if (this.address)
+      _formData.append('wallet', this.address);
+    return this.post('/users', _formData);
   }
 
   public logout() {
@@ -37,5 +38,10 @@ export class AuthenticationService extends ManagerService{
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUser = user;
     this.currentUserChange.next(this.currentUser);
+  }
+
+  public getLocalUser() {
+    var localUser = JSON.parse(localStorage.getItem('currentUser'));
+    return localUser;
   }
 }

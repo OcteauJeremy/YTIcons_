@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class ManagerService {
 
-  private baseUrl = "http://localhost:3000";
+  public baseUrl = "http://localhost:3000";
 
   constructor(protected http: HttpClient) { }
 

@@ -1,0 +1,128 @@
+<section class="search-wrapper">
+  <div class="search-area2 bgimage">
+    <div class="bg_image_holder">
+      <img src="assets/images/search.jpg" alt="">
+    </div>
+    <div class="container content_above">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="search">
+            <div class="search__title"><h3>Enter the channel's url</h3></div>
+            <div class="search__field">
+              <form action="#">
+                <div class="field-wrapper">
+                  <input [(ngModel)]="urlChannel" name="urlChannel" (keyup.enter)="loadChannel()" class="relative-field rounded" type="text" placeholder="Search your channel">
+                  <button class="btn btn--round" type="submit" (click)="loadChannel()">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dashboard_contents">
+  <div class="container">
+    <form action="#" class="setting_form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="information_module">
+            <a class="toggle_title" href="#collapseInformations" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+              <h4>Card Informations <span class="lnr lnr-chevron-down"></span></h4>
+            </a>
+
+            <div class="information__set toggle_module collapse" id="collapseInformations">
+              <div class="information_wrapper form--fields">
+                <div class="form-group">
+                  <label for="cardName">Card Name</label>
+                  <input name="cardName" type="text" id="cardName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.name">
+                </div>
+
+                <div class="form-group">
+                  <label for="citationCard">Citation</label>
+                  <textarea name="citationCard" id="citationCard" class="text_field" placeholder="Channel's citation" [(ngModel)]="cardYoutuber.citation"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="descriptionCard">Description</label>
+                  <textarea name="descriptionCard" id="descriptionCard" class="text_field" placeholder="Channel's description" [(ngModel)]="cardYoutuber.description"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="country">Nationalities</label>
+                  <div class="select-wrap select-wrap2">
+                    <select [(ngModel)]="cardYoutuber.nationality" name="country" id="country" class="text_field">
+                      <option *ngFor="let nat of nationalities" [ngValue]="nat">{{nat.name}}</option>
+                    </select>
+                    <span class="lnr lnr-chevron-down"></span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="codeCountry">Country code</label>
+                      <input name="codeCountry" type="text" id="codeCountry" class="text_field" placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="nameCountry">Country name</label>
+                      <input name="nameCountry" type="text" id="nameCountry" class="text_field" placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="information_module">
+            <a class="toggle_title" href="#collapseStatistics" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+              <h4>Card Statistics <span class="lnr lnr-chevron-down"></span></h4>
+            </a>
+
+            <div class="information__set toggle_module collapse" id="collapseStatistics">
+              <div class="information_wrapper form--fields">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nbSubscribers">Number Subscribers:<sup>*</sup></label>
+                      <input name="nbSubscribers" type="text" id="nbSubscribers" class="text_field" placeholder="Number of subscribers" [(ngModel)]="cardYoutuber.nbSubscribers">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nbVideos">Number Videos:</label>
+                      <input name="nbVideos" id="nbVideos" class="text_field" placeholder="Number of videos" [(ngModel)]="cardYoutuber.nbVideos">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nbViews">Number Views:</label>
+                      <input name="nbViews" id="nbViews" class="text_field" placeholder="Number of views" [(ngModel)]="cardYoutuber.nbViews">
+                    </div>
+                  </div>
+                </div>
+              </div><!-- end /.information_wrapper -->
+            </div><!-- end /.information__set -->
+          </div><!-- end /.information_module -->
+        </div>
+      </div>
+    </form>
+
+    <div class="row">
+      <div class="col-md-offset-2 col-md-4">
+        <card [card]="cardYoutuber" [modal]="false"></card>
+      </div>
+      <div class="col-md-offset- col-md-4">
+        <card [card]="cardOriginYoutuber" [modal]="false"></card>
+      </div>
+    </div>
+  </div>
+</div>

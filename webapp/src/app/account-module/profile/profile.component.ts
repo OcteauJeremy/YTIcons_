@@ -5,6 +5,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {Card} from "../../models/Card";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../services/user.service";
+import {ManagerService} from "../../services/manager.service";
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,7 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
-  constructor(private route: ActivatedRoute, private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+  constructor(private ms: ManagerService,private route: ActivatedRoute, private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
     }
 
   refreshProfileInfo(wallet: string) {

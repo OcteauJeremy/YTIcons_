@@ -12,4 +12,8 @@ export class NationalityService extends ManagerService {
   getNationalities() {
     return this.get('/nationalities');
   }
+
+  createNationality(body) {
+    return this.post('/nationalities', body);
+  }
 }
