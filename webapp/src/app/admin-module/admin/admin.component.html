@@ -63,16 +63,30 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="codeCountry">Country code</label>
+                      <label for="codeCountry">Country code:</label>
                       <input name="codeCountry" type="text" id="codeCountry" class="text_field" placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="nameCountry">Country name</label>
+                      <label for="nameCountry">Country name:</label>
                       <input name="nameCountry" type="text" id="nameCountry" class="text_field" placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
                     </div>
                   </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="categories">Nationalities</label>
+                  <div class="select-wrap select-wrap2">
+                    <select [(ngModel)]="cardYoutuber.category" name="categories" id="categories" class="text_field">
+                      <option *ngFor="let category of categories" [ngValue]="categories">{{category.name}}</option>
+                    </select>
+                    <span class="lnr lnr-chevron-down"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="categoryName">Category Name</label>
+                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Card Name" [(ngModel)]="cardYoutuber.type.name">
                 </div>
               </div>
             </div>

@@ -3,6 +3,7 @@ import { YoutubeService } from '../../services/youtube.service';
 import { TypeService } from '../../services/type.service';
 import { NationalityService } from '../../services/nationality.service';
 import { HttpClient } from '@angular/common/http';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,6 +15,7 @@ export class AdminComponent implements OnInit {
   public  urlChannel;
   public  types;
   public  nationalities;
+  public  categories;
   public  responseYoutube = {};
   public  cardYoutuber = {
     name: "",
@@ -27,7 +29,9 @@ export class AdminComponent implements OnInit {
     nbTransactions: 0,
     transactions: [],
     nbVideos: 0,
-    category: null,
+    category: {
+      name: ""
+    },
     url: "",
     description: "",
     citation: "",
@@ -55,7 +59,8 @@ export class AdminComponent implements OnInit {
   };
 
   constructor(private youtubeService: YoutubeService, private typeService: TypeService,
-              private nationalityService: NationalityService, private http: HttpClient) {
+              private nationalityService: NationalityService, private http: HttpClient,
+              private categoryService: CategoryService) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
@@ -63,7 +68,11 @@ export class AdminComponent implements OnInit {
 
     nationalityService.getNationalities().subscribe(res => {
       this.nationalities = res;
-    })
+    });
+
+    this.categoryService.getCategories().subscribe( res => {
+      this.categories = res;
+    });
 
   }
 
