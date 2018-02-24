@@ -59,7 +59,10 @@ export class AdminComponent implements OnInit {
     citation: "",
     price: 0.001,
     owner: null,
-    type: null
+    type: {
+      name: "origin",
+      css: "card-origin"
+    }
   };
 
   constructor(private youtubeService: YoutubeService, private typeService: TypeService,

@@ -106,12 +106,12 @@ a {
   background-size: contain;
 }
 
-card-250k {
+.card-250k {
   background: url('../images/images/cards_background/speciale_250k.png');
   background-size: contain;
 }
 
-card-500k {
+.card-500k {
   background: url('../images/images/cards_background/speciale_500k.png');
   background-size: contain;
 }
