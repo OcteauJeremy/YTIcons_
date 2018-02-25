@@ -8,13 +8,13 @@ const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(morgan('dev'));
 
 var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
-
 
 mongoose.connect(configMongo.url);
 app.set('superSecret', configMongo.secret);
@@ -40,8 +40,6 @@ require('./routes/nationality.route')(app);
 require('./routes/category.route')(app);
 require('./routes/youtube.route')(app);
 
-// Load SC listeners
-require('./controllers/web3.controller');
 
 
 // Static access
@@ -57,8 +55,8 @@ app.use(function (err, req, res, next) {
 
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
-
-    app.use(morgan('dev'));
+    // Load SC listeners
+    require('./controllers/web3.controller');
     app.listen(3000, function () {
         console.log('YTIcons API listening on 3000')
     });

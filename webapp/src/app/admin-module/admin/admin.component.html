@@ -33,7 +33,7 @@
         <div class="col-md-12">
           <div class="information_module">
             <a class="toggle_title" href="#collapseInformations" role="button" data-toggle="collapse"
-               aria-expanded="false" aria-controls="collapse1">
+               aria-expanded="false" aria-controls="collapse1" id="informations-card">
               <h4>Card Informations <span class="lnr lnr-chevron-down"></span></h4>
             </a>
 
@@ -59,8 +59,8 @@
 
                 <div class="form-group">
                   <label for="country">Nationalities:</label>
-                  <div class="select-wrap select-wrap2">
-                    <select [(ngModel)]="cardYoutuber.nationality" name="country" id="country" class="text_field">
+                  <div class="select-wrap select-wrap2" id="wrapCountry">
+                    <select [(ngModel)]="cardYoutuber.nationality"  (change)="changeInputCountry()" name="country" id="country" class="text_field">
                       <option *ngFor="let nat of nationalities" [ngValue]="nat">{{nat.name}}</option>
                     </select>
                     <span class="lnr lnr-chevron-down"></span>
@@ -72,22 +72,22 @@
                     <div class="form-group">
                       <label for="codeCountry">Country code:</label>
                       <input name="codeCountry" type="text" id="codeCountry" class="text_field"
-                             placeholder="Code country" [(ngModel)]="cardYoutuber.nationality.code">
+                             placeholder="Code country" [(ngModel)]="selectInputs.codeCountry">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="nameCountry">Country name:</label>
                       <input name="nameCountry" type="text" id="nameCountry" class="text_field"
-                             placeholder="Name country" [(ngModel)]="cardYoutuber.nationality.name">
+                             placeholder="Name country" [(ngModel)]="selectInputs.nameCountry">
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label for="category">Category:</label>
-                  <div class="select-wrap select-wrap2">
-                    <select [(ngModel)]="cardYoutuber.category" name="category" id="category" class="text_field">
+                  <div class="select-wrap select-wrap2" id="wrapCategory">
+                    <select [(ngModel)]="cardYoutuber.category" (change)="changeInputCategory()" name="category" id="category" class="text_field">
                       <option *ngFor="let cat of categories" [ngValue]="cat">{{cat.name}}</option>
                     </select>
                     <span class="lnr lnr-chevron-down"></span>
@@ -95,8 +95,8 @@
                 </div>
                 <div class="form-group">
                   <label for="categoryName">Category Name:</label>
-                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Card Name"
-                         [(ngModel)]="cardYoutuber.category.name">
+                  <input name="categoryName" type="text" id="categoryName" class="text_field" placeholder="Category Name"
+                         [(ngModel)]="selectInputs.nameCategory">
                 </div>
               </div>
             </div>
@@ -106,7 +106,7 @@
         <div class="col-md-12">
           <div class="information_module">
             <a class="toggle_title" href="#collapseStatistics" role="button" data-toggle="collapse"
-               aria-expanded="false" aria-controls="collapse1">
+               aria-expanded="false" aria-controls="collapse1" id="statistics-card">
               <h4>Card Statistics <span class="lnr lnr-chevron-down"></span></h4>
             </a>
 
@@ -144,7 +144,7 @@
 
         <div class="col-md-12">
           <div class="information_module">
-            <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse">
+            <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse" id="price-card">
               <h4>Type and Price <span class="lnr lnr-chevron-down"></span></h4>
             </a>
 

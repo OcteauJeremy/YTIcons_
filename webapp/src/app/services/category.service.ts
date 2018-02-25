@@ -12,4 +12,8 @@ export class CategoryService extends ManagerService {
   getCategories() {
     return this.get('/categories');
   }
+
+  create(body) {
+    return this.post('/categories', body);
+  }
 }

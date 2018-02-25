@@ -25,4 +25,8 @@ export class UserService extends ManagerService {
     return this.get('/users/byWallet/' + wallet);
   }
 
+  getRoot() {
+    return this.get('/users/root');
+  }
+
 }

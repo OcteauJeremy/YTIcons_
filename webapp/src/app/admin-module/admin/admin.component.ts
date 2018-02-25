@@ -5,6 +5,10 @@ import { NationalityService } from '../../services/nationality.service';
 import { HttpClient } from '@angular/common/http';
 import {CardService} from "../../services/card.service";
 import { CategoryService } from '../../services/category.service';
+import { UserService } from '../../services/user.service';
+
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-admin',
@@ -14,11 +18,17 @@ import { CategoryService } from '../../services/category.service';
 export class AdminComponent implements OnInit {
 
   public  urlChannel;
+  public  rootUser;
   public  types;
   public  nationalities;
   public  categories;
   public  createOrigin = true;
   public  responseYoutube = {};
+  public  selectInputs = {
+    codeCountry: "",
+    nameCountry: "",
+    nameCategory: ""
+  };
 
   public  cardYoutuber = {
     name: "",
@@ -67,9 +77,12 @@ export class AdminComponent implements OnInit {
     }
   };
 
+  private _self;
+
   constructor(private youtubeService: YoutubeService, private typeService: TypeService,
               private nationalityService: NationalityService, private http: HttpClient,
-              private categoryService: CategoryService,private cs: CardService,) {
+              private categoryService: CategoryService,private cs: CardService,
+              private userService: UserService) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
@@ -83,6 +96,9 @@ export class AdminComponent implements OnInit {
       this.categories = res;
     });
 
+    userService.getRoot().subscribe(res => {
+      this.rootUser = res;
+    });
   }
 
   ngOnInit() {
@@ -137,6 +153,8 @@ export class AdminComponent implements OnInit {
       for (let nat of this.nationalities) {
         if (nat.code.toLowerCase() == countryInfo.alpha2Code.toLowerCase()) {
           this.cardYoutuber.nationality = nat;
+          this.selectInputs.codeCountry = this.cardYoutuber.nationality.code;
+          this.selectInputs.nameCountry = this.cardYoutuber.nationality.name;
           cb(this);
           return ;
         }
@@ -148,6 +166,9 @@ export class AdminComponent implements OnInit {
           code: countryInfo.alpha2Code.toUpperCase()
         }).subscribe(res => {
           this.cardYoutuber.nationality = res;
+          this.selectInputs.codeCountry = this.cardYoutuber.nationality.code;
+          this.selectInputs.nameCountry = this.cardYoutuber.nationality.name;
+
           cb(this);
         });
       }
@@ -155,10 +176,118 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  checkForm() {
+    this.resetInpputs();
+
+    if (this.selectInputs.nameCountry == '' || this.selectInputs.codeCountry == '' || this.selectInputs.nameCategory == '') {
+      let inputsCategory = [$('#wrapCategory'), $('#categoryName')];
+      let inputsNationality = [$('#wrapCountry'), $('#codeCountry'), $('#nameCountry')];
+
+      console.log(inputsNationality);
+      console.log(inputsCategory);
+      //init boder
+
+      console.log('Create Card -- Error');
+      let collapseHead = $('#informations-card');
+      let collapseBody = $('#collapseInformations');
+
+      if (!collapseBody.hasClass('in')) {
+        collapseHead.click();
+      }
+
+      let offset;
+      if (this.selectInputs.nameCountry == '' || this.selectInputs.codeCountry == '') {
+        offset = $("#country").offset().top - 100;
+        inputsNationality[0].addClass('error');
+        inputsNationality[1].addClass('error');
+        inputsNationality[2].addClass('error');
+      } else if (this.selectInputs.nameCategory == '') {
+        offset = $("#category").offset().top - 100;
+        inputsCategory[0].addClass('error');
+        inputsCategory[1].addClass('error');
+      }
+
+      $('html, body').animate({
+        scrollTop: offset
+      }, 1000);
+
+      return false;
+    }
+    return true;
+  }
+
   createCard() {
-    this.cs.createCardSC(this.cardYoutuber).then(function(res) {
-      console.log(res);
+    console.log('Create Card');
+    if (!this.checkForm()) {
+      return ;
+    }
+
+    console.log('Create Card -- Passed');
+
+
+    var self = this;
+    var category = this.categories.find(function (obj) {
+      return obj.name == self.selectInputs.nameCategory;
     });
+
+    var country = this.nationalities.find(function (obj) {
+      return obj.code == self.selectInputs.codeCountry;
+    });
+
+    var createCardSC = function (self) {
+      self.cs.createCardSC(self.cardYoutuber).then(function(res) {
+        console.log('Created card evolutive', res);
+        if (self.createOrigin) {
+          self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
+          self.cardOriginYoutuber.type = self.getOriginType();
+          self.cs.createCardSC(self.cardOriginYoutuber).then(function(res) {
+            console.log('Created card origin', res);
+          });
+        }
+      });
+    };
+
+    this.cardYoutuber.owner = this.rootUser;
+
+    if (!country) {
+      country = {
+        code: this.selectInputs.codeCountry,
+        name: this.selectInputs.nameCountry
+      };
+      this.nationalityService.createNationality(country).subscribe(res => {
+        this.cardYoutuber.nationality = res;
+        if (!category) {
+          category = {
+            name: this.selectInputs.nameCategory
+          };
+          this.categoryService.create(category).subscribe(res => {
+            this.cardYoutuber.category = res;
+            createCardSC(this);
+          });
+        }
+      });
+
+    } else if (!category) {
+      category = {
+        name: this.selectInputs.nameCategory
+      };
+      this.categoryService.create(category).subscribe(res => {
+        this.cardYoutuber.category = res;
+        createCardSC(this);
+      });
+    }
+
+
+
+  }
+
+  changeInputCategory() {
+    this.selectInputs.nameCategory = this.cardYoutuber.category.name;
+  }
+
+  changeInputCountry() {
+    this.selectInputs.nameCountry = this.cardYoutuber.nationality.name;
+    this.selectInputs.codeCountry = this.cardYoutuber.nationality.code;
   }
 
   createCardFromName(name: string) {
@@ -167,8 +296,13 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  selectCountry(value) {
-    this.cardYoutuber.nationality = value;
+  resetInpputs() {
+    $('#wrapCategory').removeClass('error');
+    $('#categoryName').removeClass('error');
+
+    $('#wrapCountry').removeClass('error');
+    $('#codeCountry').removeClass('error');
+    $('#nameCountry').removeClass('error');
   }
 
   priceChanged() {

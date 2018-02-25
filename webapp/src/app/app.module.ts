@@ -31,6 +31,10 @@ import { CategoryService } from './services/category.service';
 import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
+import {ContactModule} from './contact-module/contact.module';
+import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
+import {CharityModule} from './charity-module/charity.module';
+import {DirectivesModule} from "./directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import { YoutubeService } from './services/youtube.service';
     PrivacyPolicyModule,
     LegalModule,
     AdminModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ContactModule,
+    BountyProgramModule,
+    CharityModule,
+    DirectivesModule,
   ],
   providers: [
     RealvalueService,

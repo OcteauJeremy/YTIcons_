@@ -6,3 +6,7 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.error {
+  border: solid 2px #FF0000;
+}

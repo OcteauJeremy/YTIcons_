@@ -369,6 +369,11 @@
         "indexed": false,
         "name": "newPrice",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "newOwner",
+        "type": "address"
       }
     ],
     "name": "YTIconSold",

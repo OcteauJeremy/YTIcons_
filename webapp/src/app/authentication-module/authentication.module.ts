@@ -5,12 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import {AuthenticationService} from '../services/authentication.service';
 import { SignupComponent } from './signup/signup.component';
+import {DirectivesModule} from "../directives/directives.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    DirectivesModule
   ],
   declarations: [
     SigninComponent,

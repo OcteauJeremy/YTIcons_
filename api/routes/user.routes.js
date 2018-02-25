@@ -12,6 +12,8 @@ module.exports = function(app) {
 
   app.get('/users/byWallet/:wallet', users.findByWallet);
 
+  app.get('/users/root', users.getRoot);
+
   app.get('/users/:userId', users.findOne);
 
   app.put('/users/:userId', uploadAvatar.single('avatar'), users.update);

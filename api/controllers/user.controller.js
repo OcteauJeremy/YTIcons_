@@ -112,9 +112,20 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
     User.remove({_id: req.params.userId}, function (err, user) {
         if (err) {
-            res.status(400).send({message: "Could not delete users with id " + req.params.userId});
-        } else {
-            res.status(200).send({message: "User deleted successfully!"})
+            return res.status(400).send({message: "Could not delete users with id " + req.params.userId});
         }
+        return res.status(200).send({message: "User deleted successfully!"})
+    });
+};
+
+exports.getRoot = function (req, res) {
+    User.findOne({
+        wallet: '0x0000000000000000000000000000000000000000'
+    }).exec(function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({message: "Could not delete users with id " + req.params.userId});
+        }
+        return res.status(200).send(user);
     });
 };

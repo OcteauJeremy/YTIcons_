@@ -1,20 +1,12 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0x305C0325C8652eb114251080c56020924055C8e2';
+const tokenAddress = '0xA8501ccA0f34859e48A815E763be4785eC89c018';
 
-// https://mainnet.infura.io/86DXX3VJr4phf8eKiPUM
-// var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://ropsten.infura.io/86DXX3VJr4phf8eKiPUM'));
+var User = require('../models/user.model');
+var Card = require('../models/card.model');
+var Transaction = require('../models/transaction.model');
+
 var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
-
-
-
-// var tokenContract = web3.eth.contract(tokenAbi).at(tokenAddress);
-//
-// var purchaseEvent = tokenContract.YTIconSold;
-//
-// purchaseEvent.watch(function (err, res) {
-//     console.log('yo', err, res);
-// });
 
 web3.eth.net.getId().then(function (id) {
     console.log('ID network chain', id);
@@ -22,25 +14,113 @@ web3.eth.net.getId().then(function (id) {
 
 var tokenContract = new web3.eth.Contract(tokenAbi, tokenAddress);
 
-tokenContract.events.allEvents({fromBlock: 'latest'}, function (err, res) {
-   console.log('------ event', err, res);
-});
-
-// tokenContract.once('YTIconSold', function (err, event) {
-//     console.log(err, event);
-// });
-//
-tokenContract.events.YTIconSold({
-    fromBlock: 'latest'
-}, function(error, event) {
+// Create User Root
+User.findOne({
+    wallet: '0x0000000000000000000000000000000000000000'
+}).exec(function (err, user) {
     if (err) {
         console.log(err);
         return ;
     }
-    var result = event.returnValues;
 
-    Card.findB
-    console.log('event', event);
+    if (!user) {
+        var user = new User();
+        user.username = 'Root';
+        user.password = 'HBstk5AaASChsy6V';
+        user.email = 'root@yticons.com';
+        user.wallet = '0x0000000000000000000000000000000000000000';
+
+        user.save(function (err, res) {
+            if (err) {
+                console.log(err);
+                return ;
+            }
+            console.log('User Root created')
+        })
+    }
 });
+
+tokenContract.events.YTIconSold({
+    fromBlock: 'latest'
+}, function(err, event) {
+    if (err) {
+        console.log(err);
+        return ;
+    }
+    var res = event.returnValues;
+    populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
+        if (err) {
+            console.log(err);
+            return ;
+        }
+
+        var createTx = function (user, card, newPrice) {
+            var tx = new Transaction();
+
+            tx.from = card.owner;
+            tx.price = card.price;
+            tx.to = user;
+
+            var tmpCard = JSON.parse(JSON.stringify(card));
+            tmpCard.transactions = [];
+            tx.card = tmpCard;
+
+            card.price = web3.utils.fromWei(newPrice);
+
+            tx.save(function (err, nTx) {
+                if (err) {
+                    console.log(err);
+                    return ;
+                }
+
+                ++card.nbTransactions;
+                card.transactions.push(nTx);
+                card.save(function (err, nCard) {
+                    if (err) {
+                        console.log(err);
+                        return ;
+                    }
+                    console.log('Transaction terminated. ID card', nCard._id);
+                })
+            });
+        };
+
+        User.findOne({
+            wallet: res.newOwner
+        }, function (err, user) {
+            if (err) {
+                console.log(err);
+                return ;
+            }
+
+            if (user) {
+                createTx(user, card, res.newPrice);
+            } else {
+                var user = new User();
+
+                user.save(function (err, nUser) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    createTx(nUser, card, res.newPrice);
+                })
+            }
+        });
+    });
+});
+
+
+var populateCard = function (mongooseObj) {
+    mongooseObj.populate('type').populate('category').populate('nationality').populate({
+        path: 'transactions',
+        populate: [{
+            path: 'from'
+        }, {
+            path: 'to'
+        }]
+    });
+    return mongooseObj;
+};
+
 
 
