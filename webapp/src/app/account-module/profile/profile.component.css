@@ -2,3 +2,18 @@
   color: white;
   cursor: pointer;
 }
+
+label {
+  display: block;
+}
+
+.address {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.page-title {
+  display: flex;
+  justify-content: space-between;
+}
