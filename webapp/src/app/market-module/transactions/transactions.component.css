@@ -1,3 +1,7 @@
 .withdraw_history {
   padding-bottom: 0px;
 }
+
+.table.withdraw__table {
+  margin-bottom: 0px;
+}

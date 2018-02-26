@@ -60,7 +60,7 @@
     </div>
 
     <div class="modal-body">
-      <div class="col-md-5">
+      <div class="col-md-5 col-sm-5 col-xs-12">
         <div [ngClass]="['card', card.type ? card.type.css : '', 'product', 'product--card']">
 
           <div class="card-title">
@@ -104,10 +104,10 @@
           <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
         </div>
       </div>
-      <div class="col-md-7 informations">
+      <div class="col-md-7 col-sm-7 col-xs-12 informations">
         <div class="section">
           <p>Youtube channel</p>
-          <span><a href="{{card.url}}" target="_blank">{{card.url}}</a></span>
+          <span class="ellipsis"><a href="{{card.url}}" target="_blank">{{card.url}}</a></span>
         </div>
         <div class="section">
           <p>Subscribers</p>
@@ -125,7 +125,7 @@
           <p>Citation</p>
           <span>{{card.citation}}</span>
         </div>
-        <div class="section">
+        <div class="section transactions-container">
           <p>Transactions</p>
           <transactions [transactions]="card.transactions"></transactions>
         </div>

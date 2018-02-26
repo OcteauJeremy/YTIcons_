@@ -37,9 +37,21 @@
   width: 40%;
   display: flex;
   padding: 0 28px 0 40px;
-  border-left: 2px solid #0773ed;
   align-items: center;
 }
+
+.first {
+  border-right: 2px solid #FD6B70 !important;
+}
+
+.second {
+  border-right: 2px solid #1777E9 !important;
+}
+
+.third {
+  border-right: 2px solid #724BBE !important;
+}
+
 
 .user_desc .user_avatar {
   display: inline-block;
@@ -81,7 +93,11 @@
 }
 
 .user__status.user__rank {
+  display: flex;
+  align-items: center;
   max-width: 60px;
+  min-height: 100px;
+  padding: 0px 28px 0px 18px;
 }
 
 .user__status.user__rank h3 {
@@ -97,9 +113,25 @@
   .user__status.user__rank {
     text-align: center;
     display: block;
-    border-bottom: 2px solid #0773ed;
     width: 200px;
     max-width: 200px;
+    min-height: 0px;
+    padding: 0px 28px;
+  }
+
+  .first {
+    border-bottom: 2px solid #FD6B70;
+    border-right: none !important;
+  }
+
+  .second {
+    border-bottom: 2px solid #1777E9;
+    border-right: none !important;
+  }
+
+  .third {
+    border-bottom: 2px solid #724BBE;
+    border-right: none !important;
   }
 
   .user__status.user__rank h3 {
