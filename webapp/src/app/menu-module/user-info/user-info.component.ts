@@ -18,7 +18,7 @@ export class UserInfoComponent implements OnInit {
 
   logout() {
     this.as.logout();
-    this._router.navigateByUrl('/login');
+    // this._router.navigateByUrl('/login');
   }
 
   ngOnInit() {

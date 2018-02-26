@@ -48,6 +48,10 @@
   justify-content: center;
 }
 
+.menu-container {
+   border-bottom: 1px solid #efefef;
+}
+
 @media (min-width: 768px) and (max-width: 991px) {
   .mainmenu__menu .navbar-nav > li {
     margin-right: 30px;
