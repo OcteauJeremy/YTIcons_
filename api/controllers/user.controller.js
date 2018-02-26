@@ -8,32 +8,47 @@ exports.create = function (req, res) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
-    var user = new User();
+    console.log('Create', req.body);
 
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.wallet = "";
-    user.password = user.generateHash(req.body.password);
+    User.findOne({
+        wallet: req.body.wallet
+    }).exec(function (err, fUser) {
+        var user = new User();
+        console.log('fUser 1', fUser);
 
-    if (!req.file) {
-        var files = [];
-
-        console.log(__dirname + '/../ressources/avatars/default');
-        fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
-            files.push(file);
-        });
-        user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
-    } else {
-        user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
-    }
-
-    user.save(function (err, user) {
-        if (err) {
-            console.log(err.message);
-            return res.status(400).send({message: "Some error occurred while creating the User."});
+        if (fUser.username == '') {
+            user = fUser;
+        } else if (fUser.username != '') {
+            return res.status(400).send({message: "User with this wallet already exist."});
         } else {
-            return res.status(200).send(user);
+            user.wallet = "";
         }
+
+        user.username = req.body.username;
+        user.email = req.body.email;
+        user.password = user.generateHash(req.body.password);
+
+        console.log('fUser', fUser);
+        if (!req.file) {
+            var files = [];
+
+            console.log(__dirname + '/../ressources/avatars/default');
+            fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
+                files.push(file);
+            });
+            user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
+        } else {
+            user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
+        }
+
+        user.save(function (err, user) {
+            if (err) {
+                console.log(err.message);
+                return res.status(400).send({message: "Some error occurred while creating the User."});
+            } else {
+                return res.status(200).send(user);
+            }
+        });
     });
 };
 

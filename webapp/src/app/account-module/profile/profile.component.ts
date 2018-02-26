@@ -21,7 +21,8 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
-  constructor(private ms: ManagerService,private route: ActivatedRoute, private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+  constructor(private ms: ManagerService,private route: ActivatedRoute,
+              private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
     }
 
   refreshProfileInfo(wallet: string) {
@@ -85,21 +86,22 @@ export class ProfileComponent implements OnInit {
 
     this.subscribtions.add(this.route.params.subscribe(params => {
       this.address = params['address'];
+
+      if (this.address == null && this.as.currentUser == null) {
+        this._router.navigate(['login']);
+      }
+
+      if (this.address == null) {
+        this.refreshProfileInfo(this.as.currentUser.wallet);
+      }
+
+      else {
+        this.subscribtions.add(this.us.getUserByWallet(this.address).subscribe(res => {
+          _self.userProfile = res;
+          _self.refreshProfileInfo(_self.address);
+        }));
+      }
     }));
-
-    if (this.address == null && this.as.currentUser == null) {
-      this._router.navigate(['login']);
-    }
-
-    if (this.address == null) {
-      this.refreshProfileInfo(this.as.currentUser.wallet);
-    }
-    else {
-      this.subscribtions.add(this.us.getUserByWallet(this.address).subscribe(res => {
-        _self.userProfile = res;
-        _self.refreshProfileInfo(_self.address);
-      }));
-    }
   }
 
   ngOnDestroy() {

@@ -34,7 +34,6 @@ export class EqualValidatorDirective implements Validator {
 
     // value not equal
     if (e && v !== e.value && !this.isReverse) {
-      console.log('pass here');
       return {
         validateEqual: false
       }
