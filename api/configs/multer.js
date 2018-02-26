@@ -12,6 +12,15 @@ var storageAvatar = multer.diskStorage({
     }
 });
 
+var storageYoutuber = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, __dirname + '/../ressources/youtuber/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype))
+    }
+});
+
 module.exports = {
     multerAvatar: multer({
         storage: storageAvatar,
@@ -20,5 +29,13 @@ module.exports = {
         }
     }),
     pathAvatarUpload: __dirname + '/../ressources/avatars/user',
-    pathAvatarUrl: '/avatar'
+    pathAvatarUrl: '/avatar',
+    multerYoutuber: multer({
+        storage: storageYoutuber,
+        limits: {
+            fileSize: 1024 * 1024
+        }
+    }),
+    pathYoutuberUpload: __dirname + '/../ressources/youtuber/images',
+    pathYoutuberUrl: '/youtuber'
 };

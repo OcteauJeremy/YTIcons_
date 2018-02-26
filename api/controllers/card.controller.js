@@ -1,25 +1,49 @@
 var Card = require('../models/card.model');
 var Type = require('../models/type.model');
+var uploadOptions   = require('../configs/multer');
+const download = require('image-downloader');
 
 exports.create = function (req, res) {
     var card = new Card();
 
     card.fromBody(req.body);
 
-    card.save(function (err, card) {
-        if (err) {
-            console.log(err.message);
-            return res.status(400).send({message: "Some error occurred while creating the Card."});
-        } else {
+    var saveCard = function (card) {
+        card.save(function (err, card) {
+            if (err) {
+                console.log(err.message);
+                return res.status(400).send({message: "Some error occurred while creating the Card."});
+            }
             return res.status(200).send(card);
-        }
-    });
+        });
+    };
+
+    if (req.body.image != "") {
+        var splitUrl = req.body.image.split('/');
+
+        var extension = splitUrl[splitUrl.length - 1].split('.')[1];
+
+        const options = {
+            url: req.body.image,
+            dest: uploadOptions.pathYoutuberUpload + '/' + card.id + '.' + extension
+        };
+
+        download.image(options).then(function (filename, image) {
+            card.image = '/youtuber/' + card.id + '.' + extension;
+            saveCard(card);
+
+        }).catch(function(err) {
+            throw err
+        });
+    } else {
+        saveCard(card);
+    }
 };
 
 exports.findAll = function (req, res) {
     var findObj = Card.find();
 
-    populateItem().exec(function (err, cards) {
+    populateItem(findObj).exec(function (err, cards) {
         if (err) {
             return res.status(400).send({message: "Some error occurred while retrieving users."});
         }
@@ -309,6 +333,25 @@ exports.getCount = function (req, res) {
             return res.status(400).send({message: "Could not get bounds."});
         }
         return res.status(200).send({count: nb});
+    });
+};
+
+exports.setImage = function (req, res) {
+
+    Card.findOne({
+        id: req.params.cardId
+    }, function (err, card) {
+        if (err || !card) {
+            return res.status(400).send({message: "Could not get card by id."});
+        }
+        card.image = uploadOptions.pathYoutuberUrl + '/' + req.file.filename;
+
+        card.save(function (err, card2) {
+            if (err || !card2) {
+                return res.status(400).send({message: "Could not get card by id."});
+            }
+            return res.status(200).send(card2);
+        })
     });
 };
 

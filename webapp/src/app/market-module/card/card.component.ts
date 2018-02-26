@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
     _id: ""
   };
 
-  constructor(private authenticationService: AuthenticationService, private cs: CardService,
+  constructor(private authenticationService: AuthenticationService, public cs: CardService,
               private router: Router) {
     this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;

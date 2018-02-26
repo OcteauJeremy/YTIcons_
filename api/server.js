@@ -45,6 +45,7 @@ require('./routes/youtube.route')(app);
 // Static access
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/default'));
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/user'));
+app.use('/youtuber', express.static(__dirname + '/ressources/youtuber/images'));
 
 app.use(function (err, req, res, next) {
     if (err.code === 'LIMIT_FILE_SIZE') {

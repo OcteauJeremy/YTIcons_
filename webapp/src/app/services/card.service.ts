@@ -17,7 +17,7 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _self;
-  private _tokenContractAddress = '0xefa05a541469b3d8d8e75a372d873b16906bbd51';
+  private _tokenContractAddress = '0x59a70a2fbb076cad38cd1c1ec42cb67755cc6c51';
 
   constructor(http: HttpClient) {
     super(http);
@@ -148,14 +148,13 @@ export class CardService extends ManagerService {
           self.getCountCards().subscribe(res => {
             card.id = res.count;
             self.createCard(card).subscribe(res => {
-              console.log('Card created');
-              resolve(1);
+              resolve(card);
             });
           });
         } else {
           alert('Creation de carte annulee');
           console.log(error);
-          resolve(0);
+          resolve(null);
         }
       });
     }) as Promise<any>;
@@ -175,6 +174,10 @@ export class CardService extends ManagerService {
       });
     }) as Promise<any>;
 
+  }
+
+  public  setImageCard(card, cardForm) {
+    return this.post('/cards/images/' + card.id , cardForm);
   }
 
   public  getCountCards() {

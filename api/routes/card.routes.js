@@ -1,6 +1,11 @@
+var uploadOptions   = require('../configs/multer');
+var uploadYoutuber    = uploadOptions.multerYoutuber;
+
 module.exports = function (app) {
 
     var cards = require('../controllers/card.controller.js');
+
+    app.post('/cards/images/:cardId', uploadYoutuber.single('image'), cards.setImage);
 
     app.post('/cards', cards.create);
 

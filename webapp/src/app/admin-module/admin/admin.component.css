@@ -10,3 +10,22 @@
 .error {
   border: solid 2px #FF0000;
 }
+
+.container-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.image-previ {
+  width: 150px;
+  height:150px;
+}
+
+.upload_title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

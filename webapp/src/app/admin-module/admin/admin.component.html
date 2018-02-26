@@ -144,6 +144,32 @@
 
         <div class="col-md-12">
           <div class="information_module">
+            <a class="toggle_title" href="#collapseImage" role="button" data-toggle="collapse" id="image-card">
+              <h4>Image <span class="lnr lnr-chevron-down"></span></h4>
+            </a>
+
+            <div class="information__set toggle_module collapse" id="collapseImage">
+              <div class="information_wrapper form--fields">
+                <div class="row">
+                  <div class="prof_img_upload container-image">
+                    <img [src]="cardYoutuber.image" class="image-previ">
+
+                    <div  class="upload_title">
+                      <p>JPG, GIF or PNG 150x150 px</p>
+                      <label for="dp" class="upload_btn">
+                        <input style="display: none" type="file" id="dp" (change)="refreshImage($event)">
+                        <span class="btn btn--sm btn--round">Upload Image</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- end /.information_wrapper -->
+            </div><!-- end /.information__set -->
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="information_module">
             <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse" id="price-card">
               <h4>Type and Price <span class="lnr lnr-chevron-down"></span></h4>
             </a>
@@ -174,6 +200,7 @@
             </div><!-- end /.information__set -->
           </div>
         </div>
+
       </div>
     </form>
 

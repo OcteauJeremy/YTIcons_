@@ -19,10 +19,12 @@ export class AdminComponent implements OnInit {
 
   public  urlChannel;
   public  rootUser;
-  public  types;
-  public  nationalities;
-  public  categories;
+  public  types = [];
+  public  nationalities = [];
+  public  categories = [];
+  public  fileYoutuber= null;
   public  createOrigin = true;
+  public  formData = new FormData();
   public  responseYoutube = {};
   public  selectInputs = {
     codeCountry: "",
@@ -32,7 +34,7 @@ export class AdminComponent implements OnInit {
 
   public  cardYoutuber = {
     name: "",
-    image: "",
+    image: "assets/images/cvrplc.jpg",
     nationality: {
       code: '',
       name: ''
@@ -58,7 +60,7 @@ export class AdminComponent implements OnInit {
 
   public  cardOriginYoutuber = {
     name: "",
-    image: "",
+    image: "assets/images/cvrplc.jpg",
     nationality: null,
     nbSubscribers: 0,
     nbViews: 0,
@@ -86,6 +88,7 @@ export class AdminComponent implements OnInit {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
+      this.formData.append('image', '');
     });
 
     nationalityService.getNationalities().subscribe(res => {
@@ -123,7 +126,6 @@ export class AdminComponent implements OnInit {
   loadChannel() {
     console.log(this.urlChannel);
     this.youtubeService.getChannel({url: this.urlChannel}).subscribe(res => {
-      console.log('res channel:', res);
       this.responseYoutube = res;
       this.cardYoutuber.name = res.snippet.title;
       this.cardYoutuber.image = res.snippet.thumbnails.medium.url;
@@ -218,6 +220,11 @@ export class AdminComponent implements OnInit {
       return ;
     }
 
+    if (this.fileYoutuber) {
+      this.formData.set('image', this.fileYoutuber);
+      this.cardYoutuber.image = "";
+    }
+
     var self = this;
     var category = this.categories.find(function (obj) {
       return obj.name == self.selectInputs.nameCategory;
@@ -228,13 +235,22 @@ export class AdminComponent implements OnInit {
     });
 
     var createCardSC = function (self) {
-      self.cs.createCardSC(self.cardYoutuber).then(function(res) {
-        console.log('Created card evolutive', res.name);
+      self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
+        console.log('Created card evolutive', cardYT);
+        if (self.fileYoutuber) {
+          self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
+        }
+
         if (self.createOrigin) {
+
           self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
           self.cardOriginYoutuber.type = self.getOriginType();
-          self.cs.createCardSC(self.cardOriginYoutuber).then(function(res) {
-            console.log('Created card origin', res.name);
+
+          self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
+            console.log('Created card origin', cardOrigin);
+            if (self.fileYoutuber) {
+              self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {});
+            }
           });
         }
       });
@@ -302,6 +318,22 @@ export class AdminComponent implements OnInit {
 
   priceChanged() {
     this.cardOriginYoutuber.price = this.cardYoutuber.price;
+  }
+
+  refreshImage(event: any) {
+    let fileList = event.target.files;
+
+    if (fileList && fileList.length > 0) {
+      this.fileYoutuber = fileList[0];
+      var reader = new FileReader();
+
+      reader.onload = (ev:any) => {
+        this.cardYoutuber.image = ev.target.result;
+        this.cardOriginYoutuber.image = ev.target.result;
+      };
+
+      reader.readAsDataURL(this.fileYoutuber);
+    }
   }
 
   getOriginType() {

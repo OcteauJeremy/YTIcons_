@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0xefa05a541469b3d8d8e75a372d873b16906bbd51';
+const tokenAddress = '0x59a70a2fbb076cad38cd1c1ec42cb67755cc6c51';
 
 var User = require('../models/user.model');
 var Card = require('../models/card.model');
