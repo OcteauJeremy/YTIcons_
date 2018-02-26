@@ -38,6 +38,7 @@ CardSchema.methods.fromBody = function(body) {
     this.price = body.price;
     this.type = body.type;
     this.nbTransactions = 0;
+    this.owner = body.owner;
     if (body.transactions) {
         this.transactions = body.transactions;
     } else {

@@ -17,7 +17,7 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _self;
-  private _tokenContractAddress = '0xA8501ccA0f34859e48A815E763be4785eC89c018';
+  private _tokenContractAddress = '0xefa05a541469b3d8d8e75a372d873b16906bbd51';
 
   constructor(http: HttpClient) {
     super(http);
@@ -149,10 +149,9 @@ export class CardService extends ManagerService {
             card.id = res.count;
             self.createCard(card).subscribe(res => {
               console.log('Card created');
+              resolve(1);
             });
           });
-
-          resolve(1);
         } else {
           alert('Creation de carte annulee');
           console.log(error);

@@ -1,10 +1,12 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0xA8501ccA0f34859e48A815E763be4785eC89c018';
+const tokenAddress = '0xefa05a541469b3d8d8e75a372d873b16906bbd51';
 
 var User = require('../models/user.model');
 var Card = require('../models/card.model');
 var Transaction = require('../models/transaction.model');
+var uploadOptions   = require('../configs/multer');
+
 
 var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
@@ -26,9 +28,10 @@ User.findOne({
     if (!user) {
         var user = new User();
         user.username = 'Root';
-        user.password = 'HBstk5AaASChsy6V';
+        user.password = user.generateHash('HBstk5AaASChsy6V');
         user.email = 'root@yticons.com';
         user.wallet = '0x0000000000000000000000000000000000000000';
+        user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
 
         user.save(function (err, res) {
             if (err) {
@@ -48,6 +51,8 @@ tokenContract.events.YTIconSold({
         return ;
     }
     var res = event.returnValues;
+
+
     populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
         if (err) {
             console.log(err);
@@ -72,7 +77,7 @@ tokenContract.events.YTIconSold({
                     console.log(err);
                     return ;
                 }
-
+                card.owner = user;
                 ++card.nbTransactions;
                 card.transactions.push(nTx);
                 card.save(function (err, nCard) {
@@ -98,6 +103,11 @@ tokenContract.events.YTIconSold({
             } else {
                 var user = new User();
 
+                user.username = "";
+                user.password = "";
+                user.email = "";
+                user.wallet = res.newOwner;
+                user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
                 user.save(function (err, nUser) {
                     if (err) {
                         console.log(err);
@@ -111,7 +121,7 @@ tokenContract.events.YTIconSold({
 
 
 var populateCard = function (mongooseObj) {
-    mongooseObj.populate('type').populate('category').populate('nationality').populate({
+    mongooseObj.populate('type').populate('category').populate('owner').populate('nationality').populate({
         path: 'transactions',
         populate: [{
             path: 'from'

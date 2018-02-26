@@ -5,12 +5,6 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="breadcrumb">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li class="active"><a href="#">Favorites</a></li>
-          </ul>
-        </div>
         <h1 *ngIf="address" class="page-title"><a target="_blank"
                                                   href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
         </h1>
@@ -43,14 +37,14 @@
                 <div class="profile-avatar" *ngIf="address && userProfile" src="images/author-avatar.jpg"
                      [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
               </div>
-                  <label for="cover_photo" class="upload_btn">
+                  <label *ngIf="!address" for="cover_photo" class="upload_btn">
                     <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
                            id="cover_photo">
                     <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
                   </label>
 
               <div class="author">
-                <h4 *ngIf="address">{{userProfile ? userProfile.username : 'Anonymous'}}</h4>
+                <h4 *ngIf="address">{{userProfile?.username ? userProfile.username : 'Anonymous'}}</h4>
                 <h4 *ngIf="!address">{{currentUser.username}}</h4>
                 <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') :
                   'Unknown'}}</p>

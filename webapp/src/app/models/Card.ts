@@ -14,6 +14,7 @@ export class Card {
   // public  promo: Promo;
   public  type: Type;
   public  price: number;
+  public  owner;
 
   constructor() {
   }

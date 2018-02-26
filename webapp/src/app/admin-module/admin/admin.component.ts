@@ -98,6 +98,8 @@ export class AdminComponent implements OnInit {
 
     userService.getRoot().subscribe(res => {
       this.rootUser = res;
+      this.cardYoutuber.owner = this.rootUser;
+      this.cardOriginYoutuber.owner = this.rootUser;
     });
   }
 
@@ -183,11 +185,6 @@ export class AdminComponent implements OnInit {
       let inputsCategory = [$('#wrapCategory'), $('#categoryName')];
       let inputsNationality = [$('#wrapCountry'), $('#codeCountry'), $('#nameCountry')];
 
-      console.log(inputsNationality);
-      console.log(inputsCategory);
-      //init boder
-
-      console.log('Create Card -- Error');
       let collapseHead = $('#informations-card');
       let collapseBody = $('#collapseInformations');
 
@@ -217,13 +214,9 @@ export class AdminComponent implements OnInit {
   }
 
   createCard() {
-    console.log('Create Card');
     if (!this.checkForm()) {
       return ;
     }
-
-    console.log('Create Card -- Passed');
-
 
     var self = this;
     var category = this.categories.find(function (obj) {
@@ -236,12 +229,12 @@ export class AdminComponent implements OnInit {
 
     var createCardSC = function (self) {
       self.cs.createCardSC(self.cardYoutuber).then(function(res) {
-        console.log('Created card evolutive', res);
+        console.log('Created card evolutive', res.name);
         if (self.createOrigin) {
           self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
           self.cardOriginYoutuber.type = self.getOriginType();
           self.cs.createCardSC(self.cardOriginYoutuber).then(function(res) {
-            console.log('Created card origin', res);
+            console.log('Created card origin', res.name);
           });
         }
       });
@@ -275,6 +268,8 @@ export class AdminComponent implements OnInit {
         this.cardYoutuber.category = res;
         createCardSC(this);
       });
+    } else {
+      createCardSC(this);
     }
 
 

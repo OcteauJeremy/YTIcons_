@@ -313,7 +313,7 @@ exports.getCount = function (req, res) {
 };
 
 var populateItem = function (findObj, id) {
-    findObj.populate('type').populate('category').populate('nationality').populate({
+    findObj.populate('type').populate('category').populate('nationality').populate('owner').populate({
         path: 'transactions',
         populate: [{
           path: 'from'
