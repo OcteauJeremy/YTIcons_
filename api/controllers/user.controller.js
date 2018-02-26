@@ -14,27 +14,29 @@ exports.create = function (req, res) {
         wallet: req.body.wallet
     }).exec(function (err, fUser) {
         var user = new User();
-        console.log('fUser 1', fUser);
 
-        if (fUser.username == '') {
+        user.wallet = "";
+
+        if (fUser && fUser.username == '') {
             user = fUser;
-        } else if (fUser.username != '') {
+        } else if (fUser && fUser.username != '') {
             return res.status(400).send({message: "User with this wallet already exist."});
-        } else {
-            user.wallet = "";
+        } else if (req.body.wallet) {
+            user.wallet = req.body.wallet;
         }
 
         user.username = req.body.username;
         user.email = req.body.email;
         user.password = user.generateHash(req.body.password);
 
-        console.log('fUser', fUser);
         if (!req.file) {
             var files = [];
 
             console.log(__dirname + '/../ressources/avatars/default');
             fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
-                files.push(file);
+                if (file[0] != '.') {
+                    files.push(file);
+                }
             });
             user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
         } else {

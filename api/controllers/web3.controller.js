@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0x59a70a2fbb076cad38cd1c1ec42cb67755cc6c51';
+const tokenAddress = '0xfc251e1c1df6b78784ca6436b4611a556c471c67';
 
 var User = require('../models/user.model');
 var Card = require('../models/card.model');
@@ -46,6 +46,7 @@ User.findOne({
 tokenContract.events.YTIconSold({
     fromBlock: 'latest'
 }, function(err, event) {
+    console.log('YTIconSold event');
     if (err) {
         console.log(err);
         return ;
