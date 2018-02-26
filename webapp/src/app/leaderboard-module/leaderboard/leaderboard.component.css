@@ -28,3 +28,110 @@
   display: flex !important;
   align-items: center;
 }
+
+/****/
+
+
+.user_desc {
+  min-height: 100px;
+  width: 40%;
+  display: flex;
+  padding: 0 28px 0 40px;
+  border-left: 2px solid #0773ed;
+  align-items: center;
+}
+
+.user_desc .user_avatar {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: -3px;
+  float: none;
+}
+
+.user_stats {
+  display: inline-block;
+  min-height: 100px;
+  vertical-align: middle;
+  padding: 0 30px;
+  position: absolute;
+  right: 0;
+  border-left: 1px solid #ececec;
+  border-right: 0px;
+  margin: 0px 17px 0px 0px;
+}
+
+.user_stats p {
+  margin: 0;
+  line-height: 28px;
+}
+
+.user_informations {
+  width: calc(100% - 75px);
+  padding-left: 15px;
+  display: inline-block;
+}
+
+.user_informations a {
+  font-size: 18px;
+  line-height: 26px;
+  color: #000;
+  font-weight: 500;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.user__status.user__rank {
+  max-width: 60px;
+}
+
+.user__status.user__rank h3 {
+  text-align: center;
+}
+
+
+@media (max-width: 767px) {
+  .user_single {
+    flex-direction: column;
+  }
+
+  .user__status.user__rank {
+    text-align: center;
+    display: block;
+    border-bottom: 2px solid #0773ed;
+    width: 200px;
+    max-width: 200px;
+  }
+
+  .user__status.user__rank h3 {
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .user_desc {
+    margin-top: 10px;
+    flex-direction: column;
+    border-left: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  .user_informations {
+    margin-top: 10px;
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .user_informations a {
+    padding-bottom: 0px;
+  }
+
+  .user_stats {
+    text-align: center;
+    display: block;
+    padding: 0 30px;
+    position: relative;
+    margin: auto;
+    border-left: none;
+    border-right: none;
+  }
+}
