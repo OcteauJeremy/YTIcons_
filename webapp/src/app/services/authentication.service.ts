@@ -23,10 +23,8 @@ export class AuthenticationService extends ManagerService{
     return this.post('/signin', {username: _username, password: _password});
   }
 
-  public register(_formData: FormData): Observable<any> {
-    this.cs.getAccount().then(account => {
-      this.address = account
-    });
+  public async register(_formData: FormData): Promise<any> {
+    this.address = await this.cs.getAccount();
 
     if (this.address && this.address != '')
       _formData.append('wallet', this.address);
@@ -35,7 +33,7 @@ export class AuthenticationService extends ManagerService{
     // else
     //   _formData.append('wallet', '0x546cc3C2ef5659F911dA90F90d48648a3f20C511');
 
-    return this.post('/users', _formData);
+    return this.post('/users', _formData).toPromise();
   }
 
   public logout() {
