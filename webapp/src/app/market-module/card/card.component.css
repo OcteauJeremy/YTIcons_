@@ -38,3 +38,20 @@
 .modal .modal-title {
   margin-bottom: 0px;
 }
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.transactions-container {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+}
