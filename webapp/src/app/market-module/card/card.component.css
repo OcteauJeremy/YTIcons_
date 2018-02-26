@@ -46,7 +46,12 @@
 }
 
 .transactions-container {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
+}
+
+transactions {
+  height: 230px;
+  overflow: scroll;
 }
 
 @media (max-width: 767px) {
