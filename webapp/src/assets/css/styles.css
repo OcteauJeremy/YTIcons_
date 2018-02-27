@@ -203,3 +203,11 @@ a {
   justify-content: space-between;
   color: #201f1c;
 }
+
+.table thead > tr > th {
+  padding: 12px 0 10px 28px !important;
+}
+
+.table > thead > tr > th {
+  border-bottom: 1px solid #ddd !important;
+}
