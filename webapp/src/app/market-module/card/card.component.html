@@ -5,7 +5,8 @@
   </div>
 
   <div class="card-img">
-    <div class="content-img" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
+    <div class="content-img" *ngIf="card?.image?.indexOf('http') == -1 && card?.image?.indexOf('data:image') == -1" [ngStyle]="{'background-image': 'url(' + cs.baseUrl + card.image + ')'}"></div>
+    <div class="content-img" *ngIf="card?.image?.indexOf('http') > -1 || card?.image?.indexOf('data:image') > -1" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
   </div>
 
   <div class="product__thumbnail" *ngIf="modal">
@@ -44,7 +45,7 @@
 </div>
 <div class="product-purchase">
   <div class="price_love">
-    <span>{{card.price | currency}}</span>
+    <span id="{{'card-price-' + card.id}}">{{card.price | currency}}</span>
   </div>
   <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
 </div>
@@ -68,7 +69,8 @@
           </div>
 
           <div class="card-img">
-            <div class="content-img" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
+            <div class="content-img" *ngIf="card?.image?.indexOf('http') > -1 && card?.image?.indexOf('data:image') > -1" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
+            <div class="content-img" *ngIf="card?.image?.indexOf('http') == -1 && card?.image?.indexOf('data:image') == -1" [ngStyle]="{'background-image': 'url(' + cs.baseUrl + card.image + ')'}"></div>
           </div>
 
           <div class="footer-card">
@@ -131,6 +133,7 @@
         </div>
         <div class="section">
           <p>Price history</p>
+
           <!--<price-chart [card]="card"></price-chart>-->
         </div>
 

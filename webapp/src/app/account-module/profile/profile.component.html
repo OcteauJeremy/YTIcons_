@@ -32,9 +32,9 @@
             <div class="author-infos">
 
               <div class="author_avatar">
-                <div class="profile-avatar" *ngIf="!address" src="images/author-avatar.jpg"
+                <div class="profile-avatar" *ngIf="!address"
                      [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>
-                <div class="profile-avatar" *ngIf="address && userProfile" src="images/author-avatar.jpg"
+                <div class="profile-avatar" *ngIf="address && userProfile"
                      [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
               </div>
                   <label *ngIf="!address" for="cover_photo" class="upload_btn">
@@ -49,10 +49,8 @@
                 <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') :
                   'Unknown'}}</p>
                 <p *ngIf="!address">Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy'}}</p>
-              </div><!-- end /.author -->
-            </div><!-- end /.author-infos -->
-
-
+              </div>
+            </div>
           </div><!-- end /.author-card -->
 
         </aside>

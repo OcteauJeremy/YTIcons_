@@ -61,3 +61,11 @@ transactions {
     flex-direction: column;
   }
 }
+
+.price-increase {
+  background-color: #77de51;
+}
+
+.price-decrease {
+  background-color: #9c0c1c;
+}

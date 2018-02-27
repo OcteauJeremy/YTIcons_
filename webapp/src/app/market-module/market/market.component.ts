@@ -3,9 +3,12 @@ import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TypeService } from '../../services/type.service';
-import {NationalityService} from "../../services/nationality.service";
-import {CategoryService} from "../../services/category.service";
+import { NationalityService } from "../../services/nationality.service";
+import { CategoryService } from "../../services/category.service";
+import { Socket } from 'ng-socket-io';
 
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-market',
@@ -28,7 +31,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     category: null,
     subscribers: null,
     videos: null
-  }
+  };
 
   private filters = {
     page: 1,
@@ -52,7 +55,9 @@ export class MarketComponent implements OnInit, OnDestroy {
     nbTransactions: null
   };
 
-  constructor(private cardService: CardService, private typeService: TypeService,private nationalityService: NationalityService,private categoryService: CategoryService) {
+  constructor(private cardService: CardService, private typeService: TypeService,
+              private nationalityService: NationalityService,private categoryService: CategoryService,
+              private socket: Socket) {
     this.getCards();
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
@@ -67,6 +72,18 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.categories = res;
     }));
 
+    this.socket.on('tx-card', cardId => {
+      this.cardService.getCard(cardId).subscribe(newCard => {
+        let idx = 0;
+        for (let card of this.cards) {
+          if (card._id == cardId) {
+            this.cards[idx] = newCard;
+            break ;
+          }
+          ++idx;
+        }
+      });
+    });
   }
 
   ngOnInit() {
@@ -166,5 +183,6 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscribtions.unsubscribe();
+    this.socket.disconnect();
   }
 }

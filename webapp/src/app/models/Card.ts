@@ -3,6 +3,7 @@
 import { Type } from './Type';
 
 export class Card {
+  public  _id: string;
   public  id: number;
   public  name: string;
   public  image: string;

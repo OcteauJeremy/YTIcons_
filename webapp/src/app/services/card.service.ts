@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import * as Web3 from 'web3';
+var Web3 = require('web3');
 
 import { HttpClient } from '@angular/common/http';
 import { ManagerService } from './manager.service';
@@ -17,12 +17,11 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _self;
-  private _tokenContractAddress = '0xefa05a541469b3d8d8e75a372d873b16906bbd51';
+  private _tokenContractAddress = '0xfc251e1c1df6b78784ca6436b4611a556c471c67';
 
   constructor(http: HttpClient) {
     super(http);
     if (typeof window.web3 !== 'undefined') {
-      // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
       const web3 = this._web3;
 
@@ -148,14 +147,13 @@ export class CardService extends ManagerService {
           self.getCountCards().subscribe(res => {
             card.id = res.count;
             self.createCard(card).subscribe(res => {
-              console.log('Card created');
-              resolve(1);
+              resolve(card);
             });
           });
         } else {
           alert('Creation de carte annulee');
           console.log(error);
-          resolve(0);
+          resolve(null);
         }
       });
     }) as Promise<any>;
@@ -177,6 +175,10 @@ export class CardService extends ManagerService {
 
   }
 
+  public  setImageCard(card, cardForm) {
+    return this.post('/cards/images/' + card.id , cardForm);
+  }
+
   public  getCountCards() {
     return this.get('/cards/count');
   }
@@ -187,6 +189,10 @@ export class CardService extends ManagerService {
 
   public  createCard(card) {
     return this.post('/cards', card);
+  }
+
+  public getCard(id: any) {
+    return this.get('/cards/' + id);
   }
 
   public getCards() {

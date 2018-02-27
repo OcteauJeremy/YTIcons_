@@ -16,6 +16,13 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.use( function(req, res, next){
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 mongoose.connect(configMongo.url);
 app.set('superSecret', configMongo.secret);
 
@@ -45,6 +52,7 @@ require('./routes/youtube.route')(app);
 // Static access
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/default'));
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/user'));
+app.use('/youtuber', express.static(__dirname + '/ressources/youtuber/images'));
 
 app.use(function (err, req, res, next) {
     if (err.code === 'LIMIT_FILE_SIZE') {
@@ -56,8 +64,8 @@ app.use(function (err, req, res, next) {
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
     // Load SC listeners
-    require('./controllers/web3.controller');
-    app.listen(3000, function () {
+    var server = module.exports.serverExpress = app.listen(3000, function () {
+        require('./controllers/web3.controller');
         console.log('YTIcons API listening on 3000')
     });
 });

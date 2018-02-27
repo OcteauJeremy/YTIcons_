@@ -6,6 +6,7 @@ import {Card} from "../../models/Card";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../services/user.service";
 import {ManagerService} from "../../services/manager.service";
+import { Socket } from 'ng-socket-io';
 
 @Component({
   selector: 'app-profile',
@@ -21,9 +22,26 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
-  constructor(private ms: ManagerService,private route: ActivatedRoute,
+  constructor(private ms: ManagerService,private route: ActivatedRoute, private socket: Socket,
               private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
-    }
+    socket.on('tx-card',  (cardId) => {
+      for (let c of this.cardsUser) {
+        if (c._id == cardId) {
+          this.cardsUser = [];
+          this.cs.getCardsByAddress(this.address).then((cardsUser: Array<number>) => {
+            for (var n of cardsUser) {
+              this.subscribtions.add(this.cs.getCardByIdSmartContract(n).subscribe(res => {
+                if (res) {
+                  this.cardsUser.push(res as Card);
+                }
+              }));
+            }
+          });
+          break ;
+        }
+      }
+    });
+  }
 
   refreshProfileInfo(wallet: string) {
     let _self = this;
@@ -106,6 +124,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscribtions.unsubscribe();
+    this.socket.disconnect();
   }
 
 }

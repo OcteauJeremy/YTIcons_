@@ -35,6 +35,9 @@ import {ContactModule} from './contact-module/contact.module';
 import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
 import {CharityModule} from './charity-module/charity.module';
 import {DirectivesModule} from "./directives/directives.module";
+import { SocketIoConfig, SocketIoModule } from 'ng-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -62,6 +65,7 @@ import {DirectivesModule} from "./directives/directives.module";
     BountyProgramModule,
     CharityModule,
     DirectivesModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     RealvalueService,
