@@ -15,6 +15,8 @@ module.exports = function (app) {
 
     app.get('/cards/bounds', cards.getBoundsPrice);
 
+    app.get('/cards/byWallet/:wallet', cards.findByWallet);
+
     app.get('/cards/:cardId', cards.findOne);
 
     app.get('/cards/bySmartId/:smartId', cards.findBySmartId);

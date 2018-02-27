@@ -23,7 +23,8 @@ export class ProfileComponent implements OnInit {
   public userProfile: any;
 
   constructor(private ms: ManagerService,private route: ActivatedRoute, private socket: Socket,
-              private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+              private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService) {
+
     socket.on('tx-card',  (cardId) => {
       for (let c of this.cardsUser) {
         if (c._id == cardId) {

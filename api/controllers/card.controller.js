@@ -1,6 +1,7 @@
 var Card = require('../models/card.model');
 var Type = require('../models/type.model');
-var uploadOptions   = require('../configs/multer');
+var User = require('../models/user.model');
+var uploadOptions = require('../configs/multer');
 const download = require('image-downloader');
 
 exports.create = function (req, res) {
@@ -32,7 +33,7 @@ exports.create = function (req, res) {
             card.image = '/youtuber/' + card.id + '.' + extension;
             saveCard(card);
 
-        }).catch(function(err) {
+        }).catch(function (err) {
             throw err
         });
     } else {
@@ -91,13 +92,6 @@ exports.getByQuery = function (req, res) {
     var paramSearch = {
         $and: []
     };
-
-    if (req.query.name) {
-        // TODO: OR owner name
-        paramSearch.$and.push({
-            "name": new RegExp(req.query.name, "i")
-        });
-    }
 
     if (req.query.type) {
         paramSearch.$and.push({
@@ -168,7 +162,13 @@ exports.getByQuery = function (req, res) {
 
     if (req.query.nationality) {
         paramSearch.$and.push({
-            "nationality": req.query.nationality
+            nationality: new RegExp(req.query.nationality, "i")
+        });
+    }
+
+    if (req.query.name) {
+        paramSearch.$and.push({
+            "name": new RegExp(req.query.name, "i")
         });
     }
 
@@ -193,34 +193,51 @@ exports.getByQuery = function (req, res) {
     tmp[keyObj] = order.toLowerCase();
     findObj.sort(tmp);
 
-    populateItem(findObj)
-        .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
-        .limit(pageOpt.perPage)
-        .exec(function (err, cards) {
-            if (err) {
-                console.log(err);
-                return res.status(400).send({message: "Could not retrieve user with id "});
-            }
+    var doingSearch = function (req, res, findObj) {
+        console.log('doingSearch', paramSearch);
+        populateItem(findObj)
+            .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
+            .limit(pageOpt.perPage)
+            .exec(function (err, cards) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({message: "Could not retrieve user with id "});
+                }
 
-            if (!cards) {
-                return res.status(400).send({message: "Card doesn't exist."});
-            }
+                if (!cards) {
+                    return res.status(400).send({message: "Card doesn't exist."});
+                }
 
-            var countObj;
-            if (paramSearch.$and.length > 0) {
-                countObj = Card.count(paramSearch);
-            } else {
-                countObj = Card.count();
-            }
+                var countObj;
+                if (paramSearch.$and.length > 0) {
+                    countObj = Card.count(paramSearch);
+                } else {
+                    countObj = Card.count();
+                }
 
-            populateItem(countObj).exec(function (err, count) {
-                return res.status(200).send({
-                    cards: cards,
-                    current: pageOpt.page,
-                    pages: Math.ceil(count / pageOpt.perPage)
+                populateItem(countObj).exec(function (err, count) {
+                    return res.status(200).send({
+                        cards: cards,
+                        current: pageOpt.page,
+                        pages: Math.ceil(count / pageOpt.perPage)
+                    });
                 });
             });
+    };
+
+    if (req.query.wallet) {
+        User.findOne({wallet: new RegExp(req.query.wallet, "i")}, function (err, user) {
+            if (user) {
+                paramSearch.$and.push({
+                    owner: user._id.toString()
+                });
+            }
+            doingSearch(req, res, findObj);
         });
+    } else {
+        doingSearch(req, res, findObj);
+    }
+
 };
 
 exports.update = function (req, res) {
@@ -355,11 +372,38 @@ exports.setImage = function (req, res) {
     });
 };
 
-var populateItem = function (findObj, id) {
+exports.findByWallet = function (req, res) {
+    if (!req.params.wallet) {
+        return res.status(400).send({message: "Wrong parameters."});
+    }
+
+    User.findOne({wallet: req.params.wallet}).exec(function (err, user) {
+        if (err) {
+            return res.status(400).send({message: "Error during the transaction."});
+        }
+
+        if (!user) {
+            return res.status(400).send({message: "Wallet doesn't exist."});
+        }
+
+        var findObj = Card.find({owner: user._id});
+
+        populateItem(findObj).exec(function (err, cards) {
+            if (err) {
+                return res.status(400).send({message: "Error during the transaction."});
+            }
+
+            return res.status(200).send(cards);
+        });
+
+    });
+};
+
+var populateItem = function (findObj, req) {
     findObj.populate('type').populate('category').populate('nationality').populate('owner').populate({
         path: 'transactions',
         populate: [{
-          path: 'from'
+            path: 'from'
         }, {
             path: 'to'
         }]
