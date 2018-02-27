@@ -1,0 +1,12 @@
+.dropdown {
+  min-width: 0px;
+}
+
+.dropdown.dropdown—currency {
+  padding: 0 22px;
+  right: 0;
+}
+
+.currency-button {
+  min-width: auto;
+}

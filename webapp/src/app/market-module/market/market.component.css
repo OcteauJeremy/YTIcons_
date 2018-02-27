@@ -17,3 +17,19 @@
 .pagination-area {
   margin-top: 30px;
 }
+
+.filter-bar .filter__option {
+  padding: 10px 0;
+}
+
+@media (max-width: 767px) {
+  .filter__option.filter--dropdown .dropdown-trigger,
+  .filter__option.filter--select {
+    margin: auto;
+  }
+
+  .filter__option.filter--select {
+    display: block;
+  }
+
+}
