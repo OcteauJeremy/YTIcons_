@@ -1,3 +1,13 @@
+.cardUI {
+  margin-top: 36px;
+  cursor: pointer;
+}
+
+.product-purchase {
+  margin-top: 10px !important;
+  padding: 10px 10px !important;
+}
+
 .modal-body {
   display: flex;
 }

@@ -49,7 +49,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     minTransactions: null,
     maxTransactions: null,
     nationality: null, //ID
-    sort: "price",
+    sort: "createdAt",
     order: "DESC",
     nbViews: null,
     nbTransactions: null

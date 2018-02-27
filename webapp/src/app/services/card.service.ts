@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 var Web3 = require('web3');
 
-import { HttpClient } from '@angular/common/http';
-import { ManagerService } from './manager.service';
+import {HttpClient} from '@angular/common/http';
+import {ManagerService} from './manager.service';
 
 declare let require: any;
 declare let window: any;
@@ -50,13 +50,15 @@ export class CardService extends ManagerService {
           alert(
             'Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.'
           );
-          return;
+          this._account = null;
+          resolve(null);
         }
         resolve(accs[0]);
       })
     }) as string;
 
-    this._web3.eth.defaultAccount = this._account;
+    if (this._account)
+      this._web3.eth.defaultAccount = this._account;
     return Promise.resolve(this._account);
   }
 
@@ -95,6 +97,30 @@ export class CardService extends ManagerService {
         from: account,
         gas: 4000000,
         value: this._web3.utils.toWei(_price.toString(), 'ether')
+      }, function (error, result) { //get callback from function which is your transaction key
+        if (!error) {
+          alert('Transaction ok');
+          resolve(1);
+        } else {
+          alert('Transaction closed');
+          console.log(error);
+          resolve(0);
+        }
+      });
+    }) as Promise<any>;
+  }
+
+  public async changePriceCard(_idCard: number, _price: number): Promise<any> {
+
+    let account = await this.getAccount();
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+
+      this._tokenContract.methods.setPrice(_idCard, this._web3.utils.toWei(_price.toString(), 'ether')).send({
+        from: account,
+        gas: 4000000,
+        value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
           alert('Transaction ok');
@@ -175,11 +201,11 @@ export class CardService extends ManagerService {
 
   }
 
-  public  setImageCard(card, cardForm) {
-    return this.post('/cards/images/' + card.id , cardForm);
+  public setImageCard(card, cardForm) {
+    return this.post('/cards/images/' + card.id, cardForm);
   }
 
-  public  getCountCards() {
+  public getCountCards() {
     return this.get('/cards/count');
   }
 
@@ -187,7 +213,7 @@ export class CardService extends ManagerService {
     return this.get('/cards/bySmartId/' + id);
   }
 
-  public  createCard(card) {
+  public createCard(card) {
     return this.post('/cards', card);
   }
 
