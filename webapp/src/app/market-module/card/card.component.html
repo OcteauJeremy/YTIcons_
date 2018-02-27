@@ -1,4 +1,4 @@
-<div class="cardUI" *ngIf="card" [ngClass]="['card', card.type ? card.type.css : '', 'product']">
+<div class="cardUI" *ngIf="card" [ngClass]="['card', card.type ? card.type.css : '', 'product'] " data-toggle="modal" [attr.data-target]="'#modal-' + card.id">
 
   <div class="card-title">
     <h4>{{card.name}}</h4>
@@ -8,11 +8,10 @@
     <div class="content-img" *ngIf="card?.image?.indexOf('http') == -1 && card?.image?.indexOf('data:image') == -1" [ngStyle]="{'background-image': 'url(' + cs.baseUrl + card.image + ')'}"></div>
     <div class="content-img" *ngIf="card?.image?.indexOf('http') > -1 || card?.image?.indexOf('data:image') > -1" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
   </div>
-<!--
-  <div class="product__thumbnail" *ngIf="modal">
+
+  <!--<div class="product__thumbnail" *ngIf="modal">
     <div class="prod_btn">
-      <a data-toggle="modal" [attr.data-target]="'#modal-' + card.id" class="transparent btn--sm btn--round">More
-        Info</a>
+      <a data-toggle="modal" [attr.data-target]="'#modal-' + card.id" class="transparent btn--sm btn--round">More Info</a>
       <a *ngIf="card.owner._id != currentUser?._id" data-toggle="modal"  (click)="purchaseCard(card.id, card.price)" class="transparent btn--sm btn--round">Buy</a>
       <a *ngIf="card.owner._id == currentUser?._id" data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="transparent btn--sm btn--round">Change price</a>
     </div>

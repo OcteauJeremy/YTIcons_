@@ -1,5 +1,6 @@
 .cardUI {
   margin-top: 36px;
+  cursor: pointer;
 }
 
 .product-purchase {
