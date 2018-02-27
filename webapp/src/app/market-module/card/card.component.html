@@ -111,31 +111,30 @@
           <p>Youtube channel</p>
           <span class="ellipsis"><a href="{{card.url}}" target="_blank">{{card.url}}</a></span>
         </div>
-        <div class="section">
+        <!--<div class="section">
           <p>Subscribers</p>
           <span>{{card.nbSubscribers}}</span>
-        </div>
+        </div> -->
         <div class="section">
           <p>Nationality</p>
-          <span>{{card.nationality?.name}}</span>
+          <span>{{card.nationality?.name.charAt(0).toUpperCase() + card.nationality?.name.slice(1)}}</span>
         </div>
         <div class="section">
           <p>Description</p>
           <span>{{card.description}}</span>
         </div>
-        <div class="section">
+        <!--<div class="section">
           <p>Citation</p>
           <span>{{card.citation}}</span>
-        </div>
+        </div>-->
         <div class="section transactions-container">
           <p>Transactions</p>
           <transactions [transactions]="card.transactions"></transactions>
         </div>
-        <div class="section">
+        <!--<div class="section">
           <p>Price history</p>
-
-          <!--<price-chart [card]="card"></price-chart>-->
-        </div>
+          <price-chart [card]="card"></price-chart>
+        </div>-->
 
 
       </div>
