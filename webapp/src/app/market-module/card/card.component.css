@@ -50,7 +50,8 @@
 }
 
 transactions {
-  height: 230px;
+  min-height: 170px;
+  max-height: 230px;
   overflow: scroll;
 }
 
