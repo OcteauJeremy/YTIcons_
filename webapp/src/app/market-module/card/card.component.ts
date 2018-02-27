@@ -16,6 +16,7 @@ export class CardComponent implements OnInit {
   public currentUser = {
     _id: ""
   };
+  public newPrice: number = 0;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
               private router: Router) {
@@ -30,6 +31,17 @@ export class CardComponent implements OnInit {
     this.cs.purchaseCard(idCard, price).then(function(res) {
       console.log(res);
     });
+  }
+
+  changePriceCard(idCard: number) {
+    if (this.newPrice != 0 ) {
+      this.cs.changePriceCard(idCard, this.newPrice).then(function (res) {
+        console.log(res);
+      });
+    }
+    else {
+      alert('price must be greater than 0 !');
+    }
   }
 
   ngOnInit() {

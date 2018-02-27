@@ -3,8 +3,12 @@
   justify-content: center;
 }
 
+.about_block {
+  padding: 20px 0px 20px 0px;
+}
+
 .home {
-  padding: 91px 0px;
+  padding: 130px 0px;
 }
 
 .hook {
@@ -42,6 +46,10 @@
   min-height: 0px;
 }
 
+.content_block1 {
+  padding: 10px 0px 10px 0px;
+}
+
 .about_block, .cards_block {
   background-color: #f6f7fb;
 }
@@ -52,6 +60,7 @@
 .cards_block .content_area {
   padding: 36px 0;
 }
+
 
 .about_block .content_area .content_area--title .highlight,
 .content_block1 .content_area .content_area--title .highlight,
