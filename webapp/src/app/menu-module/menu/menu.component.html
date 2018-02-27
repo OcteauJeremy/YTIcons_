@@ -14,15 +14,15 @@
             <span class="lnr lnr-menu"></span>
           </button>
 
-          <div *ngIf="!isAuthenticated()" class="logs_container hidden-lg hidden-md hidden-sm">
+          <div *ngIf="router.url == '/market'" class="hidden-lg hidden-md hidden-sm">
+            <currency-selector></currency-selector>
+          </div>
+
+          <div *ngIf="!isAuthenticated()" class="logs_container hidden-lg hidden-md hidden-sm" [ngClass]="{'margin-left': router.url == '/market'}">
             <div class="logs_wrap">
               <a routerLink="/login" href="" class="logs_button inline">Login</a>
             </div>
           </div><!-- end logs -->
-
-          <div *ngIf="router.url == '/market'" class="hidden-lg hidden-md hidden-sm">
-            <currency-selector></currency-selector>
-          </div>
 
           <!-- start profile -->
           <div *ngIf="isAuthenticated()" class="profile_container hidden-lg hidden-md hidden-sm" [ngClass]="{'margin-left': router.url == '/market'}">
@@ -53,17 +53,16 @@
             </ul>
           </div><!-- /.navbar-collapse -->
 
+          <div *ngIf="router.url == '/market'" class="hidden-xs">
+            <currency-selector></currency-selector>
+          </div>
+
           <!-- start logs -->
-          <div *ngIf="!isAuthenticated()" class="logs_container hidden-xs">
+          <div *ngIf="!isAuthenticated()" class="logs_container hidden-xs" [ngClass]="{'margin-left': router.url == '/market'}">
             <div class="logs_wrap">
               <a routerLink="/login" href="" class="logs_button inline">Login</a>
             </div>
           </div><!-- end logs -->
-
-
-          <div *ngIf="router.url == '/market'" class="hidden-xs">
-            <currency-selector></currency-selector>
-          </div>
 
           <!-- start profile -->
           <div *ngIf="isAuthenticated()" class="profile_container hidden-xs" [ngClass]="{'margin-left': router.url == '/market'}">
