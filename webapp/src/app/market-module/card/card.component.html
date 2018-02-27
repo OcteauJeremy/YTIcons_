@@ -45,7 +45,7 @@
 </div>
 <div class="product-purchase">
   <div class="price_love">
-    <span>{{card.price | currency}}</span>
+    <span id="{{'card-price-' + card.id}}">{{card.price | currency}}</span>
   </div>
   <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
 </div>
