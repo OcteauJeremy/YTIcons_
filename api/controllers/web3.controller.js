@@ -2,11 +2,14 @@ var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
 const tokenAddress = '0xfc251e1c1df6b78784ca6436b4611a556c471c67';
 
+var server = require('../server').serverExpress;
+
 var User = require('../models/user.model');
 var Card = require('../models/card.model');
 var Transaction = require('../models/transaction.model');
 var uploadOptions   = require('../configs/multer');
 
+var io = require('socket.io').listen(server);
 
 var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
@@ -41,6 +44,35 @@ User.findOne({
             console.log('User Root created')
         })
     }
+});
+
+tokenContract.events.PriceModified({
+        fromBlock: 'latest'
+}, function (err, event) {
+    console.log('PriceModified event');
+    if (err) {
+        console.log(err);
+        return ;
+    }
+
+    var res = event.returnValues;
+
+    Card.findOne({id: res.tokenId}).exec(function (err, card) {
+        if (err) {
+            console.log(err);
+            return ;
+        }
+
+        card.price = web3.utils.fromWei(res.newPrice);
+        card.save(function (err, card) {
+            if (err) {
+                console.log(err);
+                return ;
+            }
+            io.emit('tx-card', nCard._id);
+            console.log('Price modified. ID card', nCard._id);
+        });
+    })
 });
 
 tokenContract.events.YTIconSold({
@@ -86,6 +118,7 @@ tokenContract.events.YTIconSold({
                         console.log(err);
                         return ;
                     }
+                    io.emit('tx-card', nCard._id);
                     console.log('Transaction terminated. ID card', nCard._id);
                 })
             });
@@ -133,5 +166,12 @@ var populateCard = function (mongooseObj) {
     return mongooseObj;
 };
 
+
+
+io.on('connection', function(socket){
+    console.log('socket connection');
+    socket.on('disconnect', function(){
+    });
+});
 
 

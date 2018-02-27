@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import * as Web3 from 'web3';
+var Web3 = require('web3');
 
 import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
@@ -22,7 +22,6 @@ export class CardService extends ManagerService {
   constructor(http: HttpClient) {
     super(http);
     if (typeof window.web3 !== 'undefined') {
-      // Use Mist/MetaMask's provider
       this._web3 = new Web3(window.web3.currentProvider);
       const web3 = this._web3;
 
@@ -192,6 +191,10 @@ export class CardService extends ManagerService {
 
   public createCard(card) {
     return this.post('/cards', card);
+  }
+
+  public getCard(id: any) {
+    return this.get('/cards/' + id);
   }
 
   public getCards() {

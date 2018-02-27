@@ -364,10 +364,6 @@ var populateItem = function (findObj, id) {
             path: 'to'
         }]
     });
-    // {
-    //     path: "transactions.id",
-    //     match: { card: "id"}
-    // });
     return findObj;
 };
 
