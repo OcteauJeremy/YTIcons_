@@ -35,9 +35,10 @@ import {ContactModule} from './contact-module/contact.module';
 import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
 import {CharityModule} from './charity-module/charity.module';
 import {DirectivesModule} from "./directives/directives.module";
-import { SocketIoConfig, SocketIoModule } from 'ng-socket-io';
+import {SocketService} from "./services/socket.service";
+// import { SocketIoConfig, SocketIoModule } from 'ng-socket-io';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+//const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BountyProgramModule,
     CharityModule,
     DirectivesModule,
-    SocketIoModule.forRoot(config)
+    // SocketIoModule.forRoot(config)
   ],
   providers: [
     RealvalueService,
@@ -77,7 +78,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NationalityService,
     CategoryService,
     CurrencyService,
-    YoutubeService
+    YoutubeService,
+    SocketService
   ],
   bootstrap: [
     AppComponent

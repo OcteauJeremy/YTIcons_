@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TypeService } from '../../services/type.service';
 import { NationalityService } from "../../services/nationality.service";
 import { CategoryService } from "../../services/category.service";
-import { Socket } from 'ng-socket-io';
+import { SocketService } from '../../services/socket.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -56,8 +56,8 @@ export class MarketComponent implements OnInit, OnDestroy {
   };
 
   constructor(private cardService: CardService, private typeService: TypeService,
-              private nationalityService: NationalityService,private categoryService: CategoryService,
-              private socket: Socket) {
+              private nationalityService: NationalityService,private categoryService: CategoryService,private socketService: SocketService
+              ) {
     this.getCards();
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
@@ -72,7 +72,10 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.categories = res;
     }));
 
-    this.socket.on('tx-card', cardId => {
+    this.socketService.initSocket();
+
+    this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
+      console.log('cardId = ' + cardId);
       this.cardService.getCard(cardId).subscribe(newCard => {
         let idx = 0;
         for (let card of this.cards) {
@@ -86,9 +89,6 @@ export class MarketComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-  }
-
   generateQueryParams() {
     var obj = {};
     for (var key in this.filters) {
@@ -99,7 +99,11 @@ export class MarketComponent implements OnInit, OnDestroy {
     return obj;
   }
 
-  getCards() {
+  ngOnInit(): void {
+
+  }
+
+    getCards() {
     this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
@@ -182,7 +186,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.socketService.removeListener('tx-card');
     this.subscribtions.unsubscribe();
-    this.socket.disconnect();
   }
 }

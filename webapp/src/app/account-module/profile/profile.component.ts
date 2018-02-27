@@ -6,7 +6,7 @@ import {Card} from "../../models/Card";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../services/user.service";
 import {ManagerService} from "../../services/manager.service";
-import { Socket } from 'ng-socket-io';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,25 +22,27 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
-  constructor(private ms: ManagerService,private route: ActivatedRoute, private socket: Socket,
+   constructor(private ms: ManagerService,private route: ActivatedRoute, private socketService: SocketService,
               private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
-    socket.on('tx-card',  (cardId) => {
-      for (let c of this.cardsUser) {
-        if (c._id == cardId) {
-          this.cardsUser = [];
-          this.cs.getCardsByAddress(this.address).then((cardsUser: Array<number>) => {
-            for (var n of cardsUser) {
-              this.subscribtions.add(this.cs.getCardByIdSmartContract(n).subscribe(res => {
-                if (res) {
-                  this.cardsUser.push(res as Card);
-                }
-              }));
-            }
-          });
-          break ;
-        }
-      }
-    });
+     this.socketService.initSocket();
+
+     this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
+       for (let c of this.cardsUser) {
+         if (c._id == cardId) {
+           this.cardsUser = [];
+           this.cs.getCardsByAddress(this.address).then((cardsUser: Array<number>) => {
+             for (var n of cardsUser) {
+               this.subscribtions.add(this.cs.getCardByIdSmartContract(n).subscribe(res => {
+                 if (res) {
+                   this.cardsUser.push(res as Card);
+                 }
+               }));
+             }
+           });
+           break ;
+         }
+       }
+     });
   }
 
   refreshProfileInfo(wallet: string) {
@@ -123,8 +125,8 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.socketService.removeListener('tx-card');
     this.subscribtions.unsubscribe();
-    this.socket.disconnect();
   }
 
 }
