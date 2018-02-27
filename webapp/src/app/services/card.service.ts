@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import * as Web3 from 'web3';
 
-import { HttpClient } from '@angular/common/http';
-import { ManagerService } from './manager.service';
+import {HttpClient} from '@angular/common/http';
+import {ManagerService} from './manager.service';
 
 declare let require: any;
 declare let window: any;
@@ -51,13 +51,15 @@ export class CardService extends ManagerService {
           alert(
             'Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.'
           );
-          return;
+          this._account = null;
+          resolve(null);
         }
         resolve(accs[0]);
       })
     }) as string;
 
-    this._web3.eth.defaultAccount = this._account;
+    if (this._account)
+      this._web3.eth.defaultAccount = this._account;
     return Promise.resolve(this._account);
   }
 
@@ -176,11 +178,11 @@ export class CardService extends ManagerService {
 
   }
 
-  public  setImageCard(card, cardForm) {
-    return this.post('/cards/images/' + card.id , cardForm);
+  public setImageCard(card, cardForm) {
+    return this.post('/cards/images/' + card.id, cardForm);
   }
 
-  public  getCountCards() {
+  public getCountCards() {
     return this.get('/cards/count');
   }
 
@@ -188,7 +190,7 @@ export class CardService extends ManagerService {
     return this.get('/cards/bySmartId/' + id);
   }
 
-  public  createCard(card) {
+  public createCard(card) {
     return this.post('/cards', card);
   }
 

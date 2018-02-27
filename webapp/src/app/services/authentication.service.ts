@@ -26,12 +26,9 @@ export class AuthenticationService extends ManagerService{
   public async register(_formData: FormData): Promise<any> {
     this.address = await this.cs.getAccount();
 
+    console.log('here');
     if (this.address && this.address != '')
       _formData.append('wallet', this.address);
-
-    // C'etait pour tester le link des users
-    // else
-    //   _formData.append('wallet', '0x546cc3C2ef5659F911dA90F90d48648a3f20C511');
 
     return this.post('/users', _formData).toPromise();
   }
