@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {CardService} from './card.service';
 import { Subject } from 'rxjs/Subject';
 import { ManagerService } from './manager.service';
+import { CookieService } from 'ng2-cookies';
 
 @Injectable()
 export class AuthenticationService extends ManagerService{
@@ -13,10 +14,22 @@ export class AuthenticationService extends ManagerService{
   public  currentUserChange: Subject<any> = new Subject<any>();
 
 
-  constructor(http: HttpClient, private cs: CardService) {
+  constructor(http: HttpClient, private cs: CardService, public cookieService: CookieService) {
     super(http);
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.currentUserChange.next(this.currentUser);
+
+    var localToken = localStorage.getItem('yticons-token');
+    var cookieToken = this.cookieService.get('yticons-token');
+
+    var token = localToken || cookieToken;
+    if (token) {
+      this.getUserByToken(token).subscribe((res) => {
+        this.currentUser = res;
+        this.currentUserChange.next(this.currentUser);
+      });
+    } else {
+      this.currentUser = null;
+      this.currentUserChange.next(this.currentUser);
+    }
   }
 
   public login(_username: string, _password: string): Observable<any> {
@@ -34,18 +47,21 @@ export class AuthenticationService extends ManagerService{
   }
 
   public logout() {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('yticons-token');
+    this.cookieService.delete('yticons-token');
     this.currentUser = null;
   }
 
+  public getUserByToken(token) {
+    return this.get('/token/' + token);
+  }
+
   public  setCurrentUser(user) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUser = user;
     this.currentUserChange.next(this.currentUser);
   }
 
   public getLocalUser() {
-    var localUser = JSON.parse(localStorage.getItem('currentUser'));
-    return localUser;
+    return this.currentUser;
   }
 }

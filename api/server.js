@@ -1,5 +1,5 @@
 const express = require('express');
-const app = express();
+const app =  module.exports.appServer = express();
 const bodyParser = require('body-parser');
 const configMongo = require('./configs/mongoDB');
 const mongoose = require('mongoose');

@@ -23,7 +23,7 @@
 
             <!--<app-notifications></app-notifications>-->
 
-            <app-user-info></app-user-info>
+            <app-user-info *ngIf="isAuthenticated()" [user]="currentUser"></app-user-info>
           </div><!-- end .author-area -->
 
           <!-- author area restructured for mobile -->

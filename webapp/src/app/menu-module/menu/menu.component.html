@@ -46,13 +46,16 @@
               <li>
                 <a routerLink="/faq">FAQ</a>
               </li>
+              <li *ngIf="isAdmin()">
+                <a routerLink="/admin">Admin</a>
+              </li>
             </ul>
           </div><!-- /.navbar-collapse -->
 
           <!-- start logs -->
           <div *ngIf="!isAuthenticated()" class="logs_container hidden-xs">
             <div class="logs_wrap">
-              <a routerLink="/login" href="" class="logs_button inline">Login</a>
+              <a routerLink="/signin" href="" class="logs_button inline">Login</a>
             </div>
           </div><!-- end logs -->
 

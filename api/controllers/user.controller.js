@@ -1,6 +1,8 @@
 var User = require('../models/user.model');
 const fs = require('fs');
 var uploadOptions   = require('../configs/multer');
+var app = require('../server').appServer;
+var jwt    = require('jsonwebtoken');
 
 
 exports.create = function (req, res) {
@@ -28,6 +30,7 @@ exports.create = function (req, res) {
         user.username = req.body.username;
         user.email = req.body.email;
         user.password = user.generateHash(req.body.password);
+        user.roles = ['user'];
 
         if (!req.file) {
             var files = [];
@@ -48,6 +51,10 @@ exports.create = function (req, res) {
                 console.log(err.message);
                 return res.status(400).send({message: "Some error occurred while creating the User."});
             } else {
+                var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
+                    expiresInMinutes: 60 * 24 * 30
+                });
+                user.token = token;
                 return res.status(200).send(user);
             }
         });
@@ -90,15 +97,7 @@ exports.findByWallet = function (req, res) {
 
 exports.update = function (req, res) {
 
-    User.findById(req.params.userId, function (err, user) {
-        if (err) {
-            return res.status(400).send({message: "Could not find a user with id " + req.params.userId});
-        }
-
-        if (!user) {
-            return res.status(400).send({message: "User doesn't exist."});
-        }
-
+    var modifiedUser = function () {
         for (var key in req.body) {
             if (user[key] && key != "password") {
                 user[key] = req.body[key];
@@ -123,6 +122,31 @@ exports.update = function (req, res) {
                 return res.status(200).send(data);
             }
         });
+    };
+
+    User.findById(req.params.userId, function (err, user) {
+        if (err) {
+            return res.status(400).send({message: "Could not find a user with id " + req.params.userId});
+        }
+
+        if (!user) {
+            return res.status(400).send({message: "User doesn't exist."});
+        }
+
+        if (req.body.wallet != user.wallet) {
+            User.findOne({wallet: req.body.wallet}).exec(function (err, user) {
+                if (err) {
+                    return res.status(400).send({message: "Error during mongoDB transaction."});
+                }
+
+                if (user) {
+                    return res.status(400).send({message: "An account already use this wallet."});
+                }
+                modifiedUser();
+            });
+        } else {
+            modifiedUser();
+        }
     });
 };
 

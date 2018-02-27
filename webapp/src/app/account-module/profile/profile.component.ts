@@ -106,9 +106,9 @@ export class ProfileComponent implements OnInit {
     this.subscribtions.add(this.route.params.subscribe(params => {
       this.address = params['address'];
 
-      if (this.address == null && this.as.currentUser == null) {
+      /*if (this.address == null && this.as.currentUser == null) {
         this._router.navigate(['login']);
-      }
+      }*/
 
       if (this.address == null) {
         this.refreshProfileInfo(this.as.currentUser.wallet);
