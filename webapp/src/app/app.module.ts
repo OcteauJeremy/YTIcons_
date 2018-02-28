@@ -42,6 +42,7 @@ import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
 import {LeaderboardService} from "./services/leaderboard.service";
 import { LaddaModule } from 'angular2-ladda';
+import {LiveService} from "./services/live.service";
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { LaddaModule } from 'angular2-ladda';
     CookieService,
     IsAdminGuard,
     AuthenticationGuard,
+    LiveService
   ],
   bootstrap: [
     AppComponent
