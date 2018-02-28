@@ -170,9 +170,11 @@ export class CardService extends ManagerService {
         gas: 4000000,
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
+
         if (!error) {
           self.getCountCards().subscribe(res => {
             card.id = res.count;
+            card.tx = result;
             self.createCard(card).subscribe(res => {
               resolve(card);
             });

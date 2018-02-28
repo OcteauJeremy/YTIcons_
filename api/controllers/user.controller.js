@@ -156,6 +156,8 @@ exports.update = function (req, res) {
                 if (fUser) {
                     return res.status(400).send({message: "An account already use this wallet."});
                 }
+
+                user.wallet = req.body.wallet;
                 modifiedUser(user);
             });
         } else {
