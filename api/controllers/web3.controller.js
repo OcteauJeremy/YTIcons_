@@ -166,7 +166,6 @@ var populateCard = function (mongooseObj) {
 
 
 io.on('connection', function(socket){
-    console.log('socket connection');
     socket.on('disconnect', function(){
     });
 });

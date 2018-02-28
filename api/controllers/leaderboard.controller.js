@@ -3,8 +3,6 @@ var User = require('../models/user.model');
 var Card = require('../models/card.model');
 
 exports.findBySubscriber = function (req, res) {
-
-    console.log('findBySubscribers');
     const cursor = User.find().cursor();
     var ldboard = {};
     var refUser = {};

@@ -5,6 +5,7 @@ const configMongo = require('./configs/mongoDB');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+const compression = require('compression')
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -15,6 +16,7 @@ var corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
+app.use(compression());
 
 app.use( function(req, res, next){
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");

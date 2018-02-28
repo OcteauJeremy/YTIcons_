@@ -194,7 +194,7 @@ exports.getByQuery = function (req, res) {
     findObj.sort(tmp);
 
     var doingSearch = function (req, res, findObj) {
-        console.log('doingSearch', paramSearch);
+        //console.log('doingSearch', paramSearch);
         populateItem(findObj)
             .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
             .limit(pageOpt.perPage)
