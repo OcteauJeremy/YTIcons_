@@ -71,7 +71,7 @@
                       <div class="user_avatar">
                         <div class="leaderboard-profile-avatar" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + rank?.user?.avatar + ')'}" alt=""></div>
                       </div>
-                      <div class="user_informations">
+                      <div class="user_informations ellipsis">
                         <a *ngIf="!rank.user.wallet">{{rank.user.username}}</a>
                         <a *ngIf="rank.user.wallet" [routerLink]="['/account', rank.user?.wallet]">{{rank.user.username ? rank.user.username : rank.user.wallet}}</a>
                         <p *ngIf="rank.user.username">Member since: {{rank.user.createdAt | date:'MMMM yyyy'}}</p>
