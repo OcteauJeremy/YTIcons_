@@ -1,8 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { UserService } from '../../services/user.service';
 import { CurrencyService } from '../../services/currency.service';
 import { Subscription } from 'rxjs/Subscription';
+import fontawesome from '@fortawesome/fontawesome';
+import faEthereum from '@fortawesome/fontawesome-free-brands';
+import { faDollarSign, faEuroSign } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
   selector: 'currency-selector',
@@ -16,6 +18,10 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(private currencyService: CurrencyService, private as: AuthenticationService) {
+    fontawesome.library.add(faEthereum);
+    fontawesome.library.add(faDollarSign);
+    fontawesome.library.add(faEuroSign);
+
     this.subscriptions.add(this.as.currentUserChange.subscribe((user) => {
       this.currency = user.currency;
     }));

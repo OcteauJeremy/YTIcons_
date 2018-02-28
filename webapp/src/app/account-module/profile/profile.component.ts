@@ -1,12 +1,14 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {CardService} from '../../services/card.service';
-import {AuthenticationService} from '../../services/authentication.service';
-import {Card} from "../../models/Card";
-import {Subscription} from "rxjs/Subscription";
-import {UserService} from "../../services/user.service";
-import {ManagerService} from "../../services/manager.service";
+import { CardService } from '../../services/card.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Card } from "../../models/Card";
+import { Subscription } from "rxjs/Subscription";
+import { UserService } from "../../services/user.service";
+import {ManagerService } from "../../services/manager.service";
 import { SocketService } from '../../services/socket.service';
+import fontawesome from '@fortawesome/fontawesome';
+import { faSync } from '@fortawesome/fontawesome-free-solid';
 
 @Component({
   selector: 'app-profile',
@@ -22,8 +24,10 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
-   constructor(private ms: ManagerService,private route: ActivatedRoute, private socketService: SocketService,
+   constructor(private ms: ManagerService, private route: ActivatedRoute, private socketService: SocketService,
               private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+
+     fontawesome.library.add(faSync);
 
      let _self = this;
 
