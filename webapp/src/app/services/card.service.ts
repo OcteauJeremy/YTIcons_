@@ -17,7 +17,7 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _self;
-  private _tokenContractAddress = '0x0ba480857cffc3b07c914a1ac8b6fdc84e2623fc';
+  private _tokenContractAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
 
   constructor(http: HttpClient) {
     super(http);
