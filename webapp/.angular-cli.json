@@ -25,6 +25,7 @@
         "assets/css/owl.carousel.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/ladda/dist/ladda.min.css",
+        "../node_modules/angular2-toaster/toaster.css",
         "assets/css/styles-template.css",
         "assets/css/styles.css"
       ],

@@ -9,6 +9,7 @@ import {ManagerService } from "../../services/manager.service";
 import { SocketService } from '../../services/socket.service';
 import fontawesome from '@fortawesome/fontawesome';
 import { faSync } from '@fortawesome/fontawesome-free-solid';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,8 @@ export class ProfileComponent implements OnInit {
   public userProfile: any;
 
    constructor(private ms: ManagerService, private route: ActivatedRoute, private socketService: SocketService,
-              private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+               private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService,
+               private toasterService: ToasterService) {
 
      fontawesome.library.add(faSync);
 
@@ -83,7 +85,7 @@ export class ProfileComponent implements OnInit {
           }
         }, error => {
           _self.as.currentUser.wallet = save;
-          alert('Wallet is already set on another user !');
+          this.toasterService.pop('error', 'Wallet refresh', 'This wallet is already set on another user.');
         }));
       }
     });
