@@ -5,7 +5,6 @@ import { SlickModule } from 'ngx-slick';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TopbarModule } from './topbar-module/topbar.module';
 import { MenuModule } from './menu-module/menu.module';
 import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';
@@ -35,6 +34,9 @@ import {ContactModule} from './contact-module/contact.module';
 import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
 import {CharityModule} from './charity-module/charity.module';
 import {DirectivesModule} from "./directives/directives.module";
+import { CookieService } from 'ng2-cookies';
+import { IsAdminGuard } from './guards/is-admin.guard';
+import { AuthenticationGuard } from './guards/authentication.guard';
 import {SocketService} from "./services/socket.service";
 import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
@@ -81,7 +83,10 @@ import {LeaderboardService} from "./services/leaderboard.service";
     CurrencyService,
     YoutubeService,
     SocketService,
-    LeaderboardService
+    LeaderboardService,
+    CookieService,
+    IsAdminGuard,
+    AuthenticationGuard,
   ],
   bootstrap: [
     AppComponent

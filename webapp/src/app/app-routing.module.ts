@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
@@ -14,23 +13,29 @@ import { AdminComponent } from './admin-module/admin/admin.component';
 import {ContactComponent} from './contact-module/contact/contact.component';
 import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bountyprogram.component';
 import {CharityComponent} from './charity-module/charity/charity.component';
+import { IsAdminGuard } from './guards/is-admin.guard';
+import { AuthenticationGuard } from './guards/authentication.guard';
 import {LiveComponent} from './live-module/live/live.component';
 import {TermsOfServiceComponent} from './termsofservice-module/termsofservice/termsofservice.component';
 
 const appRoutes: Routes = [
   {
     path: 'home',
-    component: HomeComponent,
-    canActivate: []
+    component: HomeComponent
   },
   {
     path: 'market',
-    component: MarketComponent,
-    canActivate: []
+    component: MarketComponent
   },
   {
     path: 'account',
     component: ProfileComponent,
+    canActivate: [
+      AuthenticationGuard
+    ],
+    data: {
+      redirectTo: '/login'
+    }
   },
   {
     path: 'account/:address',
@@ -65,12 +70,15 @@ const appRoutes: Routes = [
     component: BountyProgramComponent,
   },
   {
-    path: 'login',
+    path: 'signin',
     component: SigninComponent,
   },
   {
     path: 'admin',
-    component: AdminComponent
+    component: AdminComponent,
+    canActivate: [
+      IsAdminGuard
+    ]
   },
   {
     path: 'signup',

@@ -33,3 +33,8 @@
   }
 
 }
+
+.empty-marker {
+  text-align: center;
+  padding: 112px 0px 112px 0px;
+}

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RealvalueService } from './services/realvalue.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -12,7 +11,7 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private realValueService: RealvalueService, private router: Router) {
+  constructor(private router: Router, private as: AuthenticationService) {
   }
 
   ngOnInit() {

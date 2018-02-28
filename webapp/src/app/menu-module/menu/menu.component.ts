@@ -9,9 +9,14 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  public currentUser: {};
+  public currentUser = null;
 
-  constructor(private as: AuthenticationService, private router: Router) { }
+  constructor(private as: AuthenticationService, private router: Router) {
+    this.as.currentUserChange.subscribe((user) => {
+      this.currentUser = user;
+    });
+    this.currentUser = this.as.currentUser;
+  }
 
   ngOnInit() {
     this.isAuthenticated();
@@ -22,4 +27,7 @@ export class MenuComponent implements OnInit {
     return this.currentUser ? true : false;
   }
 
+  isAdmin() {
+    return !!(this.currentUser && this.currentUser.roles.indexOf('admin') > -1);
+  }
 }

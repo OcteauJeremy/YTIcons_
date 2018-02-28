@@ -14,7 +14,11 @@ exports.findBySubscriber = function (req, res) {
         promise.then(function(doc) {
             if (doc) {
 
-                ldboard[doc._id] = 0;
+                ldboard[doc._id] = {
+                    nbSubscribers: 0,
+                    nbViews: 0,
+                    nbCards: 0
+                };
                 refUser[doc._id] = doc;
                 Card.find({owner: doc._id}).exec(function (err, cards) {
                     if (err) {
@@ -23,19 +27,18 @@ exports.findBySubscriber = function (req, res) {
 
                     for (var i = 0; i < cards.length; i++) {
                         var card = cards[i];
-                        ldboard[card.owner] += card.nbSubscribers;
+                        ldboard[card.owner].nbSubscribers += card.nbSubscribers;
+                        ldboard[card.owner].nbViews += card.nbViews;
                     }
 
-                    console.log(cursor.next);
+                    ldboard[doc._id].nbCards = cards.length;
 
                     if (cursor.next) {
                         next(cursor.next());
                     }
                 });
             } else {
-                var sortedLeaderboard = Object.keys(ldboard).sort(function(a, b) {return ldboard[b] - ldboard[a]});
-                console.log(ldboard);
-                console.log(sortedLeaderboard);
+                var sortedLeaderboard = Object.keys(ldboard).sort(function(a, b) {return ldboard[b].nbSubscribers - ldboard[a].nbSubscribers});
                 var returnLd = [];
                 for (var i = 0; i < sortedLeaderboard.length && i < 50; i++) {
                     returnLd.push({

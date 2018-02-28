@@ -1,31 +1,45 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { AuthenticationService } from './authentication.service';
+import { UserService } from './user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
-export class CurrencyService {
+export class CurrencyService implements OnDestroy{
 
   public  currentCurrency;
   public  currentCurrencyChange: Subject<any> = new Subject<any>();
+  public  currencyPipeChange:  Subject<any> = new Subject<any>();
 
-  constructor(public authenticationService: AuthenticationService) {
-    this.authenticationService.currentUserChange.subscribe((user) => {
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(public authenticationService: AuthenticationService, private userService: UserService) {
+    this.subscriptions.add(this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentCurrency = user.currency;
-      this.currentCurrencyChange.next(this.currentCurrency);
-    });
+      this.currentCurrencyChange.next(user.currency);
+      this.currencyPipeChange.next(this.currentCurrency);
+    }));
 
-    if (authenticationService.currentUser) {
-      console.log('Loading current User', authenticationService.currentUser);
-      this.currentCurrency = authenticationService.currentUser.currency;
-    } else {
-      this.currentCurrency = "ETH";
-    }
-    this.currentCurrencyChange.next(this.currentCurrency);
+    this.currentCurrency = "ETH";
+    this.currentCurrencyChange.next(this.currentCurrencyChange);
   }
 
   setCurrency(currency) {
     this.currentCurrency = currency;
-    this.currentCurrencyChange.next(currency);
+
+    this.currencyPipeChange.next(this.currentCurrency);
+    if (this.authenticationService.currentUser) {
+      this.authenticationService.currentUser.currency = currency;
+      this.subscriptions.add(this.userService.modifyUser(this.authenticationService.currentUser).subscribe(() => {}));
+    }
+  }
+
+  getCurrency() {
+    return this.currentCurrency;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

@@ -47,7 +47,7 @@
 
                                 <div class="form-group">
                                     <div class="custom_checkbox">
-                                        <input type="checkbox" id="ch2">
+                                        <input type="checkbox" id="ch2" (change)="rememberMe = !rememberMe" [checked]="rememberMe">
                                         <label for="ch2"><span class="shadow_checkbox"></span><span class="label_text">Remember me</span></label>
                                     </div>
                                 </div>
