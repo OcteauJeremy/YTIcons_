@@ -4,6 +4,7 @@ var Web3 = require('web3');
 
 import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
+import {ToasterService} from 'angular2-toaster';
 
 declare let require: any;
 declare let window: any;
@@ -19,7 +20,7 @@ export class CardService extends ManagerService {
   private _self;
   private _tokenContractAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private toasterService: ToasterService) {
     super(http);
     if (typeof window.web3 !== 'undefined') {
       this._web3 = new Web3(window.web3.currentProvider);
@@ -27,13 +28,13 @@ export class CardService extends ManagerService {
 
       this._web3.eth.net.getId().then(function (id) {
         if (id !== 3) {
-          alert('You are not connected to the right network on Metamask !');
+          this.toasterService.pop('warning', 'Network', 'You are not connected to the right network on MetaMask.');
         }
       });
 
       this._tokenContract = new this._web3.eth.Contract(tokenAbi, this._tokenContractAddress);
     } else {
-      alert('You need to install Metamask to be able to trade cards !');
+      this.toasterService.pop('warning', 'Cards trading', 'You need to install MetaMask to be able to trade cards.');
     }
 
   }
@@ -42,14 +43,12 @@ export class CardService extends ManagerService {
     this._account = await new Promise((resolve, reject) => {
       this._web3.eth.getAccounts((err, accs) => {
         if (err != null) {
-          alert('There was an error fetching your accounts.');
+          this.toasterService.pop('error', 'Account', 'There was an error while fetching your accounts.');
           return;
         }
 
         if (accs.length === 0) {
-          alert(
-            'Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.'
-          );
+          this.toasterService.pop('error', '', 'The account(s)\' retrieval had failed. Please make sure your Ethereum client is correctly configured.');
           this._account = null;
           resolve(null);
         }
@@ -100,10 +99,10 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
         console.log('result', result);
         if (!error) {
-          alert('Transaction ok');
+          this.toasterService.pop('success', 'Transaction', 'Your purchase has been successfully done.');
           resolve(1);
         } else {
-          alert('Transaction closed');
+          this.toasterService.pop('error', 'Transaction', 'Transaction closed');
           console.log(error);
           resolve(0);
         }
@@ -124,10 +123,10 @@ export class CardService extends ManagerService {
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          alert('Transaction ok');
+          this.toasterService.pop('success', 'Price modification', 'The price of your YTIcon has been successfully modified.');
           resolve(1);
         } else {
-          alert('Transaction closed');
+          this.toasterService.pop('success', 'Price modification', 'Transaction closed');
           console.log(error);
           resolve(0);
         }
@@ -147,10 +146,10 @@ export class CardService extends ManagerService {
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          alert('Creation de carte ok');
+          this.toasterService.pop('success', 'Card creation', 'The YTIcon named "' + name + '" has been successfully created.');
           resolve(1);
         } else {
-          alert('Creation de carte annulee');
+          this.toasterService.pop('error', 'Card creation', 'An error occured while creating the YTIcon "' + name + '"');
           console.log(error);
           resolve(0);
         }
@@ -180,7 +179,7 @@ export class CardService extends ManagerService {
             });
           });
         } else {
-          alert('Creation de carte annulee');
+          this.toasterService.pop('success', 'Card creation', 'An error occured while creating the YTIcon "' + card.name + '"');
           console.log(error);
           resolve(null);
         }

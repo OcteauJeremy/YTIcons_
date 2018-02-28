@@ -3,6 +3,7 @@ import { Card } from '../../models/Card';
 import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'card',
@@ -19,7 +20,7 @@ export class CardComponent implements OnInit {
   public newPrice: number = 0;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
-              private router: Router) {
+              private router: Router, private toasterService: ToasterService) {
     this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     });
@@ -38,9 +39,8 @@ export class CardComponent implements OnInit {
       this.cs.changePriceCard(idCard, this.newPrice).then(function (res) {
         console.log(res);
       });
-    }
-    else {
-      alert('price must be greater than 0 !');
+    } else {
+      this.toasterService.pop('error', 'Price modification', 'The price must be greater than 0.');
     }
   }
 
@@ -49,7 +49,7 @@ export class CardComponent implements OnInit {
 
   redirectToUser() {
     console.log('redirect', '/account', this.card.owner.wallet);
-    this.router.navigate(['/account', this.card.owner.wallet])
+    this.router.navigate(['/account', this.card.owner.wallet]);
   }
 
 }
