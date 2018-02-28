@@ -104,17 +104,14 @@ tokenContract.events.YTIconSold({
 
             card.price = web3.utils.fromWei(newPrice);
 
-            console.log('tx saved:', tx);
             tx.save(function (err, nTx) {
-                if (err) {
-                    console.log(err);
-                    return ;
+                 if (err) {
+                     console.log(err);
+                     return ;
                 }
                 card.owner = user;
                 ++card.nbTransactions;
-                console.log('nTx push', nTx);
-                console.log('card bf push', card);
-                card.transactions.push(nTx);
+                card.transactions.push(tx);
                 card.save(function (err, nCard) {
                     if (err) {
                         console.log(err);

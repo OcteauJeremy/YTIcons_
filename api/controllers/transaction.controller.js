@@ -62,7 +62,7 @@ exports.findAll = function (req, res) {
 exports.getLastTransactions = function (req, res) {
     var findObj = Transaction.find();
 
-    findObj.sort({createdAt: 'asc'});
+    findObj.sort({createdAt: 'desc'});
 
     var limitNb = req.query.limit ? req.query.limit : 20;
 

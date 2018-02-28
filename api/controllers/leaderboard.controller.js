@@ -12,7 +12,7 @@ exports.findBySubscriber = function (req, res) {
 
     function next(promise) {
         promise.then(function(doc) {
-            if (doc) {
+            if (doc && doc.username != "Root") {
 
                 ldboard[doc._id] = {
                     nbSubscribers: 0,

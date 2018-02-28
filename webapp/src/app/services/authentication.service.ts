@@ -13,7 +13,6 @@ export class AuthenticationService extends ManagerService{
   public  currentUser: any;
   public  currentUserChange: Subject<any> = new Subject<any>();
 
-
   constructor(http: HttpClient, private cs: CardService, public cookieService: CookieService) {
     super(http);
 
@@ -39,7 +38,6 @@ export class AuthenticationService extends ManagerService{
   public async register(_formData: FormData): Promise<any> {
     this.address = await this.cs.getAccount();
 
-    console.log('here');
     if (this.address && this.address != '')
       _formData.append('wallet', this.address);
 
