@@ -57,20 +57,20 @@ tokenContract.events.PriceModified({
 
     var res = event.returnValues;
 
-    Card.findOne({id: res.tokenId}).exec(function (err, card) {
+    populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
         if (err) {
             console.log(err);
             return ;
         }
 
         card.price = web3.utils.fromWei(res.newPrice);
-        card.save(function (err, card) {
+        card.save(function (err, nCard) {
             if (err) {
                 console.log(err);
                 return ;
             }
-            io.emit('tx-card', nCard._id);
-            console.log('Price modified. ID card', nCard._id);
+            io.emit('tx-card', card._id);
+            console.log('Price modified. ID card', card._id);
         });
     })
 });
@@ -119,6 +119,7 @@ tokenContract.events.YTIconSold({
                         return ;
                     }
                     io.emit('tx-card', nCard._id);
+                    io.emit('live-info', nCard);
                     console.log('Transaction terminated. ID card', nCard._id);
                 })
             });
