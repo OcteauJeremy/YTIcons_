@@ -1,15 +1,16 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var uploadOptions   = require('../configs/multer');
 
 var UserSchema = mongoose.Schema({
-    username: {type: String, unique: true},
-    email: {type: String, unique: true},
+    username: String,
+    email: String,
     password: String,
     roles: [String],
     currency: String,
     avatar: String,
     token: String,
-    wallet: {type: String}
+    wallet: String
 }, {
     timestamps: true
 });
@@ -21,6 +22,17 @@ UserSchema.methods.generateHash = function (password) {
 // checking if password is valid
 UserSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.initValues = function() {
+    this.username = "";
+    this.email = "";
+    this.password = "";
+    this.roles = ["user"];
+    this.currency  = "ETH";
+    this.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
+    this.token = "";
+    this.wallet = "";
 };
 
 module.exports = mongoose.model('User', UserSchema);

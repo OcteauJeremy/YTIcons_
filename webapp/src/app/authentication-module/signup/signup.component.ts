@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         formData.append('username', this.username);
         formData.append('password', this.password);
         this.as.register(formData).then(res => {
-            this._router.navigate(['login']);
+            this._router.navigate(['signin']);
         }, error2 => {
           alert(error2.error.message);
         });
