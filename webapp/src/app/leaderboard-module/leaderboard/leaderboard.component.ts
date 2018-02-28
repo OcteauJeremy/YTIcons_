@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ManagerService} from "../../services/manager.service";
-import {LeaderboardService} from "../../services/leaderboard.service";
-import {Subscription} from "rxjs/Subscription";
-import { RouterLink } from '@angular/router';
-import {AuthenticationService} from "../../services/authentication.service";
+import { ManagerService } from "../../services/manager.service";
+import { LeaderboardService } from "../../services/leaderboard.service";
+import { Subscription } from "rxjs/Subscription";
+import { AuthenticationService } from "../../services/authentication.service";
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-leaderboard',
@@ -12,7 +12,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class LeaderboardComponent implements OnInit {
 
-  constructor(private ms: ManagerService,private ls: LeaderboardService, private as: AuthenticationService) {
+  constructor(private ms: ManagerService,private ls: LeaderboardService, private as: AuthenticationService, private toasterService: ToasterService) {
 
   }
 
@@ -30,7 +30,7 @@ export class LeaderboardComponent implements OnInit {
         _self.leaderboard = res;
       }
     }, error => {
-      alert('Wallet is already set on another user !');
+      this.toasterService.pop('error', 'Leaderboard', 'This wallet is already set on another user.');
     }));
   }
 

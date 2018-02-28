@@ -3,6 +3,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'app-signin',
@@ -16,7 +17,7 @@ export class SigninComponent implements OnInit, OnDestroy {
   public  rememberMe = true;
   private subscribtions: Subscription = new Subscription();
 
-  constructor(private as: AuthenticationService, private _router: Router, public cookieService: CookieService) {
+  constructor(private as: AuthenticationService, private _router: Router, public cookieService: CookieService, private toasterService: ToasterService) {
     if (as.currentUser != null) {
       this._router.navigate(['account']);
     }
@@ -34,8 +35,8 @@ export class SigninComponent implements OnInit, OnDestroy {
       this.as.setCurrentUser(res);
       this._router.navigate(['account']);
 
-    },error2 => {
-      alert(error2.error.message);
+    },error => {
+      this.toasterService.pop('error', 'Authentication', error.error.message);
     }));
   }
 

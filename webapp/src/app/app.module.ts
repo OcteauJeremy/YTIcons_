@@ -15,9 +15,9 @@ import { AuthenticationModule } from './authentication-module/authentication.mod
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { RealvalueService } from './services/realvalue.service';
-import {CardService} from './services/card.service';
-import {FaqModule} from './faq-module/faq.module';
-import {AuthenticationService} from './services/authentication.service';
+import { CardService } from './services/card.service';
+import { FaqModule } from './faq-module/faq.module';
+import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TypeService } from './services/type.service';
@@ -30,23 +30,25 @@ import { CategoryService } from './services/category.service';
 import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
-import {ContactModule} from './contact-module/contact.module';
-import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
-import {CharityModule} from './charity-module/charity.module';
-import {DirectivesModule} from "./directives/directives.module";
+import { ContactModule } from './contact-module/contact.module';
+import { BountyProgramModule } from './bountyprogram-module/bountyprogram.module';
+import { CharityModule } from './charity-module/charity.module';
+import { DirectivesModule } from "./directives/directives.module";
 import { CookieService } from 'ng2-cookies';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import {SocketService} from "./services/socket.service";
-import {LiveModule} from './live-module/live.module';
-import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
-import {LeaderboardService} from "./services/leaderboard.service";
+import { SocketService } from "./services/socket.service";
+import { LiveModule } from './live-module/live.module';
+import { TermsOfServiceModule } from './termsofservice-module/termsofservice.module';
+import { LeaderboardService } from "./services/leaderboard.service";
 import { LaddaModule } from 'angular2-ladda';
-import {LiveService} from "./services/live.service";
+import { LiveService } from "./services/live.service";
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,9 @@ import {LiveService} from "./services/live.service";
     DirectivesModule,
     LiveModule,
     TermsOfServiceModule,
-    LaddaModule
+    LaddaModule,
+    ToasterModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     RealvalueService,
@@ -90,7 +94,8 @@ import {LiveService} from "./services/live.service";
     CookieService,
     IsAdminGuard,
     AuthenticationGuard,
-    LiveService
+    LiveService,
+    ToasterService
   ],
   bootstrap: [
     AppComponent
