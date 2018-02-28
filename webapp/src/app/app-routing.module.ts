@@ -14,6 +14,8 @@ import { AdminComponent } from './admin-module/admin/admin.component';
 import {ContactComponent} from './contact-module/contact/contact.component';
 import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bountyprogram.component';
 import {CharityComponent} from './charity-module/charity/charity.component';
+import {LiveComponent} from './live-module/live/live.component';
+import {TermsOfServiceComponent} from './termsofservice-module/termsofservice/termsofservice.component';
 
 const appRoutes: Routes = [
   {
@@ -39,12 +41,20 @@ const appRoutes: Routes = [
     component: LeaderboardComponent,
   },
   {
+    path: 'live',
+    component: LiveComponent,
+  },
+  {
     path: 'faq',
     component: FaqComponent,
   },
   {
     path: 'contact',
     component: ContactComponent,
+  },
+  {
+    path: 'termsofservice',
+    component: TermsOfServiceComponent,
   },
   {
     path: 'charity',

@@ -36,6 +36,8 @@ import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
 import {CharityModule} from './charity-module/charity.module';
 import {DirectivesModule} from "./directives/directives.module";
 import { SocketIoConfig, SocketIoModule } from 'ng-socket-io';
+import {LiveModule} from './live-module/live.module';
+import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -65,7 +67,9 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BountyProgramModule,
     CharityModule,
     DirectivesModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    LiveModule,
+    TermsOfServiceModule
   ],
   providers: [
     RealvalueService,
