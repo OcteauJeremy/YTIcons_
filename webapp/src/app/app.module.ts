@@ -38,6 +38,7 @@ import {DirectivesModule} from "./directives/directives.module";
 import {SocketService} from "./services/socket.service";
 import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
+import {LeaderboardService} from "./services/leaderboard.service";
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {TermsOfServiceModule} from './termsofservice-module/termsofservice.modul
     CategoryService,
     CurrencyService,
     YoutubeService,
-    SocketService
+    SocketService,
+    LeaderboardService
   ],
   bootstrap: [
     AppComponent

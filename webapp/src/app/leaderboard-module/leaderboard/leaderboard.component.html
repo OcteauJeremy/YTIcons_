@@ -59,18 +59,18 @@
           <div class="col-md-12">
             <div class="user_area">
               <ul>
-                <li>
+                <li *ngFor="let rank of leaderboard; let i = index">
                   <div class="user_single">
-                    <div class="user__status user__rank first">
-                      <h3>1</h3>
+                    <div class="user__status user__rank first" [ngClass]="['user__status','user__rank', !i ? 'first' : '',i == 1 ? 'second' : '',i == 2 ? 'third' : '' ]">
+                      <h3>{{i + 1}}</h3>
                     </div>
                     <div class="user_desc">
                       <div class="user_avatar">
                         <img src="assets/images/m1.png" alt="">
                       </div>
                       <div class="user_informations">
-                        <a href="#">Nekflamm</a>
-                        <p>Member since: February 2017</p>
+                        <a [routerLink]="['/account', rank.user.wallet]">{{rank.user.username ? rank.user.username : rank.user.wallet}}</a>
+                        <p *ngIf="rank.user.username">Member since: February 2017</p>
                       </div>
                     </div>
                     <div class="user_stats">
