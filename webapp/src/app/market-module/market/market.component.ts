@@ -21,6 +21,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   public  types = [];
   public  nationalities = [];
   public  categories = [];
+  public  isLoading = false;
 
   private subscribtions: Subscription = new Subscription();
   private maxPages = 0;
@@ -104,7 +105,10 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
     getCards() {
+    this.isLoading = true;
+    this.cards = [];
     this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
+      this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
       console.log('cards', res);
