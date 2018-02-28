@@ -31,6 +31,7 @@ exports.create = function (req, res) {
         user.email = req.body.email;
         user.password = user.generateHash(req.body.password);
         user.roles = ['user'];
+        user.currency = 'ETH';
 
         if (!req.file) {
             var files = [];
@@ -97,7 +98,7 @@ exports.findByWallet = function (req, res) {
 
 exports.update = function (req, res) {
 
-    var modifiedUser = function () {
+    var modifiedUser = function (user) {
         for (var key in req.body) {
             if (user[key] && key != "password") {
                 user[key] = req.body[key];
@@ -134,18 +135,18 @@ exports.update = function (req, res) {
         }
 
         if (req.body.wallet != user.wallet) {
-            User.findOne({wallet: req.body.wallet}).exec(function (err, user) {
+            User.findOne({wallet: req.body.wallet}).exec(function (err, fUser) {
                 if (err) {
                     return res.status(400).send({message: "Error during mongoDB transaction."});
                 }
 
-                if (user) {
+                if (fUser) {
                     return res.status(400).send({message: "An account already use this wallet."});
                 }
-                modifiedUser();
+                modifiedUser(user);
             });
         } else {
-            modifiedUser();
+            modifiedUser(user);
         }
     });
 };

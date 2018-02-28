@@ -5,7 +5,6 @@ import { SlickModule } from 'ngx-slick';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TopbarModule } from './topbar-module/topbar.module';
 import { MenuModule } from './menu-module/menu.module';
 import { FooterModule } from './footer-module/footer-module.module';
 import { HomeModule } from './home-module/home.module';

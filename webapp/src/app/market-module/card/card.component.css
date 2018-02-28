@@ -32,7 +32,7 @@
 .modal-body .section {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .modal-footer {
@@ -60,7 +60,8 @@
 }
 
 transactions {
-  height: 230px;
+  min-height: 170px;
+  max-height: 230px;
   overflow: scroll;
 }
 
@@ -78,3 +79,4 @@ transactions {
 .price-decrease {
   background-color: #9c0c1c;
 }
+

@@ -13,29 +13,17 @@ export class CurrencySelectorComponent implements OnInit {
   public currency = "ETH";
   public currentUser;
 
-  constructor(private authenticationService: AuthenticationService, private currencyService: CurrencyService, private userService: UserService) {
-
-    this.authenticationService.currentUserChange.subscribe((user) => {
-      this.currentUser = user;
+  constructor(private currencyService: CurrencyService, private as: AuthenticationService) {
+    this.as.currentUserChange.subscribe((user) => {
       this.currency = user.currency;
     });
 
-    this.currencyService.currentCurrencyChange.subscribe((currency) => {
+    this.currencyService.currentUserCurrencyChange.subscribe((currency) => {
       this.currency = currency;
-      this.currentUser = this.authenticationService.getLocalUser();
-      if (this.currentUser) {
-        this.userService.modifyUser(this.currentUser).subscribe(res => {
-          this.authenticationService.setCurrentUser(res);
-        });
-      }
     });
 
-    this.currentUser = this.authenticationService.currentUser;
-    if (this.currentUser) {
-      this.currency = this.currentUser.currency;
-    } else {
-      this.currency = currencyService.currentCurrency;
-    }
+    this.currency = this.currencyService.getCurrency();
+    console.log('this.currency CMP', this.currency);
   }
 
   ngOnInit() {
@@ -44,5 +32,4 @@ export class CurrencySelectorComponent implements OnInit {
   setCurrency(currency) {
     this.currencyService.setCurrency(currency);
   }
-
 }
