@@ -24,7 +24,7 @@ export class LeaderboardComponent implements OnInit {
     let _self = this;
     this.currentUser = this.as.currentUser;
 
-    console.log(this.currentUser);
+    //console.log(this.currentUser);
     this.subscriptions.add(this.ls.getLeaderboard().subscribe(res => {
       if (res != null) {
         _self.leaderboard = res;
