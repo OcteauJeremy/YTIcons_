@@ -11,7 +11,7 @@ var uploadOptions   = require('../configs/multer');
 
 var io = require('socket.io').listen(server);
 
-var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
 web3.eth.net.getId().then(function (id) {
     console.log('ID network chain', id);
@@ -111,8 +111,6 @@ tokenContract.events.YTIconSold({
                 }
                 card.owner = user;
                 ++card.nbTransactions;
-                console.log('tx created:',  tx);
-                console.log('user', user);
                 card.transactions.push(tx);
                 card.save(function (err, nCard) {
                     if (err) {

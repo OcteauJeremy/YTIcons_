@@ -17,7 +17,7 @@ import { faSync } from '@fortawesome/fontawesome-free-solid';
 })
 export class ProfileComponent implements OnInit {
 
-  public cardNumber: number;
+  public cardNumber: number = 0;
   public cardsUser: Array<Card> = [];
   public currentUser: any;
   private subscriptions: Subscription = new Subscription();
