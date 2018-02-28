@@ -40,6 +40,7 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import {SocketService} from "./services/socket.service";
 import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
+import { LaddaModule } from 'angular2-ladda';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import {TermsOfServiceModule} from './termsofservice-module/termsofservice.modul
     CharityModule,
     DirectivesModule,
     LiveModule,
-    TermsOfServiceModule
+    TermsOfServiceModule,
+    LaddaModule
   ],
   providers: [
     RealvalueService,

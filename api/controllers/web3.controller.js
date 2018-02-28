@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0x410245e78bd43f8cac9c9e337cfddcb435d0d0c9';
+const tokenAddress = '0x0ba480857cffc3b07c914a1ac8b6fdc84e2623fc';
 
 var server = require('../server').serverExpress;
 
@@ -104,6 +104,7 @@ tokenContract.events.YTIconSold({
 
             card.price = web3.utils.fromWei(newPrice);
 
+            console.log('tx saved:', tx);
             tx.save(function (err, nTx) {
                 if (err) {
                     console.log(err);
@@ -111,6 +112,8 @@ tokenContract.events.YTIconSold({
                 }
                 card.owner = user;
                 ++card.nbTransactions;
+                console.log('nTx push', nTx);
+                console.log('card bf push', card);
                 card.transactions.push(nTx);
                 card.save(function (err, nCard) {
                     if (err) {

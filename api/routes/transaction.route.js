@@ -7,5 +7,7 @@ module.exports = function(app) {
 
     app.get('/transactions', transactions.findAll);
 
+    app.get('/transactions/last', transactions.getLastTransactions);
+
     app.get('/transactions/:transactionId', transactions.findOne);
 };
