@@ -14,7 +14,9 @@
 
 .modal-body .informations {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+  word-break: break-all;
+  overflow: hidden;
 }
 
 .modal-body .informations p {
