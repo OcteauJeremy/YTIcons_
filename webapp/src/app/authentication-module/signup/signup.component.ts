@@ -45,6 +45,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         });
 
       }
+      this.toasterService.pop('error', 'Sign up', 'Please, fill all the fields.');
     }
 
   readUrl(event:any) {

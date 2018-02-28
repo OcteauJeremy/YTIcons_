@@ -36,7 +36,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       this._router.navigate(['account']);
 
     },error => {
-      this.toasterService.pop('error', 'Authentication', error.error.message);
+      this.toasterService.pop('error', 'Authentication', 'The entered credentials are incorrect.');
     }));
   }
 
