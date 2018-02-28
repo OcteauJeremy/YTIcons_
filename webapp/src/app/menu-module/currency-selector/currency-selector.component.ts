@@ -20,18 +20,18 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
       this.currency = user.currency;
     }));
 
-    this.subscriptions.add(this.currencyService.currentUserCurrencyChange.subscribe((currency) => {
+    this.subscriptions.add(this.currencyService.currentCurrencyChange.subscribe((currency) => {
       this.currency = currency;
     }));
 
     this.currency = this.currencyService.getCurrency();
-    console.log('this.currency CMP', this.currency);
   }
 
   ngOnInit() {
   }
 
   setCurrency(currency) {
+    this.currency = currency;
     this.currencyService.setCurrency(currency);
   }
 
