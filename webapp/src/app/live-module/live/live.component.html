@@ -30,12 +30,13 @@
       <div class="col-md-12">
 
         <div class="job_detail_module">
-          <h3 class="job__title">Live view</h3>
           <div class="job__content">
-            <div *ngFor="let tr of transactions">
-            <span>Vendeur:</span><span>{{tr?.from?.username ? tr?.from?.username : tr.from?.wallet}}</span>
-              <span>Acheteur:</span><span>{{tr?.to?.username ? tr?.to?.username : tr.to?.wallet}}</span>
-              <span>Price:</span><span>{{tr?.price}} ETH</span>
+            <div *ngFor="let tr of transactions" style="margin-bottom: 15px;">
+              <span style="color:#939493">YTIcons> </span><a style="font-weight: 500;" [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username ? tr?.to?.username : 'Anonymous'}}</a> bought
+              <span style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</span> <span>[{{tr?.card?.nbSubscribers | abbreviateNumber}} FOLW, {{tr?.card?.nbViews | abbreviateNumber}} VIEWS, {{tr?.card?.nbVideos | abbreviateNumber}} VIDS, {{tr?.card?.createdAt | timeBetween}} CARD]</span>
+              from
+              <a style="font-weight: 500;" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ? tr?.from?.username : tr.from?.wallet}}</a> at
+              <span>{{tr?.price}} ETH.</span>
             </div>
           </div>
         </div><!-- end /.job_detail_module -->
