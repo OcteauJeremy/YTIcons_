@@ -6,7 +6,7 @@ import {Card} from "../../models/Card";
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../../services/user.service";
 import {ManagerService} from "../../services/manager.service";
-import { Socket } from 'ng-socket-io';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,30 +18,34 @@ export class ProfileComponent implements OnInit {
   public cardNumber: number;
   public cardsUser: Array<Card> = [];
   public currentUser: any;
-  private subscribtions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
   public address: string = null;
   public userProfile: any;
 
-  constructor(private ms: ManagerService,private route: ActivatedRoute, private socket: Socket,
-              private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService) {
+   constructor(private ms: ManagerService,private route: ActivatedRoute, private socketService: SocketService,
+              private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
 
-    socket.on('tx-card',  (cardId) => {
-      for (let c of this.cardsUser) {
-        if (c._id == cardId) {
-          this.cardsUser = [];
-          this.cs.getCardsByAddress(this.address).then((cardsUser: Array<number>) => {
-            for (var n of cardsUser) {
-              this.subscribtions.add(this.cs.getCardByIdSmartContract(n).subscribe(res => {
-                if (res) {
-                  this.cardsUser.push(res as Card);
-                }
-              }));
-            }
-          });
-          break ;
-        }
-      }
-    });
+     let _self = this;
+
+     this.socketService.initSocket();
+
+     this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
+       for (let c of this.cardsUser) {
+         if (c._id == cardId) {
+           this.cardsUser = [];
+           this.cs.getCardsByWallet(this.address == null ? this.currentUser.wallet : this.address).subscribe(cardsUser => {
+
+             for (var card of cardsUser) {
+               if (card) {
+                 _self.cardsUser.push(card as Card);
+               }
+             }
+             _self.cardNumber = _self.cardsUser.length;
+           });
+           break ;
+         }
+       }
+     });
   }
 
   refreshProfileInfo(wallet: string) {
@@ -49,17 +53,15 @@ export class ProfileComponent implements OnInit {
 
     this.currentUser = this.as.currentUser;
 
-    this.cs.getCardNumberByAddress(wallet).then(cardNumber => this.cardNumber = cardNumber);
-
     this.cardsUser = [];
-    this.cs.getCardsByAddress(wallet).then(function(cardsUser: Array<number>) {
-      for (var n of cardsUser) {
-        _self.subscribtions.add(_self.cs.getCardByIdSmartContract(n).subscribe(res => {
-          if (res) {
-            _self.cardsUser.push(res as Card);
+    this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
+
+      for (var card of cardsUser) {
+          if (card) {
+            _self.cardsUser.push(card as Card);
           }
-        }));
       }
+      _self.cardNumber = _self.cardsUser.length;
     });
   }
 
@@ -67,10 +69,16 @@ export class ProfileComponent implements OnInit {
     let _self = this;
     this.cs.getAccount().then(function(res:string) {
       if (_self.as.currentUser.wallet != res) {
+        let save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;
-        _self.subscribtions.add(_self.us.modifyUser(_self.as.currentUser).subscribe(res => {
-          _self.as.setCurrentUser(res);
-          _self.refreshProfileInfo(_self.as.currentUser.wallet);
+        _self.subscriptions.add(_self.us.modifyUser(_self.as.currentUser).subscribe(res => {
+          if (res != null) {
+            _self.as.setCurrentUser(res);
+            _self.refreshProfileInfo(_self.as.currentUser.wallet);
+          }
+        }, error => {
+          _self.as.currentUser.wallet = save;
+          alert('Wallet is already set on another user !');
         }));
       }
     });
@@ -91,7 +99,7 @@ export class ProfileComponent implements OnInit {
       formData.append('currency', _self.as.currentUser.currency);
       formData.append('password', _self.as.currentUser.password);
 
-      _self.subscribtions.add(_self.us.modifyUserFormData(formData, _self.as.currentUser).subscribe(res => {
+      _self.subscriptions.add(_self.us.modifyUserFormData(formData, _self.as.currentUser).subscribe(res => {
         _self.as.setCurrentUser(res);
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
       }));
@@ -103,7 +111,7 @@ export class ProfileComponent implements OnInit {
     let _self = this;
     this.currentUser = this.as.currentUser;
 
-    this.subscribtions.add(this.route.params.subscribe(params => {
+    this.subscriptions.add(this.route.params.subscribe(params => {
       this.address = params['address'];
 
       /*if (this.address == null && this.as.currentUser == null) {
@@ -115,17 +123,24 @@ export class ProfileComponent implements OnInit {
       }
 
       else {
-        this.subscribtions.add(this.us.getUserByWallet(this.address).subscribe(res => {
-          _self.userProfile = res;
-          _self.refreshProfileInfo(_self.address);
+        this.subscriptions.add(this.us.getUserByWallet(this.address).subscribe(res => {
+          if (res == null) {
+            this._router.navigate(['market']);
+          }
+          else {
+            _self.userProfile = res;
+            _self.refreshProfileInfo(_self.address);
+          }
+        },error => {
+          console.log(error);
         }));
       }
     }));
   }
 
   ngOnDestroy() {
-    this.subscribtions.unsubscribe();
-    this.socket.disconnect();
+    this.socketService.removeListener('tx-card');
+    this.subscriptions.unsubscribe();
   }
 
 }

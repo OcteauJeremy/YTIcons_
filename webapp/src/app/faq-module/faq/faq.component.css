@@ -1,3 +1,21 @@
 iframe {
-  width: 100%;
+  width: 50%;
+}
+
+@media (max-width: 767px) {
+  iframe {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  iframe {
+    width: 80%;
+  }
+}
+
+@media (min-width: 991px) and (max-width: 1199px) {
+  iframe {
+    width: 60%;
+  }
 }

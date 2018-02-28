@@ -225,6 +225,10 @@ export class CardService extends ManagerService {
     return this.get('/cards');
   }
 
+  public getCardsByWallet(wallet: string) {
+    return this.get('/cards/byWallet/' + wallet);
+  }
+
   public getCardsQuery(query) {
     return this.getQuery('/cards', query);
   }

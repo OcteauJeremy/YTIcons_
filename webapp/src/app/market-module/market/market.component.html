@@ -122,6 +122,9 @@
   <div class="container">
 
     <div class="row">
+      <div class="empty-marker" *ngIf="cards.length == 0">
+        <p>No youtuber can reach your search criterias :(</p>
+      </div>
       <div *ngFor="let card of cards">
         <card class="col-lg-3 col-md-4 col-sm-6" [card]="card"></card>
       </div>

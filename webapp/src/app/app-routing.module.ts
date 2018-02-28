@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
@@ -16,6 +15,8 @@ import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bount
 import {CharityComponent} from './charity-module/charity/charity.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import {LiveComponent} from './live-module/live/live.component';
+import {TermsOfServiceComponent} from './termsofservice-module/termsofservice/termsofservice.component';
 
 const appRoutes: Routes = [
   {
@@ -45,12 +46,20 @@ const appRoutes: Routes = [
     component: LeaderboardComponent,
   },
   {
+    path: 'live',
+    component: LiveComponent,
+  },
+  {
     path: 'faq',
     component: FaqComponent,
   },
   {
     path: 'contact',
     component: ContactComponent,
+  },
+  {
+    path: 'termsofservice',
+    component: TermsOfServiceComponent,
   },
   {
     path: 'charity',
