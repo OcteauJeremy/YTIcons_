@@ -98,6 +98,7 @@ export class CardService extends ManagerService {
         gas: 4000000,
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
+        console.log('result', result);
         if (!error) {
           alert('Transaction ok');
           resolve(1);
