@@ -40,6 +40,7 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import {SocketService} from "./services/socket.service";
 import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
+import {LeaderboardService} from "./services/leaderboard.service";
 import { LaddaModule } from 'angular2-ladda';
 
 @NgModule({
@@ -83,10 +84,11 @@ import { LaddaModule } from 'angular2-ladda';
     CategoryService,
     CurrencyService,
     YoutubeService,
+    SocketService,
+    LeaderboardService,
     CookieService,
     IsAdminGuard,
     AuthenticationGuard,
-    SocketService
   ],
   bootstrap: [
     AppComponent

@@ -40,6 +40,10 @@
   align-items: center;
 }
 
+.first p,.second p,.third p {
+  font-size: 24px;
+}
+
 .first {
   border-right: 2px solid #FD6B70 !important;
 }
@@ -50,6 +54,10 @@
 
 .third {
   border-right: 2px solid #724BBE !important;
+}
+
+.default {
+  border-right: 1px solid #ececec !important;
 }
 
 

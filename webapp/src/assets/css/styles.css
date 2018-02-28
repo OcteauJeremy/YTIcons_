@@ -22,6 +22,32 @@
   src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf);
 }
 
+.user__status {
+  position: relative;
+}
+.star_user {
+  position: absolute;
+  top: 0;
+  right: calc(50% - 15px);
+  left: calc(50% - 18px);
+}
+
+
+
+.leaderboard-profile-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+.first-leaderboard .leaderboard-profile-avatar, .second-leaderboard .leaderboard-profile-avatar,.third-leaderboard .leaderboard-profile-avatar {
+  width: 76px;
+  height: 76px;
+}
+
 a {
   cursor: pointer;
 }
