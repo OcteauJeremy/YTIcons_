@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0xfc251e1c1df6b78784ca6436b4611a556c471c67';
+const tokenAddress = '0x410245e78bd43f8cac9c9e337cfddcb435d0d0c9';
 
 var server = require('../server').serverExpress;
 
@@ -85,7 +85,6 @@ tokenContract.events.YTIconSold({
     }
     var res = event.returnValues;
 
-
     populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
         if (err) {
             console.log(err);
@@ -138,11 +137,8 @@ tokenContract.events.YTIconSold({
             } else {
                 var user = new User();
 
-                user.username = "";
-                user.password = "";
-                user.email = "";
+                user.initValues();
                 user.wallet = res.newOwner;
-                user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
                 user.save(function (err, nUser) {
                     if (err) {
                         console.log(err);

@@ -10,54 +10,69 @@ exports.create = function (req, res) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
-    console.log('Create', req.body);
-
-    User.findOne({
-        wallet: req.body.wallet
-    }).exec(function (err, fUser) {
-        var user = new User();
-
-        user.wallet = "";
-
-        if (fUser && fUser.username == '') {
-            user = fUser;
-        } else if (fUser && fUser.username != '') {
-            return res.status(400).send({message: "User with this wallet already exist."});
-        } else if (req.body.wallet) {
-            user.wallet = req.body.wallet;
+    User.find({ $or: [ {username: req.body.username}, {email: req.body.email}]}).exec(function (err, users) {
+        if (err) {
+            return res.status(400).send({message: "Error during mongoDB transaction."});
         }
 
-        user.username = req.body.username;
-        user.email = req.body.email;
-        user.password = user.generateHash(req.body.password);
-        user.roles = ['user'];
-        user.currency = 'ETH';
+        var emailError = false;
+        var usernameError = false;
+        for (var idx = 0; idx < users.length; idx++) {
+            if (users[idx].email == req.body.email) emailError = true;
 
-        if (!req.file) {
-            var files = [];
+            if (users[idx].username == req.body.username) usernameError = true;
+        }
 
-            console.log(__dirname + '/../ressources/avatars/default');
-            fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
-                if (file[0] != '.') {
-                    files.push(file);
+        if (emailError) return res.status(400).send({message: "Email already in user."});
+
+        if (usernameError) return res.status(400).send({message: "Username already in user."});
+
+
+        User.findOne({
+            wallet: req.body.wallet
+        }).exec(function (err, fUser) {
+            var user = new User();
+
+            user.initValues();
+
+            if (fUser && fUser.username == '') {
+                user = fUser;
+            } else if (fUser && fUser.username != '') {
+                return res.status(400).send({message: "User with this wallet already exist."});
+            } else if (req.body.wallet) {
+                user.wallet = req.body.wallet;
+            }
+
+            user.username = req.body.username;
+            user.email = req.body.email;
+            user.password = user.generateHash(req.body.password);
+
+            if (!req.file) {
+                var files = [];
+
+                console.log(__dirname + '/../ressources/avatars/default');
+                fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
+                    if (file[0] != '.') {
+                        files.push(file);
+                    }
+                });
+                user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
+            } else {
+                user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
+            }
+
+            user.save(function (err, user) {
+                if (err) {
+                    console.log(err.message);
+                    return res.status(400).send({message: "Some error occurred while creating the User."});
+                } else {
+                    var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
+                        expiresIn: 60 * 24 * 30
+                    });
+                    user.token = token;
+                    return res.status(200).send(user);
                 }
             });
-            user.avatar = uploadOptions.pathAvatarUrl + '/' + files[Math.floor(Math.random() * files.length)];
-        } else {
-            user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
-        }
-
-        user.save(function (err, user) {
-            if (err) {
-                console.log(err.message);
-                return res.status(400).send({message: "Some error occurred while creating the User."});
-            } else {
-                var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
-                    expiresInMinutes: 60 * 24 * 30
-                });
-                user.token = token;
-                return res.status(200).send(user);
-            }
         });
     });
 };
@@ -66,9 +81,8 @@ exports.findAll = function (req, res) {
     User.find(function (err, users) {
         if (err) {
             return res.status(400).send({message: "Some error occurred while retrieving users."});
-        } else {
-            return res.status(200).send(users);
         }
+        return res.status(200).send(users);
     });
 };
 

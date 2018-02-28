@@ -9,6 +9,8 @@
 # dependencies
 webapp/node_modules
 api/node_modules
+webapp/package-lock.json
+api/package-lock.json
 
 # IDEs and editors
 .idea

@@ -23,13 +23,13 @@ app.use( function(req, res, next){
     next();
 });
 
-mongoose.connect(configMongo.url);
-app.set('superSecret', configMongo.secret);
-
 mongoose.connection.on('error', function () {
     console.log('Could not connect to the database. Exiting now...');
     process.exit();
 });
+
+mongoose.connect(configMongo.url);
+app.set('superSecret', configMongo.secret);
 
 var directoryRoutes = "./routes/";
 

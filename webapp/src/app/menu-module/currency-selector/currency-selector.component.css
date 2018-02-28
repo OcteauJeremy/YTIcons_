@@ -3,10 +3,30 @@
 }
 
 .dropdown.dropdown—currency {
-  padding: 0 22px;
+  padding: 10px 22px;
   right: 0;
+  min-width: calc(100% + 20px);
+}
+
+.dropdown.dropdown—currency ul li {
+  text-align: center;
+}
+
+.dropdown:before {
+  left: 50%;
 }
 
 .currency-button {
-  min-width: auto;
+  min-width: 80px;
+  line-height: normal;
+  height: 34px;
+}
+
+.dropdown.dropdown—currency ul li a {
+  border-radius: 3px;
+}
+
+.dropdown.dropdown—currency ul li a:hover {
+  background: #0674ec;
+  color: #fff;
 }
