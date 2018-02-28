@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
 
   public currentUser = null;
 
-  constructor(private as: AuthenticationService, private router: Router) {
+  constructor(private as: AuthenticationService, public router: Router) {
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     });

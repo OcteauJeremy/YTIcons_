@@ -7,7 +7,7 @@ export class Card {
   public  id: number;
   public  name: string;
   public  image: string;
-  public  nationality: string;
+  public  nationality: any;
   public  nbSubscribers: number;
   public  url: string;
   public  description: string;
@@ -16,6 +16,10 @@ export class Card {
   public  type: Type;
   public  price: number;
   public  owner;
+  public  nbTransactions: any;
+  public  nbVideos: any;
+  public  nbViews: any;
+  public  transactions: any;
 
   constructor() {
   }

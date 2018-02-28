@@ -56,7 +56,7 @@
           <div class="filter__option filter--dropdown">
             <a href="#" id="follower" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.subscribers ? names.subscribers + ' followers' : 'Followers'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectFollower('')"><a>All <i *ngIf="!filters.minSubscribers && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
+              <li (click)="selectFollower('', null, null)"><a>All <i *ngIf="!filters.minSubscribers && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
               <li  (click)="selectFollower(0,50000, '0 - 50K')"><a>0 - 50K <i *ngIf="filters.minSubscribers == 0 && filters.maxSubscribers == 50000" class="fa fa-check"></i></a></li>
               <li  (click)="selectFollower(50000,100000, '50K - 100K')"><a>50K - 100K <i *ngIf="filters.minSubscribers == 50000 && filters.maxSubscribers == 100000" class="fa fa-check"></i></a></li>
               <li  (click)="selectFollower(100000,500000, '100K - 500K')"><a>100K - 500K <i *ngIf="filters.minSubscribers == 100000 && filters.maxSubscribers == 500000" class="fa fa-check"></i></a></li>
@@ -69,7 +69,7 @@
           <div class="filter__option filter--dropdown">
             <a href="#" id="video" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.videos ? names.videos + ' videos' : 'Videos'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectVideo('')"><a>All <i *ngIf="!filters.minVideos && !filters.maxVideos" class="fa fa-check"></i></a></li>
+              <li (click)="selectVideo('', null, null)"><a>All <i *ngIf="!filters.minVideos && !filters.maxVideos" class="fa fa-check"></i></a></li>
               <li  (click)="selectVideo(0,100, '0 - 100')"><a>0 - 100 <i *ngIf="filters.minVideos == 0 && filters.maxVideos == 100" class="fa fa-check"></i></a></li>
               <li  (click)="selectVideo(100,200, '100 - 200')"><a>100 - 200 <i *ngIf="filters.minVideos == 100 && filters.maxVideos == 200" class="fa fa-check"></i></a></li>
               <li  (click)="selectVideo(200,500,'200 - 500')"><a>200 - 500 <i *ngIf="filters.minVideos == 200 && filters.maxVideos == 500" class="fa fa-check"></i></a></li>
