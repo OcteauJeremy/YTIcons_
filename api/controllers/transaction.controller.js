@@ -59,6 +59,21 @@ exports.findAll = function (req, res) {
     });
 };
 
+exports.getLastTransactions = function (req, res) {
+    var findObj = Transaction.find();
+
+    findObj.sort({createdAt: 'asc'});
+
+    var limitNb = req.query.limit ? req.query.limit : 20;
+
+    populateItem(findObj).limit(limitNb).exec(function (err, txs) {
+        if (err) {
+            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+        }
+        return res.status(200).send(txs);
+    });
+};
+
 exports.findOne = function (req, res) {
     var findObj = Transaction.findById(req.params.transactionId);
 

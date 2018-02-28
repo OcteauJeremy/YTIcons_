@@ -24,6 +24,7 @@ export class AdminComponent implements OnInit {
   public  categories = [];
   public  fileYoutuber= null;
   public  createOrigin = true;
+  public  loadingChannel = false;
   public  formData = new FormData();
   public  responseYoutube = {};
   public  selectInputs = {
@@ -31,6 +32,7 @@ export class AdminComponent implements OnInit {
     nameCountry: "",
     nameCategory: ""
   };
+
 
   public  cardYoutuber = {
     name: "",
@@ -125,6 +127,7 @@ export class AdminComponent implements OnInit {
 
   loadChannel() {
     console.log(this.urlChannel);
+    this.loadingChannel = true;
     this.youtubeService.getChannel({url: this.urlChannel}).subscribe(res => {
       this.responseYoutube = res;
       this.cardYoutuber.name = res.snippet.title;
@@ -141,7 +144,7 @@ export class AdminComponent implements OnInit {
         self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
         self.cardOriginYoutuber.type = self.getOriginType();
       });
-
+      this.loadingChannel = false;
     });
   }
 

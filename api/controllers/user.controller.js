@@ -60,16 +60,15 @@ exports.create = function (req, res) {
             } else {
                 user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
             }
-
+            var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
+                expiresIn: 60 * 24 * 30
+            });
+            user.token = token;
             user.save(function (err, user) {
                 if (err) {
                     console.log(err.message);
                     return res.status(400).send({message: "Some error occurred while creating the User."});
                 } else {
-                    var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
-                        expiresIn: 60 * 24 * 30
-                    });
-                    user.token = token;
                     return res.status(200).send(user);
                 }
             });

@@ -15,7 +15,7 @@
                 <div class="field-wrapper">
                   <input [(ngModel)]="urlChannel" name="urlChannel" (keyup.enter)="loadChannel()"
                          class="relative-field rounded" type="text" placeholder="Search your channel">
-                  <button class="btn btn--round" type="submit" (click)="loadChannel()">Search</button>
+                  <button class="btn btn--round" type="submit" [ladda]="loadingChannel" (click)="loadChannel()">Search</button>
                 </div>
               </form>
             </div>
