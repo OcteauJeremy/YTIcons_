@@ -33,9 +33,8 @@
           <h3 class="job__title">Live view</h3>
           <div class="job__content">
             <div *ngFor="let tr of transactions">
-            <span>Vendeur:</span><span>{{tr?.from?.username ? tr?.from?.username : tr.from?.wallet}}</span>
-              <span>Acheteur:</span><span>{{tr?.to?.username ? tr?.to?.username : tr.to?.wallet}}</span>
-              <span>Price:</span><span>{{tr?.price}} ETH</span>
+              <span>{{tr?.from?.username ? tr?.from?.username : tr.from?.wallet}} has sold ... to {{tr?.to?.username ? tr?.to?.username : tr.to?.wallet}}
+                for {{tr?.price}} ETH</span>
             </div>
           </div>
         </div><!-- end /.job_detail_module -->
