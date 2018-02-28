@@ -40,11 +40,8 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 import {SocketService} from "./services/socket.service";
 import {LiveModule} from './live-module/live.module';
 import {TermsOfServiceModule} from './termsofservice-module/termsofservice.module';
-<<<<<<< HEAD
 import {LeaderboardService} from "./services/leaderboard.service";
-=======
 import { LaddaModule } from 'angular2-ladda';
->>>>>>> 483cba8af854ba0c0d31a6593b288b8cc1db34fe
 
 @NgModule({
   declarations: [

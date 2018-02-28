@@ -62,7 +62,9 @@
                 <li *ngFor="let rank of leaderboard; let i = index" [ngClass]="[i == 0 ? 'first-leaderboard' : '',i == 1 ? 'second-leaderboard' : '',i == 2 ? 'third-leaderboard' : '', i > 2 ? 'default' : '' ]">
                   <div class="user_single">
                     <div class="user__status user__rank" [ngClass]="['user__status','user__rank', i == 0 ? 'first' : '',i == 1 ? 'second' : '',i == 2 ? 'third' : '', i > 2 ? 'default' : '' ]">
-                      <i *ngIf="rank?.user?._id == currentUser?._id" style="color: yellow" class="fa fa-star"></i>
+                      <div *ngIf="rank?.user?._id == currentUser?._id" class="star_user">
+                        <img src="assets/images/images/star.png" [ngStyle]="{'width': '30px', 'max-width': '30px'}">
+                      </div>
                       <p>{{i + 1}}</p>
                     </div>
                     <div class="user_desc">
