@@ -8,3 +8,8 @@
   justify-content: space-around;
   border-right: 1px solid #ececec;
 }
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+}
