@@ -97,6 +97,10 @@ var populateItem = function (findObj) {
             }, {
                 path: "from"
             }]
+        }, {
+            path: "owner"
+        }, {
+            path: "nationality"
         }]
     });
     return findObj;
