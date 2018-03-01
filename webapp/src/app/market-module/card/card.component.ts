@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { Card } from '../../models/Card';
 import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
@@ -12,6 +12,7 @@ import {ToasterService} from 'angular2-toaster';
 })
 export class CardComponent implements OnInit {
 
+  @ViewChild('openModal') openModal:ElementRef;
   @Input("card") card: Card;
   @Input("modal") modal: Boolean = true;
   public currentUser = {
@@ -44,7 +45,12 @@ export class CardComponent implements OnInit {
     }
   }
 
+  openModalOnLoad() {
+    this.openModal.nativeElement.click();
+  }
+
   ngOnInit() {
+    console.log('enter');
   }
 
   redirectToUser() {

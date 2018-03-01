@@ -50,7 +50,7 @@
   <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
 </div>
 
-<div class="modal fade rating_modal" id="{{ 'modal-' + card.id}}" tabindex="-1" role="dialog">
+<div style="display:block!important;" class="modal fade rating_modal" id="{{ 'modal-' + card.id}}" tabindex="-1" role="dialog">
 <div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
     <div class="modal-header">
@@ -147,6 +147,7 @@
   </div>
 </div>
 </div>
+
 
 
 <div class="modal fade" id="{{ 'modal-' + card.id + '-changePrice'}}" tabindex="-1" role="dialog">

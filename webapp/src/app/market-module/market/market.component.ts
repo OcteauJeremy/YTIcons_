@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -16,6 +16,7 @@ declare var $: any;
   styleUrls: ['./market.component.css']
 })
 export class MarketComponent implements OnInit, OnDestroy {
+
 
   public  cards = [];
   public  types = [];
@@ -101,7 +102,6 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
   }
 
     getCards() {

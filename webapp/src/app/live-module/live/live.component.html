@@ -32,14 +32,15 @@
         <div class="job_detail_module">
           <div class="job__content">
             <div *ngFor="let tr of transactions" style="margin-bottom: 15px;">
-              <span style="color:#939493">YTIcons> </span><a style="font-weight: 500;"
+              <span style="color:#939493;font-weight: 500;">YTIcons></span> <a style="font-weight: 500;"
                                                              [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username
               ? tr?.to?.username : 'Anonymous'}}</a> bought
-              <span style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</span> <span>[{{tr?.card?.nbSubscribers | abbreviateNumber}} FOLW, {{tr?.card?.nbViews | abbreviateNumber}} VIEWS, {{tr?.card?.nbVideos | abbreviateNumber}} VIDS, {{tr?.card?.createdAt | timeBetween}} CARD]</span>
+              <span style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</span>
+              <!--<span>[{{tr?.card?.nbSubscribers | abbreviateNumber}} FOLW, {{tr?.card?.nbViews | abbreviateNumber}} VIEWS, {{tr?.card?.nbVideos | abbreviateNumber}} VIDS, {{tr?.card?.createdAt | timeBetween}} CARD]</span>-->
               from
               <a style="font-weight: 500;" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ?
                 tr?.from?.username : tr.from?.wallet}}</a> at
-              <span>{{tr?.price}} ETH.</span>
+              <span>{{tr?.price}} ETH</span><span> - {{tr?.createdAt | timeBetweenLive}} ago</span>
             </div>
           </div><!-- end /.job_detail_module -->
         </div><!-- end /.col-md-6 -->
