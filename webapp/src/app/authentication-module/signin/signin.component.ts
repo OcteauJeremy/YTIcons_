@@ -3,7 +3,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
-import {ToasterService} from 'angular2-toaster';
+import { ToastsManager } from 'ng2-toastr';
+import fontawesome from '@fortawesome/fontawesome';
+import {faCheck} from '@fortawesome/fontawesome-free-solid';
 
 @Component({
   selector: 'app-signin',
@@ -17,13 +19,17 @@ export class SigninComponent implements OnInit, OnDestroy {
   public  rememberMe = true;
   private subscribtions: Subscription = new Subscription();
 
-  constructor(private as: AuthenticationService, private _router: Router, public cookieService: CookieService, private toasterService: ToasterService) {
+  constructor(private as: AuthenticationService, private _router: Router,
+              public cookieService: CookieService, private toastr: ToastsManager) {
+    fontawesome.library.add(faCheck);
     if (as.currentUser != null) {
       this._router.navigate(['account']);
     }
   }
 
   signin() {
+    const toastr = this.toastr;
+
     this.subscribtions.add(this.as.login(this.username, this.password).subscribe(res => {
 
       if (this.rememberMe) {
@@ -36,7 +42,7 @@ export class SigninComponent implements OnInit, OnDestroy {
       this._router.navigate(['account']);
 
     },error => {
-      this.toasterService.pop('error', 'Authentication', 'The entered credentials are incorrect.');
+      toastr.error('The entered credentials are incorrect.', 'Authentication');
     }));
   }
 

@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-
-var Web3 = require('web3');
-
 import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
-import {ToasterService} from 'angular2-toaster';
+import {ToastsManager} from 'ng2-toastr';
 
+var Web3 = require('web3');
 declare let require: any;
 declare let window: any;
 
@@ -20,35 +18,38 @@ export class CardService extends ManagerService {
   private _self;
   private _tokenContractAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
 
-  constructor(http: HttpClient, private toasterService: ToasterService) {
+  constructor(http: HttpClient, private toastr: ToastsManager) {
     super(http);
     if (typeof window.web3 !== 'undefined') {
       this._web3 = new Web3(window.web3.currentProvider);
       const web3 = this._web3;
+      const toastr = this.toastr;
 
       this._web3.eth.net.getId().then(function (id) {
         if (id !== 3) {
-          this.toasterService.pop('warning', 'Network', 'You are not connected to the right network on MetaMask.');
+          toastr.warning('You are not connected to the right network on MetaMask.', 'Network');
         }
       });
 
       this._tokenContract = new this._web3.eth.Contract(tokenAbi, this._tokenContractAddress);
     } else {
-      this.toasterService.pop('warning', 'Cards trading', 'You need to install MetaMask to be able to trade cards.');
+      toastr.warning('You need to install MetaMask to be able to trade cards.', 'Cards trading');
     }
 
   }
 
   public async getAccount(): Promise<string> {
+    const toastr = this.toastr;
+
     this._account = await new Promise((resolve, reject) => {
       this._web3.eth.getAccounts((err, accs) => {
         if (err != null) {
-          this.toasterService.pop('error', 'Account', 'There was an error while fetching your accounts.');
+          toastr.error('There was an error while fetching your accounts.', 'Account');
           return;
         }
 
         if (accs.length === 0) {
-          this.toasterService.pop('error', '', 'The account(s)\' retrieval had failed. Please make sure your Ethereum client is correctly configured.');
+          toastr.error('The account(s)\' retrieval had failed. Please make sure your Ethereum client is correctly configured.', '');
           this._account = null;
           resolve(null);
         }
@@ -91,6 +92,7 @@ export class CardService extends ManagerService {
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
+      const toastr = this.toastr;
 
       this._tokenContract.methods.purchase(_idCard).send({
         from: account,
@@ -99,10 +101,10 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
         console.log('result', result);
         if (!error) {
-          this.toasterService.pop('success', 'Transaction', 'Your purchase has been successfully done.');
+          toastr.success('Your purchase has been successfully done.', 'Transaction');
           resolve(1);
         } else {
-          this.toasterService.pop('error', 'Transaction', 'Transaction closed');
+          toastr.error('Transaction closed', 'Transaction');
           console.log(error);
           resolve(0);
         }
@@ -113,6 +115,7 @@ export class CardService extends ManagerService {
   public async changePriceCard(_idCard: number, _price: number): Promise<any> {
 
     let account = await this.getAccount();
+    const toastr = this.toastr;
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -123,10 +126,10 @@ export class CardService extends ManagerService {
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          this.toasterService.pop('success', 'Price modification', 'The price of your YTIcon has been successfully modified.');
+          toastr.success('The price of your YTIcon has been successfully modified.', 'Price modification');
           resolve(1);
         } else {
-          this.toasterService.pop('success', 'Price modification', 'Transaction closed');
+          toastr.error('Transaction closed', 'Price modification');
           console.log(error);
           resolve(0);
         }
@@ -139,6 +142,7 @@ export class CardService extends ManagerService {
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
+      const toastr = this.toastr;
 
       this._tokenContract.methods.createCardFromName(name).send({
         from: account,
@@ -146,10 +150,10 @@ export class CardService extends ManagerService {
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          this.toasterService.pop('success', 'Card creation', 'The YTIcon named "' + name + '" has been successfully created.');
+          toastr.success('The YTIcon named "' + name + '" has been successfully created.', 'Card creation');
           resolve(1);
         } else {
-          this.toasterService.pop('error', 'Card creation', 'An error occured while creating the YTIcon "' + name + '"');
+          toastr.error('An error occured while creating the YTIcon "' + name + '"', 'Card creation');
           console.log(error);
           resolve(0);
         }
@@ -159,6 +163,7 @@ export class CardService extends ManagerService {
 
   public async createCardSC(card) {
     let account = await this.getAccount();
+    const toastr = this.toastr;
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -179,7 +184,7 @@ export class CardService extends ManagerService {
             });
           });
         } else {
-          this.toasterService.pop('success', 'Card creation', 'An error occured while creating the YTIcon "' + card.name + '"');
+          toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
           console.log(error);
           resolve(null);
         }
