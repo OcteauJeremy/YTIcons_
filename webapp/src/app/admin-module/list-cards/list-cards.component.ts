@@ -165,9 +165,16 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     return counters;
   }
 
-  onSearchChange(searchValue: string) {
-    this.filters.name = searchValue;
-    this.getCards();
+  timeout = null;
+  onSearchChange(searchValue : string ) {
+    if (this.timeout !== null) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(function (self) {
+      self.filters.name = searchValue;
+      self.getCards();
+    }, 1000, this);
   }
 
   /*** Market component change ***/
