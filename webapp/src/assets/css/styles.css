@@ -221,6 +221,22 @@ a {
   font-size: 14px;
 }
 
+.card-10m .footer-card {
+  background: #140002;
+}
+
+.card-10m .footer-card .card-line {
+  color: #FF0089 !important;
+}
+
+.card-origin .footer-card {
+  background: #494949;
+}
+
+.card-origin .footer-card .card-line {
+  color: white !important;
+}
+
 .card .footer-card .card-line {
   display: flex;
   flex-flow: row nowrap;
