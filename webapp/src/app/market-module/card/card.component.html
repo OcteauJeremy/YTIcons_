@@ -1,5 +1,5 @@
 <div [ngClass]="{locked: card.isLocked}">
-  <div *ngIf="card" [ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : ''] " [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
+  <div *ngIf="card" [id]="card._id"[ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : ''] " [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
 
     <div class="card-title">
       <h4>{{card.name}}</h4>
