@@ -96,6 +96,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
       for (var card of this.cards) {
         card.copy = JSON.parse(JSON.stringify(card));
         card.modifed = false;
+        card.isSaving = false;
       }
     }));
   }
@@ -164,18 +165,59 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     return counters;
   }
 
-  onSearchChange(searchValue: string) {
-    this.filters.name = searchValue;
-    this.getCards();
+  timeout = null;
+  onSearchChange(searchValue : string ) {
+    if (this.timeout !== null) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(function (self) {
+      self.filters.name = searchValue;
+      self.getCards();
+    }, 1000, this);
   }
 
   /*** Market component change ***/
   saveCard(card) {
-    this.subscribtions.add(this.cardService.modifyCard(card).subscribe( res => {
 
-    }));
+    card.isSaving = true;
+    var modifyCard = (card) => {
+      this.subscribtions.add(this.cardService.modifyCard(card).subscribe( res => {
+        card.modified = false;
+        card.copy = res;
+        card.isSaving = false;
+        //toaster
+      }));
+    };
+
+    if (card.isLocked != card.copy.isLocked) {
+      if (card.isLocked) {
+        this.cardService.lockCard(card.id).then((resultat) => {
+          card.tx = resultat;
+          modifyCard(card)
+        });
+      } else {
+        this.cardService.unlockCard(card.id).then((resultat) => {
+          card.tx = resultat;
+          modifyCard(card)
+        });
+      }
+    } else {
+      modifyCard(card);
+    }
   }
 
+  triggerSave(card) {
+    if (card.isHidden != card.copy.isHidden || card.isLocked != card.copy.isLocked ||
+      card.type._id != card.copy.type._id) {
+      card.modified = true;
+    }
+
+    if (card.isHidden == card.copy.isHidden && card.isLocked == card.copy.isLocked &&
+      card.type._id == card.copy.type._id) {
+      card.modified = false;
+    }
+  }
 
 
   ngOnDestroy() {

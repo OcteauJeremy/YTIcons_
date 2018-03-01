@@ -128,13 +128,12 @@
             <div class="dashboard__title">
               <div class="row">
                 <div class="col-md-4 image-title-container">
-                    <p>Image</p>
+                    <p>Card</p>
                 </div>
                 <div class="col-md-8">
                   <div class="cards-options">
                     <p>Locked</p>
                     <p>Hidden</p>
-                    <p>Type</p>
                   </div>
                 </div>
               </div>
@@ -151,28 +150,20 @@
                   <div class="right-side">
                     <div class="cards-options">
                       <div class="custom_checkbox">
-                        <input type="checkbox" id="isLocked" class="" name="mail_rating_reminder" [(ngModel)]="card.isLocked">
-                        <label for="isLocked">
+                        <input type="checkbox" id="{{'isLocked' + card.id}}" class="" (change)="triggerSave(card)" name="mail_rating_reminder" [(ngModel)]="card.isLocked">
+                        <label for="{{'isLocked' + card.id}}">
                           <span class="shadow_checkbox"></span>
                         </label>
                       </div>
                       <div class="custom_checkbox">
-                        <input type="checkbox" id="isHidden" class="" name="mail_rating_reminder" [(ngModel)]="card.isHidden">
-                        <label for="isHidden">
+                        <input type="checkbox" id="{{'isHidden' + card.id}}" class="" (change)="triggerSave(card)" name="mail_rating_reminder" [(ngModel)]="card.isHidden">
+                        <label for="{{'isHidden' + card.id}}">
                           <span class="shadow_checkbox"></span>
                         </label>
                       </div>
-                      <div>
-                        <div class="select-wrap select-wrap2">
-                          <select [(ngModel)]="card.type" name="types" id="typesSelect" class="text_field">
-                            <option *ngFor="let type of types" [ngValue]="type">{{type.name}}</option>
-                          </select>
-                          <span class="lnr lnr-chevron-down"></span>
-                        </div>
-                      </div>
                     </div>
                     <div class="buttons-modify">
-                      <button (click)="saveCard(card)" class="btn btn--round btn--default">Save</button>
+                      <button (click)="saveCard(card)" [ladda]="card.isSaving" [class.disabled]="!card.modified" class="btn btn--round btn--default">Save</button>
 
                     </div>
                   </div>

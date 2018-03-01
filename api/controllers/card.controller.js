@@ -5,11 +5,11 @@ var uploadOptions = require('../configs/multer');
 const download = require('image-downloader');
 
 exports.create = function (req, res) {
+    console.log(req.body);
     var card = new Card();
 
     card.fromBody(req.body);
-    card.isLocked = false;
-    card.isHidden = req.body.tx ? true : false;
+    card.isHidden = true;
 
     var web3 = require('./web3.controller').web3;
 
@@ -21,11 +21,17 @@ exports.create = function (req, res) {
             }
 
             function checkTx(tx, card) {
-                var lastTimeout;
-                web3.eth.getTransactionReceipt(tx, function (err, res) {
-                    if (res) {
-                        card.isHidden = false;
-                        if (res.status == 0) {
+                web3.eth.getTransactionReceipt(tx, function (err, resTx) {
+                    if (resTx) {
+                        if (req.body.isHidden == true) {
+                            card.isHidden = true;
+                        } else if (req.body.isHidden == false) {
+                            card.isHidden = false
+                        } else {
+                            card.isHidden = true;
+                        }
+
+                        if (resTx.status == 0) {
                             card.delete(function (err) {
                                 return res.status(400).send({message: 'Error during the ethereum transatcion.'});
                             });
@@ -36,13 +42,13 @@ exports.create = function (req, res) {
                         }
                         //clearTimeout(lastTimeout);
                     } else {
-                        lastTimeout = setTimeout(checkTx, 1000, tx, card);
+                        setTimeout(checkTx, 1000, tx, card);
                     }
                 });
             }
 
             if (req.body.tx) {
-                lastTimeout = setTimeout(checkTx, 1000, req.body.tx, card);
+                setTimeout(checkTx, 1000, req.body.tx, card);
             } else {
                 return res.status(200).send(card);
             }
@@ -121,10 +127,14 @@ var constructQuery = function (req, res, isAdmin) {
     };
 
     var paramSearch = {
-        $and: [{
-            "isHidden": isAdmin
-        }]
+        $and: []
     };
+
+    if (!isAdmin) {
+        paramSearch.$and.push({
+            isHidden: isAdmin
+        })
+    }
 
     if (req.query.type) {
         paramSearch.$and.push({
@@ -298,18 +308,40 @@ exports.update = function (req, res) {
             }
         }
 
-        card.save(function (err, card) {
-            if (err) {
-                console.log(err.message);
-                return res.status(400).send({message: "Some error occurred while creating the Card."});
-            } else {
-                return res.status(200).send(card);
-            }
-        });
+        var saveCard = function () {
+            card.save(function (err, card) {
+                if (err) {
+                    console.log(err.message);
+                    return res.status(400).send({message: "Some error occurred while creating the Card."});
+                } else {
+                    return res.status(200).send(card);
+                }
+            });
+        };
 
-        // var saveCard = function () {
-        //
-        // };
+
+        var web3 = require('./web3.controller').web3;
+
+        function checkTx(tx, card) {
+            web3.eth.getTransactionReceipt(tx, function (err, res) {
+                if (res) {
+                    if (res.status == 0) {
+                        return res.status(400).send({message: "Some error occurred while locking the Card."});
+                    } else {
+                       saveCard();
+                    }
+                    //clearTimeout(lastTimeout);
+                } else {
+                    setTimeout(checkTx, 1000, tx, card);
+                }
+            });
+        }
+
+        if (req.body.tx) {
+            setTimeout(checkTx, 1000, req.body.tx, card);
+        } else {
+            saveCard()
+        }
 
         // if (req.body.type) {
         //     Type.findById(req.body.type._id, function (err, type) {

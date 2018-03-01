@@ -1,5 +1,5 @@
 <div [ngClass]="{locked: card.isLocked}">
-  <div class="cardUI" *ngIf="card" [ngClass]="['card', card.type ? card.type.css : '', 'product'] " data-toggle="modal" [attr.data-target]="'#modal-' + card.id">
+  <div *ngIf="card" [ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : ''] " [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
 
     <div class="card-title">
       <h4>{{card.name}}</h4>
@@ -43,5 +43,5 @@
     <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
   </div>
 
-  <app-card-modal [card]="card"></app-card-modal>
+  <app-card-modal *ngIf="modal" [card]="card"></app-card-modal>
 </div>

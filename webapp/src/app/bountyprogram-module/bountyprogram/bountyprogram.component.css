@@ -5,3 +5,58 @@
 .contact_form--wrapper {
   padding: 0px 0 40px;
 }
+
+.bounty-detail-module .bounty-title {
+  border-bottom: 1px solid #ececec;
+  padding: 0px 30px 11px;
+  font-size: 24px;
+  line-height: 66px;
+}
+
+.bounty-detail-module .bounty-content {
+  padding: 34px 30px 16px;
+}
+
+.bounty-area {
+  background: #f0f1f5;
+}
+
+.bounty-area .container {
+  background: #ffffff;
+}
+
+.bounty-detail-module .bounty-content .content_list {
+  padding-left: 30px;
+  margin-top: 25px;
+}
+
+.bounty-detail-module .bounty-content .content_list li {
+  padding-left: 26px;
+  position: relative;
+  line-height: 30px;
+  color: #555;
+}
+
+.bounty-detail-module .bounty-content .content_list li:before {
+  content: "";
+  height: 7px;
+  width: 7px;
+  background: #c5cad4;
+  position: absolute;
+  left: 0;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.bounty-detail-module .bounty-content .content_list {
+  padding-left: 20px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+.bounty-detail-module .bounty-content .content_list li {
+  padding-left: 20px;
+}

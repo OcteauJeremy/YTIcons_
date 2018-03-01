@@ -25,6 +25,7 @@ export class AdminComponent implements OnInit {
   public  fileYoutuber= null;
   public  createOrigin = true;
   public  loadingChannel = false;
+  public  createLoading = false;
   public  formData = new FormData();
   public  responseYoutube = {};
   public  selectInputs = {
@@ -45,6 +46,8 @@ export class AdminComponent implements OnInit {
     nbTransactions: 0,
     transactions: [],
     nbVideos: 0,
+    isHidden: false,
+    isLocked: false,
     category: {
       name: ''
     },
@@ -68,6 +71,8 @@ export class AdminComponent implements OnInit {
     nbTransactions: 0,
     transactions: [],
     nbVideos: 0,
+    isHidden: false,
+    isLocked: false,
     category: null,
     url: "",
     description: "",
@@ -140,8 +145,13 @@ export class AdminComponent implements OnInit {
       this.attributeType();
 
       this.linkNationality(res.snippet.country, function (self) {
+        var isHidden = self.cardOriginYoutuber.isHidden;
+        var isLocked = self.cardOriginYoutuber.isLocked;
+
         self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
         self.cardOriginYoutuber.type = self.getOriginType();
+        self.cardOriginYoutuber.isLocked = isLocked;
+        self.cardOriginYoutuber.isHidden = isHidden;
       });
       this.loadingChannel = false;
     });
@@ -236,6 +246,7 @@ export class AdminComponent implements OnInit {
       return obj.code == self.selectInputs.codeCountry;
     });
 
+    this.createLoading = true;
     var createCardSC = function (self) {
       self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
         console.log('Created card evolutive', cardYT);
@@ -244,16 +255,25 @@ export class AdminComponent implements OnInit {
         }
 
         if (self.createOrigin) {
+          var isHidden = self.cardOriginYoutuber.isHidden;
+          var isLocked = self.cardOriginYoutuber.isLocked;
+          console.log('isHidden:', isHidden, isLocked)
 
           self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
           self.cardOriginYoutuber.type = self.getOriginType();
+          self.cardOriginYoutuber.isHidden = isHidden;
+          self.cardOriginYoutuber.isLocked = isLocked;
 
           self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
             console.log('Created card origin', cardOrigin);
+            self.createLoading = false;
             if (self.fileYoutuber) {
-              self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {});
+              self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
+              });
             }
           });
+        } else {
+          self.createLoading = false;
         }
       });
     };

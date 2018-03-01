@@ -12,6 +12,7 @@
 .right-side {
   display: flex;
   flex-direction: column;
+  vertical-align: middle;
 }
 
 .buttons-modify {

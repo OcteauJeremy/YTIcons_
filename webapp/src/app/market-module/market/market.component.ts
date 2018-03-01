@@ -109,7 +109,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-    getCards() {
+  getCards() {
     this.isLoading = true;
     this.cards = [];
     this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
@@ -184,9 +184,16 @@ export class MarketComponent implements OnInit, OnDestroy {
     return counters;
   }
 
+  timeout = null;
   onSearchChange(searchValue : string ) {
-    this.filters.name = searchValue;
-    this.getCards();
+    if (this.timeout !== null) {
+      clearTimeout(this.timeout);
+    }
+
+    this.timeout = setTimeout(function (self) {
+      self.filters.name = searchValue;
+      self.getCards();
+    }, 1000, this);
   }
 
   ngOnDestroy() {
