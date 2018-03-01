@@ -1,0 +1,84 @@
+.cardUI {
+  margin-top: 36px;
+  cursor: pointer;
+}
+
+.product-purchase {
+  margin-top: 10px !important;
+  padding: 10px 10px !important;
+}
+
+.modal-body {
+  display: flex;
+}
+
+.modal-body .informations {
+  display: flex;
+  flex-direction: column;
+  word-break: break-all;
+  overflow: hidden;
+}
+
+.modal-body .informations p {
+  min-width: 138px;
+  display: inline-block;
+  margin-bottom: 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.modal-body .informations .section span {
+  margin-left: 25px;
+}
+
+.modal-body .section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-header {
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+
+.modal .modal-title {
+  margin-bottom: 0px;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.transactions-container {
+  margin-bottom: 0 !important;
+}
+
+transactions {
+  min-height: 170px;
+  max-height: 230px;
+  overflow: scroll;
+}
+
+@media (max-width: 767px) {
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.price-increase {
+  background-color: #77de51;
+}
+
+.price-decrease {
+  background-color: #9c0c1c;
+}
+

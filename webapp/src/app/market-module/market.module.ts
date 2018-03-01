@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
+import { CardModalComponent } from './card-modal/card-modal.component';
 
 @NgModule({
   imports: [
@@ -21,11 +22,13 @@ import { PriceChartComponent } from './price-chart/price-chart.component';
     MarketComponent,
     CardComponent,
     TransactionsComponent,
-    PriceChartComponent
+    PriceChartComponent,
+    CardModalComponent
   ],
   exports: [
     MarketComponent,
-    CardComponent
+    CardComponent,
+    CardModalComponent
   ]
 })
 export class MarketModule { }
