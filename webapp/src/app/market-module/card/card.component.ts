@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { Card } from '../../models/Card';
 import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
-import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'card',
@@ -17,11 +16,9 @@ export class CardComponent implements OnInit {
   public currentUser = {
     _id: ""
   };
-  public newPrice: number = 0;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
-              private router: Router, private toastr: ToastsManager, vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
+              private router: Router) {
     this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     });
@@ -29,28 +26,8 @@ export class CardComponent implements OnInit {
     this.currentUser = this.authenticationService.getLocalUser();
   }
 
-  purchaseCard(idCard: number, price: number) {
-    this.cs.purchaseCard(idCard, price).then(function(res) {
-      console.log(res);
-    });
-  }
 
-  changePriceCard(idCard: number) {
-    if (this.newPrice != 0 ) {
-      this.cs.changePriceCard(idCard, this.newPrice).then(function (res) {
-        console.log(res);
-      });
-    } else {
-      this.toastr.error('The price must be greater than 0.', 'Price modification');
-    }
-  }
 
   ngOnInit() {
   }
-
-  redirectToUser() {
-    console.log('redirect', '/account', this.card.owner.wallet);
-    this.router.navigate(['/account', this.card.owner.wallet]);
-  }
-
 }

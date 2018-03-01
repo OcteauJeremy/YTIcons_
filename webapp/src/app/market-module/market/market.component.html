@@ -1,8 +1,7 @@
-
 <section class="search-wrapper">
   <div class="search-area2 bgimage">
     <!--<div class="bg_image_holder">-->
-      <!--<img src="images/search.jpg" alt="">-->
+    <!--<img src="images/search.jpg" alt="">-->
     <!--</div>-->
     <div class="container content_above youtube_search">
       <div class="row">
@@ -12,7 +11,8 @@
             <div class="search__field">
               <form action="#">
                 <div class="field-wrapper">
-                  <input (input)="onSearchChange($event.target.value)" name="search" class="relative-field rounded" type="text" placeholder="Search your YTIcon">
+                  <input (input)="onSearchChange($event.target.value)" name="search" class="relative-field rounded"
+                         type="text" placeholder="Search your YTIcon">
                   <button class="btn btn--round" type="submit">Search</button>
                 </div>
               </form>
@@ -83,15 +83,15 @@
 
 
           <!--<div class="filter__option filter&#45;&#45;dropdown filter&#45;&#45;range">-->
-            <!--<a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>-->
-            <!--<div class="dropdown dropdown-menu" aria-labelledby="drop3">-->
-              <!--<div class="range-slider price-range"></div>-->
+          <!--<a href="#" id="drop3" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Price Range <span class="lnr lnr-chevron-down"></span></a>-->
+          <!--<div class="dropdown dropdown-menu" aria-labelledby="drop3">-->
+          <!--<div class="range-slider price-range"></div>-->
 
-              <!--<div class="price-ranges">-->
-                <!--<span class="from rounded">$30</span>-->
-                <!--<span class="to rounded">$300</span>-->
-              <!--</div>-->
-            <!--</div>-->
+          <!--<div class="price-ranges">-->
+          <!--<span class="from rounded">$30</span>-->
+          <!--<span class="to rounded">$300</span>-->
+          <!--</div>-->
+          <!--</div>-->
           <!--</div>-->
 
           <div class="filter__option filter--select">
@@ -140,7 +140,8 @@
             <div class="nav-links">
               <a class="prev page-numbers" (click)="prevPage()"><span class="lnr lnr-arrow-left"></span></a>
 
-              <a class="prev page-numbers" *ngIf="maxPages > 4" [class.disabled]="filters.page == 1" (click)="loadPage(1)">First</a>
+              <a class="prev page-numbers" *ngIf="maxPages > 4" [class.disabled]="filters.page == 1"
+                 (click)="loadPage(1)">First</a>
 
               <a *ngFor="let in of counter(maxPages); let idxPage = index" class="page-numbers"
                  [class.current]="idxPage + 1 == filters.page" (click)="loadPage(idxPage + 1)">
@@ -148,7 +149,8 @@
               </a>
 
               <a class="prev page-numbers" *ngIf="maxPages > 4" (click)="loadPage(maxPages)">Last</a>
-              <a class="next page-numbers" [class.disabled]="filters.page == maxPages" (click)="nextPage()"><span class="lnr lnr-arrow-right"></span></a>
+              <a class="next page-numbers" [class.disabled]="filters.page == maxPages" (click)="nextPage()"><span
+                class="lnr lnr-arrow-right"></span></a>
             </div>
           </nav>
         </div>
@@ -156,3 +158,4 @@
     </div>
   </div>
 </section>
+

@@ -137,28 +137,33 @@ export class CardService extends ManagerService {
     }) as Promise<any>;
   }
 
-  public async changePriceCard(_idCard: number, _price: number): Promise<any> {
+  public async changePriceCard(_idCard: number, _price: number, _walletCard: string): Promise<any> {
 
     let account = await this.getAccount();
     const toastr = this.toastr;
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
-
-      this._tokenContract.methods.setPrice(_idCard, this._web3.utils.toWei(_price.toString(), 'ether')).send({
-        from: account,
-        gas: 4000000,
-        value: 0
-      }, function (error, result) { //get callback from function which is your transaction key
-        if (!error) {
-          toastr.success('The price of your YTIcon has been successfully modified.', 'Price modification');
-          resolve(1);
-        } else {
-          toastr.error('Transaction closed', 'Price modification');
-          console.log(error);
-          resolve(0);
-        }
-      });
+      if (account != _walletCard) {
+        toastr.error('The wallet on Metamask is not the same as the card holder', 'Price modification');
+        resolve(0);
+      }
+      else {
+        this._tokenContract.methods.setPrice(_idCard, this._web3.utils.toWei(_price.toString(), 'ether')).send({
+          from: account,
+          gas: 4000000,
+          value: 0
+        }, function (error, result) { //get callback from function which is your transaction key
+          if (!error) {
+            toastr.success('The price of your YTIcon has been successfully modified.', 'Price modification');
+            resolve(1);
+          } else {
+            toastr.error('Transaction closed', 'Price modification');
+            console.log(error);
+            resolve(0);
+          }
+        });
+      }
     }) as Promise<any>;
   }
 
