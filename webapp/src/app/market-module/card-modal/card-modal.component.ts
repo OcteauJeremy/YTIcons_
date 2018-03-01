@@ -46,6 +46,7 @@ export class CardModalComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.as.currentUser;
+    this.newPrice = this.card.price;
   }
 
 }
