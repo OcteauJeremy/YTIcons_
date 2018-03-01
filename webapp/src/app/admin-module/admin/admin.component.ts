@@ -33,7 +33,6 @@ export class AdminComponent implements OnInit {
     nameCategory: ""
   };
 
-
   public  cardYoutuber = {
     name: "",
     image: "assets/images/cvrplc.jpg",

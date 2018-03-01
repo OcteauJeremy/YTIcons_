@@ -3,15 +3,15 @@ var Type = require('../models/type.model');
 var User = require('../models/user.model');
 var uploadOptions = require('../configs/multer');
 const download = require('image-downloader');
-var web3 = require('./web3.controller').web3;
 
 exports.create = function (req, res) {
     var card = new Card();
 
     card.fromBody(req.body);
     card.isLocked = false;
-    card.isHidden = true;
+    card.isHidden = req.body.tx ? true : false;
 
+    var web3 = require('./web3.controller').web3;
     console.log('tx: ', req.body.tx);
 
 
@@ -21,11 +21,33 @@ exports.create = function (req, res) {
                 console.log(err.message);
                 return res.status(400).send({message: "Some error occurred while creating the Card."});
             }
-            setTimeout(function (tx, card) {
-                console.log('timeout', tx);
-            }, 1000, req.body.tx, card);
 
-            return res.status(200).send(card);
+            function checkTx(tx, card) {
+                var lastTimeout;
+                web3.eth.getTransactionReceipt(tx, function (err, res) {
+                    if (res) {
+                        card.isHidden = false;
+                        if (res.status == 0) {
+                            card.delete(function (err) {
+                                return res.status(400).send({message: 'Error during the ethereum transatcion.'});
+                            });
+                        } else {
+                            card.save(function (err, result) {
+                                return res.status(200).send(card);
+                            });
+                        }
+                        //clearTimeout(lastTimeout);
+                    } else {
+                        lastTimeout = setTimeout(checkTx, 1000, tx, card);
+                    }
+                });
+            }
+
+            if (req.body.tx) {
+                lastTimeout = setTimeout(checkTx, 1000, req.body.tx, card);
+            } else {
+                return res.status(200).send(card);
+            }
         });
     };
 
