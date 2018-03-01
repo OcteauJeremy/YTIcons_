@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.as.register(formData).then(res => {
             this._router.navigate(['signin']);
         }, error => {
-          toastr.error(error.error.message, 'Sign up');
+          this.toastr.error(error.error.message, 'Sign up');
         });
 
       }

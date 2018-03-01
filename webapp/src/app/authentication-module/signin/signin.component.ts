@@ -4,6 +4,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
 import { ToastsManager } from 'ng2-toastr';
+import fontawesome from '@fortawesome/fontawesome';
+import {faCheck} from '@fortawesome/fontawesome-free-solid';
 
 @Component({
   selector: 'app-signin',
@@ -19,6 +21,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   constructor(private as: AuthenticationService, private _router: Router,
               public cookieService: CookieService, private toastr: ToastsManager) {
+    fontawesome.library.add(faCheck);
     if (as.currentUser != null) {
       this._router.navigate(['account']);
     }
