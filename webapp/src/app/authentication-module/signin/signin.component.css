@@ -1,0 +1,13 @@
+#ch2 {
+  display: block;
+  margin: 0;
+}
+
+.custom_checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom_checkbox label .label_text {
+  margin-left: 7px;
+}

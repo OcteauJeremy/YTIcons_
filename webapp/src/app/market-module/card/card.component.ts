@@ -1,9 +1,9 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { Card } from '../../models/Card';
 import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
-import {ToasterService} from 'angular2-toaster';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'card',
@@ -21,7 +21,8 @@ export class CardComponent implements OnInit {
   public newPrice: number = 0;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
-              private router: Router, private toasterService: ToasterService) {
+              private router: Router, private toastr: ToastsManager, vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
     this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     });
@@ -41,7 +42,7 @@ export class CardComponent implements OnInit {
         console.log(res);
       });
     } else {
-      this.toasterService.pop('error', 'Price modification', 'The price must be greater than 0.');
+      this.toastr.error('The price must be greater than 0.', 'Price modification');
     }
   }
 

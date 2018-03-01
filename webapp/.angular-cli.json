@@ -22,10 +22,10 @@
         "assets/css/animate.css",
         "assets/css/fontello.css",
         "../node_modules/linearicons/dist/web-font/style.css",
+        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
         "assets/css/owl.carousel.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/ladda/dist/ladda.min.css",
-        "../node_modules/angular2-toaster/toaster.css",
         "assets/css/styles-template.css",
         "assets/css/styles.css"
       ],

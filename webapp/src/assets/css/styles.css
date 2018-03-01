@@ -5,7 +5,7 @@
 }
 @font-face {
   font-family: SFSemiBold;
-  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-SemiBold.otf');
+  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Semibold.otf);
 }
 
 @font-face {
@@ -31,8 +31,6 @@
   right: calc(50% - 15px);
   left: calc(50% - 18px);
 }
-
-
 
 .leaderboard-profile-avatar {
   width: 70px;

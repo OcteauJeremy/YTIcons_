@@ -117,13 +117,13 @@ tokenContract.events.YTIconSold({
                         console.log(err);
                         return ;
                     }
-                    nCard.populateCard('card', function (res) {
+                    nTx.populate('card', function (res) {
                         if (err) {
                             console.log(err);
                             return ;
                         }
                         io.emit('tx-card', nCard._id);
-                        io.emit('live-info', tx);
+                        io.emit('live-info', nTx);
                         console.log('Transaction terminated. ID card', nCard._id);
                     });
                 })

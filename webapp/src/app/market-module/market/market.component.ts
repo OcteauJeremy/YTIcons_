@@ -6,6 +6,8 @@ import { TypeService } from '../../services/type.service';
 import { NationalityService } from "../../services/nationality.service";
 import { CategoryService } from "../../services/category.service";
 import { SocketService } from '../../services/socket.service';
+import fontawesome from '@fortawesome/fontawesome';
+import { faCheck } from '@fortawesome/fontawesome-free-solid';
 
 declare var jquery: any;
 declare var $: any;
@@ -60,6 +62,9 @@ export class MarketComponent implements OnInit, OnDestroy {
   constructor(private cardService: CardService, private typeService: TypeService,
               private nationalityService: NationalityService,private categoryService: CategoryService,private socketService: SocketService
               ) {
+
+    fontawesome.library.add(faCheck);
+
     this.getCards();
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {

@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
-import {ToasterService} from 'angular2-toaster';
+import {ToastsManager} from 'ng2-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   public url: string = 'assets/images/authplc.png';
 
-  constructor(private as: AuthenticationService, private _router: Router, private toasterService: ToasterService) { }
+  constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager) { }
 
   redirect(pagename: string) {
     this._router.navigate(['/' + pagename]);
@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     signup() {
       if (this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
+        const toastr = this.toastr;
 
         let formData: FormData = new FormData();
         if (this.fileList && this.fileList.length > 0) {
@@ -41,11 +42,11 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.as.register(formData).then(res => {
             this._router.navigate(['signin']);
         }, error => {
-          this.toasterService.pop('error', 'Sign up', error.error.message);
+          this.toastr.error(error.error.message, 'Sign up');
         });
 
       }
-      this.toasterService.pop('error', 'Sign up', 'Please, fill all the fields.');
+      this.toastr.error('Please, fill all the fields.', 'Sign up');
     }
 
   readUrl(event:any) {
