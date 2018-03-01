@@ -1,25 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
   font-family: SFBold;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf');
 }
 @font-face {
   font-family: SFSemiBold;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-SemiBold.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-SemiBold.otf');
 }
 
 @font-face {
   font-family: SF;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf');
 }
 @font-face {
   font-family: SFLight;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf');
 }
 
 @font-face {
   font-family: SFMedium;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf');
 }
 
 .user__status {
