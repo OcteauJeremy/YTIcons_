@@ -12,8 +12,6 @@ exports.create = function (req, res) {
     card.isHidden = req.body.tx ? true : false;
 
     var web3 = require('./web3.controller').web3;
-    console.log('tx: ', req.body.tx);
-
 
     var saveCard = function (card) {
         card.save(function (err, card) {
@@ -116,7 +114,7 @@ exports.findBySmartId = function (req, res) {
     });
 };
 
-exports.getByQuery = function (req, res) {
+var constructQuery = function (req, res, isAdmin) {
     var pageOpt = {
         page: req.query.page ? req.query.page : 1,
         perPage: 20
@@ -124,7 +122,7 @@ exports.getByQuery = function (req, res) {
 
     var paramSearch = {
         $and: [{
-            "isHidden": false
+            "isHidden": isAdmin
         }]
     };
 
@@ -272,7 +270,14 @@ exports.getByQuery = function (req, res) {
     } else {
         doingSearch(req, res, findObj);
     }
+};
 
+exports.getByQuery = function (req, res) {
+    constructQuery(req, res, false);
+};
+
+exports.getByQueryAdmin = function (req, res) {
+    constructQuery(req, res, true);
 };
 
 exports.update = function (req, res) {
@@ -288,7 +293,7 @@ exports.update = function (req, res) {
         }
 
         for (var key in req.body) {
-            if (card[key] && key != "id") {
+            if (card[key] && key != "id" || typeof card[key] == 'boolean') {
                 card[key] = req.body[key];
             }
         }

@@ -87,15 +87,15 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   getCards() {
     this.isLoading = true;
     this.cards = [];
-    this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
+    this.subscribtions.add(this.cardService.getCardsQueryAdmin(this.generateQueryParams()).subscribe(res => {
       this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
       console.log('cards', res);
 
       for (var card of this.cards) {
-        //TODO: request smartcontract
-        // card.price = 0.001;
+        card.copy = JSON.parse(JSON.stringify(card));
+        card.modifed = false;
       }
     }));
   }
@@ -168,6 +168,15 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     this.filters.name = searchValue;
     this.getCards();
   }
+
+  /*** Market component change ***/
+  saveCard(card) {
+    this.subscribtions.add(this.cardService.modifyCard(card).subscribe( res => {
+
+    }));
+  }
+
+
 
   ngOnDestroy() {
     this.subscribtions.unsubscribe();

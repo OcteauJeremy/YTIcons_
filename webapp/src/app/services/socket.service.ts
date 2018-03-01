@@ -4,8 +4,6 @@ import * as socketIo from 'socket.io-client';
 import {Observable} from "rxjs/Observable";
 import { environment } from '../../environments/environment';
 
-
-
 const SERVER_URL = environment.apiUrl;
 
 @Injectable()

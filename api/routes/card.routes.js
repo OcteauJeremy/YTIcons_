@@ -11,6 +11,8 @@ module.exports = function (app) {
 
     app.get('/cards/count', cards.getCount);
 
+    app.get('/cards/admin', cards.getByQueryAdmin);
+
     app.get('/cards', cards.getByQuery);
 
     app.get('/cards/bounds', cards.getBoundsPrice);

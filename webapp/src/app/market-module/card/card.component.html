@@ -1,53 +1,47 @@
-<div class="cardUI" *ngIf="card" [ngClass]="['card', card.type ? card.type.css : '', 'product'] " data-toggle="modal" [attr.data-target]="'#modal-' + card.id">
+<div [ngClass]="{locked: card.isLocked}">
+  <div class="cardUI" *ngIf="card" [ngClass]="['card', card.type ? card.type.css : '', 'product'] " data-toggle="modal" [attr.data-target]="'#modal-' + card.id">
 
-  <div class="card-title">
-    <h4>{{card.name}}</h4>
-  </div>
-
-  <div class="card-img">
-    <div class="content-img" *ngIf="card?.image?.indexOf('http') == -1 && card?.image?.indexOf('data:image') == -1" [ngStyle]="{'background-image': 'url(' + cs.baseUrl + card.image + ')'}"></div>
-    <div class="content-img" *ngIf="card?.image?.indexOf('http') > -1 || card?.image?.indexOf('data:image') > -1" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
-  </div>
-
-  <!--<div class="product__thumbnail" *ngIf="modal">
-    <div class="prodgi_btn">
-      <a data-toggle="modal" [attr.data-target]="'#modal-' + card.id" class="transparent btn--sm btn--round">More Info</a>
-      <a *ngIf="card.owner._id != currentUser?._id" data-toggle="modal"  (click)="purchaseCard(card.id, card.price)" class="transparent btn--sm btn--round">Buy</a>
-      <a *ngIf="card.owner._id == currentUser?._id" data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="transparent btn--sm btn--round">Change price</a>
+    <div class="card-title">
+      <h4>{{card.name}}</h4>
     </div>
-  </div> -->
 
-  <div class="footer-card">
-    <div class="card-line">
-      <div>
-        <span class="label-footer label-vids">VIDS</span>
-        <span class="value-footer">{{card.nbVideos | abbreviateNumber}}</span>
-      </div>
-
-      <div>
-        <span class="value-footer value-folw">{{card.nbSubscribers | abbreviateNumber}}</span>
-        <span class="label-footer">FOLW</span>
-      </div>
+    <div class="card-img">
+      <div class="content-img" *ngIf="card?.image?.indexOf('http') == -1 && card?.image?.indexOf('data:image') == -1" [ngStyle]="{'background-image': 'url(' + cs.baseUrl + card.image + ')'}"></div>
+      <div class="content-img" *ngIf="card?.image?.indexOf('http') > -1 || card?.image?.indexOf('data:image') > -1" [ngStyle]="{'background-image': 'url(' + card.image + ')'}"></div>
     </div>
-    <div class="card-line">
-      <div>
-        <span class="label-footer label-view">VIEW</span>
-        <span class="value-footer">{{card.nbViews | abbreviateNumber}}</span>
-      </div>
 
-      <div>
-        <span class="value-footer value-card">{{card.createdAt | timeBetween}}</span>
-        <span class="label-footer">CARD</span>
-      </div>
+    <div class="footer-card">
+      <div class="card-line">
+        <div>
+          <span class="label-footer label-vids">VIDS</span>
+          <span class="value-footer">{{card.nbVideos | abbreviateNumber}}</span>
+        </div>
 
+        <div>
+          <span class="value-footer value-folw">{{card.nbSubscribers | abbreviateNumber}}</span>
+          <span class="label-footer">FOLW</span>
+        </div>
+      </div>
+      <div class="card-line">
+        <div>
+          <span class="label-footer label-view">VIEW</span>
+          <span class="value-footer">{{card.nbViews | abbreviateNumber}}</span>
+        </div>
+
+        <div>
+          <span class="value-footer value-card">{{card.createdAt | timeBetween}}</span>
+          <span class="label-footer">CARD</span>
+        </div>
+
+      </div>
     </div>
   </div>
+  <div class="product-purchase">
+    <div class="price_love">
+      <span id="{{'card-price-' + card.id}}">{{card.price | currency}}</span>
+    </div>
+    <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
+  </div>
+
+  <app-card-modal [card]="card"></app-card-modal>
 </div>
-<div class="product-purchase">
-  <div class="price_love">
-    <span id="{{'card-price-' + card.id}}">{{card.price | currency}}</span>
-  </div>
-  <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
-</div>
-
-<app-card-modal [card]="card"></app-card-modal>

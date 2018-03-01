@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ManagerService {
+
   public baseUrl = environment.apiUrl;
 
   constructor(protected http: HttpClient) { }
