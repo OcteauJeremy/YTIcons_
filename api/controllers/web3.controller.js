@@ -117,14 +117,30 @@ tokenContract.events.YTIconSold({
                         console.log(err);
                         return ;
                     }
-                    nTx.populate('card', function (res) {
-                        if (err) {
-                            console.log(err);
-                            return ;
-                        }
-                        io.emit('tx-card', nCard._id);
-                        io.emit('live-info', nTx);
-                        console.log('Transaction terminated. ID card', nCard._id);
+                    nTx.populate({
+                        path: 'card',
+                        populate: [{
+                            path: "type"
+                        }, {
+                            path: "transactions",
+                            populate: [{
+                                path: "to"
+                            }, {
+                                path: "from"
+                            }]
+                        }, {
+                            path: "owner"
+                        }, {
+                            path: "nationality"
+                        }]
+                    }, function (err) {
+                        nTx.populate("from'", function (err) {
+                            nTx.populate("to", function (err) {
+                                io.emit('tx-card', nCard._id);
+                                io.emit('live-info', nTx);
+                                console.log('Transaction terminated. ID card', nCard._id);
+                           })
+                        });
                     });
                 })
             });

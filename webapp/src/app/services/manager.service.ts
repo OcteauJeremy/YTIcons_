@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 export class ManagerService {
 
   public baseUrl = "http://localhost:3000";
+  //const SERVER_URL = 'http://yticons-api:3000';
 
   constructor(protected http: HttpClient) { }
 

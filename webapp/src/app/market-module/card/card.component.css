@@ -1,3 +1,8 @@
+.locked {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
 .cardUI {
   margin-top: 36px;
   cursor: pointer;

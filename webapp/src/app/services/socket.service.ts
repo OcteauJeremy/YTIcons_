@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 
 
 const SERVER_URL = 'http://localhost:3000';
+//const SERVER_URL = 'http://yticons-api:3000';
 
 @Injectable()
 export class SocketService {

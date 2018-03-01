@@ -117,11 +117,6 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
       console.log('cards', res);
-
-      for (var card of this.cards) {
-        //TODO: request smartcontract
-        // card.price = 0.001;
-      }
     }));
   }
 

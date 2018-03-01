@@ -86,6 +86,31 @@ export class CardService extends ManagerService {
     }) as Promise<number>;
   }
 
+  public async lockCard(_idCard: number): Promise<any> {
+
+    let account = await this.getAccount();
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+      const toastr = this.toastr;
+
+      this._tokenContract.methods.lock(_idCard).send({
+        from: account,
+        gas: 4000000,
+        value: 0
+      }, function (error, result) { //get callback from function which is your transaction key
+        if (!error) {
+          toastr.success('Your locked has been successfully done.', 'Transaction');
+          resolve(1);
+        } else {
+          toastr.error('Transaction closed', 'Transaction');
+          console.log(error);
+          resolve(0);
+        }
+      });
+    }) as Promise<any>;
+  }
+
   public async purchaseCard(_idCard: number, _price: number): Promise<any> {
 
     let account = await this.getAccount();
@@ -232,12 +257,20 @@ export class CardService extends ManagerService {
     return this.get('/cards');
   }
 
+  public modifyCard(card) {
+    return this.put('/cards/' + card._id, card);
+  };
+
   public getCardsByWallet(wallet: string) {
     return this.get('/cards/byWallet/' + wallet);
   }
 
   public getCardsQuery(query) {
     return this.getQuery('/cards', query);
+  }
+
+  public getCardsQueryAdmin(query) {
+    return this.getQuery('/cards/admin', query);
   }
 
 }
