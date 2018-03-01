@@ -31,13 +31,13 @@
 
         <div class="job_detail_module">
           <div class="job__content">
-            <div *ngFor="let tr of transactions" style="margin-bottom: 15px;">
-              <span style="color:#939493;font-weight: 500;">YTIcons></span> <a style="font-weight: 500;"
+            <div *ngFor="let tr of transactions" class="row-terminal">
+              <span class="caret-terminal">YTIcons></span><a class="bold"
                                                              [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username
               ? tr?.to?.username : 'Anonymous'}}</a> bought
               <a data-toggle="modal" [attr.data-target]="'#modal-' + tr?.card?.id" style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</a>
               from
-              <a style="font-weight: 500;" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ?
+              <a class="bold" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ?
                 tr?.from?.username : 'Anonymous'}}</a> at
               <span>{{tr?.price}} ETH</span><span> - {{tr?.createdAt | timeBetweenLive}} ago</span>
               <app-card-modal *ngIf="tr?.card" [card]="tr?.card"></app-card-modal>

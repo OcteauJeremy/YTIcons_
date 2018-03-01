@@ -14,3 +14,18 @@ li {
 .section--padding2 {
   padding: 70px 0px;
 }
+
+.row-terminal {
+  margin-bottom: 15px;
+  line-height: 30px;
+}
+
+.caret-terminal {
+  color:#939493;
+  font-weight: 500;
+  margin-right: 15px;
+}
+
+.bold {
+  font-weight: 500;
+}
