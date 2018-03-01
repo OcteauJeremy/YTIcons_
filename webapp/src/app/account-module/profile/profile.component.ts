@@ -1,12 +1,15 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {CardService} from '../../services/card.service';
-import {AuthenticationService} from '../../services/authentication.service';
-import {Card} from "../../models/Card";
-import {Subscription} from "rxjs/Subscription";
-import {UserService} from "../../services/user.service";
-import {ManagerService} from "../../services/manager.service";
+import { CardService } from '../../services/card.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Card } from "../../models/Card";
+import { Subscription } from "rxjs/Subscription";
+import { UserService } from "../../services/user.service";
+import {ManagerService } from "../../services/manager.service";
 import { SocketService } from '../../services/socket.service';
+import fontawesome from '@fortawesome/fontawesome';
+import { faSync } from '@fortawesome/fontawesome-free-solid';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'app-profile',
@@ -15,15 +18,18 @@ import { SocketService } from '../../services/socket.service';
 })
 export class ProfileComponent implements OnInit {
 
-  public cardNumber: number;
+  public cardNumber: number = 0;
   public cardsUser: Array<Card> = [];
   public currentUser: any;
   private subscriptions: Subscription = new Subscription();
   public address: string = null;
   public userProfile: any;
 
-   constructor(private ms: ManagerService,private route: ActivatedRoute, private socketService: SocketService,
-              private as: AuthenticationService, private cs: CardService, private _router: Router,private us: UserService) {
+   constructor(private ms: ManagerService, private route: ActivatedRoute, private socketService: SocketService,
+               private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService,
+               private toasterService: ToasterService) {
+
+     fontawesome.library.add(faSync);
 
      let _self = this;
 
@@ -68,6 +74,7 @@ export class ProfileComponent implements OnInit {
   refreshWallet() {
     let _self = this;
     this.cs.getAccount().then(function(res:string) {
+      console.log(_self.as.currentUser.wallet, res);
       if (_self.as.currentUser.wallet != res) {
         let save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;
@@ -78,7 +85,7 @@ export class ProfileComponent implements OnInit {
           }
         }, error => {
           _self.as.currentUser.wallet = save;
-          alert('Wallet is already set on another user !');
+          this.toasterService.pop('error', 'Wallet refresh', 'This wallet is already set on another user.');
         }));
       }
     });

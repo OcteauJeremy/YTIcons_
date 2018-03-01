@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   public url: string = 'assets/images/authplc.png';
 
-  constructor(private as: AuthenticationService, private _router: Router) { }
+  constructor(private as: AuthenticationService, private _router: Router, private toasterService: ToasterService) { }
 
   redirect(pagename: string) {
     this._router.navigate(['/' + pagename]);
@@ -39,11 +40,12 @@ export class SignupComponent implements OnInit, OnDestroy {
         formData.append('password', this.password);
         this.as.register(formData).then(res => {
             this._router.navigate(['signin']);
-        }, error2 => {
-          alert(error2.error.message);
+        }, error => {
+          this.toasterService.pop('error', 'Sign up', error.error.message);
         });
 
       }
+      this.toasterService.pop('error', 'Sign up', 'Please, fill all the fields.');
     }
 
   readUrl(event:any) {

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
   font-family: SFBold;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Bold.otf');
 }
 @font-face {
   font-family: SFSemiBold;
@@ -10,16 +10,40 @@
 
 @font-face {
   font-family: SF;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Regular.otf');
 }
 @font-face {
   font-family: SFLight;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Light.otf');
 }
 
 @font-face {
   font-family: SFMedium;
-  src: url(../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf);
+  src: url('../fonts/SanFranciscoFont-master/SanFranciscoText-Medium.otf');
+}
+
+.user__status {
+  position: relative;
+}
+.star_user {
+  position: absolute;
+  top: 0;
+  right: calc(50% - 15px);
+  left: calc(50% - 18px);
+}
+
+.leaderboard-profile-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+.first-leaderboard .leaderboard-profile-avatar, .second-leaderboard .leaderboard-profile-avatar,.third-leaderboard .leaderboard-profile-avatar {
+  width: 76px;
+  height: 76px;
 }
 
 a {

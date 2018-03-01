@@ -30,41 +30,22 @@
       <div class="col-md-12">
 
         <div class="job_detail_module">
-          <h3 class="job__title">Job Description</h3>
           <div class="job__content">
-            <p>laoreet dolore magna aluam erat volutpaterat consectetuerni euism laoreet dolore magna aliquam erat
-              volutpaterat .
-              Consectetuer elit, sed diam nonmy dolor sit amet consectetuer adipiscing elit, sed diam nonmy ipsum dolor
-              sit amet,
-              consectetuer adipiscing elit sed diam nonmy ni euism laor dolore magna aliquam erat volutpat
-              consectetuerni euism
-              laoreet dolore magna aliqm volutpat onsectetuer amet consectetuer adipiscing elit sed diam nonmy ni euism
-              laore dolore
-              magna aluam eravolutpaterat consectetuerni</p>
-          </div>
-
-          <h3 class="job__title">Responsibilities</h3>
-          <div class="job__content">
-            <p>laoreet dolore magna aluam erat volutpaterat consectetuerni euism laoreet dolore magna aliquam erat
-              volutpaterat . Consectetuer
-              elit, sed diam nonmy dolor sit amet consectetuer adipiscing elit, sed diam nonmy ipsum dolor sit amet,
-              consectetuer adipiscing
-              elit sed diam nonmy.</p>
-
-            <ul class="content_list">
-              <li>Build next-generation web applications with a focus on the client side.</li>
-              <li>Redesign UI's, implement new UI's, and pick up Java as necessary.</li>
-              <li>Explore and design dynamic and compelling consumer experiences.</li>
-              <li>Design and build scalable framework for web applications.</li>
-            </ul>
-          </div>
-
-          <div class="job__content"></div>
-
-        </div><!-- end /.job_detail_module -->
-      </div><!-- end /.col-md-6 -->
-    </div><!-- end /.row -->
-  </div><!-- end /.container -->
+            <div *ngFor="let tr of transactions" style="margin-bottom: 15px;">
+              <span style="color:#939493">YTIcons> </span><a style="font-weight: 500;"
+                                                             [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username
+              ? tr?.to?.username : 'Anonymous'}}</a> bought
+              <span style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</span> <span>[{{tr?.card?.nbSubscribers | abbreviateNumber}} FOLW, {{tr?.card?.nbViews | abbreviateNumber}} VIEWS, {{tr?.card?.nbVideos | abbreviateNumber}} VIDS, {{tr?.card?.createdAt | timeBetween}} CARD]</span>
+              from
+              <a style="font-weight: 500;" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ?
+                tr?.from?.username : tr.from?.wallet}}</a> at
+              <span>{{tr?.price}} ETH.</span>
+            </div>
+          </div><!-- end /.job_detail_module -->
+        </div><!-- end /.col-md-6 -->
+      </div><!-- end /.row -->
+    </div><!-- end /.container -->
+  </div>
 </section>
 <!--================================
     END JOB AREA

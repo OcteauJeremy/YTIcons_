@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0x0ba480857cffc3b07c914a1ac8b6fdc84e2623fc';
+const tokenAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
 
 var server = require('../server').serverExpress;
 
@@ -11,7 +11,7 @@ var uploadOptions   = require('../configs/multer');
 
 var io = require('socket.io').listen(server);
 
-var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
 web3.eth.net.getId().then(function (id) {
     console.log('ID network chain', id);
@@ -104,25 +104,28 @@ tokenContract.events.YTIconSold({
 
             card.price = web3.utils.fromWei(newPrice);
 
-            console.log('tx saved:', tx);
             tx.save(function (err, nTx) {
-                if (err) {
-                    console.log(err);
-                    return ;
+                 if (err) {
+                     console.log(err);
+                     return ;
                 }
                 card.owner = user;
                 ++card.nbTransactions;
-                console.log('nTx push', nTx);
-                console.log('card bf push', card);
-                card.transactions.push(nTx);
+                card.transactions.push(tx);
                 card.save(function (err, nCard) {
                     if (err) {
                         console.log(err);
                         return ;
                     }
-                    io.emit('tx-card', nCard._id);
-                    io.emit('live-info', nCard);
-                    console.log('Transaction terminated. ID card', nCard._id);
+                    nTx.populate('card', function (res) {
+                        if (err) {
+                            console.log(err);
+                            return ;
+                        }
+                        io.emit('tx-card', nCard._id);
+                        io.emit('live-info', nTx);
+                        console.log('Transaction terminated. ID card', nCard._id);
+                    });
                 })
             });
         };
@@ -169,7 +172,6 @@ var populateCard = function (mongooseObj) {
 
 
 io.on('connection', function(socket){
-    console.log('socket connection');
     socket.on('disconnect', function(){
     });
 });

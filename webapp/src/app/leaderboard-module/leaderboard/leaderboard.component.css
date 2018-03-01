@@ -1,36 +1,13 @@
-.nek_user_meta {
-  position: absolute;
-  right: 0;
-  border-left: 1px solid #ececec;
-  border-right: 0px !important;
-  margin: 0px 17px 0px 0px !important;
-  padding-left: 38px !important;
-}
-
-.user__rank {
-  border-right: 1px solid #ececec;
-  margin: 0 10px 0px 10px !important;
-  padding-top: auto !important;
-  padding-bottom: auto !important;
-}
-
-.user__short_desc {
-  border-right: 0px;
-}
-
-.nek__short_desc {
-  border-right: 0 !important;
-  border-left: 1px solid #ececec !important;
-  padding-left: 40px !important;
-}
-
 .user_single {
   display: flex !important;
   align-items: center;
 }
 
-/****/
-
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .user_desc {
   min-height: 100px;
@@ -38,6 +15,10 @@
   display: flex;
   padding: 0 28px 0 40px;
   align-items: center;
+}
+
+.first p,.second p,.third p {
+  font-size: 24px;
 }
 
 .first {
@@ -50,6 +31,10 @@
 
 .third {
   border-right: 2px solid #724BBE !important;
+}
+
+.default {
+  border-right: 1px solid #ececec !important;
 }
 
 

@@ -8,6 +8,12 @@ exports.create = function (req, res) {
     var card = new Card();
 
     card.fromBody(req.body);
+    card.isLocked = false;
+    card.isHidden = req.body.tx ? true : false;
+
+    var web3 = require('./web3.controller').web3;
+    console.log('tx: ', req.body.tx);
+
 
     var saveCard = function (card) {
         card.save(function (err, card) {
@@ -15,7 +21,33 @@ exports.create = function (req, res) {
                 console.log(err.message);
                 return res.status(400).send({message: "Some error occurred while creating the Card."});
             }
-            return res.status(200).send(card);
+
+            function checkTx(tx, card) {
+                var lastTimeout;
+                web3.eth.getTransactionReceipt(tx, function (err, res) {
+                    if (res) {
+                        card.isHidden = false;
+                        if (res.status == 0) {
+                            card.delete(function (err) {
+                                return res.status(400).send({message: 'Error during the ethereum transatcion.'});
+                            });
+                        } else {
+                            card.save(function (err, result) {
+                                return res.status(200).send(card);
+                            });
+                        }
+                        //clearTimeout(lastTimeout);
+                    } else {
+                        lastTimeout = setTimeout(checkTx, 1000, tx, card);
+                    }
+                });
+            }
+
+            if (req.body.tx) {
+                lastTimeout = setTimeout(checkTx, 1000, req.body.tx, card);
+            } else {
+                return res.status(200).send(card);
+            }
         });
     };
 
@@ -56,7 +88,7 @@ exports.findAll = function (req, res) {
 exports.findOne = function (req, res) {
     var findObj = Card.findById(req.params.cardId);
 
-    populateItem(findObj).populate('type').exec(function (err, card) {
+    populateItem(findObj).exec(function (err, card) {
         if (err) {
             return res.status(400).send({message: "Could not retrieve user with id " + req.params.cardId});
         } else {
@@ -71,7 +103,8 @@ exports.findBySmartId = function (req, res) {
     }
 
     var findObj = Card.findOne({
-        id: req.params.smartId
+        id: req.params.smartId,
+        isHidden: false
     });
 
     populateItem(findObj).populate('type').exec(function (err, card) {
@@ -90,7 +123,9 @@ exports.getByQuery = function (req, res) {
     };
 
     var paramSearch = {
-        $and: []
+        $and: [{
+            "isHidden": false
+        }]
     };
 
     if (req.query.type) {
@@ -194,7 +229,7 @@ exports.getByQuery = function (req, res) {
     findObj.sort(tmp);
 
     var doingSearch = function (req, res, findObj) {
-        console.log('doingSearch', paramSearch);
+        //console.log('doingSearch', paramSearch);
         populateItem(findObj)
             .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
             .limit(pageOpt.perPage)
@@ -252,62 +287,41 @@ exports.update = function (req, res) {
             return res.status(400).send({message: "Card doesn't exist."});
         }
 
-        if (req.body.name) {
-            card.name = req.body.name;
+        for (var key in req.body) {
+            if (card[key] && key != "id") {
+                card[key] = req.body[key];
+            }
         }
 
-        if (req.body.image) {
-            card.image = req.body.image;
-        }
+        card.save(function (err, card) {
+            if (err) {
+                console.log(err.message);
+                return res.status(400).send({message: "Some error occurred while creating the Card."});
+            } else {
+                return res.status(200).send(card);
+            }
+        });
 
-        if (req.body.nationality) {
-            card.nationality = req.body.nationality;
-        }
+        // var saveCard = function () {
+        //
+        // };
 
-        if (req.body.nbSubscribers) {
-            card.nbSubscribers = req.body.nbSubscribers;
-        }
-
-        if (req.body.url) {
-            card.url = req.body.url;
-        }
-
-        if (req.body.description) {
-            card.description = req.body.description;
-        }
-
-        if (req.body.citation) {
-            card.citation = req.body.citation;
-        }
-
-
-        var saveCard = function () {
-            card.save(function (err, card) {
-                if (err) {
-                    console.log(err.message);
-                    return res.status(400).send({message: "Some error occurred while creating the Card."});
-                } else {
-                    return res.status(200).send(card);
-                }
-            });
-        };
-
-        if (req.body.type) {
-            Type.findById(req.body.type._id, function (err, type) {
-                if (!type) {
-                    return res.status(400).send({message: "Type doesn't exist."});
-                }
-
-                if (err) {
-                    console.log(err.message);
-                    return res.status(400).send({message: "Some error occurred while using mongoDB."});
-                }
-                card.type = type;
-                saveCard();
-            });
-        } else {
-            saveCard();
-        }
+        // if (req.body.type) {
+        //     Type.findById(req.body.type._id, function (err, type) {
+        //         if (!type) {
+        //             return res.status(400).send({message: "Type doesn't exist."});
+        //         }
+        //
+        //         if (err) {
+        //             console.log(err.message);
+        //             return res.status(400).send({message: "Some error occurred while using mongoDB."});
+        //         }
+        //         card.type = type;
+        //         saveCard();
+        //     });
+        // } else {
+        //     saveCard();
+        // }
     });
 };
 
@@ -386,7 +400,7 @@ exports.findByWallet = function (req, res) {
             return res.status(400).send({message: "Wallet doesn't exist."});
         }
 
-        var findObj = Card.find({owner: user._id});
+        var findObj = Card.find({owner: user._id, isHidden: false});
 
         populateItem(findObj).exec(function (err, cards) {
             if (err) {
