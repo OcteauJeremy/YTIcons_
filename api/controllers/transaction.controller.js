@@ -86,7 +86,7 @@ exports.findOne = function (req, res) {
 };
 
 var populateItem = function (findObj) {
-    findObj.populate("from").populate("to").populate({
+    findObj.populate("from").populate("to").populate("card").populate({
         path: "card",
         populate: {
             path: "type"

@@ -1,0 +1,175 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Card } from '../../models/Card';
+import { CardService } from '../../services/card.service';
+import { TypeService } from '../../services/type.service';
+import { NationalityService } from '../../services/nationality.service';
+import { CategoryService } from '../../services/category.service';
+import { Subscription } from 'rxjs/Subscription';
+
+@Component({
+  selector: 'app-list-cards',
+  templateUrl: './list-cards.component.html',
+  styleUrls: ['./list-cards.component.css']
+})
+export class ListCardsComponent implements OnInit, OnDestroy {
+
+  public cards = [];
+  public types = [];
+  public nationalities = [];
+  public categories = [];
+  public isLoading = false;
+
+  private subscribtions: Subscription = new Subscription();
+  public maxPages = 0;
+
+  public names = {
+    type: null,
+    nationality: null,
+    category: null,
+    subscribers: null,
+    videos: null
+  };
+
+  public filters = {
+    page: 1,
+    name: null,
+    type: null, //ID
+    category: null, //ID
+    minPrice: null,
+    maxPrice: null,
+    minSubscribers: null,
+    maxSubscribers: null,
+    minViews: null,
+    maxViews: null,
+    minVideos: null,
+    maxVideos: null,
+    minTransactions: null,
+    maxTransactions: null,
+    nationality: null, //ID
+    sort: "createdAt",
+    order: "DESC",
+    nbViews: null,
+    nbTransactions: null
+  };
+
+  constructor(private cardService: CardService, private typeService: TypeService,
+              private nationalityService: NationalityService, private categoryService: CategoryService) {
+    this.getCards();
+
+    this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
+      this.types = res;
+    }));
+
+    this.subscribtions.add(this.nationalityService.getNationalities().subscribe(res => {
+      this.nationalities = res;
+    }));
+
+    this.subscribtions.add(this.categoryService.getCategories().subscribe(res => {
+      this.categories = res;
+    }));
+
+  }
+
+  generateQueryParams() {
+    var obj = {};
+    for (var key in this.filters) {
+      if (this.filters[key]) {
+        obj[key] = this.filters[key];
+      }
+    }
+    return obj;
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  getCards() {
+    this.isLoading = true;
+    this.cards = [];
+    this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
+      this.isLoading = false;
+      this.cards = res.cards as Array<Card>;
+      this.maxPages = res.pages;
+      console.log('cards', res);
+
+      for (var card of this.cards) {
+        //TODO: request smartcontract
+        // card.price = 0.001;
+      }
+    }));
+  }
+
+  selectType(type) {
+    this.filters.type = type._id;
+    this.names.type = type.name;
+    this.getCards();
+  }
+
+  selectNationality(nationality) {
+    this.filters.nationality = nationality._id;
+    this.names.nationality = nationality.name;
+    this.getCards();
+  }
+
+  selectCategory(category) {
+    this.filters.category = category._id;
+    this.names.category = category.name;
+    this.getCards();
+  }
+
+  selectFollower(min, max, s: string) {
+    this.filters.maxSubscribers = max;
+    this.filters.minSubscribers = min;
+    this.names.subscribers = s;
+    this.getCards();
+  }
+
+  selectVideo(min, max, s: string) {
+    this.filters.maxVideos = max;
+    this.filters.minVideos = min;
+    this.names.videos = s;
+    this.getCards();
+  }
+
+  selectSort(sort: string) {
+    let sort_array = sort.split("_");
+
+    this.filters.sort = sort_array[0];
+    this.filters.order = sort_array[1];
+    this.getCards();
+  }
+
+  prevPage() {
+    if (this.filters.page > 1) {
+      --this.filters.page;
+      this.getCards();
+    }
+  }
+
+  nextPage() {
+    if (this.filters.page < this.maxPages) {
+      ++this.filters.page;
+      this.getCards();
+    }
+  }
+
+  loadPage(idx) {
+    this.filters.page = idx;
+    this.getCards();
+  }
+
+  counter(max) {
+    var counters = new Array(max);
+    return counters;
+  }
+
+  onSearchChange(searchValue: string) {
+    this.filters.name = searchValue;
+    this.getCards();
+  }
+
+  ngOnDestroy() {
+    this.subscribtions.unsubscribe();
+  }
+}
