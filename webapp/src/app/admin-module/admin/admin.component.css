@@ -29,3 +29,15 @@
   justify-content: center;
   align-items: center;
 }
+
+.container-checkbox {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 24px;
+}

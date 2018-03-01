@@ -206,15 +206,69 @@
 
     <div *ngIf="createOrigin" class="row">
       <div class="col-md-offset-2 col-md-4">
-        <card [card]="cardYoutuber" [modal]="false"></card>
+        <div class="card-container">
+          <card [card]="cardYoutuber" [modal]="false"></card>
+          <div class="container-checkbox">
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isLocked-evo" class="" name="mail_rating_reminder" [(ngModel)]="cardYoutuber.isLocked">
+              <label for="isLocked-evo">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Locked</span>
+              </label>
+            </div>
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isHidden-evo" class="" name="mail_rating_reminder" [(ngModel)]="cardYoutuber.isHidden">
+              <label for="isHidden-evo">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Hidden</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-offset- col-md-4">
-        <card [card]="cardOriginYoutuber" [modal]="false"></card>
+        <div class="card-container">
+          <card [card]="cardOriginYoutuber" [modal]="false"></card>
+          <div class="container-checkbox">
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isLocked-origin" class="" name="mail_rating_reminder" [(ngModel)]="cardOriginYoutuber.isLocked">
+              <label for="isLocked-origin">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Locked</span>
+              </label>
+            </div>
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isHidden-origin" class="" name="mail_rating_reminder" [(ngModel)]="cardOriginYoutuber.isHidden">
+              <label for="isHidden-origin">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Hidden</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div *ngIf="!createOrigin" class="row">
       <div class="col-md-offset-4 col-md-4">
-        <card [card]="cardYoutuber" [modal]="false"></card>
+        <div class="card-container">
+          <card [card]="cardYoutuber" [modal]="false"></card>
+          <div class="container-checkbox">
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isLocked-evo" class="" name="mail_rating_reminder" [(ngModel)]="cardYoutuber.isLocked">
+              <label for="isLocked-evo">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Locked</span>
+              </label>
+            </div>
+            <div class="custom_checkbox">
+              <input type="checkbox" id="isHidden-evo" class="" name="mail_rating_reminder" [(ngModel)]="cardYoutuber.isHidden">
+              <label for="isHidden-evo">
+                <span class="shadow_checkbox"></span>
+                <span class="radio_title">Hidden</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -230,7 +284,7 @@
                 <span class="radio_title">Create Origin</span>
               </label>
             </div>
-            <button type="submit" class="btn btn--round btn--md" (click)="createCard()">Create card</button>
+            <button type="submit" class="btn btn--round btn--md" [ladda]="createLoading" (click)="createCard()">Create card</button>
           </div>
         </div>
       </div>
