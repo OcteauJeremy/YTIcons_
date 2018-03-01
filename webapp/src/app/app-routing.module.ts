@@ -17,6 +17,7 @@ import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import {LiveComponent} from './live-module/live/live.component';
 import {TermsOfServiceComponent} from './termsofservice-module/termsofservice/termsofservice.component';
+import { ListCardsComponent } from './admin-module/list-cards/list-cards.component';
 
 const appRoutes: Routes = [
   {
@@ -76,6 +77,13 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [
+      IsAdminGuard
+    ]
+  },
+  {
+    path: 'list-cards',
+    component: ListCardsComponent,
     canActivate: [
       IsAdminGuard
     ]

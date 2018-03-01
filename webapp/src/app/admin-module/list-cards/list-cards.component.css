@@ -1,0 +1,10 @@
+.cards-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.image-title-container {
+  display: flex;
+  justify-content: space-around;
+  border-right: 1px solid #ececec;
+}

@@ -20,6 +20,8 @@ export class Card {
   public  nbVideos: any;
   public  nbViews: any;
   public  transactions: any;
+  public  isHidden: boolean;
+  public  isLocked: boolean;
 
   constructor() {
   }

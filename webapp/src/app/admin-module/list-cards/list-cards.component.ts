@@ -1,35 +1,28 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
-import { Subscription } from 'rxjs/Subscription';
 import { TypeService } from '../../services/type.service';
-import { NationalityService } from "../../services/nationality.service";
-import { CategoryService } from "../../services/category.service";
-import { SocketService } from '../../services/socket.service';
-import fontawesome from '@fortawesome/fontawesome';
-import { faCheck } from '@fortawesome/fontawesome-free-solid';
-
-declare var jquery: any;
-declare var $: any;
+import { NationalityService } from '../../services/nationality.service';
+import { CategoryService } from '../../services/category.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'app-market',
-  templateUrl: './market.component.html',
-  styleUrls: ['./market.component.css']
+  selector: 'app-list-cards',
+  templateUrl: './list-cards.component.html',
+  styleUrls: ['./list-cards.component.css']
 })
-export class MarketComponent implements OnInit, OnDestroy {
+export class ListCardsComponent implements OnInit, OnDestroy {
 
-
-  public  cards = [];
-  public  types = [];
-  public  nationalities = [];
-  public  categories = [];
-  public  isLoading = false;
+  public cards = [];
+  public types = [];
+  public nationalities = [];
+  public categories = [];
+  public isLoading = false;
 
   private subscribtions: Subscription = new Subscription();
-  private maxPages = 0;
+  public maxPages = 0;
 
-  private names = {
+  public names = {
     type: null,
     nationality: null,
     category: null,
@@ -37,7 +30,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     videos: null
   };
 
-  private filters = {
+  public filters = {
     page: 1,
     name: null,
     type: null, //ID
@@ -60,11 +53,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   };
 
   constructor(private cardService: CardService, private typeService: TypeService,
-              private nationalityService: NationalityService,private categoryService: CategoryService,private socketService: SocketService
-              ) {
-
-    fontawesome.library.add(faCheck);
-
+              private nationalityService: NationalityService, private categoryService: CategoryService) {
     this.getCards();
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
@@ -79,21 +68,6 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.categories = res;
     }));
 
-    this.socketService.initSocket();
-
-    this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
-      console.log('cardId = ' + cardId);
-      this.cardService.getCard(cardId).subscribe(newCard => {
-        let idx = 0;
-        for (let card of this.cards) {
-          if (card._id == cardId) {
-            this.cards[idx] = newCard;
-            break ;
-          }
-          ++idx;
-        }
-      });
-    });
   }
 
   generateQueryParams() {
@@ -107,9 +81,10 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
   }
 
-    getCards() {
+  getCards() {
     this.isLoading = true;
     this.cards = [];
     this.subscribtions.add(this.cardService.getCardsQuery(this.generateQueryParams()).subscribe(res => {
@@ -143,14 +118,14 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.getCards();
   }
 
-  selectFollower(min:number, max:number, s: string) {
+  selectFollower(min, max, s: string) {
     this.filters.maxSubscribers = max;
     this.filters.minSubscribers = min;
     this.names.subscribers = s;
     this.getCards();
   }
 
-  selectVideo(min:number, max:number, s: string) {
+  selectVideo(min, max, s: string) {
     this.filters.maxVideos = max;
     this.filters.minVideos = min;
     this.names.videos = s;
@@ -158,7 +133,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   selectSort(sort: string) {
-    let sort_array =  sort.split("_");
+    let sort_array = sort.split("_");
 
     this.filters.sort = sort_array[0];
     this.filters.order = sort_array[1];
@@ -189,13 +164,12 @@ export class MarketComponent implements OnInit, OnDestroy {
     return counters;
   }
 
-  onSearchChange(searchValue : string ) {
+  onSearchChange(searchValue: string) {
     this.filters.name = searchValue;
     this.getCards();
   }
 
   ngOnDestroy() {
-    this.socketService.removeListener('tx-card');
     this.subscribtions.unsubscribe();
   }
 }
