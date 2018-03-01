@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
+import { ToastsManager } from 'ng2-toastr';
 
 declare var jquery: any;
 declare var $: any;
@@ -11,7 +12,9 @@ declare var $: any;
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, private as: AuthenticationService) {
+
+  constructor(private router: Router, private as: AuthenticationService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+    this.toastr.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {

@@ -43,8 +43,8 @@ import { TermsOfServiceModule } from './termsofservice-module/termsofservice.mod
 import { LeaderboardService } from "./services/leaderboard.service";
 import { LaddaModule } from 'angular2-ladda';
 import { LiveService } from "./services/live.service";
-import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng2-toastr';
 
 @NgModule({
   declarations: [
@@ -75,7 +75,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LiveModule,
     TermsOfServiceModule,
     LaddaModule,
-    ToasterModule.forRoot(),
+    ToastModule.forRoot(),
     BrowserAnimationsModule
   ],
   providers: [
@@ -95,7 +95,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     IsAdminGuard,
     AuthenticationGuard,
     LiveService,
-    ToasterService
   ],
   bootstrap: [
     AppComponent
