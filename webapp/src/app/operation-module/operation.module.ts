@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from "@angular/router";
-import { CharityComponent } from './charity/charity.component';
+import { OperationComponent } from './operation/operation.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule
   ],
-  declarations: [CharityComponent]
+  declarations: [OperationComponent]
 })
-export class CharityModule { }
+export class OperationModule { }

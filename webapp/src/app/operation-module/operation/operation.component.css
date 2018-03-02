@@ -6,42 +6,42 @@
   padding: 0px 0 40px;
 }
 
-.bounty-detail-module {
+.operation-detail-module {
   text-align: justify;
 }
 
-.bounty-detail-module .bounty-title {
+.operation-detail-module .operation-title {
   border-bottom: 1px solid #ececec;
   padding: 0px 30px 11px;
   font-size: 24px;
   line-height: 66px;
 }
 
-.bounty-detail-module .bounty-content {
+.operation-detail-module .operation-content {
   padding: 34px 30px 16px;
 }
 
-.bounty-area {
+.operation-area {
   background: #f0f1f5;
 }
 
-.bounty-area .container {
+.operation-area .container {
   background: #ffffff;
 }
 
-.bounty-detail-module .bounty-content .content_list {
+.operation-detail-module .operation-content .content_list {
   padding-left: 30px;
   margin-top: 25px;
 }
 
-.bounty-detail-module .bounty-content .content_list li {
+.operation-detail-module .operation-content .content_list li {
   padding-left: 26px;
   position: relative;
   line-height: 30px;
   color: #555;
 }
 
-.bounty-detail-module .bounty-content .content_list li:before {
+.operation-detail-module .operation-content .content_list li:before {
   content: "";
   height: 7px;
   width: 7px;
@@ -56,11 +56,11 @@
   transform: translateY(-50%);
 }
 
-.bounty-detail-module .bounty-content .content_list {
+.operation-detail-module .operation-content .content_list {
   padding-left: 20px;
   margin-bottom: 10px;
   margin-top: 0px;
 }
-.bounty-detail-module .bounty-content .content_list li {
+.operation-detail-module .operation-content .content_list li {
   padding-left: 20px;
 }

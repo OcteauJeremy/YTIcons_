@@ -12,7 +12,7 @@ import {LegalComponent} from "./legal-module/legal/legal.component";
 import { AdminComponent } from './admin-module/admin/admin.component';
 import {ContactComponent} from './contact-module/contact/contact.component';
 import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bountyprogram.component';
-import {CharityComponent} from './charity-module/charity/charity.component';
+import {OperationComponent} from './operation-module/operation/operation.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import {LiveComponent} from './live-module/live/live.component';
@@ -63,8 +63,8 @@ const appRoutes: Routes = [
     component: TermsOfServiceComponent,
   },
   {
-    path: 'charity',
-    component: CharityComponent,
+    path: 'operation',
+    component: OperationComponent,
   },
   {
     path: 'bountyprogram',
