@@ -6,6 +6,10 @@
   padding: 0px 0 40px;
 }
 
+.bounty-detail-module {
+  text-align: justify;
+}
+
 .bounty-detail-module .bounty-title {
   border-bottom: 1px solid #ececec;
   padding: 0px 30px 11px;

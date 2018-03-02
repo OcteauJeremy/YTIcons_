@@ -6,6 +6,9 @@
   padding: 0px 0 40px;
 }
 
+.operation-detail-module {
+  text-align: justify;
+}
 
 .operation-detail-module .operation-title {
   border-bottom: 1px solid #ececec;
