@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit {
              for (var card of cardsUser) {
                if (card) {
                  _self.cardsUser.push(card as Card);
+                 document.getElementsByClassName('modal-backdrop')[0].remove();
                }
              }
              _self.cardNumber = _self.cardsUser.length;

@@ -25,13 +25,6 @@
 .user__status {
   position: relative;
 }
-.star_user {
-  position: absolute;
-  top: 0;
-  right: calc(50% - 15px);
-  left: calc(50% - 18px);
-}
-
 .leaderboard-profile-avatar {
   width: 70px;
   height: 70px;
