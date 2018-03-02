@@ -5,3 +5,15 @@
 .contact_form--wrapper {
   padding: 0px 0 40px;
 }
+
+.form-control {
+  border-radius: 2px;
+  -webkit-appearance: none;
+  height: 48px;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border: 1px solid #e7e7e7;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #757575;
+}
