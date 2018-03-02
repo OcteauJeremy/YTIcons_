@@ -32,7 +32,7 @@ import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
 import { ContactModule } from './contact-module/contact.module';
 import { BountyProgramModule } from './bountyprogram-module/bountyprogram.module';
-import { CharityModule } from './charity-module/charity.module';
+import { OperationModule } from './operation-module/operation.module';
 import { DirectivesModule } from "./directives/directives.module";
 import { CookieService } from 'ng2-cookies';
 import { IsAdminGuard } from './guards/is-admin.guard';
@@ -70,7 +70,7 @@ import { ToastModule } from 'ng2-toastr';
     NgbModule.forRoot(),
     ContactModule,
     BountyProgramModule,
-    CharityModule,
+    OperationModule,
     DirectivesModule,
     LiveModule,
     TermsOfServiceModule,
