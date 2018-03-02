@@ -204,7 +204,7 @@ var constructQuery = function (req, res, isAdmin) {
 
     if (req.query.nationality) {
         paramSearch.$and.push({
-            nationality: new RegExp(req.query.nationality, "i")
+            nationality: req.query.nationality
         });
     }
 
