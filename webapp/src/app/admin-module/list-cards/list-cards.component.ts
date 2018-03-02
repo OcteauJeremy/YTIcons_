@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
 import { TypeService } from '../../services/type.service';
 import { NationalityService } from '../../services/nationality.service';
 import { CategoryService } from '../../services/category.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-list-cards',
@@ -53,8 +54,10 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   };
 
   constructor(private cardService: CardService, private typeService: TypeService,
-              private nationalityService: NationalityService, private categoryService: CategoryService) {
+              private nationalityService: NationalityService, private categoryService: CategoryService,
+              private toastr: ToastsManager, private vcr: ViewContainerRef) {
     this.getCards();
+    this.toastr.setRootViewContainerRef(this.vcr);
 
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
       this.types = res;
@@ -183,21 +186,30 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     card.isSaving = true;
     var modifyCard = (card) => {
       this.subscribtions.add(this.cardService.modifyCard(card).subscribe( res => {
-        card.modified = false;
-        card.copy = res;
-        card.isSaving = false;
-        //toaster
+        card = this.initCopyCard(card);
+        this.toastr.success('Card ' + card.name + ' has been modified', 'Card');
+      }, error => {
+        card = this.initCopyCard(card);
+        this.toastr.warning('Error during the transaction', 'Network');
       }));
     };
 
     if (card.isLocked != card.copy.isLocked) {
       if (card.isLocked) {
         this.cardService.lockCard(card.id).then((resultat) => {
+          if (!resultat) {
+              card = this.initCopyCard(card);
+              return ;
+          }
           card.tx = resultat;
           modifyCard(card)
         });
       } else {
         this.cardService.unlockCard(card.id).then((resultat) => {
+          if (!resultat) {
+            card = this.initCopyCard(card);
+            return ;
+          }
           card.tx = resultat;
           modifyCard(card)
         });
@@ -205,6 +217,13 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     } else {
       modifyCard(card);
     }
+  }
+
+  initCopyCard(card) {
+    card.isSaving = false;
+    card.modified = false;
+    card = JSON.parse(JSON.stringify(card.copy));
+    return card;
   }
 
   triggerSave(card) {

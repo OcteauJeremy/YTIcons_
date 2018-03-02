@@ -5,7 +5,6 @@ var uploadOptions = require('../configs/multer');
 const download = require('image-downloader');
 
 exports.create = function (req, res) {
-    console.log(req.body);
     var card = new Card();
 
     card.fromBody(req.body);
@@ -21,7 +20,7 @@ exports.create = function (req, res) {
             }
 
             function checkTx(tx, card) {
-                web3.eth.getTransactionReceipt(tx, function (err, resTx) {
+                web3.eth.getTransactionReceipt(tx).then(function (resTx) {
                     if (resTx) {
                         if (req.body.isHidden == true) {
                             card.isHidden = true;
@@ -313,9 +312,8 @@ exports.update = function (req, res) {
                 if (err) {
                     console.log(err.message);
                     return res.status(400).send({message: "Some error occurred while creating the Card."});
-                } else {
-                    return res.status(200).send(card);
                 }
+                return res.status(200).send(card);
             });
         };
 
@@ -323,14 +321,14 @@ exports.update = function (req, res) {
         var web3 = require('./web3.controller').web3;
 
         function checkTx(tx, card) {
-            web3.eth.getTransactionReceipt(tx, function (err, res) {
-                if (res) {
-                    if (res.status == 0) {
+            web3.eth.getTransactionReceipt(tx).then(function (resTx) {
+                if (resTx) {
+                    if (resTx.status == 0) {
                         return res.status(400).send({message: "Some error occurred while locking the Card."});
                     } else {
                        saveCard();
                     }
-                    //clearTimeout(lastTimeout);
+                    // clearTimeout(lastTimeout);
                 } else {
                     setTimeout(checkTx, 1000, tx, card);
                 }
@@ -342,23 +340,6 @@ exports.update = function (req, res) {
         } else {
             saveCard()
         }
-
-        // if (req.body.type) {
-        //     Type.findById(req.body.type._id, function (err, type) {
-        //         if (!type) {
-        //             return res.status(400).send({message: "Type doesn't exist."});
-        //         }
-        //
-        //         if (err) {
-        //             console.log(err.message);
-        //             return res.status(400).send({message: "Some error occurred while using mongoDB."});
-        //         }
-        //         card.type = type;
-        //         saveCard();
-        //     });
-        // } else {
-        //     saveCard();
-        // }
     });
 };
 
