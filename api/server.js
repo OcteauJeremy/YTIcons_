@@ -2,6 +2,7 @@ const express = require('express');
 const app =  module.exports.appServer = express();
 const bodyParser = require('body-parser');
 const configMongo = require('./configs/mongoDB');
+const URL = require('./configs/urls');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -12,7 +13,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 var corsOptions = {
-    origin: 'http://localhost:4200',
+    origin: URL.webserver,
     //origin: 'http://yticons-webserver:4200',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
@@ -20,7 +21,7 @@ app.use(cors(corsOptions));
 app.use(compression());
 
 app.use( function(req, res, next){
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Origin", URL.webserver);
 //    res.header("Access-Control-Allow-Origin", origin: "http://yticons-webserver:4200");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

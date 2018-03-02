@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
-const tokenAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
+const URL = require('../configs/urls');
 
 var server = require('../server').serverExpress;
 
@@ -11,13 +11,13 @@ var uploadOptions   = require('../configs/multer');
 
 var io = require('socket.io').listen(server);
 
-var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
 
 web3.eth.net.getId().then(function (id) {
     console.log('ID network chain', id);
 });
 
-var tokenContract = new web3.eth.Contract(tokenAbi, tokenAddress);
+var tokenContract = new web3.eth.Contract(tokenAbi, URL.tokenAddress);
 
 // Create User Root
 User.findOne({

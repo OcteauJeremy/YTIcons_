@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
+import { environment } from '../../environments/environment';
 
 var Web3 = require('web3');
 declare let require: any;
@@ -16,7 +17,7 @@ export class CardService extends ManagerService {
   private _web3;
   private _tokenContract: any;
   private _self;
-  private _tokenContractAddress = '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f';
+  private _tokenContractAddress = environment.tokenAddress;
 
   constructor(http: HttpClient, private toastr: ToastsManager) {
     super(http);

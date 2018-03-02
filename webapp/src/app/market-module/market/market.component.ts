@@ -27,9 +27,9 @@ export class MarketComponent implements OnInit, OnDestroy {
   public  isLoading = false;
 
   private subscribtions: Subscription = new Subscription();
-  private maxPages = 0;
+  public maxPages = 0;
 
-  private names = {
+  public names = {
     type: null,
     nationality: null,
     category: null,
@@ -37,7 +37,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     videos: null
   };
 
-  private filters = {
+  public filters = {
     page: 1,
     name: null,
     type: null, //ID
@@ -139,14 +139,14 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.getCards();
   }
 
-  selectFollower(min:number, max:number, s: string) {
+  selectFollower(min, max, s: string) {
     this.filters.maxSubscribers = max;
     this.filters.minSubscribers = min;
     this.names.subscribers = s;
     this.getCards();
   }
 
-  selectVideo(min:number, max:number, s: string) {
+  selectVideo(min, max, s: string) {
     this.filters.maxVideos = max;
     this.filters.minVideos = min;
     this.names.videos = s;

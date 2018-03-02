@@ -150,15 +150,12 @@
                   <div class="right-side">
                     <div class="cards-options">
                       <div class="custom_checkbox">
-                        <input type="checkbox" id="{{'isLocked' + card.id}}" class="" (change)="triggerSave(card)" name="mail_rating_reminder" [(ngModel)]="card.isLocked">
-                        <label for="{{'isLocked' + card.id}}">
-                          <span class="shadow_checkbox"></span>
-                        </label>
+                        <input type="checkbox" id="{{'isLocked' + card.id}}" (change)="triggerSave(card)" [(ngModel)]="card.isLocked">
+                        <label for="{{'isLocked' + card.id}}"><span class="shadow_checkbox"></span></label>
                       </div>
                       <div class="custom_checkbox">
-                        <input type="checkbox" id="{{'isHidden' + card.id}}" class="" (change)="triggerSave(card)" name="mail_rating_reminder" [(ngModel)]="card.isHidden">
-                        <label for="{{'isHidden' + card.id}}">
-                          <span class="shadow_checkbox"></span>
+                        <input type="checkbox" id="{{'isHidden' + card.id}}" (change)="triggerSave(card)" [(ngModel)]="card.isHidden">
+                        <label for="{{'isHidden' + card.id}}"><span class="shadow_checkbox"></span>
                         </label>
                       </div>
                     </div>
