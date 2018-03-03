@@ -45,6 +45,7 @@ import { LaddaModule } from 'angular2-ladda';
 import { LiveService } from "./services/live.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr';
+import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ToastModule } from 'ng2-toastr';
     TermsOfServiceModule,
     LaddaModule,
     ToastModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    VerifyIconModule
   ],
   providers: [
     RealvalueService,

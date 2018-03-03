@@ -1,4 +1,8 @@
 
+.term_modules {
+  text-align: justify;
+}
+
 .term_modules .term .paragraph-container {
   padding: 30px 30px 0px 30px;
 }
@@ -9,4 +13,8 @@
 
 li {
   font-size: 16px;
+}
+
+.legal_area {
+  background: #f0f1f5;
 }

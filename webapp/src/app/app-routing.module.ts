@@ -4,20 +4,21 @@ import { HomeComponent } from './home-module/home/home.component';
 import { MarketComponent } from './market-module/market/market.component';
 import { ProfileComponent } from './account-module/profile/profile.component';
 import { SigninComponent } from './authentication-module/signin/signin.component';
-import {SignupComponent} from './authentication-module/signup/signup.component';
-import {FaqComponent} from './faq-module/faq/faq.component';
+import { SignupComponent} from './authentication-module/signup/signup.component';
+import { FaqComponent } from './faq-module/faq/faq.component';
 import { LeaderboardComponent } from './leaderboard-module/leaderboard/leaderboard.component';
 import { PrivacyPolicyComponent } from "./privacypolicy-module/privacypolicy/privacypolicy.component";
-import {LegalComponent} from "./legal-module/legal/legal.component";
+import { LegalComponent } from "./legal-module/legal/legal.component";
 import { AdminComponent } from './admin-module/admin/admin.component';
-import {ContactComponent} from './contact-module/contact/contact.component';
-import {BountyProgramComponent} from './bountyprogram-module/bountyprogram/bountyprogram.component';
-import {OperationComponent} from './operation-module/operation/operation.component';
+import { ContactComponent } from './contact-module/contact/contact.component';
+import { BountyProgramComponent } from './bountyprogram-module/bountyprogram/bountyprogram.component';
+import { OperationComponent } from './operation-module/operation/operation.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import {LiveComponent} from './live-module/live/live.component';
-import {TermsOfServiceComponent} from './termsofservice-module/termsofservice/termsofservice.component';
+import { LiveComponent } from './live-module/live/live.component';
+import { TermsOfServiceComponent } from './termsofservice-module/termsofservice/termsofservice.component';
 import { ListCardsComponent } from './admin-module/list-cards/list-cards.component';
+import { VerifyIconComponent } from './verifyicon-module/verifyicon/verifyicon.component';
 
 const appRoutes: Routes = [
   {
@@ -99,6 +100,10 @@ const appRoutes: Routes = [
   {
     path: 'legal',
     component: LegalComponent,
+  },
+  {
+    path: 'verify',
+    component: VerifyIconComponent,
   },
   { path: '',
     redirectTo: '/home',
