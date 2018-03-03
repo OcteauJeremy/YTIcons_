@@ -46,6 +46,10 @@ User.findOne({
     }
 });
 
+tokenContract.events.allEvents(function (error, event) {
+   console.log(error, event);
+});
+
 tokenContract.events.PriceModified({
         fromBlock: 'latest'
 }, function (err, event) {

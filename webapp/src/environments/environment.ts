@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000',
-  tokenAddress: '0x6ee43a4ab5c077c19b32bf2fcd83e235d40fce8f'
+  tokenAddress: '0x708df5613eefdeded5d2c28e44a51c91cde6f547'
 };
