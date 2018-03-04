@@ -65,10 +65,14 @@ app.use(function (err, req, res, next) {
     // Handle any other errors
 });
 
+var server =  require('http').createServer(app);
+
+module.exports.serverExpress = server;
+
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
     // Load SC listeners
-    module.exports.serverExpress = app.listen(3000, function () {
+    server.listen(3000, function () {
         require('./controllers/web3.controller');
         console.log('YTIcons API listening on 3000')
     });

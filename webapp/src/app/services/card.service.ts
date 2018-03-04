@@ -95,6 +95,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       const toastr = this.toastr;
 
+      console.log(account);
       this._tokenContract.methods.lock(_idCard).send({
         from: account,
         gas: 4000000,
