@@ -16,6 +16,7 @@ var CardSchema = mongoose.Schema({
     description: String,
     citation: String,
     price: Number,
+    maxPrice: Number,
     isLocked: Boolean,
     isHidden: Boolean,
     owner: {type: Schema.Types.ObjectId, ref: "User"},
@@ -38,6 +39,7 @@ CardSchema.methods.fromBody = function(body) {
     this.description = body.description;
     this.citation = body.citation;
     this.price = body.price;
+    this.maxPrice = this.price;
     this.type = body.type;
     this.nbTransactions = 0;
     this.owner = body.owner;

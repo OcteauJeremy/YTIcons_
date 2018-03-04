@@ -19,6 +19,7 @@ web3.eth.net.getId().then(function (id) {
 
 var tokenContract = new web3.eth.Contract(tokenAbi, URL.tokenAddress);
 
+
 // Create User Root
 User.findOne({
     wallet: '0x0000000000000000000000000000000000000000'
@@ -103,6 +104,7 @@ tokenContract.events.YTIconSold({
             tx.card = tmpCard;
 
             card.price = web3.utils.fromWei(newPrice);
+            card.maxPrice = card.price;
 
             tx.save(function (err, nTx) {
                  if (err) {

@@ -14,7 +14,6 @@ app.use(morgan('dev'));
 
 var corsOptions = {
     origin: URL.webserver,
-    //origin: 'http://yticons-webserver:4200',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
@@ -22,7 +21,6 @@ app.use(compression());
 
 app.use( function(req, res, next){
     res.header("Access-Control-Allow-Origin", URL.webserver);
-//    res.header("Access-Control-Allow-Origin", origin: "http://yticons-webserver:4200");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -65,10 +63,14 @@ app.use(function (err, req, res, next) {
     // Handle any other errors
 });
 
+var server =  require('http').createServer(app);
+
+module.exports.serverExpress = server;
+
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
     // Load SC listeners
-    module.exports.serverExpress = app.listen(3000, function () {
+    server.listen(3000, function () {
         require('./controllers/web3.controller');
         console.log('YTIcons API listening on 3000')
     });
