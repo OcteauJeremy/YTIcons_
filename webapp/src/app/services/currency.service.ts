@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
-export class CurrencyService implements OnDestroy{
+export class CurrencyService implements OnDestroy {
 
   public  currentCurrency;
   public  currentCurrencyChange: Subject<any> = new Subject<any>();

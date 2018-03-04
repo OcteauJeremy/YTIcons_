@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { SlickModule } from 'ngx-slick';
 
 
@@ -46,6 +46,9 @@ import { LiveService } from "./services/live.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr';
 import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { TokenService } from './services/token.service';
 
 @NgModule({
   declarations: [
@@ -82,11 +85,12 @@ import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
   ],
   providers: [
     RealvalueService,
-    CardService,
+    ManagerService,
+    AuthenticationGuard,
     AuthenticationService,
+    CardService,
     UserService,
     TypeService,
-    ManagerService,
     NationalityService,
     CategoryService,
     CurrencyService,
@@ -95,8 +99,13 @@ import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
     LeaderboardService,
     CookieService,
     IsAdminGuard,
-    AuthenticationGuard,
     LiveService,
+    TokenService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent

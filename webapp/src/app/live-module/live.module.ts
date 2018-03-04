@@ -4,6 +4,7 @@ import { RouterModule } from "@angular/router";
 import {LiveComponent} from './live/live.component';
 import {PipesModule} from "../pipes/pipes.module";
 import {MarketModule} from "../market-module/market.module";
+import { ManagerService } from '../services/manager.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,9 @@ import {MarketModule} from "../market-module/market.module";
     PipesModule,
     MarketModule
   ],
-  declarations: [LiveComponent]
+  declarations: [LiveComponent],
+  providers: [
+    ManagerService
+  ]
 })
 export class LiveModule { }

@@ -9,8 +9,6 @@ var createLeaderboard = function (req, res, wallet) {
     var refUser = {};
     var idWalletUser = null;
 
-    console.log(wallet);
-
     function next(promise) {
         promise.then(function(doc) {
             if (doc) {

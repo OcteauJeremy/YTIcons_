@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
 import { CardModalComponent } from './card-modal/card-modal.component';
+import { ManagerService } from '../services/manager.service';
 
 @NgModule({
   imports: [
@@ -29,6 +30,9 @@ import { CardModalComponent } from './card-modal/card-modal.component';
     MarketComponent,
     CardComponent,
     CardModalComponent
+  ],
+  providers: [
+    ManagerService
   ]
 })
 export class MarketModule { }

@@ -10,7 +10,8 @@ var UserSchema = mongoose.Schema({
     currency: String,
     avatar: String,
     token: String,
-    wallet: String
+    wallet: String,
+    token: String
 }, {
     timestamps: true
 });

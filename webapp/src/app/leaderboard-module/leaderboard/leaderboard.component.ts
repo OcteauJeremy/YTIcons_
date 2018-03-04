@@ -27,7 +27,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(this.ls.getLeaderboard().subscribe(res => {
       if (res != null) {
-        _self.leaderboard = res;
+        _self.leaderboard = res.leaderboard;
       }
     }, error => {
       toastr.error( 'This wallet is already set on another user.', 'Leaderboard');

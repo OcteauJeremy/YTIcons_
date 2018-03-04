@@ -6,6 +6,7 @@ import { CookieService } from 'ng2-cookies';
 import { ToastsManager } from 'ng2-toastr';
 import fontawesome from '@fortawesome/fontawesome';
 import {faCheck} from '@fortawesome/fontawesome-free-solid';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-signin',
@@ -20,11 +21,9 @@ export class SigninComponent implements OnInit, OnDestroy {
   private subscribtions: Subscription = new Subscription();
 
   constructor(private as: AuthenticationService, private _router: Router,
-              public cookieService: CookieService, private toastr: ToastsManager) {
+              public cookieService: CookieService, private toastr: ToastsManager,
+              private tokenService:  TokenService) {
     fontawesome.library.add(faCheck);
-    if (as.currentUser != null) {
-      this._router.navigate(['account']);
-    }
   }
 
   signin() {
@@ -49,7 +48,11 @@ export class SigninComponent implements OnInit, OnDestroy {
   redirect(pagename: string) {
     this._router.navigate(['/' + pagename]);
   }
+
   ngOnInit() {
+    if (this.as.currentUser != null) {
+      this._router.navigate(['account']);
+    }
   }
 
   ngOnDestroy() {

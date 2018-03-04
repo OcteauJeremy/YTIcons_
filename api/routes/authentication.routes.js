@@ -22,13 +22,27 @@ apiRoutes.post('/signin', function (req, res) {
 
         //TODO: GENERATE TOKEN
         if (user.validPassword(req.body.password)) {
-            var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
-                expiresIn: 60 * 24 * 30
+            jwt.verify(user.token, app.get('superSecret'), function(err, decoded) {
+                console.log('verified:', err);
+                if (err) {
+                    var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
+                        expiresIn: 60 * 24 * 30 * 12
+                    });
+                    user.token = token;
+                    user.save(function (err) {
+                        if (err) {
+                            console.log(err.message);
+                            return res.status(400).send({message: "Some error occurred while using mongoDB."});
+                        }
+                        return res.status(200).send(user);
+                    });
+                } else {
+                    return res.status(200).send(user);
+                }
             });
-            user.token = token;
-            return res.status(200).send(user);
+        } else {
+            return res.status(400).send({message: "Wrong password."});
         }
-        return res.status(400).send({message: "Wrong password."});
     };
 
     if (req.body.username.indexOf('@') > -1) {
@@ -50,9 +64,8 @@ apiRoutes.get('/token/:token', function (req, res) {
 
     jwt.verify(req.params.token, app.get('superSecret'), function(err, decoded) {
         if (err) {
-            return res.status(400).send({message: 'Failed to authenticate token.' });
+            return res.status(403).send({ auth: false, message: 'Failed to authenticate token.' });
         } else {
-            // if everything is good, save to request for use in other routes
             User.findById(decoded.userId).exec(function (err, user) {
                 if (!user) {
                     return res.status(400).send({message: "User doesn't exist."});
@@ -67,7 +80,6 @@ apiRoutes.get('/token/:token', function (req, res) {
             });
         }
     });
-
 });
 
 

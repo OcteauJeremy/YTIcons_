@@ -73,7 +73,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'signin',
-    component: SigninComponent,
+    component: SigninComponent
   },
   {
     path: 'admin',

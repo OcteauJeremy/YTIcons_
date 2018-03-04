@@ -1,6 +1,7 @@
 
 var uploadOptions   = require('../configs/multer');
 var uploadAvatar    = uploadOptions.multerAvatar;
+var tokenGuard = require('../controllers/token.guard');
 
 module.exports = function(app) {
 
@@ -8,7 +9,7 @@ module.exports = function(app) {
 
   app.post('/users', uploadAvatar.single('avatar'), users.create);
 
-  app.get('/users', users.findAll);
+  // app.get('/users', users.findAll);
 
   app.get('/users/byWallet/:wallet', users.findByWallet);
 
@@ -16,7 +17,7 @@ module.exports = function(app) {
 
   app.get('/users/:userId', users.findOne);
 
-  app.put('/users/:userId', uploadAvatar.single('avatar'), users.update);
+  app.put('/users/:userId', tokenGuard.verifyToken, uploadAvatar.single('avatar'), users.update);
 
-  app.delete('/users/:userId', users.delete);
+  //app.delete('/users/:userId', users.delete);
 };

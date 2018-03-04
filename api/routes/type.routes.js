@@ -1,3 +1,4 @@
+var tokenGuard = require('../controllers/token.guard');
 
 module.exports = function(app) {
 

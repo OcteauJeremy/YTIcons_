@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
 import { environment } from '../../environments/environment';
+import { AuthenticationService } from './authentication.service';
+import { CookieService } from 'ng2-cookies';
 
 var Web3 = require('web3');
 declare let require: any;

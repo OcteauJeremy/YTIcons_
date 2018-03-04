@@ -24,13 +24,11 @@ export class LiveComponent implements OnInit {
 
     this.transactions = [];
     this.socketService.onEvent('live-info').subscribe((transaction: any) => {
-      console.log(transaction);
       if (transaction)
         _self.transactions.unshift(transaction);
     });
 
     this.subscriptions.add(this.ls.getLastTransactions().subscribe(transactions => {
-      console.log(transactions);
       if (transactions != null) {
         for (var tr of transactions) {
           _self.transactions.push(tr);

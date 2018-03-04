@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MarketModule } from '../market-module/market.module';
 import { LaddaModule } from 'angular2-ladda';
 import { ListCardsComponent } from './list-cards/list-cards.component';
+import { ManagerService } from '../services/manager.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,9 @@ import { ListCardsComponent } from './list-cards/list-cards.component';
     MarketModule,
     LaddaModule
   ],
-  declarations: [AdminComponent, ListCardsComponent]
+  declarations: [AdminComponent, ListCardsComponent],
+  providers: [
+    ManagerService
+  ]
 })
 export class AdminModule { }

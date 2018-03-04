@@ -1,3 +1,4 @@
+var tokenGuard = require('../controllers/token.guard');
 
 module.exports = function(app) {
 
@@ -5,5 +6,5 @@ module.exports = function(app) {
 
     app.get('/nationalities', nationalities.findAll);
 
-    app.post('/nationalities', nationalities.create);
+    app.post('/nationalities', tokenGuard.verifyToken, tokenGuard.isAdmin, nationalities.create);
 };

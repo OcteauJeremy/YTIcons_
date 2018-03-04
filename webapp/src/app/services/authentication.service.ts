@@ -5,15 +5,18 @@ import {CardService} from './card.service';
 import { Subject } from 'rxjs/Subject';
 import { ManagerService } from './manager.service';
 import { CookieService } from 'ng2-cookies';
+import { TokenService } from './token.service';
 
 @Injectable()
-export class AuthenticationService extends ManagerService{
+export class AuthenticationService extends ManagerService {
 
   private address: string;
-  public  currentUser: any;
   public  currentUserChange: Subject<any> = new Subject<any>();
+  public  currentUser;
 
-  constructor(http: HttpClient, private cs: CardService, public cookieService: CookieService) {
+
+  constructor(http: HttpClient, private cs: CardService, public cookieService: CookieService,
+              private tokenService: TokenService) {
     super(http);
 
     var localToken = localStorage.getItem('yticons-token');
@@ -23,12 +26,23 @@ export class AuthenticationService extends ManagerService{
     if (token) {
       this.getUserByToken(token).subscribe((res) => {
         this.currentUser = res;
+        this.tokenService.currentUser = this.currentUser;
         this.currentUserChange.next(this.currentUser);
+        console.log('CurrentUser changed', this.currentUser);
       });
     } else {
       this.currentUser = null;
+      this.tokenService.currentUser = this.currentUser;
       this.currentUserChange.next(this.currentUser);
     }
+
+    this.tokenService.tokenChange.subscribe((res) => {
+      this.currentUser = null;
+    });
+  }
+
+  ngOnInit() {
+
   }
 
   public login(_username: string, _password: string): Observable<any> {
@@ -47,6 +61,7 @@ export class AuthenticationService extends ManagerService{
   public logout() {
     localStorage.removeItem('yticons-token');
     this.cookieService.delete('yticons-token');
+    this.tokenService.currentUser = null;
     this.currentUser = null;
   }
 
@@ -56,6 +71,7 @@ export class AuthenticationService extends ManagerService{
 
   public  setCurrentUser(user) {
     this.currentUser = user;
+    this.tokenService.currentUser = this.currentUser;
     this.currentUserChange.next(this.currentUser);
   }
 

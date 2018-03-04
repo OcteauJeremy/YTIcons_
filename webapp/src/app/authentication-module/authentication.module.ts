@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import {AuthenticationService} from '../services/authentication.service';
 import { SignupComponent } from './signup/signup.component';
 import {DirectivesModule} from "../directives/directives.module";
+import { ManagerService } from '../services/manager.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {DirectivesModule} from "../directives/directives.module";
     SigninComponent
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    ManagerService
   ]
 })
 export class AuthenticationModule { }

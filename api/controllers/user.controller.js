@@ -61,10 +61,10 @@ exports.create = function (req, res) {
                 user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
             }
             var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
-                expiresIn: 60 * 24 * 30
+                expiresIn: 60 * 24 * 30 * 12
             });
             user.token = token;
-            user.save(function (err, user) {
+            user.save(function (err) {
                 if (err) {
                     console.log(err.message);
                     return res.status(400).send({message: "Some error occurred while creating the User."});
@@ -111,9 +111,13 @@ exports.findByWallet = function (req, res) {
 
 exports.update = function (req, res) {
 
+    if (req.currentUser.id != req.params.userId && req.currentUser.roles.indexOf('admin') == -1) {
+        return res.status(403).send({ auth: false, message: 'Non authorized.' });
+    }
+
     var modifiedUser = function (user) {
         for (var key in req.body) {
-            if (user[key] && key != "password") {
+            if (user[key] && key != "password" && key != "username" && key != "token") {
                 user[key] = req.body[key];
             }
         }
@@ -147,22 +151,18 @@ exports.update = function (req, res) {
             return res.status(400).send({message: "User doesn't exist."});
         }
 
-        if (req.body.wallet != user.wallet) {
-            User.findOne({wallet: req.body.wallet}).exec(function (err, fUser) {
-                if (err) {
-                    return res.status(400).send({message: "Error during mongoDB transaction."});
-                }
+        User.find({$or: [{username: req.body.username}, {email: req.body.email}, {wallet: req.body.wallet}]}).exec(function (err, fUser) {
+            if (err) {
+                return res.status(400).send({message: "Error during mongoDB transaction."});
+            }
 
-                if (fUser) {
-                    return res.status(400).send({message: "An account already use this wallet."});
-                }
+            if (fUser.length > 0) {
+                return res.status(400).send({message: "An account already use this wallet."});
+            }
 
-                user.wallet = req.body.wallet;
-                modifiedUser(user);
-            });
-        } else {
+            user.wallet = req.body.wallet;
             modifiedUser(user);
-        }
+        });
     });
 };
 

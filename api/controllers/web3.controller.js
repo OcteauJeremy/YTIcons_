@@ -19,7 +19,6 @@ web3.eth.net.getId().then(function (id) {
 
 var tokenContract = new web3.eth.Contract(tokenAbi, URL.tokenAddress);
 
-
 // Create User Root
 User.findOne({
     wallet: '0x0000000000000000000000000000000000000000'
