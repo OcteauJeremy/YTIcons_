@@ -2,16 +2,24 @@
 var User = require('../models/user.model');
 var Card = require('../models/card.model');
 
-exports.findBySubscriber = function (req, res) {
+
+var createLeaderboard = function (req, res, wallet) {
     const cursor = User.find().cursor();
     var ldboard = {};
     var refUser = {};
+    var idWalletUser = null;
 
+    console.log(wallet);
 
     function next(promise) {
         promise.then(function(doc) {
             if (doc) {
                 if (doc.username != "Root") {
+                    if (wallet && doc.wallet == wallet) {
+                        idWalletUser = doc._id;
+                        console.log(doc._id);
+                    }
+
                     ldboard[doc._id] = {
                         nbSubscribers: 0,
                         nbViews: 0,
@@ -42,6 +50,11 @@ exports.findBySubscriber = function (req, res) {
                 }
             } else {
                 var sortedLeaderboard = Object.keys(ldboard).sort(function(a, b) {return ldboard[b].nbSubscribers - ldboard[a].nbSubscribers});
+                var order = -1;
+
+                if (idWalletUser) {
+                    order = sortedLeaderboard.indexOf(idWalletUser.toString());
+                }
                 var returnLd = [];
                 for (var i = 0; i < sortedLeaderboard.length && i < 50; i++) {
                     returnLd.push({
@@ -49,34 +62,31 @@ exports.findBySubscriber = function (req, res) {
                         score: ldboard[sortedLeaderboard[i]]
                     });
                 }
-                res.status(200).send(returnLd);
+                var returnedObj = {
+                    leaderboard: returnLd,
+                    ranking: null
+                };
+
+                if (order > -1) {
+                    returnedObj.ranking = {
+                        user: refUser[idWalletUser],
+                        score: ldboard[idWalletUser],
+                        rank: order + 1
+                    }
+                }
+
+                res.status(200).send(returnedObj);
             }
         })
     }
 
     next(cursor.next());
+};
 
+exports.findBySubscriber = function (req, res) {
+    createLeaderboard(req, res, null);
+};
 
-
-    /*cursor.on('data', function(doc) {
-        // Called once for every document
-        console.log(doc);
-    });
-    cursor.on('close', function() {
-        // Called when done
-        console.log('-- done');
-    });*/
-    // var next = function (promise) {
-    //     console.log('next', promise);
-    //     promise.then(function(doc) {
-    //         console.log('doc', doc);
-    //         if (doc) {
-    //             console.log(doc);
-    //             next(cursor.next());
-    //         }
-    //     })
-    // }
-    //
-    // next(cursor.next);
-    // console.log('findBySubscribers');
+exports.findBySubscriberAndWallet = function (req, res) {
+    createLeaderboard(req, res, req.params.wallet);
 };
