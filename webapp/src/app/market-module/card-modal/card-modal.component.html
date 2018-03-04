@@ -109,9 +109,10 @@
 
       <div class="modal-body">
         <div class="col-md-12 col-sm-12 col-xs-12">
+          Actual price : {{card.price.toFixed(4)}} ETH
           Actual price : {{card.price}} ETH
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
-                 placeholder="Enter new price in ETH" [value]="card.price"required>
+                 placeholder="Enter new price in ETH" [value]="card.price.toFixed(4)"required>
         </div>
       </div><!-- end /.modal-body -->
       <div class="modal-footer">

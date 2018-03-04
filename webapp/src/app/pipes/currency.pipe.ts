@@ -24,7 +24,7 @@ export class CurrencyPipe implements PipeTransform, OnDestroy {
 
     switch (this.currentCurrency) {
       case "ETH":
-        return (value).toString() + " ETH";
+        return this.precisionRoundEth((value)).toString() + " ETH";
       case "USD":
         return this.precisionRound(value * this.realvalueService.valueUSD).toString() + " USD";
       case "EUR":
@@ -32,6 +32,10 @@ export class CurrencyPipe implements PipeTransform, OnDestroy {
       default:
         return value;
     }
+  }
+
+  precisionRoundEth(num) {
+    return num.toFixed(4);
   }
 
   precisionRound(num) {
