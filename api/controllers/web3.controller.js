@@ -47,10 +47,6 @@ User.findOne({
     }
 });
 
-tokenContract.events.allEvents(function (error, event) {
-   console.log(error, event);
-});
-
 tokenContract.events.PriceModified({
         fromBlock: 'latest'
 }, function (err, event) {
@@ -108,6 +104,7 @@ tokenContract.events.YTIconSold({
             tx.card = tmpCard;
 
             card.price = web3.utils.fromWei(newPrice);
+            card.maxPrice = card.price;
 
             tx.save(function (err, nTx) {
                  if (err) {
