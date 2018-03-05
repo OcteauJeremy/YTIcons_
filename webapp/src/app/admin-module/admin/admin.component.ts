@@ -257,7 +257,6 @@ export class AdminComponent implements OnInit {
         if (self.createOrigin) {
           var isHidden = self.cardOriginYoutuber.isHidden;
           var isLocked = self.cardOriginYoutuber.isLocked;
-          console.log('isHidden:', isHidden, isLocked)
 
           self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
           self.cardOriginYoutuber.type = self.getOriginType();
@@ -325,7 +324,7 @@ export class AdminComponent implements OnInit {
 
   createCardFromName(name: string) {
     this.cs.createCardFromName(name).then(function(res) {
-      console.log(res);
+      //console.log(res);
     });
   }
 

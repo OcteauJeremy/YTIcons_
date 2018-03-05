@@ -94,7 +94,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
-      console.log('cards', res);
+      // console.log('cards', res);
 
       for (var card of this.cards) {
         card.copy = JSON.parse(JSON.stringify(card));
