@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000',
-  tokenAddress: '0x2141f457eb3b345f6cbec4c24cf256c806e37015',
+  tokenAddress: '0xc99831cab3b8bb2a89c8bb7dfebfccab8f9a45f8',
   recaptchaPublic: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
   recaptchaPrivate: '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
 };

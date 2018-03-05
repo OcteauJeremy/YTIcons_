@@ -1,8 +1,10 @@
-var User = require('../models/user.model');
-const fs = require('fs');
+var User    = require('../models/user.model');
+var Card    = require('../models/card.model');
+var Transaction     = require('../models/transaction.model');
 var uploadOptions   = require('../configs/multer');
-var app = require('../server').appServer;
-var jwt    = require('jsonwebtoken');
+var app     = require('../server').appServer;
+var jwt     = require('jsonwebtoken');
+const fs    = require('fs');
 
 
 exports.create = function (req, res) {
@@ -156,9 +158,37 @@ exports.update = function (req, res) {
                 return res.status(400).send({message: "Error during mongoDB transaction."});
             }
 
-            console.log(fUser[0]._id, user._id);
             if (fUser.length > 0 && fUser[0]._id.toString() != user._id.toString()) {
                 return res.status(400).send({message: "An account already use this pseudo/wallet/email."});
+            }
+
+            if (fUser.length > 0) {
+                fUser.forEach(function (userTmp) {
+                   if (userTmp.username == '' && userTmp.password == '') {
+                       Card.find({owner: userTmp._id}, function (err, cards) {
+                            cards.forEach(function (card) {
+                                card.owner = user._id;
+                                card.save();
+                            });
+                       });
+
+                       Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
+                            txs.forEach(function (tx) {
+                               if (tx.from.toString() == userTmp._id.toString()) {
+                                   tx.from = user._id;
+                               }
+
+                               if (tx.to.toString() == userTmp._id.toString()) {
+                                   tx.to = user._id;
+                               }
+
+                               tx.save();
+                            });
+                       });
+                       userTmp.remove();
+                       //userTmp.delete();
+                   }
+                });
             }
 
             user.wallet = req.body.wallet;
