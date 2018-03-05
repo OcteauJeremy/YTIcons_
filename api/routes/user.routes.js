@@ -19,5 +19,7 @@ module.exports = function(app) {
 
   app.put('/users/:userId', tokenGuard.verifyToken, uploadAvatar.single('avatar'), users.update);
 
+  app.post('/newPassword/:userId', tokenGuard.verifyToken, users.setNewPassword);
+
   //app.delete('/users/:userId', users.delete);
 };
