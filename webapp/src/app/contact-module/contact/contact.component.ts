@@ -25,6 +25,12 @@ export class ContactComponent implements OnInit {
   constructor(private rs: RecaptchaService,private toastr: ToastsManager) { }
 
   ngOnInit() {
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
   }
 
   resolved(_captchaResponse: string) {

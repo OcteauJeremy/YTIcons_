@@ -66,7 +66,7 @@ export class AuthenticationService extends ManagerService {
   }
 
   public lostPassword(_username: string): Observable<any> {
-    return this.get('/resetPassword/' + _username);
+    return this.get('/forgotPassword/' + _username);
   }
 
   public getUserByToken(token) {

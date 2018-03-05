@@ -22,7 +22,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   public password: string;
   public username: string;
   public rememberMe = true;
-  private subscribtions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
   private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
@@ -37,6 +37,12 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.as.currentUser != null) {
       this._router.navigate(['account']);
     }
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
   }
 
   ngAfterViewChecked() {
@@ -50,7 +56,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   signin() {
     const toastr = this.toastr;
 
-    this.subscribtions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
@@ -58,7 +64,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
     }));
 
     if (!this.isRobot) {
-      this.subscribtions.add(this.as.login(this.username, this.password).subscribe(res => {
+      this.subscriptions.add(this.as.login(this.username, this.password).subscribe(res => {
 
         if (this.rememberMe) {
           localStorage.setItem('yticons-token', res.token);
@@ -80,6 +86,6 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy() {
-    this.subscribtions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
