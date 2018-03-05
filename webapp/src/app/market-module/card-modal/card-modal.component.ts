@@ -15,6 +15,7 @@ export class CardModalComponent implements OnInit {
 
   public currentUser: any;
   public newPrice: number = 0;
+  public newLineTag = "<br />";
 
   constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);

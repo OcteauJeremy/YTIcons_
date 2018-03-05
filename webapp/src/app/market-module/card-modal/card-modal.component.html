@@ -69,7 +69,7 @@
           </div>
           <div class="section">
             <p>Description</p>
-            <span>{{card.description}}</span>
+            <span *ngFor="let paragraph of card.description.split('\n')" [innerHTML]="paragraph.length > 0 ? paragraph : newLineTag"></span>
           </div>
           <!--<div class="section">
             <p>Citation</p>
