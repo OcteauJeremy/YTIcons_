@@ -3,6 +3,7 @@ var apiRoutes = express.Router();
 var app = require('../server').appServer;
 var User = require('../models/user.model');
 var jwt    = require('jsonwebtoken');
+var request = require('request');
 
 apiRoutes.post('/signin', function (req, res) {
     if (!req.body.username || !req.body.password) {
@@ -82,7 +83,22 @@ apiRoutes.get('/token/:token', function (req, res) {
     });
 });
 
+apiRoutes.post('/verfiyCaptcha', function (req, res) {
+    if (!req.body.secret || !req.body.response) {
+        return res.status(400).send({message: "Wrong parameters"});
+    }
 
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + req.body.secret + "&response=" + req.body.response;
 
+    request(verificationUrl, function(error,response,body) {
+        body = JSON.parse(body);
+        // Success will be true or false depending upon captcha validation.
+        if (body.success !== undefined && !body.success) {
+            return res.status(200).send({message: "Success"});
+        }
+        return res.status(400).send({message: "Failed CAPTCHA."});
+    });
+
+});
 
 module.exports.authRoutes = apiRoutes;
