@@ -5,7 +5,7 @@ var uploadOptions   = require('../configs/multer');
 var UserSchema = mongoose.Schema({
     username: String,
     email: String,
-    password: String,
+    password: {type: String, select: false},
     roles: [String],
     currency: String,
     avatar: String,
@@ -17,6 +17,18 @@ var UserSchema = mongoose.Schema({
 }, {
     timestamps: true
 });
+
+UserSchema.methods.safeObj = function () {
+  return {
+      username: this.username,
+      email: this.email,
+      roles: this.roles,
+      currency: this.currency,
+      avatar: this.avatar,
+      wallet: this.wallet,
+      token: this.token
+  }
+};
 
 UserSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

@@ -158,6 +158,13 @@ export class ProfileComponent implements OnInit {
     let _self = this;
     this.currentUser = this.as.currentUser;
 
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
+
     this.subscriptions.add(this.route.params.subscribe(params => {
       this.address = params['address'];
 

@@ -20,7 +20,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   public categories = [];
   public isLoading = false;
 
-  private subscribtions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
   public maxPages = 0;
 
   public names = {
@@ -59,15 +59,22 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     this.getCards();
     this.toastr.setRootViewContainerRef(this.vcr);
 
-    this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
+
+    this.subscriptions.add(this.typeService.getTypes().subscribe(res => {
       this.types = res;
     }));
 
-    this.subscribtions.add(this.nationalityService.getNationalities().subscribe(res => {
+    this.subscriptions.add(this.nationalityService.getNationalities().subscribe(res => {
       this.nationalities = res;
     }));
 
-    this.subscribtions.add(this.categoryService.getCategories().subscribe(res => {
+    this.subscriptions.add(this.categoryService.getCategories().subscribe(res => {
       this.categories = res;
     }));
 
@@ -90,7 +97,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   getCards() {
     this.isLoading = true;
     this.cards = [];
-    this.subscribtions.add(this.cardService.getCardsQueryAdmin(this.generateQueryParams()).subscribe(res => {
+    this.subscriptions.add(this.cardService.getCardsQueryAdmin(this.generateQueryParams()).subscribe(res => {
       this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
@@ -185,7 +192,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
 
     card.isSaving = true;
     var modifyCard = (card) => {
-      this.subscribtions.add(this.cardService.modifyCard(card).subscribe( res => {
+      this.subscriptions.add(this.cardService.modifyCard(card).subscribe( res => {
         card = this.initCopyCard(card);
         this.toastr.success('Card ' + card.name + ' has been modified', 'Card');
       }, error => {
@@ -240,6 +247,6 @@ export class ListCardsComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subscribtions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

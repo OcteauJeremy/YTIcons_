@@ -34,10 +34,10 @@ apiRoutes.post('/signin', function (req, res) {
                             console.log(err.message);
                             return res.status(400).send({message: "Some error occurred while using mongoDB."});
                         }
-                        return res.status(200).send(user);
+                        return res.status(200).send(user.safeObj());
                     });
                 } else {
-                    return res.status(200).send(user);
+                    return res.status(200).send(user.safeObj());
                 }
             });
         } else {
@@ -48,11 +48,11 @@ apiRoutes.post('/signin', function (req, res) {
     if (req.body.username.indexOf('@') > -1) {
         User.findOne({
             email: req.body.username
-        }, connectionFunction);
+        }).select('password').exec(connectionFunction);
     } else {
         User.findOne({
             username: req.body.username
-        }, connectionFunction);
+        }).select('password').exec(connectionFunction);
     }
 });
 

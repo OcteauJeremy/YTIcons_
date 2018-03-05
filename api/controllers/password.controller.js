@@ -12,7 +12,7 @@ exports.setNewPassword = function (req, res) {
     }
 
 
-    User.findById(req.params.userId, function (err, user) {
+    User.findById(req.params.userId).select('password').exec(function (err, user) {
         if (err) {
             console.log(err.message);
             return res.status(400).send({message: "Some error occurred while performing request."});
@@ -113,7 +113,7 @@ exports.resetPassword = function(req, res) {
         return res.status(400).send({message: "Password too short."})
     }
 
-    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}}, function(err, user) {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}}).exec(function(err, user) {
         if (!user) {
             return res.status(400).send({message: "Token doesn't exist."});
         }

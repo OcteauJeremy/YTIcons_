@@ -20,6 +20,7 @@ export class CardService extends ManagerService {
   private _tokenContract: any;
   private _self;
   private _tokenContractAddress = environment.tokenAddress;
+  private
 
   constructor(http: HttpClient, private toastr: ToastsManager) {
     super(http);
@@ -27,6 +28,13 @@ export class CardService extends ManagerService {
       this._web3 = new Web3(window.web3.currentProvider);
       const web3 = this._web3;
       const toastr = this.toastr;
+
+      toastr.onClickToast().subscribe( toast => {
+        if (toast.timeoutId) {
+          clearTimeout(toast.timeoutId);
+        }
+        this.toastr.clearToast(toast);
+      });
 
       this._web3.eth.net.getId().then(function (id) {
         if (id !== 3) {

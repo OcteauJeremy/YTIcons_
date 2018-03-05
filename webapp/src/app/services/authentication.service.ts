@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { ManagerService } from './manager.service';
 import { CookieService } from 'ng2-cookies';
 import { TokenService } from './token.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
 export class AuthenticationService extends ManagerService {
@@ -70,7 +71,7 @@ export class AuthenticationService extends ManagerService {
   }
 
   public lostPassword(_username: string): Observable<any> {
-    return this.get('/resetPassword/' + _username);
+    return this.get('/forgotPassword/' + _username);
   }
 
   public getUserByToken(token) {

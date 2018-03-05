@@ -19,7 +19,8 @@ import { LiveComponent } from './live-module/live/live.component';
 import { TermsOfServiceComponent } from './termsofservice-module/termsofservice/termsofservice.component';
 import { ListCardsComponent } from './admin-module/list-cards/list-cards.component';
 import { VerifyIconComponent } from './verifyicon-module/verifyicon/verifyicon.component';
-import {ForgottenPasswordComponent} from './authentication-module/lost-password/forgotten-password/forgotten-password.component';
+import { ForgottenPasswordComponent } from './authentication-module/lost-password/forgotten-password/forgotten-password.component';
+import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
 
 const appRoutes: Routes = [
   {
@@ -37,7 +38,7 @@ const appRoutes: Routes = [
       AuthenticationGuard
     ],
     data: {
-      redirectTo: '/login'
+      redirectTo: '/signin'
     }
   },
   {
@@ -74,7 +75,13 @@ const appRoutes: Routes = [
   },
   {
     path: 'signin',
-    component: SigninComponent
+    component: SigninComponent,
+    canActivate: [
+      IsNotConnectedGuard
+    ],
+    data: {
+      redirectTo: '/account'
+    }
   },
   {
     path: 'admin',
@@ -93,6 +100,12 @@ const appRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [
+      IsNotConnectedGuard
+    ],
+    data: {
+      redirectTo: '/account'
+    }
   },
   {
     path: 'privacypolicy',
