@@ -119,7 +119,7 @@ exports.update = function (req, res) {
 
     var modifiedUser = function (user) {
         for (var key in req.body) {
-            if (user[key] && key != "password" && key != "username" && key != "token") {
+            if (user[key] && key != "password" && key != "username" && key != "token" && key != "resetPasswordToken") {
                 user[key] = req.body[key];
             }
         }
@@ -129,7 +129,6 @@ exports.update = function (req, res) {
             var fileName = tmp[tmp.length - 1];
 
             if (fileName.indexOf('default') < 0) {
-                console.log('unlink');
                 fs.unlink(__dirname + '/../ressources/avatars/user/' + fileName, function () {});
             }
             user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
@@ -164,7 +163,7 @@ exports.update = function (req, res) {
 
             if (fUser.length > 0) {
                 fUser.forEach(function (userTmp) {
-                   if (userTmp.username == '' && userTmp.password == '') {
+                   if (userTmp.username == '' && userTmp.email == '') {
                        Card.find({owner: userTmp._id}, function (err, cards) {
                             cards.forEach(function (card) {
                                 card.owner = user._id;
