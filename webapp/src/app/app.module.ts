@@ -51,6 +51,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TokenService } from './services/token.service';
 import { RecaptchaModule } from "ng-recaptcha";
 import { RecaptchaService } from "./services/recaptcha.service";
+import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
 
 export class ToastCustomOptions extends ToastOptions {
   animate = 'fade';
@@ -110,6 +111,7 @@ export class ToastCustomOptions extends ToastOptions {
     LeaderboardService,
     CookieService,
     IsAdminGuard,
+    IsNotConnectedGuard,
     LiveService,
     RecaptchaService,
     TokenService,

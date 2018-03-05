@@ -1,20 +1,18 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { AuthenticationService } from '../services/authentication.service';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {AuthenticationService} from '../services/authentication.service';
 import {CookieService} from 'ng2-cookies';
-import 'rxjs/add/operator/map';
-
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class IsNotConnectedGuard implements CanActivate {
 
   constructor(private as: AuthenticationService, private router: Router, private cookieService: CookieService) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    const customRedirect = next.data['redirectTo'];
+    let customRedirect = next.data['redirectTo'];
 
     const localToken = localStorage.getItem('yticons-token');
     const cookieToken = this.cookieService.get('yticons-token');
@@ -22,12 +20,12 @@ export class AuthenticationGuard implements CanActivate {
     const token = localToken || cookieToken;
     if (token) {
       return this.as.getUserByToken(token).map((res) => {
-          return true;
+          const redirect = !!customRedirect ? customRedirect : '/market';
+          this.router.navigate([redirect]);
+          return false;
       }).first();
     } else {
-      const redirect = !!customRedirect ? customRedirect : '/market';
-      this.router.navigate([redirect]);
-      return false;
+      return true;
     }
   }
 }
