@@ -9,8 +9,11 @@ export class LeaderboardService  extends ManagerService{
   constructor(http: HttpClient) {
     super(http);
   }
-  public getLeaderboard() {
-    return this.get('/leaderboards/bySubscribers/');
+  public getLeaderboard(wallet) {
+    if (wallet) {
+      return this.get('/leaderboards/bySubscribers/' + wallet);
+    }
+    return this.get('/leaderboards/bySubscribers');
   }
 
 }

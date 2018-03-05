@@ -17,6 +17,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   }
 
   public leaderboard: any;
+  public  ranking;
   private subscriptions: Subscription = new Subscription();
   public currentUser: any;
 
@@ -25,9 +26,10 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     this.currentUser = this.as.currentUser;
     const toastr = this.toastr;
 
-    this.subscriptions.add(this.ls.getLeaderboard().subscribe(res => {
+    this.subscriptions.add(this.ls.getLeaderboard(this.as.currentUser ? this.as.currentUser.wallet : null).subscribe(res => {
       if (res != null) {
         _self.leaderboard = res.leaderboard;
+        _self.ranking = res.ranking;
       }
     }, error => {
       toastr.error( 'This wallet is already set on another user.', 'Leaderboard');

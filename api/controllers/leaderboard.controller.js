@@ -9,13 +9,14 @@ var createLeaderboard = function (req, res, wallet) {
     var refUser = {};
     var idWalletUser = null;
 
+    console.log('wallet', wallet);
+
     function next(promise) {
         promise.then(function(doc) {
             if (doc) {
                 if (doc.username != "Root") {
                     if (wallet && doc.wallet == wallet) {
                         idWalletUser = doc._id;
-                        console.log(doc._id);
                     }
 
                     ldboard[doc._id] = {

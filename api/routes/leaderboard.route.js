@@ -6,5 +6,4 @@ module.exports = function(app) {
     app.get('/leaderboards/bySubscribers/', leaderboards.findBySubscriber);
 
     app.get('/leaderboards/bySubscribers/:wallet', leaderboards.findBySubscriberAndWallet);
-
 };

@@ -86,10 +86,42 @@
                 </li>
 
               </ul>
-            </div><!-- end /.user_area -->
-          </div><!-- end /.col-md-12 -->
-        </div><!-- end /.row -->
-      </div><!-- end /.col-md-8 -->
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="ranking && ranking.rank > 50">
+            <div class="user_area">
+              <ul>
+                <li class="default">
+                  <div class="user_single">
+                    <div class="user__status user__rank default" >
+                      <div *ngIf="ranking?.user?._id == currentUser?._id" class="star_user">
+                        <img src="assets/images/images/star.png" [ngStyle]="{'width': '30px', 'max-width': '30px'}">
+                      </div>
+                      <p>{{ranking.rank}}</p>
+                    </div>
+                    <div class="user_desc">
+                      <div class="user_avatar">
+                        <div class="leaderboard-profile-avatar" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + ranking?.user?.avatar + ')'}" alt=""></div>
+                      </div>
+                      <div class="user_informations ellipsis">
+                        <a *ngIf="!ranking.user.wallet">{{ranking.user.username}}</a>
+                        <a *ngIf="ranking.user.wallet" [routerLink]="['/account', ranking.user?.wallet]">{{ranking.user.username ? ranking.user.username : ranking.user.wallet}}</a>
+                        <p *ngIf="ranking.user.username">Member since: {{ranking.user.createdAt | date:'MMMM yyyy'}}</p>
+                      </div>
+                    </div>
+                    <div class="user_stats">
+                      <p>{{ranking.score.nbSubscribers | frenchNumber}} Followers</p>
+                      <p>{{ranking.score.nbCards}} Cards</p>
+                      <p>{{ranking.score.nbViews | frenchNumber}} Views</p>
+                    </div>
+                  </div><!-- end /.user_single -->
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div><!-- end /.row -->
   </div><!-- end /.container -->
