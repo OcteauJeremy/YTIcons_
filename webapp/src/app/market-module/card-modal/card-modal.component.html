@@ -49,7 +49,7 @@
           </div>
           <div class="product-purchase">
             <div class="price_love">
-              <span>{{card.price | currency}}</span>
+              <span>{{card.price | currency }}</span>
             </div>
             <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
           </div>
@@ -113,8 +113,7 @@
             the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
           <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
           <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
-          <p>Actual price : {{card.price.toFixed(4)}} ETH
-          Actual price : {{card.price}} ETH</p>
+          <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
                  placeholder="Enter new price in ETH" [value]="card.price.toFixed(4)"required>
         </div>
