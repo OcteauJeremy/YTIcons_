@@ -14,6 +14,12 @@ export class ContactComponent implements OnInit {
   private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
 
+  public form: any = {
+    subject: 'Subject',
+    name: '',
+    email: '',
+    text: ''
+  }
   constructor(private rs: RecaptchaService,private toastr: ToastsManager) { }
 
   ngOnInit() {
@@ -30,11 +36,13 @@ export class ContactComponent implements OnInit {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      toastr.error('The captcha is not valid', 'Authentication');
+      toastr.error('The captcha is not valid', 'Contact us');
     });
 
-    if (!this.isRobot) {
+    if (!this.isRobot && this.form.name && this.form.subject && this.form.subject != 'Subject' && this.form.email && this.form.text) {
 
+    } else if (!this.isRobot) {
+      this.toastr.error('Please, fill all the fields.', 'Contact us');
     }
   }
 }
