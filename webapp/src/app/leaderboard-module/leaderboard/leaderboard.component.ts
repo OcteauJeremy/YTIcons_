@@ -26,6 +26,13 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     this.currentUser = this.as.currentUser;
     const toastr = this.toastr;
 
+    this.subscriptions.add(toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
+
     this.subscriptions.add(this.ls.getLeaderboard(this.as.currentUser ? this.as.currentUser.wallet : null).subscribe(res => {
       if (res != null) {
         _self.leaderboard = res.leaderboard;

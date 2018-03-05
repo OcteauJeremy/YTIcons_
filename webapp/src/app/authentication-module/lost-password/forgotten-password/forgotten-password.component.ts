@@ -15,6 +15,7 @@ declare var $: any;
 })
 export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  public isLoading: boolean = false;
   public username: string;
   private captchaResponse: string = null;
   private isRobot: boolean = true;
@@ -29,6 +30,12 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   }
 
   ngOnInit() {
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+        if (toast.timeoutId) {
+          clearTimeout(toast.timeoutId);
+        }
+        this.toastr.clearToast(toast);
+    }));
   }
 
   ngAfterViewChecked() {
@@ -48,11 +55,16 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
     }));
 
     if (!this.isRobot && this.username) {
+      this.isLoading = true;
       this.subscriptions.add(this.authService.lostPassword(this.username).subscribe(res => {
-        this._router.navigate(['market']);
-
+        this.toastr.success('An email has been sent to the email address linked to your account', 'Lost password');
+        setTimeout((router: Router) => {
+          this._router.navigate(['market']);
+          this.isLoading = false;
+        }, 3000);
       }, error => {
         this.toastr.error('We could not find you account anywhere.', 'Lost password');
+        this.isLoading = false;
       }));
     }
   }

@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public password: string;
   public conPassword: string;
   public emailPattern: string;
-  private subscribtions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
   public fileList: FileList = null;
   private captchaResponse: string = null;
   private isRobot: boolean = true;
@@ -33,6 +33,13 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnInit() {
     this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
   }
 
   ngAfterViewChecked() {
@@ -50,7 +57,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   signup() {
     const toastr = this.toastr;
 
-    this.subscribtions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
@@ -102,7 +109,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy() {
-    this.subscribtions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }

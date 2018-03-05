@@ -1,21 +1,23 @@
-import {Component, Input, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
 import {Card} from "../../models/Card";
 import {CardService} from "../../services/card.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ToastsManager} from "ng2-toastr";
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-card-modal',
   templateUrl: './card-modal.component.html',
   styleUrls: ['./card-modal.component.css']
 })
-export class CardModalComponent implements OnInit {
+export class CardModalComponent implements OnInit, OnDestroy {
 
   @Input("card") card: Card;
 
   public currentUser: any;
   public newPrice: number = 0;
   public newLineTag = "<br />";
+  private subscriptions: Subscription = new Subscription();
 
   constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -48,6 +50,17 @@ export class CardModalComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.as.currentUser;
     this.newPrice = parseFloat(this.card.price.toFixed(4));
+
+    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+      if (toast.timeoutId) {
+        clearTimeout(toast.timeoutId);
+      }
+      this.toastr.clearToast(toast);
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }
