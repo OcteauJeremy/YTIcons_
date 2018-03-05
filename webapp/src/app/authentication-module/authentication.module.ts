@@ -7,17 +7,25 @@ import {AuthenticationService} from '../services/authentication.service';
 import { SignupComponent } from './signup/signup.component';
 import {DirectivesModule} from "../directives/directives.module";
 import { ManagerService } from '../services/manager.service';
+import {RecaptchaModule} from "ng-recaptcha";
+import {ForgottenPasswordComponent} from './lost-password/forgotten-password/forgotten-password.component';
+import {SetPasswordComponent} from './lost-password/set-password/set-password.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    DirectivesModule
+    DirectivesModule,
+    RecaptchaModule,
+    RouterModule
   ],
   declarations: [
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    ForgottenPasswordComponent,
+    SetPasswordComponent
   ],
   exports: [
     SigninComponent

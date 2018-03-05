@@ -34,7 +34,8 @@
             <div class="contact_form cardify">
               <div class="section-title">
                 <h1>Is there anything we can help <span class="highlighted">you</span> with ?</h1>
-                <p>To get a faster support related to your account, please provide your Ethereum wallet address in your message.</p>
+                <p>To get a faster support related to your account, please provide your Ethereum wallet address in your
+                  message.</p>
               </div>
 
               <div class="row">
@@ -44,13 +45,34 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <input type="text"  placeholder="Name">
+                            <input #namecheck="ngModel" [(ngModel)]="form.name" name="name" type="text" placeholder="Name" required>
+
+                            <div *ngIf="namecheck.invalid && (namecheck.dirty || namecheck.touched)" class="alert alert-danger">
+
+                              <div *ngIf="namecheck.errors.required">
+                                Name is required.
+                              </div>
+
+                            </div>
+
                           </div>
                         </div>
 
                         <div class="col-md-6">
                           <div class="form-group">
-                            <input type="text" placeholder="Email">
+                            <input #emailCheck="ngModel" [(ngModel)]="form.email" name="email" type="email" placeholder="Email" required emailValidatorDirective>
+
+                            <div *ngIf="emailCheck.invalid && (emailCheck.dirty || emailCheck.touched)" class="alert alert-danger">
+
+                              <div *ngIf="emailCheck.errors.required">
+                                Email is required.
+                              </div>
+                              <div *ngIf="!emailCheck.errors.required && emailCheck.errors.emailvalidator">
+                                Email is not valid.
+                              </div>
+
+                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -58,22 +80,26 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
-                            <select class="form-control" id="subject">
-                              <option hidden>Subject</option>
+                            <select [(ngModel)]="form.subject" name="subject" class="form-control" id="subject" required>
+                              <option selected>Subject</option>
                               <option>Informations</option>
                               <option>Help</option>
                               <option>Bounty program</option>
-                              <option>Verified your card</option>
+                              <option>Verify your card</option>
                             </select>
                           </div>
                         </div>
 
                       </div>
 
-                      <textarea cols="30" rows="10" placeholder="Your text here"></textarea>
+                      <div class="form-group">
+                        <textarea  [maxLength]="500" [(ngModel)]="form.text" name="text" cols="30" rows="10" placeholder="Your text here" required></textarea>
+                      </div>
+
+                      <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
                       <div class="sub_btn">
-                        <button type="button" class="btn btn--round btn--default">Send</button>
+                        <button (click)="send()" type="button" class="btn btn--round btn--default">Send</button>
                       </div>
                     </form>
                   </div>
