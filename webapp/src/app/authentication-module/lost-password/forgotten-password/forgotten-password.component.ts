@@ -52,7 +52,7 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
         this._router.navigate(['market']);
 
       }, error => {
-        this.toastr.error('We could not find you account anywhere.', 'Authentication');
+        this.toastr.error('We could not find you account anywhere.', 'Lost password');
       }));
     }
   }

@@ -31,10 +31,7 @@ export class ManagerService {
     return this.http.get<any>(this.baseUrl + url, {
       headers: headers
     }).catch((error: Response | any) => {
-      if (error instanceof Response) {
-        // Re-throw unhandled error
         return Observable.throw(error);
-      }
     });
   }
 
@@ -57,10 +54,7 @@ export class ManagerService {
     return this.http.post<any>(this.baseUrl + url, body, {
       headers: headers
     }).catch((error: Response | any) => {
-      if (error instanceof Response) {
-        // Re-throw unhandled error
         return Observable.throw(error);
-      }
     });
   }
 
@@ -72,10 +66,7 @@ export class ManagerService {
     return this.http.put(this.baseUrl + url, body, {
       headers: headers
     }).catch((error: Response | any) => {
-      if (error instanceof Response) {
-        // Re-throw unhandled error
         return Observable.throw(error);
-      }
     });
   }
 
@@ -87,10 +78,7 @@ export class ManagerService {
     return this.http.delete<any>(this.baseUrl + url, {
       headers: headers
     }).catch((error: Response | any) => {
-      if (error instanceof Response) {
-        // Re-throw unhandled error
         return Observable.throw(error);
-      }
     });
   }
 }
