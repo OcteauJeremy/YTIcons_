@@ -37,11 +37,13 @@
                 <div class="profile-avatar" *ngIf="address && userProfile"
                      [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
               </div>
-                  <label *ngIf="!address" for="cover_photo" class="upload_btn">
-                    <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
-                           id="cover_photo">
-                    <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
-                  </label>
+              <label *ngIf="!address" for="cover_photo" class="upload_btn">
+                <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
+                       id="cover_photo">
+                <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
+              </label>
+              <span *ngIf="!address" data-toggle="modal" data-target="#editPassword" class="btn btn--sm btn--round"
+                    aria-hidden="true">Edit password</span>
 
               <div class="author">
                 <h4 *ngIf="address">{{userProfile?.username ? userProfile.username : 'Anonymous'}}</h4>
@@ -49,6 +51,7 @@
                 <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM / dd / yyyy') :
                   'Unknown'}}</p>
                 <p *ngIf="!address">Signed Up: {{currentUser.createdAt | date:'MM / dd / yyyy'}}</p>
+
               </div>
             </div>
           </div><!-- end /.author-card -->
@@ -83,3 +86,86 @@
 <!--================================
     END AUTHOR AREA
 =================================-->
+
+<div class="modal fade" id="editPassword" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="">Edit your password</h3>
+      </div>
+
+      <div class="modal-body">
+        <form action="#">
+        <div class="login--form">
+
+          <div class="form-group">
+            <label for="passworda">Password</label>
+            <input #passworda="ngModel" [(ngModel)]="form.password" name="passworda" id="passworda" type="password"
+                   class="text_field"
+                   placeholder="Enter your password..." reverse="true" required>
+
+            <div *ngIf="passworda.invalid && (passworda.dirty || passworda.touched)" class="alert alert-danger">
+
+              <div *ngIf="passworda.errors.required">
+                Password is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input #newPassword="ngModel" [(ngModel)]="form.newPassword"
+                   name="newPassword" id="newPassword" type="password" class="text_field"
+                   placeholder="New password" minlength="6" maxlength="64" required>
+
+            <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
+                 class="alert alert-danger">
+
+              <div *ngIf="newPassword.errors.required">
+                New password is required.
+              </div>
+              <div *ngIf="newPassword.errors.minlength">
+                Password must be at least 6 characters
+              </div>
+              <div *ngIf="newPassword.errors.maxlength">
+                Password must be less than 64 characters
+              </div>
+              <div *ngIf="!newPassword.errors.required">
+                Password must match
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="con_pass">Confirm New Password</label>
+            <input #confirmPassword="ngModel" equalValidatorDirective="newPassword" [(ngModel)]="form.conPassword"
+                   name="confirmPassword" id="con_pass" type="password" class="text_field"
+                   placeholder="Confirm password" required>
+
+            <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+                 class="alert alert-danger">
+
+              <div *ngIf="confirmPassword.errors.required">
+                Password must match
+              </div>
+              <div *ngIf="!confirmPassword.errors.required">
+                Password must match
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+        </form>
+      </div><!-- end /.modal-body -->
+
+      <div class="modal-footer">
+        <button (click)="editPassword()" data-dismiss="modal" class="btn btn--round btn--default">Submit</button>
+        <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

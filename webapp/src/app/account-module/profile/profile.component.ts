@@ -25,6 +25,15 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
+  public form = {
+    password: '',
+    newPassword: '',
+    conPassword: ''
+  }
+
+  conPassword: string;
+  password: string;
+
    constructor(private ms: ManagerService, private route: ActivatedRoute, private socketService: SocketService,
                private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService,
                private toastr: ToastsManager) {
@@ -35,7 +44,7 @@ export class ProfileComponent implements OnInit {
 
      this.socketService.initSocket();
 
-     this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
+     this.subscriptions.add(this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
        for (let c of this.cardsUser) {
          if (c._id == cardId) {
            this.cardsUser = [];
@@ -52,7 +61,7 @@ export class ProfileComponent implements OnInit {
            break ;
          }
        }
-     });
+     }));
   }
 
   refreshProfileInfo(wallet: string) {
@@ -61,15 +70,17 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.as.currentUser;
 
     this.cardsUser = [];
-    this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
+    if (wallet) {
+      this.subscriptions.add(this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
 
-      for (var card of cardsUser) {
+        for (var card of cardsUser) {
           if (card) {
             _self.cardsUser.push(card as Card);
           }
-      }
-      _self.cardNumber = _self.cardsUser.length;
-    });
+        }
+        _self.cardNumber = _self.cardsUser.length;
+      }));
+    }
   }
 
   refreshWallet() {
@@ -115,6 +126,32 @@ export class ProfileComponent implements OnInit {
       }));
     }
 
+  }
+
+  editPassword() {
+
+    const toastr = this.toastr;
+    const _self = this;
+
+    if (this.form.conPassword !== this.form.newPassword) {
+      toastr.error('New password must match', 'Edit password');
+    }
+    else if (this.form.password != '' && this.form.conPassword != ''  && this.form.newPassword != '' ) {
+      this.subscriptions.add(this.as.setNewPassword(this.form.password, this.form.conPassword).subscribe(res => {
+          toastr.success(res.message, 'Edit password');
+          _self.form.password = '';
+          _self.form.conPassword = '';
+          _self.form.newPassword = '';
+
+        },
+        error => {
+          toastr.error(error.error.message, 'Edit password');
+        }
+      ));
+    }
+    else {
+      toastr.error('All fields are required', 'Edit password');
+    }
   }
 
   ngOnInit() {
