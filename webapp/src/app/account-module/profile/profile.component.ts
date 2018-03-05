@@ -25,6 +25,12 @@ export class ProfileComponent implements OnInit {
   public address: string = null;
   public userProfile: any;
 
+  public form = {
+    password: '',
+    newPassword: '',
+    conPassword: ''
+  }
+
    constructor(private ms: ManagerService, private route: ActivatedRoute, private socketService: SocketService,
                private as: AuthenticationService, private cs: CardService, private _router: Router, private us: UserService,
                private toastr: ToastsManager) {
