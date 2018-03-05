@@ -1,13 +1,13 @@
-import {Router} from '@angular/router';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
-import {AuthenticationService} from '../../services/authentication.service';
-import {CookieService} from 'ng2-cookies';
-import {ToastsManager} from 'ng2-toastr';
+import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { AuthenticationService } from '../../services/authentication.service';
+import { CookieService } from 'ng2-cookies';
+import { ToastsManager } from 'ng2-toastr';
 import fontawesome from '@fortawesome/fontawesome';
-import {faCheck} from '@fortawesome/fontawesome-free-solid';
-import {TokenService} from '../../services/token.service';
-import {RecaptchaService} from "../../services/recaptcha.service";
+import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import { TokenService } from '../../services/token.service';
+import { RecaptchaService } from '../../services/recaptcha.service';
 import { environment } from '../../../environments/environment';
 
 
@@ -39,12 +39,12 @@ export class SigninComponent implements OnInit, OnDestroy {
   signin() {
     const toastr = this.toastr;
 
-    this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    this.subscribtions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      toastr.error('The captcha is not valid', 'Authentication');
-    });
+      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
+    }));
 
     if (!this.isRobot) {
       this.subscribtions.add(this.as.login(this.username, this.password).subscribe(res => {

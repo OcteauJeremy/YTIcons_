@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {RecaptchaService} from "../../services/recaptcha.service";
-import {ToastsManager} from "ng2-toastr";
+import { environment } from "../../../environments/environment";
+import { RecaptchaService } from "../../services/recaptcha.service";
+import { ToastsManager } from "ng2-toastr";
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-faq',
@@ -10,6 +11,7 @@ import {ToastsManager} from "ng2-toastr";
 })
 export class ContactComponent implements OnInit {
 
+  private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
   private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
@@ -32,12 +34,12 @@ export class ContactComponent implements OnInit {
   send() {
     const toastr = this.toastr;
 
-    this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      toastr.error('The captcha is not valid', 'Contact us');
-    });
+      toastr.error('Please, verify that you\'re not a robot.', 'Contact us');
+    }));
 
     if (!this.isRobot && this.form.name && this.form.subject && this.form.subject != 'Subject' && this.form.email && this.form.text) {
 
@@ -45,4 +47,9 @@ export class ContactComponent implements OnInit {
       this.toastr.error('Please, fill all the fields.', 'Contact us');
     }
   }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
 }

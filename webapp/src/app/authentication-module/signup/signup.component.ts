@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   public username: string;
   public password: string;
   public conPassword: string;
+  public emailPattern: string;
   private subscribtions: Subscription = new Subscription();
   public fileList: FileList = null;
   private captchaResponse: string = null;
@@ -26,6 +27,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   public url: string = 'assets/images/authplc.png';
 
   constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+  }
+
+  ngOnInit() {
+    this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   }
 
   redirect(pagename: string) {
@@ -39,12 +44,12 @@ export class SignupComponent implements OnInit, OnDestroy {
   signup() {
     const toastr = this.toastr;
 
-    this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    this.subscribtions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      toastr.error('The captcha is not valid', 'Authentication');
-    });
+      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
+    }));
 
     if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
 
@@ -82,9 +87,6 @@ export class SignupComponent implements OnInit, OnDestroy {
 
       reader.readAsDataURL(event.target.files[0]);
     }
-  }
-
-  ngOnInit() {
   }
 
   ngOnDestroy() {

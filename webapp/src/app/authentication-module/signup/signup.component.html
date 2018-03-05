@@ -64,14 +64,14 @@
               <div class="form-group">
                 <label for="email_ad">Email Address</label>
                 <input #emailCheck="ngModel" [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
-                       placeholder="Enter your email address" required emailValidatorDirective="">
+                       placeholder="Enter your email address" required [pattern]="emailPattern">
 
                 <div *ngIf="emailCheck.invalid && (emailCheck.dirty || emailCheck.touched)" class="alert alert-danger">
 
                   <div *ngIf="emailCheck.errors.required">
                     Email is required.
                   </div>
-                  <div *ngIf="!emailCheck.errors.required && emailCheck.errors.emailvalidator">
+                  <div *ngIf="!emailCheck.errors.required && emailCheck.errors.pattern">
                     Email is not valid.
                   </div>
 
