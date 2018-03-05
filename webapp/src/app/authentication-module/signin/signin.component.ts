@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
@@ -10,13 +10,14 @@ import { TokenService } from '../../services/token.service';
 import { RecaptchaService } from '../../services/recaptcha.service';
 import { environment } from '../../../environments/environment';
 
+declare var $: any;
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public password: string;
   public username: string;
@@ -30,6 +31,16 @@ export class SigninComponent implements OnInit, OnDestroy {
               public cookieService: CookieService, private toastr: ToastsManager,
               private tokenService: TokenService, private rs: RecaptchaService) {
     fontawesome.library.add(faCheck);
+  }
+
+  ngOnInit() {
+    if (this.as.currentUser != null) {
+      this._router.navigate(['account']);
+    }
+  }
+
+  ngAfterViewChecked() {
+    $('re-captcha > div').addClass('recaptcha');
   }
 
   resolved(_captchaResponse: string) {
@@ -66,12 +77,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
   redirect(pagename: string) {
     this._router.navigate(['/' + pagename]);
-  }
-
-  ngOnInit() {
-    if (this.as.currentUser != null) {
-      this._router.navigate(['account']);
-    }
   }
 
   ngOnDestroy() {

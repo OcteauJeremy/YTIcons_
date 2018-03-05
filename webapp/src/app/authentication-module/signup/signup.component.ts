@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -6,12 +6,14 @@ import {ToastsManager} from 'ng2-toastr';
 import {environment} from "../../../environments/environment";
 import {RecaptchaService} from "../../services/recaptcha.service";
 
+declare var $: any;
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public email: string;
   public username: string;
@@ -31,6 +33,10 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  }
+
+  ngAfterViewChecked() {
+    $('re-captcha > div').addClass('recaptcha');
   }
 
   redirect(pagename: string) {

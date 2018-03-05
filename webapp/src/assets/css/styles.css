@@ -244,3 +244,13 @@ a {
 .table > thead > tr > th {
   border-bottom: 1px solid #ddd !important;
 }
+
+
+@media (max-width: 480px) {
+  .recaptcha {
+    transform: scale(0.77);
+    -webkit-transform: scale(0.77);
+    transform-origin: 0 0;
+    -webkit-transform-origin: 0 0;
+  }
+}
