@@ -1,6 +1,5 @@
 <div class="profile_menu inline has_dropdown" *ngIf="isAuthenticated()">
   <div class="author__avatar">
-    <!--<img src="assets/images/usr_avatar.png" alt="user avatar">-->
     <img [attr.src]="baseUrl + currentUser.avatar" alt="user avatar" class="avatar">
   </div>
   <div class="autor__info">

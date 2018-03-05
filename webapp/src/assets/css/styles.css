@@ -98,7 +98,7 @@ a {
   font-family: SF, sans-serif;
   width: 251px;
   height: 379px;
-  background: url('../images/images/cards_background/bronze.png');
+  background: url('../images/cards_background/bronze.png');
   background-size: contain;
   color: white;
   position: relative;
@@ -112,7 +112,7 @@ a {
 }
 
 .card-origin {
-  background: url('../images/images/cards_background/origin.png');
+  background: url('../images/cards_background/origin.png');
   background-size: contain;
 }
 
@@ -121,37 +121,37 @@ a {
 }
 
 .card-bronze {
-  background: url('../images/images/cards_background/bronze.png');
+  background: url('../images/cards_background/bronze.png');
   background-size: contain;
 }
 
 .card-silver {
-  background: url('../images/images/cards_background/silver.png');
+  background: url('../images/cards_background/silver.png');
   background-size: contain;
 }
 
 .card-gold {
-  background: url('../images/images/cards_background/gold.png');
+  background: url('../images/cards_background/gold.png');
   background-size: contain;
 }
 
 .card-250k {
-  background: url('../images/images/cards_background/speciale_250k.png');
+  background: url('../images/cards_background/speciale_250k.png');
   background-size: contain;
 }
 
 .card-500k {
-  background: url('../images/images/cards_background/speciale_500k.png');
+  background: url('../images/cards_background/speciale_500k.png');
   background-size: contain;
 }
 
 .card-1m {
-  background: url('../images/images/cards_background/speciale_1M.png');
+  background: url('../images/cards_background/speciale_1M.png');
   background-size: contain;
 }
 
 .card-10m {
-  background: url('../images/images/cards_background/speciale_10M.png');
+  background: url('../images/cards_background/speciale_10M.png');
   background-size: contain;
 }
 
@@ -176,7 +176,6 @@ a {
 }
 
 .card .content-img {
-  background: url('../images/images/prime.jpg');
   background-size: cover;
   border: 2px solid white;
   width: 150px;
