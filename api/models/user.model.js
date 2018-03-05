@@ -11,7 +11,9 @@ var UserSchema = mongoose.Schema({
     avatar: String,
     token: String,
     wallet: String,
-    token: String
+    token: String,
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 }, {
     timestamps: true
 });

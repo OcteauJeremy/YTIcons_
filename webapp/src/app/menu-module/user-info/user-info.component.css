@@ -2,6 +2,11 @@
 .avatar {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+}
+
+.autor__info {
+  margin-left: 10px;
 }
 
 @media (max-width: 480px) {

@@ -24,7 +24,6 @@ apiRoutes.post('/signin', function (req, res) {
         //TODO: GENERATE TOKEN
         if (user.validPassword(req.body.password)) {
             jwt.verify(user.token, app.get('superSecret'), function(err, decoded) {
-                console.log('verified:', err);
                 if (err) {
                     var token = jwt.sign({userId: user._id}, app.get('superSecret'), {
                         expiresIn: 60 * 24 * 30 * 12

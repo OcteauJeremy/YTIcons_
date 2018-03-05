@@ -43,7 +43,7 @@
                 <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
               </label>
               <span *ngIf="!address" data-toggle="modal" data-target="#editPassword" class="btn btn--sm btn--round"
-                    aria-hidden="true">Change password</span>
+                    aria-hidden="true">Edit password</span>
 
               <div class="author">
                 <h4 *ngIf="address">{{userProfile?.username ? userProfile.username : 'Anonymous'}}</h4>
@@ -97,6 +97,7 @@
       </div>
 
       <div class="modal-body">
+        <form action="#">
         <div class="login--form">
 
           <div class="form-group">
@@ -115,7 +116,7 @@
 
           <div class="form-group">
             <label for="newPassword">New Password</label>
-            <input #newPassword="ngModel" equalValidatorDirective="conFirmPassword" [(ngModel)]="form.newPassword"
+            <input #newPassword="ngModel" [(ngModel)]="form.newPassword"
                    name="newPassword" id="newPassword" type="password" class="text_field"
                    placeholder="New password" minlength="6" maxlength="64" required>
 
@@ -157,10 +158,11 @@
           </div>
 
         </div>
+        </form>
       </div><!-- end /.modal-body -->
 
       <div class="modal-footer">
-        <button (click)="editPassword()" data-dismiss="modal" class="btn btn--round btn--default">Edit</button>
+        <button (click)="editPassword()" data-dismiss="modal" class="btn btn--round btn--default">Submit</button>
         <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
       </div>
     </div>

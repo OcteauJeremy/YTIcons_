@@ -64,6 +64,11 @@ export class AuthenticationService extends ManagerService {
     this.currentUser = null;
   }
 
+  public setNewPassword(password: string, newPassword: string) {
+    console.log(this.currentUser._id);
+    return this.post('/newPassword/' + this.currentUser._id, {'oldPassword' : password, 'newPassword' : newPassword});
+  }
+
   public lostPassword(_username: string): Observable<any> {
     return this.get('/resetPassword/' + _username);
   }
