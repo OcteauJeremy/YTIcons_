@@ -28,7 +28,6 @@ export class AuthenticationService extends ManagerService {
         this.currentUser = res;
         this.tokenService.currentUser = this.currentUser;
         this.currentUserChange.next(this.currentUser);
-        console.log('CurrentUser changed', this.currentUser);
       });
     } else {
       this.currentUser = null;

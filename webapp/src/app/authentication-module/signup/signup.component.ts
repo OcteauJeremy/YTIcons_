@@ -41,12 +41,15 @@ export class SignupComponent implements OnInit, OnDestroy {
         formData.append('password', this.password);
         this.as.register(formData).then(res => {
             this._router.navigate(['signin']);
+          this.toastr.success('Sign up successful.', 'Sign up');
+
         }, error => {
           this.toastr.error(error.error.message, 'Sign up');
         });
 
+      } else {
+        this.toastr.error('Please, fill all the fields.', 'Sign up');
       }
-      this.toastr.error('Please, fill all the fields.', 'Sign up');
     }
 
   readUrl(event:any) {

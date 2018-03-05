@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
     const toastr = this.toastr;
 
     this.cs.getAccount().then(function(res:string) {
-      console.log(_self.as.currentUser.wallet, res);
+      // console.log(_self.as.currentUser.wallet, res);
       if (_self.as.currentUser.wallet != res) {
         let save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;

@@ -82,7 +82,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.socketService.initSocket();
 
     this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
-      console.log('cardId = ' + cardId);
+      //console.log('cardId = ' + cardId);
       this.cardService.getCard(cardId).subscribe(newCard => {
         let idx = 0;
         for (let card of this.cards) {
@@ -117,7 +117,7 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
-      console.log('cards', res);
+      // console.log('cards', res);
     }));
   }
 

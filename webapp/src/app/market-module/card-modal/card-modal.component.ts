@@ -15,6 +15,7 @@ export class CardModalComponent implements OnInit {
 
   public currentUser: any;
   public newPrice: number = 0;
+  public newLineTag = "<br />";
 
   constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -28,7 +29,7 @@ export class CardModalComponent implements OnInit {
   changePriceCard(idCard: number, _wallet: string) {
     if (this.newPrice != 0 ) {
       this.cs.changePriceCard(idCard, this.newPrice, _wallet).then(function (res) {
-        console.log(res);
+        // console.log(res);
       });
     } else {
       this.toastr.error('The price must be greater than 0.', 'Price modification');
@@ -40,7 +41,7 @@ export class CardModalComponent implements OnInit {
       price = card.price;
     }
     this.cs.purchaseCard(card.id, price).then(function(res) {
-      console.log(res);
+      // console.log(res);
     });
   }
 

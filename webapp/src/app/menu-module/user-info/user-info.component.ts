@@ -17,8 +17,12 @@ export class UserInfoComponent implements OnInit {
   }
 
   logout() {
+    var urlAccount = '/account/' + this.as.currentUser.wallet;
+
     this.as.logout();
-    // this._router.navigateByUrl('/login');
+    if (this._router.url == "/account") {
+      this._router.navigateByUrl(urlAccount);
+    }
   }
 
   ngOnInit() {

@@ -156,8 +156,9 @@ exports.update = function (req, res) {
                 return res.status(400).send({message: "Error during mongoDB transaction."});
             }
 
-            if (fUser.length > 0) {
-                return res.status(400).send({message: "An account already use this wallet."});
+            console.log(fUser[0]._id, user._id);
+            if (fUser.length > 0 && fUser[0]._id.toString() != user._id.toString()) {
+                return res.status(400).send({message: "An account already use this pseudo/wallet/email."});
             }
 
             user.wallet = req.body.wallet;
