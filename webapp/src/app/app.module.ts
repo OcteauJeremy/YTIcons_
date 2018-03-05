@@ -49,6 +49,8 @@ import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TokenService } from './services/token.service';
+import {RecaptchaModule} from "ng-recaptcha";
+import {RecaptchaService} from "./services/recaptcha.service";
 
 @NgModule({
   declarations: [
@@ -81,7 +83,8 @@ import { TokenService } from './services/token.service';
     LaddaModule,
     ToastModule.forRoot(),
     BrowserAnimationsModule,
-    VerifyIconModule
+    VerifyIconModule,
+    RecaptchaModule.forRoot()
   ],
   providers: [
     RealvalueService,
@@ -100,6 +103,7 @@ import { TokenService } from './services/token.service';
     CookieService,
     IsAdminGuard,
     LiveService,
+    RecaptchaService,
     TokenService,
     {
       provide: HTTP_INTERCEPTORS,

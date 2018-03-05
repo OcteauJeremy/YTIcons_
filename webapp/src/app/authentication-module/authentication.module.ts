@@ -7,13 +7,15 @@ import {AuthenticationService} from '../services/authentication.service';
 import { SignupComponent } from './signup/signup.component';
 import {DirectivesModule} from "../directives/directives.module";
 import { ManagerService } from '../services/manager.service';
+import {RecaptchaModule} from "ng-recaptcha";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    DirectivesModule
+    DirectivesModule,
+    RecaptchaModule
   ],
   declarations: [
     SigninComponent,

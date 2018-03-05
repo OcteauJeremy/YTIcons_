@@ -83,7 +83,7 @@ apiRoutes.get('/token/:token', function (req, res) {
     });
 });
 
-apiRoutes.post('/verfiyCaptcha', function (req, res) {
+apiRoutes.post('/verifyCaptcha', function (req, res) {
     if (!req.body.secret || !req.body.response) {
         return res.status(400).send({message: "Wrong parameters"});
     }
@@ -92,11 +92,11 @@ apiRoutes.post('/verfiyCaptcha', function (req, res) {
 
     request(verificationUrl, function(error,response,body) {
         body = JSON.parse(body);
-        // Success will be true or false depending upon captcha validation.
-        if (body.success !== undefined && !body.success) {
-            return res.status(200).send({message: "Success"});
+      // Success will be true or false depending upon captcha validation.
+        if (body.success !== undefined && body.success == true) {
+            return res.status(200).send({success: true, message: "Success"});
         }
-        return res.status(400).send({message: "Failed CAPTCHA."});
+        return res.status(400).send({success: false, message: "Failed CAPTCHA."});
     });
 
 });

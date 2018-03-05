@@ -34,7 +34,8 @@
             <div class="contact_form cardify">
               <div class="section-title">
                 <h1>Is there anything we can help <span class="highlighted">you</span> with ?</h1>
-                <p>To get a faster support related to your account, please provide your Ethereum wallet address in your message.</p>
+                <p>To get a faster support related to your account, please provide your Ethereum wallet address in your
+                  message.</p>
               </div>
 
               <div class="row">
@@ -44,13 +45,13 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group">
-                            <input type="text"  placeholder="Name">
+                            <input [(ngModel)]="name" name="name" type="text" placeholder="Name">
                           </div>
                         </div>
 
                         <div class="col-md-6">
                           <div class="form-group">
-                            <input type="text" placeholder="Email">
+                            <input [(ngModel)]="email" name="email"type="text" placeholder="Email">
                           </div>
                         </div>
                       </div>
@@ -58,7 +59,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group">
-                            <select class="form-control" id="subject">
+                            <select [(ngModel)]="subject" name="subject" class="form-control" id="subject">
                               <option hidden>Subject</option>
                               <option>2</option>
                               <option>3</option>
@@ -70,10 +71,14 @@
 
                       </div>
 
-                      <textarea cols="30" rows="10" placeholder="Your text here"></textarea>
+                      <div class="form-group">
+                        <textarea [(ngModel)]="text" name="text" cols="30" rows="10" placeholder="Your text here"></textarea>
+                      </div>
+
+                      <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
                       <div class="sub_btn">
-                        <button type="button" class="btn btn--round btn--default">Send</button>
+                        <button (click)="send()" type="button" class="btn btn--round btn--default">Send</button>
                       </div>
                     </form>
                   </div>

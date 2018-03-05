@@ -45,7 +45,9 @@
                                     <input type="password"  name="password" [(ngModel)]="password" id="pass" class="text_field" placeholder="Enter your password...">
                                 </div>
 
-                                <div class="form-group">
+                              <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
+
+                              <div class="form-group">
                                     <div class="custom_checkbox">
                                         <input type="checkbox" id="ch2" (change)="rememberMe = !rememberMe" [checked]="rememberMe">
                                         <label for="ch2"><span class="label_text">Remember me</span></label>

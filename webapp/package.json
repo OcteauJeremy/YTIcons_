@@ -34,6 +34,7 @@
     "express": "^4.16.2",
     "jquery": "^3.3.1",
     "linearicons": "^1.0.1",
+    "ng-recaptcha": "^3.0.3",
     "ng2-cookies": "^1.0.12",
     "ng2-toastr": "^4.1.2",
     "ngx-slick": "^0.1.3",
