@@ -19,6 +19,7 @@ import { LiveComponent } from './live-module/live/live.component';
 import { TermsOfServiceComponent } from './termsofservice-module/termsofservice/termsofservice.component';
 import { ListCardsComponent } from './admin-module/list-cards/list-cards.component';
 import { VerifyIconComponent } from './verifyicon-module/verifyicon/verifyicon.component';
+import {ForgottenPasswordComponent} from './authentication-module/lost-password/forgotten-password/forgotten-password.component';
 
 const appRoutes: Routes = [
   {
@@ -104,6 +105,10 @@ const appRoutes: Routes = [
   {
     path: 'verify',
     component: VerifyIconComponent,
+  },
+  {
+    path: 'lost-password',
+    component: ForgottenPasswordComponent,
   },
   { path: '',
     redirectTo: '/home',
