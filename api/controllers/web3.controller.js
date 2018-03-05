@@ -187,6 +187,14 @@ var populateCard = function (mongooseObj) {
 };
 
 
+// maintain connection
+const subscription = web3.eth.subscribe('newBlockHeaders', function(error, blockHeader) {
+    if (error) return console.error(error);
+
+    //console.log('Successfully subscribed!', blockHeader);
+}).on('data', function(blockHeader) {
+    // console.log('data: ', blockHeader);
+});
 
 io.on('connection', function(socket){
     socket.on('disconnect', function(){
