@@ -44,13 +44,21 @@ import { LeaderboardService } from "./services/leaderboard.service";
 import { LaddaModule } from 'angular2-ladda';
 import { LiveService } from "./services/live.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastModule } from 'ng2-toastr';
+import { ToastModule, ToastOptions } from 'ng2-toastr';
 import { VerifyIconModule } from './verifyicon-module/verifyicon.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TokenService } from './services/token.service';
-import {RecaptchaModule} from "ng-recaptcha";
-import {RecaptchaService} from "./services/recaptcha.service";
+import { RecaptchaModule } from "ng-recaptcha";
+import { RecaptchaService } from "./services/recaptcha.service";
+
+export class ToastCustomOptions extends ToastOptions {
+  animate = 'fade';
+  dismiss = 'auto';
+  showCloseButton = true;
+  newestOnTop = true;
+  enableHTML = true;
+}
 
 @NgModule({
   declarations: [
@@ -105,6 +113,10 @@ import {RecaptchaService} from "./services/recaptcha.service";
     LiveService,
     RecaptchaService,
     TokenService,
+    {
+      provide: ToastOptions,
+      useClass: ToastCustomOptions
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

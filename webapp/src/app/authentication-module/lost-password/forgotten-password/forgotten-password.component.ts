@@ -4,6 +4,7 @@ import { ToastsManager } from 'ng2-toastr';
 import { environment } from '../../../../environments/environment';
 import { RecaptchaService } from '../../../services/recaptcha.service';
 import { Subscription } from 'rxjs/Subscription';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 declare var $: any;
 
@@ -14,14 +15,13 @@ declare var $: any;
 })
 export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  public email: string;
-  public emailPattern: string;
+  public username: string;
   private captchaResponse: string = null;
   private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
   public subscriptions: Subscription = new Subscription();
 
-  constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+  constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService, private authService: AuthenticationService) {
   }
 
   resolved(_captchaResponse: string) {
@@ -29,7 +29,6 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   }
 
   ngOnInit() {
-    this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   }
 
   ngAfterViewChecked() {
@@ -37,17 +36,27 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   }
 
   send() {
+    if (!this.username) {
+      this.toastr.error('Please fill in your username.', 'Authentication');
+      return;
+    }
     this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      this.toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
+      this.toastr.error('Please, verify that you\'re not a robot.', 'Lost password');
     }));
 
-    if (!this.isRobot && this.email) {
+    if (!this.isRobot && this.username) {
+      this.subscriptions.add(this.authService.lostPassword(this.username).subscribe(res => {
+        this._router.navigate(['market']);
 
+      }, error => {
+        this.toastr.error('We could not find you account anywhere.', 'Authentication');
+      }));
     }
   }
+
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

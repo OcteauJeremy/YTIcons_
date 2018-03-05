@@ -30,6 +30,11 @@ export class ManagerService {
 
     return this.http.get<any>(this.baseUrl + url, {
       headers: headers
+    }).catch((error: Response | any) => {
+      if (error instanceof Response) {
+        // Re-throw unhandled error
+        return Observable.throw(error);
+      }
     });
   }
 
@@ -53,11 +58,6 @@ export class ManagerService {
       headers: headers
     }).catch((error: Response | any) => {
       if (error instanceof Response) {
-        // if (error.status === 400) {
-        //   console.log("Server responded with 400");
-        //   // Create a new observable with the data for the rest of the chain
-        //   return Observable.of([]);
-        // }
         // Re-throw unhandled error
         return Observable.throw(error);
       }
@@ -71,6 +71,11 @@ export class ManagerService {
 
     return this.http.put(this.baseUrl + url, body, {
       headers: headers
+    }).catch((error: Response | any) => {
+      if (error instanceof Response) {
+        // Re-throw unhandled error
+        return Observable.throw(error);
+      }
     });
   }
 
@@ -81,6 +86,11 @@ export class ManagerService {
 
     return this.http.delete<any>(this.baseUrl + url, {
       headers: headers
+    }).catch((error: Response | any) => {
+      if (error instanceof Response) {
+        // Re-throw unhandled error
+        return Observable.throw(error);
+      }
     });
   }
 }

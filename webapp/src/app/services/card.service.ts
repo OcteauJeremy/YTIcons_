@@ -52,7 +52,7 @@ export class CardService extends ManagerService {
         }
 
         if (accs.length === 0) {
-          toastr.error('The account(s)\' retrieval had failed. Please make sure your Ethereum client is correctly configured.', '');
+          toastr.error('Please make sure your Ethereum wallet is correctly configured.', '');
           this._account = null;
           resolve(null);
         }

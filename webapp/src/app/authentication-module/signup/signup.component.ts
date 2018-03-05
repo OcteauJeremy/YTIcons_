@@ -54,8 +54,12 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.isRobot = false;
     }, error => {
       this.isRobot = true;
-      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
+      toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
     }));
+
+    if (this.isRobot) {
+      return;
+    }
 
     if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
 
@@ -73,10 +77,12 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.toastr.success('Sign up successful.', 'Sign up');
 
       }, error => {
-        this.toastr.error(error.error.message, 'Sign up');
+        if (error) {
+          this.toastr.error(error.error.message, 'Sign up');
+        }
       });
 
-    } else if (!this.isRobot) {
+    } else {
       this.toastr.error('Please, fill all the fields.', 'Sign up');
     }
   }

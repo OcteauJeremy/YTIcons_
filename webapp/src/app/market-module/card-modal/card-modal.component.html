@@ -69,7 +69,7 @@
           </div>
           <div class="section">
             <p>Description</p>
-            <span *ngFor="let paragraph of card.description.split('\n')">{{ paragraph.length > 0 ? paragraph : '<br />' }} </span>
+            <span *ngFor="let paragraph of card.description.split('\n')">{{ paragraph.length > 0 ? paragraph : '\n' }} </span>
           </div>
           <!--<div class="section">
             <p>Citation</p>
@@ -104,13 +104,17 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
           aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="">Choose price for {{card.name}}</h3>
+        <h3 class="modal-title" id="">Bid for {{card.name}}</h3>
       </div>
 
       <div class="modal-body">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-          Actual price : {{card.price.toFixed(4)}} ETH
-          Actual price : {{card.price}} ETH
+        <div class="col-md-12 col-sm-12 col-xs-12 justify">
+          <p>During busy periods, it is possible that many users attempt to get the YTIcon you desire. As transactions on the Blockchain take time to be validated,
+            the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
+          <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
+          <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
+          <p>Actual price : {{card.price.toFixed(4)}} ETH
+          Actual price : {{card.price}} ETH</p>
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
                  placeholder="Enter new price in ETH" [value]="card.price.toFixed(4)"required>
         </div>
