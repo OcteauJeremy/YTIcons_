@@ -27,7 +27,7 @@
       <div class="col-md-12">
         <div class="filter-bar">
           <div class="filter__option filter--dropdown">
-            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.type ? names.type : 'Type'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.type ? names.type.charAt(0).toUpperCase() + names.type.slice(1) : 'Type'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
               <li (click)="selectType('')"><a>All <span *ngIf="!filters.type"><i class="fas fa-check"></i></span></a></li>
               <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name.charAt(0).toUpperCase() + type.name.slice(1)}} <span *ngIf="filters.type == type._id"><i class="fas fa-check"></i></span></a></li>
@@ -35,7 +35,7 @@
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.nationality ? names.nationality : 'Nationality'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.nationality ? names.nationality.charAt(0).toUpperCase() + names.nationality.slice(1) : 'Nationality'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
               <li (click)="selectNationality('')"><a>All <span *ngIf="!filters.nationality"><i class="fas fa-check"></i></span></a></li>
               <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality.name.charAt(0).toUpperCase() + nationality.name.slice(1)}} <span *ngIf="filters.nationality == nationality._id"><i class="fas fa-check"></i></span></a></li>
@@ -43,7 +43,7 @@
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.category ? names.category : 'Channel Category'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.category ? names.category.charAt(0).toUpperCase() + names.category.slice(1) : 'Channel Category'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
               <li (click)="selectCategory('')"><a>All <span *ngIf="!filters.category"><i class="fas fa-check"></i></span></a></li>
               <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category.name.charAt(0).toUpperCase() + category.name.slice(1)}} <span *ngIf="filters.category == category._id"><i class="fas fa-check"></i></span></a></li>

@@ -3,8 +3,10 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ToastsManager} from 'ng2-toastr';
-import {environment} from "../../../environments/environment";
-import {RecaptchaService} from "../../services/recaptcha.service";
+import {environment} from '../../../environments/environment';
+import {RecaptchaService} from '../../services/recaptcha.service';
+import {AnalyticsService} from '../../services/analytics.service';
+import {send} from 'q';
 
 declare var $: any;
 
@@ -28,7 +30,8 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public url: string = 'assets/images/authplc.png';
 
-  constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+  constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService,
+              private analytics: AnalyticsService) {
   }
 
   ngOnInit() {
@@ -82,7 +85,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.as.register(formData).then(res => {
         this._router.navigate(['signin']);
         this.toastr.success('Sign up successful.', 'Sign up');
-
+        this.analytics.sendEvent('Authenticate', 'Signup success');
       }, error => {
         if (error) {
           this.toastr.error(error.error.message, 'Sign up');
