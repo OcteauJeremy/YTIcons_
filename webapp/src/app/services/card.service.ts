@@ -20,7 +20,6 @@ export class CardService extends ManagerService {
   private _tokenContract: any;
   private _self;
   private _tokenContractAddress = environment.tokenAddress;
-  private
 
   constructor(http: HttpClient, private toastr: ToastsManager) {
     super(http);
@@ -29,6 +28,7 @@ export class CardService extends ManagerService {
       const web3 = this._web3;
       const toastr = this.toastr;
 
+      // Probably useless to unsubscribe since a service is never destroyed...
       toastr.onClickToast().subscribe( toast => {
         if (toast.timeoutId) {
           clearTimeout(toast.timeoutId);
