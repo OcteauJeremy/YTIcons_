@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';

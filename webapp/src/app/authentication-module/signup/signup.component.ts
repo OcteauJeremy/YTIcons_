@@ -5,6 +5,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {ToastsManager} from 'ng2-toastr';
 import {environment} from "../../../environments/environment";
 import {RecaptchaService} from "../../services/recaptcha.service";
+import fontawesome from '@fortawesome/fontawesome';
+import { faCheck } from '@fortawesome/fontawesome-free-solid';
 
 declare var $: any;
 
@@ -20,6 +22,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public password: string;
   public conPassword: string;
   public emailPattern: string;
+  public acceptTos = false;
   private subscriptions: Subscription = new Subscription();
   public fileList: FileList = null;
   private captchaResponse: string = null;
@@ -29,6 +32,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public url: string = 'assets/images/authplc.png';
 
   constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+    fontawesome.library.add(faCheck);
   }
 
   ngOnInit() {
@@ -68,7 +72,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
-    if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
+    if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword && this.acceptTos) {
 
       let formData: FormData = new FormData();
       if (this.fileList && this.fileList.length > 0) {

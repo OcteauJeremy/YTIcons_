@@ -40,3 +40,23 @@ label span {
     display: none;
   }
 }
+
+#ch2 {
+  display: block;
+  margin: 0;
+}
+
+.custom_checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom_checkbox label .label_text {
+  margin-left: 7px;
+}
+
+.custom_checkbox label span {
+  color: #000;
+  text-transform: none;
+}
+
