@@ -21,6 +21,7 @@ var UserSchema = mongoose.Schema({
 UserSchema.methods.safeObj = function () {
     console.log(this);
   var obj = {
+      _id: this._id,
       username: this.username,
       email: this.email,
       roles: this.roles,
