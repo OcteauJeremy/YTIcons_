@@ -55,6 +55,11 @@ function updateYoutubers(types) {
                             doc.nbVideos = parseInt(channel.statistics.videoCount);
                             doc.nbViews = parseInt(channel.statistics.viewCount);
                             doc.description = channel.snippet.description;
+                            types.forEach(function (type) {
+                                if (doc.nbSubscribers >= type.minSubscribers && doc.nbSubscribers <= type.maxSubscribers) {
+                                    doc.type = type;
+                                }
+                            });
                             // console.log('--- ', doc.name, ' ---');
                             // console.log('nbSubscribers', doc.nbSubscribers, parseInt(channel.statistics.subscriberCount));
                             // console.log('nbVideos', doc.nbVideos, parseInt(channel.statistics.videoCount));

@@ -95,12 +95,13 @@
 /*}*/
 
 @font-face {
-  font-family: QuickSandFont;
+  /*font-family: 'Quicksand', sans-serif;*/
+  font-family: QuickSandFont, sans-serif;
   src: url(../fonts/quicksand/Quicksand-Medium.ttf);
 }
 
 body {
-  font-family: QuickSandFont;
+  font-family: QuickSandFont, sans-serif;
   position: relative;
   font-weight: 400;
   font-size: 15px;
@@ -243,7 +244,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: QuickSandFont, sans-serif;
   margin: 0;
   font-weight: 400;
   padding: 0;
@@ -470,7 +471,7 @@ a {
 }
 
 .tooltip .tooltip-inner {
-  font-family: "Quicksand", sans-serif;
+  font-family: QuickSandFont, sans-serif;
   font-size: 14px;
   text-align: left;
   display: block;
@@ -3214,7 +3215,7 @@ h6 {
 }
 
 .tooltip .tooltip-inner {
-  font-family: "Quicksand", sans-serif;
+  font-family: QuickSandFont, sans-serif;
   font-size: 14px;
   text-align: left;
   display: block;
@@ -4386,7 +4387,7 @@ h6 {
 }
 
 .tooltip .tooltip-inner {
-  font-family: "Quicksand", sans-serif;
+  font-family: QuickSandFont, sans-serif;
   font-size: 14px;
   text-align: left;
   display: block;
@@ -5759,7 +5760,7 @@ div#ui-datepicker-div tbody tr td a:hover {
 }
 
 .tooltip .tooltip-inner {
-  font-family: "Quicksand", sans-serif;
+  font-family: QuickSandFont, sans-serif;
   font-size: 14px;
   text-align: left;
   display: block;
