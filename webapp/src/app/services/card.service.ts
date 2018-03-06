@@ -49,18 +49,21 @@ export class CardService extends ManagerService {
 
   }
 
-  public async getAccount(): Promise<string> {
+  public async getAccount(display: boolean): Promise<string> {
     const toastr = this.toastr;
 
     this._account = await new Promise((resolve, reject) => {
-      this._web3.eth.getAccounts((err, accs) => {
+
+      if (this._web3)
+        this._web3.eth.getAccounts((err, accs) => {
         if (err != null) {
           toastr.error('There was an error while fetching your accounts.', 'Account');
           return;
         }
 
         if (accs.length === 0) {
-          toastr.error('Please make sure your Ethereum wallet is correctly configured.', '');
+          if (display)
+            toastr.error('Please make sure your Ethereum wallet is correctly configured.', '');
           this._account = null;
           resolve(null);
         }
@@ -99,7 +102,7 @@ export class CardService extends ManagerService {
 
   public async lockCard(_idCard: number): Promise<any> {
 
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -125,7 +128,7 @@ export class CardService extends ManagerService {
 
   public async unlockCard(_idCard: number): Promise<any> {
 
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -150,7 +153,7 @@ export class CardService extends ManagerService {
 
   public async purchaseCard(_idCard: number, _price: number): Promise<any> {
 
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -176,7 +179,7 @@ export class CardService extends ManagerService {
 
   public async changePriceCard(_idCard: number, _price: number, _walletCard: string): Promise<any> {
 
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
     const toastr = this.toastr;
 
     return new Promise((resolve, reject) => {
@@ -205,7 +208,7 @@ export class CardService extends ManagerService {
   }
 
   public async createCardFromName(name: string) {
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
 
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
@@ -229,7 +232,7 @@ export class CardService extends ManagerService {
   }
 
   public async createCardSC(card) {
-    let account = await this.getAccount();
+    let account = await this.getAccount(true);
     const toastr = this.toastr;
 
     return new Promise((resolve, reject) => {
@@ -315,4 +318,7 @@ export class CardService extends ManagerService {
     return this.getQuery('/cards/admin', query);
   }
 
+  public checkWallet(wallet:string) {
+    return this._web3.utils.isAddress(wallet);
+  }
 }

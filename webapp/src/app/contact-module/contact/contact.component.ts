@@ -13,7 +13,6 @@ export class ContactComponent implements OnInit {
 
   private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
-  private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
 
   public form: any = {
@@ -39,19 +38,17 @@ export class ContactComponent implements OnInit {
 
   send() {
     const toastr = this.toastr;
+    let _self = this;
 
     this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      this.isRobot = false;
+      if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.text) {
+
+      } else {
+        _self.toastr.error('Please, fill all the fields.', 'Contact us');
+      }
     }, error => {
-      this.isRobot = true;
       toastr.error('Please, verify that you\'re not a robot.', 'Contact us');
     }));
-
-    if (!this.isRobot && this.form.name && this.form.subject && this.form.subject != 'Subject' && this.form.email && this.form.text) {
-
-    } else if (!this.isRobot) {
-      this.toastr.error('Please, fill all the fields.', 'Contact us');
-    }
   }
 
   ngOnDestroy() {

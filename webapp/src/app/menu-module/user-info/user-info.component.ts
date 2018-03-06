@@ -17,10 +17,16 @@ export class UserInfoComponent implements OnInit {
   }
 
   logout() {
+    var wallet = this.as.currentUser.wallet;
     var urlAccount = '/account/' + this.as.currentUser.wallet;
 
     this.as.logout();
-    if (this._router.url == "/account") {
+    if (!wallet) {
+      console.log('enter');
+      this._router.navigateByUrl('/signin');
+    }
+    else if (this._router.url == "/account") {
+      console.log('enter2');
       this._router.navigateByUrl(urlAccount);
     }
   }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToastsManager} from 'ng2-toastr';
+import {AuthenticationService} from "../../../services/authentication.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-set-password',
@@ -9,9 +11,43 @@ import {ToastsManager} from 'ng2-toastr';
 })
 export class SetPasswordComponent implements OnInit {
 
-  constructor(private _router: Router, private toastr: ToastsManager) {
+  public token: string;
+  private subscriptions: Subscription = new Subscription();
+
+  public form = {
+    'newPassword': '',
+    'conPassword': ''
+  }
+  constructor(private _router: Router, private toastr: ToastsManager, private as: AuthenticationService,private route: ActivatedRoute) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscriptions.add(this.route.params.subscribe(params => {
+      this.token = params['token'];
+    }));
+  }
 
+  setPassword() {
+    const toastr = this.toastr;
+
+    if (this.form.conPassword !== this.form.newPassword) {
+      toastr.error('New password must match', 'New password');
+    }
+    else if (!this.form.conPassword || !this.form.newPassword) {
+      toastr.error('Please fill all the fields', 'New password');
+    }
+    else {
+      this.subscriptions.add(this.as.resetPassword(this.form.newPassword, this.token).subscribe(res => {
+        toastr.success(res.message, 'New password');
+        this._router.navigate(['signin']);
+      }, error => {
+        toastr.error(error.error.message, 'New password');
+        this._router.navigate(['signin']);
+      }));
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 }

@@ -21,6 +21,7 @@ import { ListCardsComponent } from './admin-module/list-cards/list-cards.compone
 import { VerifyIconComponent } from './verifyicon-module/verifyicon/verifyicon.component';
 import { ForgottenPasswordComponent } from './authentication-module/lost-password/forgotten-password/forgotten-password.component';
 import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
+import {SetPasswordComponent} from "./authentication-module/lost-password/set-password/set-password.component";
 
 const appRoutes: Routes = [
   {
@@ -122,6 +123,10 @@ const appRoutes: Routes = [
   {
     path: 'lost-password',
     component: ForgottenPasswordComponent,
+  },
+  {
+    path:'lost-password/:token',
+    component: SetPasswordComponent
   },
   { path: '',
     redirectTo: '/home',

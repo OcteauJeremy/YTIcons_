@@ -21,13 +21,16 @@ var UserSchema = mongoose.Schema({
 UserSchema.methods.safeObj = function () {
     console.log(this);
   var obj = {
+      _id: this._id,
       username: this.username,
       email: this.email,
       roles: this.roles,
       currency: this.currency,
       avatar: this.avatar,
       wallet: this.wallet,
-      token: this.token
+      token: this.token,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
   };
   console.log(obj);
   return obj;
