@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class MenuComponent implements OnInit, OnDestroy {
 
   public currentUser = null;
-  public subscriptions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private as: AuthenticationService, public router: Router) {
     this.subscriptions.add(this.as.currentUserChange.subscribe((user) => {

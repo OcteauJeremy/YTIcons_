@@ -19,7 +19,7 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   public username: string;
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
-  public subscriptions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService, private authService: AuthenticationService) {
   }

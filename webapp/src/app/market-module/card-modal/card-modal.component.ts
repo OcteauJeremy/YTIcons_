@@ -21,7 +21,6 @@ export class CardModalComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
       this.acceptTos = true;

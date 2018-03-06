@@ -70,12 +70,11 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
         _self._router.navigate(['account']);
 
       }, error => {
-        toastr.error('The entered credentials are incorrect.', 'Authentication');
+        this.toastr.error('The entered credentials are incorrect.', 'Authentication');
       }));
     }, error => {
       toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
     }));
-
   }
 
   redirect(pagename: string) {
