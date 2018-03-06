@@ -94,6 +94,7 @@ a {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
 .card {
   font-family: SF, sans-serif;
   width: 251px;
@@ -102,7 +103,6 @@ a {
   background-size: contain;
   color: white;
   position: relative;
-  margin: 0;
   margin-right: auto;
   margin-left: auto;
 }
