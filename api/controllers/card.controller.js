@@ -36,8 +36,8 @@ exports.create = function (req, res) {
                                 return res.status(400).send({message: 'Error during the ethereum transatcion.'});
                             });
                         } else {
-                            Card.count(function (err, nb) {
-                                card.id = nb - 1;
+                            Card.count(function (err, count) {
+                                card.id = count - 1;
                                 card.save(function (err, result) {
                                     return res.status(200).send(card);
                                 });

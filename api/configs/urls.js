@@ -9,7 +9,7 @@ if (process.env.ENVIRONMENT == "prod") {
     };
 } else {
     module.exports = {
-        tokenAddress: "0xdb42497254a99561f70705a3959c5a6eadce3ba6",
+        tokenAddress: "0x10207693450fa18527f73d71d52f6c016d8353fa",
         webserver: "http://localhost:4200",
         websocket: "wss://ropsten.infura.io/ws",
         mongodb: "mongodb://jeremy:yticons2018LB@ds241658.mlab.com:41658/yticons"
