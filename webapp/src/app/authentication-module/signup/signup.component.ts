@@ -72,7 +72,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (_self.wallet && !_self.cs.checkWallet(_self.wallet)) {
         _self.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
       }
-      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword && _self.acceptTos) {
+      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword) {
 
         let formData: FormData = new FormData();
         if (_self.fileList && _self.fileList.length > 0) {

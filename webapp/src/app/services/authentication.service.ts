@@ -58,6 +58,7 @@ export class AuthenticationService extends ManagerService {
     this.cookieService.delete('yticons-token');
     this.tokenService.currentUser = null;
     this.currentUser = null;
+    this.currentUserChange.next(null);
   }
 
   public setNewPassword(password: string, newPassword: string) {

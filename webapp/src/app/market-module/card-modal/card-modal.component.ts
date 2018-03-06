@@ -24,6 +24,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
     this.toastr.setRootViewContainerRef(vcr);
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
+      this.acceptTos = true;
     });
 
     this.currentUser = this.as.getLocalUser();
@@ -50,6 +51,10 @@ export class CardModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUser = this.as.currentUser;
+    if (this.currentUser) {
+      this.acceptTos = true;
+    }
+
     this.newPrice = parseFloat(this.card.price.toFixed(4));
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {

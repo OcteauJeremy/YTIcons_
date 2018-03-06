@@ -15,9 +15,11 @@ export class CurrencyService implements OnDestroy {
 
   constructor(public authenticationService: AuthenticationService, private userService: UserService) {
     this.subscriptions.add(this.authenticationService.currentUserChange.subscribe((user) => {
-      this.currentCurrency = user.currency;
-      this.currentCurrencyChange.next(user.currency);
-      this.currencyPipeChange.next(this.currentCurrency);
+      if (user) {
+        this.currentCurrency = user.currency;
+        this.currentCurrencyChange.next(user.currency);
+        this.currencyPipeChange.next(this.currentCurrency);
+      }
     }));
 
     this.currentCurrency = "ETH";

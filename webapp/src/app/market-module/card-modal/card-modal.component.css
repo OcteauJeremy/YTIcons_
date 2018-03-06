@@ -104,3 +104,21 @@ transactions {
   color: #000;
   text-transform: none;
 }
+
+.buttons-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.modal-footer-buy {
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+  justify-content: space-around;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-tos {
+  display: flex;
+  justify-content: center;
+}

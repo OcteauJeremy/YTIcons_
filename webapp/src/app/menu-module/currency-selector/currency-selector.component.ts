@@ -23,7 +23,9 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
     fontawesome.library.add(faEuroSign);
 
     this.subscriptions.add(this.as.currentUserChange.subscribe((user) => {
-      this.currency = user.currency;
+      if (user) {
+        this.currency = user.currency;
+      }
     }));
 
     this.subscriptions.add(this.currencyService.currentCurrencyChange.subscribe((currency) => {

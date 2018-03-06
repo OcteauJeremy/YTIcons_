@@ -118,16 +118,18 @@
                  placeholder="Enter new price in ETH" [value]="card.price | number: '1.2-4'"required>
         </div>
       </div><!-- end /.modal-body -->
-      <div class="modal-footer">
-        <div class="form-group">
-          <div class="custom_checkbox">
-            <input type="checkbox" id="ch2" (change)="acceptTos = !acceptTos" [checked]="acceptTos">
-            <label for="ch2"><span class="label_text">I accept the Term of services</span></label>
+      <div class="modal-footer-buy">
+        <div class="container-tos" *ngIf="!currentUser">
+          <div class="form-group">
+            <div class="custom_checkbox">
+              <input type="checkbox" id="ch2" (change)="acceptTos = !acceptTos" [checked]="acceptTos">
+              <label for="ch2"><span class="label_text">I accept the <a target="_blank" routerLink="/termsofservice">Term of services</a></span></label>
+            </div>
           </div>
         </div>
-        <div>
+        <div class="buttons-container">
           <button *ngIf="card?.owner?._id == currentUser?._id" (click)="changePriceCard(card.id, card.owner.wallet)" data-dismiss="modal" type="button" class="btn btn--round btn--default">Submit</button>
-          <button *ngIf="card?.owner?._id != currentUser?._id" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default">Buy</button>
+          <button *ngIf="card?.owner?._id != currentUser?._id" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default" [disabled]="!acceptTos">Buy</button>
           <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
         </div>
       </div>

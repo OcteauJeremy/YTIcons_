@@ -152,13 +152,13 @@
               <div class="form-group">
                 <div class="custom_checkbox">
                   <input type="checkbox" id="ch2" (change)="acceptTos = !acceptTos" [checked]="acceptTos">
-                  <label for="ch2"><span class="label_text">I accept the Term of services</span></label>
+                  <label for="ch2"><span class="label_text">I accept the <a target="_blank" routerLink="/termsofservice">Term of services</a></span></label>
                 </div>
               </div>
 
               <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
-              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit">Register Now</button>
+              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit" [disabled]="!acceptTos">Register Now</button>
 
               <div class="login_assist">
                 <p>Already have an account? <a (click)="redirect('signin')">Login</a></p>
