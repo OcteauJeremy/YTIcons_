@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
 
   public currentUser = null;
+  public subscriptions: Subscription = new Subscription();
 
   constructor(private as: AuthenticationService, public router: Router) {
-    this.as.currentUserChange.subscribe((user) => {
+    this.subscriptions.add(this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
-    });
+    }));
     this.currentUser = this.as.currentUser;
   }
 
@@ -29,5 +31,9 @@ export class MenuComponent implements OnInit {
 
   isAdmin() {
     return !!(this.currentUser && this.currentUser.roles.indexOf('admin') > -1);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
