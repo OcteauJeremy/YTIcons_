@@ -15,12 +15,12 @@ export class CardModalComponent implements OnInit, OnDestroy {
   @Input("card") card: Card;
 
   public currentUser: any;
+  public acceptTos = false;
   public newPrice: number = 0;
   public newLineTag = "<br />";
   private subscriptions: Subscription = new Subscription();
 
   constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
-    this.toastr.setRootViewContainerRef(vcr);
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     });

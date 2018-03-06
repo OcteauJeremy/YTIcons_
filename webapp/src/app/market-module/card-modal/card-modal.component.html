@@ -119,9 +119,17 @@
         </div>
       </div><!-- end /.modal-body -->
       <div class="modal-footer">
-        <button *ngIf="card?.owner?._id == currentUser?._id" (click)="changePriceCard(card.id, card.owner.wallet)" data-dismiss="modal" type="button" class="btn btn--round btn--default">Submit</button>
-        <button *ngIf="card?.owner?._id != currentUser?._id" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default">Buy</button>
-        <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+        <div class="form-group">
+          <div class="custom_checkbox">
+            <input type="checkbox" id="ch2" (change)="acceptTos = !acceptTos" [checked]="acceptTos">
+            <label for="ch2"><span class="label_text">I accept the Term of services</span></label>
+          </div>
+        </div>
+        <div>
+          <button *ngIf="card?.owner?._id == currentUser?._id" (click)="changePriceCard(card.id, card.owner.wallet)" data-dismiss="modal" type="button" class="btn btn--round btn--default">Submit</button>
+          <button *ngIf="card?.owner?._id != currentUser?._id" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default">Buy</button>
+          <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

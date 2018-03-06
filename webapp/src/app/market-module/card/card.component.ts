@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Card } from '../../models/Card';
 import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input("card") card: Card;
   @Input("modal") modal: Boolean = true;
@@ -17,13 +18,15 @@ export class CardComponent implements OnInit {
     _id: ""
   };
 
+  private subscriptions: Subscription = new Subscription();
+
   public obj: any;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
               private router: Router) {
-    this.authenticationService.currentUserChange.subscribe((user) => {
+    this.subscriptions.add(this.authenticationService.currentUserChange.subscribe((user) => {
       this.currentUser = user;
-    });
+    }));
 
     this.currentUser = this.authenticationService.getLocalUser();
   }
@@ -73,6 +76,9 @@ export class CardComponent implements OnInit {
       _self.obj.style.transform = 'rotate(0deg)';
       _self.obj.style.zIndex = '0';
     };
+  }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

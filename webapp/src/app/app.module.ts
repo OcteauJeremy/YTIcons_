@@ -56,6 +56,7 @@ import {AnalyticsService} from './services/analytics.service';
 
 export class ToastCustomOptions extends ToastOptions {
   animate = 'fade';
+  positionClass = 'toast-top-right';
   dismiss = 'auto';
   showCloseButton = true;
   newestOnTop = true;

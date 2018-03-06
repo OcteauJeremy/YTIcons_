@@ -93,5 +93,9 @@ transactions {
   background-color: #9c0c1c;
 }
 
+.price_love, .sell {
+  cursor: pointer;
+}
+
 /**** EFFECT ****/
 

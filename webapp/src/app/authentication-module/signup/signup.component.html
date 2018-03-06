@@ -7,8 +7,8 @@
       <div class="col-md-12">
         <div class="breadcrumb">
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li class="active"><a href="#">Signup</a></li>
+            <li><a routerLink="/home">Home</a></li>
+            <li class="active"><a routerLink="/signup">Signup</a></li>
           </ul>
         </div>
         <h1 class="page-title">Sign up</h1>
@@ -52,19 +52,35 @@
                     <div class="img_info">
                       <p class="bold">Profile Image</p>
                       <p class="subtitle">JPG, GIF or PNG</p>
+
+                      <label for="cover_photo" class="upload_btn_small">
+                        <input style="display: none" (change)="readUrl($event)" type="file" id="upload-photo-small">
+                        <span class="btn btn--sm btn--round" aria-hidden="true">
+                          <span class="upload-button-icon"><i class="fas fa-plus"></i></span>
+                        </span>
+                      </label>
                     </div>
                     <label for="cover_photo" class="upload_btn">
-                      <input style="display: none" (change)="readUrl($event)" type="file" type="file" id="cover_photo">
-                      <span class="btn btn--sm btn--round" aria-hidden="true">Upload Image</span>
+                      <input style="display: none" (change)="readUrl($event)" type="file" id="cover_photo">
+                      <span class="btn btn--sm btn--round" aria-hidden="true">
+                        <span class="upload-button-icon"><i class="fas fa-plus"></i></span>
+                        <span class="upload-button-text">Upload image</span>
+                      </span>
                     </label>
                   </div>
                 </div>
               </div>
 
               <div class="form-group">
+                <label for="wallet">Wallet address</label>
+                <input [(ngModel)]="wallet" name="wallet" id="wallet" type="text" class="text_field"
+                       placeholder="Enter your ETH wallet address">
+              </div>
+
+              <div class="form-group">
                 <label for="email_ad">Email Address</label>
                 <input #emailCheck="ngModel" [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
-                       placeholder="Enter your email address" required [pattern]="emailPattern">
+                       placeholder="Enter your email" required [pattern]="emailPattern">
 
                 <div *ngIf="emailCheck.invalid && (emailCheck.dirty || emailCheck.touched)" class="alert alert-danger">
 
@@ -131,6 +147,12 @@
                     Password must match
                   </div>
 
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="custom_checkbox">
+                  <input type="checkbox" id="ch2" (change)="acceptTos = !acceptTos" [checked]="acceptTos">
+                  <label for="ch2"><span class="label_text">I accept the Term of services</span></label>
                 </div>
               </div>
 

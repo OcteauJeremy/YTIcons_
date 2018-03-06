@@ -57,7 +57,6 @@ export class ListCardsComponent implements OnInit, OnDestroy {
               private nationalityService: NationalityService, private categoryService: CategoryService,
               private toastr: ToastsManager, private vcr: ViewContainerRef) {
     this.getCards();
-    this.toastr.setRootViewContainerRef(this.vcr);
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {

@@ -18,9 +18,8 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   public isLoading: boolean = false;
   public username: string;
   private captchaResponse: string = null;
-  private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
-  public subscriptions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService, private authService: AuthenticationService) {
   }
@@ -43,30 +42,30 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   }
 
   send() {
+    let _self = this;
+
     if (!this.username) {
       this.toastr.error('Please fill in your username.', 'Authentication');
       return;
     }
     this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      this.isRobot = false;
+      if (_self.username) {
+        _self.isLoading = true;
+        _self.subscriptions.add(_self.authService.lostPassword(_self.username).subscribe(res => {
+          _self.toastr.success('An email has been sent to the email address linked to your account', 'Lost password');
+          setTimeout((router: Router) => {
+            _self._router.navigate(['market']);
+            _self.isLoading = false;
+          }, 3000);
+        }, error => {
+          _self.toastr.error('We could not find you account anywhere.', 'Lost password');
+          _self.isLoading = false;
+        }));
+      }
     }, error => {
-      this.isRobot = true;
       this.toastr.error('Please, verify that you\'re not a robot.', 'Lost password');
     }));
 
-    if (!this.isRobot && this.username) {
-      this.isLoading = true;
-      this.subscriptions.add(this.authService.lostPassword(this.username).subscribe(res => {
-        this.toastr.success('An email has been sent to the email address linked to your account', 'Lost password');
-        setTimeout((router: Router) => {
-          this._router.navigate(['market']);
-          this.isLoading = false;
-        }, 3000);
-      }, error => {
-        this.toastr.error('We could not find you account anywhere.', 'Lost password');
-        this.isLoading = false;
-      }));
-    }
   }
 
 

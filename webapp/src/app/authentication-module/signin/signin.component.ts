@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
@@ -24,7 +24,6 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   public rememberMe = true;
   private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
-  private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
 
   constructor(private as: AuthenticationService, private _router: Router,
@@ -55,30 +54,27 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   signin() {
     const toastr = this.toastr;
+    let _self = this;
 
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      this.isRobot = false;
-    }, error => {
-      this.isRobot = true;
-      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
-    }));
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(resCaptcha => {
+      _self.subscriptions.add(_self.as.login(_self.username, _self.password).subscribe(res => {
 
-    if (!this.isRobot) {
-      this.subscriptions.add(this.as.login(this.username, this.password).subscribe(res => {
-
-        if (this.rememberMe) {
+        if (_self.rememberMe) {
           localStorage.setItem('yticons-token', res.token);
         } else {
-          this.cookieService.set('yticons-token', res.token);
+          _self.cookieService.set('yticons-token', res.token);
         }
 
-        this.as.setCurrentUser(res);
-        this._router.navigate(['account']);
+        console.log(res);
+        _self.as.setCurrentUser(res);
+        _self._router.navigate(['account']);
 
       }, error => {
-        toastr.error('The entered credentials are incorrect.', 'Authentication');
+        this.toastr.error('The entered credentials are incorrect.', 'Authentication');
       }));
-    }
+    }, error => {
+      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
+    }));
   }
 
   redirect(pagename: string) {

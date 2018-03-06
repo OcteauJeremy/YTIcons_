@@ -50,11 +50,6 @@ export class AuthenticationService extends ManagerService {
   }
 
   public async register(_formData: FormData): Promise<any> {
-    this.address = await this.cs.getAccount();
-
-    if (this.address && this.address != '')
-      _formData.append('wallet', this.address);
-
     return this.post('/users', _formData).toPromise();
   }
 
@@ -86,5 +81,9 @@ export class AuthenticationService extends ManagerService {
 
   public getLocalUser() {
     return this.currentUser;
+  }
+
+  public resetPassword(newPassword: string, token: string) {
+    return this.post('/resetPassword/' + token, {'password': newPassword});
   }
 }

@@ -1,0 +1,62 @@
+.upload-button-icon {
+  display: none;
+}
+
+label span {
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.upload_btn_small {
+  display: none;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.btn.btn--sm.btn--round {
+  background: #7347c1;
+}
+
+@media (min-width: 991px) and (max-width: 1199px), (max-width: 767px) {
+  .upload-button-text {
+    display: none;
+  }
+  .upload-button-icon {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .upload_btn {
+    display: none;
+  }
+
+  .upload_btn_small {
+    display: block;
+  }
+
+  .subtitle {
+    display: none;
+  }
+}
+
+#ch2 {
+  display: block;
+  margin: 0;
+}
+
+.custom_checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom_checkbox label .label_text {
+  margin-left: 7px;
+}
+
+.custom_checkbox label span {
+  color: #000;
+  text-transform: none;
+}
+

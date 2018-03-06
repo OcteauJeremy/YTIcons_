@@ -48,11 +48,11 @@ apiRoutes.post('/signin', function (req, res) {
     if (req.body.username.indexOf('@') > -1) {
         User.findOne({
             email: req.body.username
-        }).select('password').exec(connectionFunction);
+        }).select('_id password username email roles currency avatar wallet token createdAt updatedAt').exec(connectionFunction);
     } else {
         User.findOne({
             username: req.body.username
-        }).select('password').exec(connectionFunction);
+        }).select('_id password username email roles currency avatar wallet token createdAt updatedAt').exec(connectionFunction);
     }
 });
 
