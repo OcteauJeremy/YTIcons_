@@ -19,7 +19,8 @@ var UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.safeObj = function () {
-  return {
+    console.log(this);
+  var obj = {
       username: this.username,
       email: this.email,
       roles: this.roles,
@@ -27,7 +28,9 @@ UserSchema.methods.safeObj = function () {
       avatar: this.avatar,
       wallet: this.wallet,
       token: this.token
-  }
+  };
+  console.log(obj);
+  return obj;
 };
 
 UserSchema.methods.generateHash = function (password) {
