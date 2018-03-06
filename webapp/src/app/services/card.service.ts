@@ -53,7 +53,9 @@ export class CardService extends ManagerService {
     const toastr = this.toastr;
 
     this._account = await new Promise((resolve, reject) => {
-      this._web3.eth.getAccounts((err, accs) => {
+
+      if (this._web3)
+        this._web3.eth.getAccounts((err, accs) => {
         if (err != null) {
           toastr.error('There was an error while fetching your accounts.', 'Account');
           return;

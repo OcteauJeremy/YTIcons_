@@ -39,10 +39,10 @@ export class SetPasswordComponent implements OnInit {
     else {
       this.subscriptions.add(this.as.resetPassword(this.form.newPassword, this.token).subscribe(res => {
         toastr.success(res.message, 'New password');
-        this._router.navigate(['login']);
+        this._router.navigate(['signin']);
       }, error => {
         toastr.error(error.error.message, 'New password');
-        this._router.navigate(['login']);
+        this._router.navigate(['signin']);
       }));
     }
   }
