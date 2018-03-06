@@ -3,11 +3,13 @@ import {Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ToastsManager} from 'ng2-toastr';
-import {environment} from "../../../environments/environment";
-import {RecaptchaService} from "../../services/recaptcha.service";
-import {CardService} from "../../services/card.service";
+import {environment} from '../../../environments/environment';
+import {RecaptchaService} from '../../services/recaptcha.service';
+import {AnalyticsService} from '../../services/analytics.service';
+import {send} from 'q';
 import fontawesome from '@fortawesome/fontawesome';
 import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import {CardService} from '../../services/card.service';
 
 declare var $: any;
 
@@ -32,7 +34,8 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public url: string = 'assets/images/authplc.png';
 
-  constructor(private cs: CardService, private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+  constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService,
+              private analytics: AnalyticsService, private cs: CardService) {
     fontawesome.library.add(faCheck);
   }
 
@@ -83,25 +86,21 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
         formData.append('email', _self.email);
         formData.append('username', _self.username);
         formData.append('password', _self.password);
-        if (_self.wallet)
+        if (_self.wallet) {
           formData.append('wallet', _self.wallet);
+        }
         _self.as.register(formData).then(res => {
           _self._router.navigate(['signin']);
           _self.toastr.success('Sign up successful.', 'Sign up');
-
-        }, error => {
-          if (error) {
-            _self.toastr.error(error.error.message, 'Sign up');
-          }
+          _self.analytics.sendEvent("Authenticate", "Signup success");
         });
-
       } else {
         _self.toastr.error('Please, fill all the fields.', 'Sign up');
       }
     }, error => {
       toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
     }));
-    }
+  }
 
   readUrl(event: any) {
     this.fileList = event.target.files;

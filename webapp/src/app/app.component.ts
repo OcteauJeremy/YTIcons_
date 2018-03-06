@@ -51,6 +51,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd) {
         $('html,body').animate({ scrollTop: 0 }, 500);
+        (<any>window).ga('set', 'page', evt.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
       }
     });
   }

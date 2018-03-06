@@ -8,6 +8,7 @@ import { CategoryService } from "../../services/category.service";
 import { SocketService } from '../../services/socket.service';
 import fontawesome from '@fortawesome/fontawesome';
 import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import {AnalyticsService} from '../../services/analytics.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -60,8 +61,8 @@ export class MarketComponent implements OnInit, OnDestroy {
   };
 
   constructor(private cardService: CardService, private typeService: TypeService,
-              private nationalityService: NationalityService,private categoryService: CategoryService,private socketService: SocketService
-              ) {
+              private nationalityService: NationalityService,private categoryService: CategoryService,private socketService: SocketService,
+              private analytics: AnalyticsService) {
 
     fontawesome.library.add(faCheck);
 
@@ -131,6 +132,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.nationality = nationality._id;
     this.names.nationality = nationality.name;
     this.getCards();
+    this.analytics.sendEvent('Nationality selected', nationality.name);
   }
 
   selectCategory(category) {
