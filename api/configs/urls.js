@@ -2,7 +2,7 @@
 
 if (process.env.ENVIRONMENT == "prod") {
     module.exports = {
-        tokenAddress: "0x5fcd445af16c64809b3c0167d96c417cc2633502",
+        tokenAddress: "0xc1d4a8b2639ddc2ab23f882b30f37904ad32f908",
         webserver: "http://163.172.142.44/",
         websocket: "wss://ropsten.infura.io/ws",
         mongodb: "mongodb://yticons:SPy55g47Q7bTstN6@yticons-mongo:27017/yticons"

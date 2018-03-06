@@ -74,24 +74,26 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       if (_self.wallet && !_self.cs.checkWallet(_self.wallet)) {
         _self.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
-      } else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword && _self.acceptTos) {
+      }
+      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword) {
 
-          let formData: FormData = new FormData();
-          if (_self.fileList && _self.fileList.length > 0) {
-            let file: File = _self.fileList[0];
-            formData.append('avatar', file);
-          }
+        let formData: FormData = new FormData();
+        if (_self.fileList && _self.fileList.length > 0) {
+          let file: File = _self.fileList[0];
+          formData.append('avatar', file);
+        }
 
-          formData.append('email', _self.email);
-          formData.append('username', _self.username);
-          formData.append('password', _self.password);
-          if (_self.wallet) {
-            formData.append('wallet', _self.wallet);
-          }
-          _self.as.register(formData).then(res => {
-            _self._router.navigate(['signin']);
-            _self.toastr.success('Sign up successful.', 'Sign up');
-          });
+        formData.append('email', _self.email);
+        formData.append('username', _self.username);
+        formData.append('password', _self.password);
+        if (_self.wallet) {
+          formData.append('wallet', _self.wallet);
+        }
+        _self.as.register(formData).then(res => {
+          _self._router.navigate(['signin']);
+          _self.toastr.success('Sign up successful.', 'Sign up');
+          _self.analytics.sendEvent("Authenticate", "Signup success");
+        });
       } else {
         _self.toastr.error('Please, fill all the fields.', 'Sign up');
       }
