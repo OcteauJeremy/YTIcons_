@@ -5,6 +5,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {ToastsManager} from 'ng2-toastr';
 import {environment} from "../../../environments/environment";
 import {RecaptchaService} from "../../services/recaptcha.service";
+import {CardService} from "../../services/card.service";
 
 declare var $: any;
 
@@ -25,14 +26,20 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   private captchaResponse: string = null;
   private isRobot: boolean = true;
   public recaptchaPublic: string = environment.recaptchaPublic;
+  public wallet;
 
   public url: string = 'assets/images/authplc.png';
 
-  constructor(private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+  constructor(private cs: CardService, private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
   }
 
   ngOnInit() {
+    let _self = this;
+
     this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+    this.cs.getAccount(true).then(res => {
+      _self.wallet = res;
+    });
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {
@@ -68,7 +75,10 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
 
-    if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
+    if (this.wallet && !this.cs.checkWallet(this.wallet)) {
+      this.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
+    }
+    else if (!this.isRobot && this.email && this.username && this.password && this.conPassword && this.password == this.conPassword) {
 
       let formData: FormData = new FormData();
       if (this.fileList && this.fileList.length > 0) {
@@ -79,6 +89,8 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       formData.append('email', this.email);
       formData.append('username', this.username);
       formData.append('password', this.password);
+      if (this.wallet)
+        formData.append('wallet', this.wallet);
       this.as.register(formData).then(res => {
         this._router.navigate(['signin']);
         this.toastr.success('Sign up successful.', 'Sign up');
