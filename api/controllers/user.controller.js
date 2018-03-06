@@ -6,6 +6,7 @@ var app     = require('../server').appServer;
 var jwt     = require('jsonwebtoken');
 const fs    = require('fs');
 
+
 exports.create = function (req, res) {
     if (!req.body.username || !req.body.email || !req.body.password) {
         return res.status(400).send({message: "User can not be empty"});
@@ -41,7 +42,10 @@ exports.create = function (req, res) {
             } else if (fUser && fUser.username != '' && fUser.wallet && fUser.wallet != '') {
                 return res.status(400).send({message: "User with this wallet already exist."});
             } else if (req.body.wallet) {
-                user.wallet = req.body.wallet;
+                var web3 = require('./web3.controller').web3;
+                if (this._web3.utils.isAddress(req.body.wallet)) {
+                    user.wallet = req.body.wallet;
+                }
             }
 
             user.username = req.body.username;

@@ -87,8 +87,20 @@
 /*****************************
 	-- RESET
 *****************************/
+/*body {*/
+  /*font-family: 'Quicksand', sans-serif;*/
+  /*position: relative;*/
+  /*font-weight: 400;*/
+  /*font-size: 15px;*/
+/*}*/
+
+@font-face {
+  font-family: QuickSandFont;
+  src: url(../fonts/quicksand/Quicksand-Medium.ttf);
+}
+
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: QuickSandFont;
   position: relative;
   font-weight: 400;
   font-size: 15px;
