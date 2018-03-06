@@ -12,7 +12,7 @@ exports.setNewPassword = function (req, res) {
     }
 
 
-    User.findById(req.params.userId).select('password').exec(function (err, user) {
+    User.findById(req.params.userId).select('password username email roles currency avatar wallet token').exec(function (err, user) {
         if (err) {
             console.log(err.message);
             return res.status(400).send({message: "Some error occurred while performing request."});

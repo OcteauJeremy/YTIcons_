@@ -81,9 +81,9 @@ export class MarketComponent implements OnInit, OnDestroy {
 
     this.socketService.initSocket();
 
-    this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
+    this.subscribtions.add(this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
       //console.log('cardId = ' + cardId);
-      this.cardService.getCard(cardId).subscribe(newCard => {
+      this.subscribtions.add(this.cardService.getCard(cardId).subscribe(newCard => {
         let idx = 0;
         for (let card of this.cards) {
           if (card._id == cardId) {
@@ -93,8 +93,8 @@ export class MarketComponent implements OnInit, OnDestroy {
           }
           ++idx;
         }
-      });
-    });
+      }));
+    }));
   }
 
   generateQueryParams() {

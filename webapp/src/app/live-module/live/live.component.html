@@ -16,14 +16,7 @@
     </div><!-- end /.row -->
   </div><!-- end /.container -->
 </section>
-<!--================================
-    END BREADCRUMB AREA
-=================================-->
 
-
-<!--================================
-        START JOB AREA
-    =================================-->
 <section class="job_area section--padding2">
   <div class="container">
     <div class="row">
@@ -39,13 +32,11 @@
               <div class="rect5"></div>
             </div>
             <div *ngFor="let tr of transactions" class="row-terminal">
-              <span class="caret-terminal">YTIcons></span><a class="bold"
-                                                             [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username
-              ? tr?.to?.username : 'Anonymous'}}</a> bought
+              <span class="caret-terminal">YTIcons></span>
+              <a class="bold" [routerLink]="'/account/' + tr?.to?.wallet">{{tr?.to?.username ? tr?.to?.username : 'Anonymous'}}</a> bought
               <a data-toggle="modal" [attr.data-target]="'#modal-' + tr?.card?.id" style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</a>
               from
-              <a class="bold" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ?
-                tr?.from?.username : 'Anonymous'}}</a> at
+              <a class="bold" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ? tr?.from?.username : 'Anonymous'}}</a> at
               <span>{{tr?.price}} ETH</span><span> - {{tr?.createdAt | timeBetweenLive}} ago</span>
               <app-card-modal *ngIf="tr?.card" [card]="tr?.card"></app-card-modal>
             </div>
@@ -55,6 +46,3 @@
     </div><!-- end /.container -->
   </div>
 </section>
-<!--================================
-    END JOB AREA
-=================================-->
