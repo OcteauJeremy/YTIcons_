@@ -37,10 +37,10 @@
     </div>
   </div>
   <div class="product-purchase">
-    <div class="price_love">
+    <div class="price_love" [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
       <span id="{{'card-price-' + card.id}}">{{card.price | currency  }}</span>
     </div>
-    <div class="sell"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
+    <div class="sell" [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
   </div>
 
 </div>
