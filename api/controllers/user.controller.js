@@ -45,8 +45,9 @@ exports.create = function (req, res) {
                 var web3 = require('./web3.controller').web3;
                 if (web3.utils.isAddress(req.body.wallet)) {
                     user.wallet = req.body.wallet;
+                } else {
+                    return res.status(400).send({message: "Your wallet doesn't exist."});
                 }
-                return res.status(400).send({message: "Your wallet doesn't exist."});
             }
 
             user.username = req.body.username;
