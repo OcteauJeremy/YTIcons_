@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
+import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CookieService } from 'ng2-cookies';
@@ -65,6 +65,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
           _self.cookieService.set('yticons-token', res.token);
         }
 
+        console.log(res);
         _self.as.setCurrentUser(res);
         _self._router.navigate(['account']);
 

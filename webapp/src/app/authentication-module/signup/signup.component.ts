@@ -6,6 +6,8 @@ import {ToastsManager} from 'ng2-toastr';
 import {environment} from "../../../environments/environment";
 import {RecaptchaService} from "../../services/recaptcha.service";
 import {CardService} from "../../services/card.service";
+import fontawesome from '@fortawesome/fontawesome';
+import { faCheck } from '@fortawesome/fontawesome-free-solid';
 
 declare var $: any;
 
@@ -21,6 +23,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public password: string;
   public conPassword: string;
   public emailPattern: string;
+  public acceptTos = false;
   private subscriptions: Subscription = new Subscription();
   public fileList: FileList = null;
   private captchaResponse: string = null;
@@ -30,6 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public url: string = 'assets/images/authplc.png';
 
   constructor(private cs: CardService, private as: AuthenticationService, private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService) {
+    fontawesome.library.add(faCheck);
   }
 
   ngOnInit() {
@@ -68,7 +72,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (_self.wallet && !_self.cs.checkWallet(_self.wallet)) {
         _self.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
       }
-      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword) {
+      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword && _self.acceptTos) {
 
         let formData: FormData = new FormData();
         if (_self.fileList && _self.fileList.length > 0) {
