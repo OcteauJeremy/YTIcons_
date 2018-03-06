@@ -434,6 +434,9 @@ exports.findByWallet = function (req, res) {
 var populateItem = function (findObj, req) {
     findObj.populate('type').populate('category').populate('nationality').populate('owner').populate({
         path: 'transactions',
+        options: {
+            sort: {'createdAt': 'desc'}
+        },
         populate: [{
             path: 'from'
         }, {

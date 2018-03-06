@@ -19,6 +19,7 @@ var CardSchema = mongoose.Schema({
     maxPrice: Number,
     isLocked: Boolean,
     isHidden: Boolean,
+    isVerified: Boolean,
     owner: {type: Schema.Types.ObjectId, ref: "User"},
     type: {type: Schema.Types.ObjectId, ref: 'Type'}
 }, {
@@ -28,6 +29,7 @@ var CardSchema = mongoose.Schema({
 
 CardSchema.methods.fromBody = function(body) {
     this.id = body.id;
+    this.is
     this.name = body.name;
     this.image = body.image;
     this.nationality = body.nationality;
