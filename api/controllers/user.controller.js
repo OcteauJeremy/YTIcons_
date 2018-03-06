@@ -43,7 +43,7 @@ exports.create = function (req, res) {
                 return res.status(400).send({message: "User with this wallet already exist."});
             } else if (req.body.wallet) {
                 var web3 = require('./web3.controller').web3;
-                if (this._web3.utils.isAddress(req.body.wallet)) {
+                if (web3.utils.isAddress(req.body.wallet)) {
                     user.wallet = req.body.wallet;
                 }
             }
