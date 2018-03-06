@@ -46,6 +46,7 @@ exports.create = function (req, res) {
                 if (web3.utils.isAddress(req.body.wallet)) {
                     user.wallet = req.body.wallet;
                 }
+                return res.status(400).send({message: "Your wallet doesn't exist."});
             }
 
             user.username = req.body.username;
