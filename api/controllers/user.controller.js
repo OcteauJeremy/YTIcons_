@@ -6,7 +6,6 @@ var app     = require('../server').appServer;
 var jwt     = require('jsonwebtoken');
 const fs    = require('fs');
 
-
 exports.create = function (req, res) {
     if (!req.body.username || !req.body.email || !req.body.password) {
         return res.status(400).send({message: "User can not be empty"});
@@ -30,6 +29,7 @@ exports.create = function (req, res) {
         if (usernameError) return res.status(400).send({message: "Username already in user."});
 
 
+        console.log(req.body.wallet);
         User.findOne({
             wallet: req.body.wallet
         }).exec(function (err, fUser) {
@@ -39,7 +39,7 @@ exports.create = function (req, res) {
 
             if (fUser && fUser.username == '') {
                 user = fUser;
-            } else if (fUser && fUser.username != '') {
+            } else if (fUser && fUser.username != '' && fUser.wallet && fUser.wallet != '') {
                 return res.status(400).send({message: "User with this wallet already exist."});
             } else if (req.body.wallet) {
                 user.wallet = req.body.wallet;
