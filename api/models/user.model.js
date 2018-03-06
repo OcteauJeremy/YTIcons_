@@ -27,7 +27,9 @@ UserSchema.methods.safeObj = function () {
       currency: this.currency,
       avatar: this.avatar,
       wallet: this.wallet,
-      token: this.token
+      token: this.token,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
   };
   console.log(obj);
   return obj;
