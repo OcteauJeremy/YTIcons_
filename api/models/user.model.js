@@ -19,7 +19,6 @@ var UserSchema = mongoose.Schema({
 });
 
 UserSchema.methods.safeObj = function () {
-    console.log(this);
   var obj = {
       _id: this._id,
       username: this.username,
@@ -32,7 +31,6 @@ UserSchema.methods.safeObj = function () {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
   };
-  console.log(obj);
   return obj;
 };
 

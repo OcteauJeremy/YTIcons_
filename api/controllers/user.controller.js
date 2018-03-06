@@ -29,7 +29,6 @@ exports.create = function (req, res) {
         if (usernameError) return res.status(400).send({message: "Username already in user."});
 
 
-        console.log(req.body.wallet);
         User.findOne({
             wallet: req.body.wallet
         }).exec(function (err, fUser) {
