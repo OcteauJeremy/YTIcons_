@@ -246,12 +246,9 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
 
         if (!error) {
-          self.getCountCards().subscribe(res => {
-            card.id = res.count;
-            card.tx = result;
-            self.createCard(card).subscribe(res => {
-              resolve(card);
-            });
+          card.tx = result;
+          self.createCard(card).subscribe(res => {
+            resolve(card);
           });
         } else {
           toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');

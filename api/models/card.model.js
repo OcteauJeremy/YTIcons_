@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CardSchema = mongoose.Schema({
-    id: {type: Number, unique: true},
+    id: {type: Number},
     name: String,
     image: String,
     nationality: {type: Schema.Types.ObjectId, ref: "Nationality"},

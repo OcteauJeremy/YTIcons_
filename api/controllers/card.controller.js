@@ -13,6 +13,7 @@ exports.create = function (req, res) {
     var web3 = require('./web3.controller').web3;
 
     var saveCard = function (card) {
+        card.id = -1;
         card.save(function (err, card) {
             if (err) {
                 console.log(err.message);
@@ -35,8 +36,11 @@ exports.create = function (req, res) {
                                 return res.status(400).send({message: 'Error during the ethereum transatcion.'});
                             });
                         } else {
-                            card.save(function (err, result) {
-                                return res.status(200).send(card);
+                            Card.count(function (err, nb) {
+                                card.id = nb - 1;
+                                card.save(function (err, result) {
+                                    return res.status(200).send(card);
+                                });
                             });
                         }
                         //clearTimeout(lastTimeout);

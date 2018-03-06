@@ -184,11 +184,12 @@ export class AdminComponent implements OnInit {
           this.cardYoutuber.nationality = res;
           this.selectInputs.codeCountry = this.cardYoutuber.nationality.code;
           this.selectInputs.nameCountry = this.cardYoutuber.nationality.name;
-
           cb(this);
+          return ;
         });
+      } else {
+        cb(this);
       }
-
     })
   }
 
@@ -262,7 +263,6 @@ export class AdminComponent implements OnInit {
           self.cardOriginYoutuber.type = self.getOriginType();
           self.cardOriginYoutuber.isHidden = isHidden;
           self.cardOriginYoutuber.isLocked = isLocked;
-
           self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
             console.log('Created card origin', cardOrigin);
             self.createLoading = false;
