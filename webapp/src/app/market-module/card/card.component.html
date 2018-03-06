@@ -1,8 +1,11 @@
-<div style="perspective:2000px;perspective-origin: bottom"  [ngClass]="{locked: card.isLocked}">
+<div style="perspective:2000px;perspective-origin: bottom;"  [ngClass]="{locked: card.isLocked}">
   <div *ngIf="card" [id]="card._id"[ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : ''] " [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
 
     <div class="card-title">
-      <h4>{{card.name}}</h4>
+      <h4>{{card.name}}
+        <img *ngIf="card?.isVerified" style="margin-left:6px;width:12px;margin-top:auto;margin-bottom: 4px;" src="assets/images/verified_icon.png">
+        <img *ngIf="card?.isLocked" style="margin-left:6px;width:13px;margin-top:auto;margin-bottom: 3px;" src="assets/images/lock_icon.png">
+      </h4>
     </div>
 
     <div class="card-img">
