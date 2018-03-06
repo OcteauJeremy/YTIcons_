@@ -3,10 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
 import { environment } from '../../environments/environment';
-import { AuthenticationService } from './authentication.service';
-import { CookieService } from 'ng2-cookies';
 
-var Web3 = require('web3');
+const Web3 = require('web3');
 declare let require: any;
 declare let window: any;
 
@@ -44,7 +42,7 @@ export class CardService extends ManagerService {
 
       this._tokenContract = new this._web3.eth.Contract(tokenAbi, this._tokenContractAddress);
     } else {
-      toastr.warning('You need to install MetaMask to be able to trade cards.', 'Cards trading');
+      toastr.warning('You need to install MetaMask to be able to trade cards.', 'Marketplace');
     }
 
   }
@@ -115,10 +113,10 @@ export class CardService extends ManagerService {
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          toastr.success('Your lock has been successfully done.', 'Transaction');
+          toastr.success('Your lock has been successfully done.', 'Lock');
           resolve(result);
         } else {
-          toastr.error('Transaction closed', 'Transaction');
+          toastr.error('The YTIcon\'s lock has failed.', 'Transaction');
           console.log(error);
           resolve(null);
         }
@@ -143,7 +141,7 @@ export class CardService extends ManagerService {
           toastr.success('Your unlock has been successfully done.', 'Transaction');
           resolve(result);
         } else {
-          toastr.error('Transaction closed', 'Transaction');
+          toastr.error('The YTIcon\'s unlock has failed.', 'Transaction');
           console.log(error);
           resolve(null);
         }
@@ -169,7 +167,7 @@ export class CardService extends ManagerService {
           toastr.success('Your purchase has been successfully done.', 'Transaction');
           resolve(1);
         } else {
-          toastr.error('Transaction closed', 'Transaction');
+          toastr.error('Your purchase has been rejected.', 'Transaction');
           console.log(error);
           resolve(0);
         }
@@ -198,7 +196,7 @@ export class CardService extends ManagerService {
             toastr.success('The price of your YTIcon has been successfully modified.', 'Price modification');
             resolve(1);
           } else {
-            toastr.error('Transaction closed', 'Price modification');
+            toastr.error('Your YTIcon\'s price modification has failed.', 'Price modification');
             console.log(error);
             resolve(0);
           }
@@ -315,7 +313,7 @@ export class CardService extends ManagerService {
     return this.getQuery('/cards/admin', query);
   }
 
-  public checkWallet(wallet:string) {
+  public checkWallet(wallet: string) {
     return this._web3.utils.isAddress(wallet);
   }
 }
