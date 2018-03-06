@@ -52,10 +52,20 @@
                     <div class="img_info">
                       <p class="bold">Profile Image</p>
                       <p class="subtitle">JPG, GIF or PNG</p>
+
+                      <label for="cover_photo" class="upload_btn_small">
+                        <input style="display: none" (change)="readUrl($event)" type="file" id="upload-photo-small">
+                        <span class="btn btn--sm btn--round" aria-hidden="true">
+                          <span class="upload-button-icon"><i class="fas fa-plus"></i></span>
+                        </span>
+                      </label>
                     </div>
                     <label for="cover_photo" class="upload_btn">
-                      <input style="display: none" (change)="readUrl($event)" type="file" type="file" id="cover_photo">
-                      <span class="btn btn--sm btn--round" aria-hidden="true">Upload Image</span>
+                      <input style="display: none" (change)="readUrl($event)" type="file" id="cover_photo">
+                      <span class="btn btn--sm btn--round" aria-hidden="true">
+                        <span class="upload-button-icon"><i class="fas fa-plus"></i></span>
+                        <span class="upload-button-text">Upload image</span>
+                      </span>
                     </label>
                   </div>
                 </div>
