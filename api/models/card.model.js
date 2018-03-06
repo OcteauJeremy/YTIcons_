@@ -29,7 +29,7 @@ var CardSchema = mongoose.Schema({
 
 CardSchema.methods.fromBody = function(body) {
     this.id = body.id;
-    this.is
+    this.isVerified = false;
     this.name = body.name;
     this.image = body.image;
     this.nationality = body.nationality;
