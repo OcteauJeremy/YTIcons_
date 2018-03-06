@@ -18,7 +18,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
     _id: ""
   };
 
-  public subscriptions: Subscription = new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   public obj: any;
 

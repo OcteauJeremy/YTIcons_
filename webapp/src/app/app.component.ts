@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private toastManager: ToastsManager;
 
-  constructor(private router: Router, private as: AuthenticationService, public toastr: ToastsManager, private vcr: ViewContainerRef,
+  constructor(private router: Router, private as: AuthenticationService, private toastr: ToastsManager, private vcr: ViewContainerRef,
               private socketService: SocketService,
               private app: ApplicationRef, private componentFactoryResolver: ComponentFactoryResolver, private ngZone: NgZone) {
     this.toastr.setRootViewContainerRef(vcr);
