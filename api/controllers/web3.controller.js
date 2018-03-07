@@ -34,7 +34,7 @@ User.findOne({
         user.password = user.generateHash('HBstk5AaASChsy6V');
         user.email = 'root@yticons.com';
         user.wallet = '0x0000000000000000000000000000000000000000';
-        user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
+        user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.jpg';
 
         user.save(function (err, res) {
             if (err) {

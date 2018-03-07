@@ -48,7 +48,7 @@ UserSchema.methods.initValues = function() {
     this.password = "";
     this.roles = ["user"];
     this.currency  = "ETH";
-    this.avatar = uploadOptions.pathAvatarUrl + '/anonymous.png';
+    this.avatar = uploadOptions.pathAvatarUrl + '/anonymous.jpg';
     this.token = "";
     this.wallet = "";
 };
