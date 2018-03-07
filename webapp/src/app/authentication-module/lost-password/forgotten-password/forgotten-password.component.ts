@@ -20,12 +20,19 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
   private subscriptions: Subscription = new Subscription();
+  private isRobot = true;
 
   constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService, private authService: AuthenticationService) {
   }
 
   resolved(_captchaResponse: string) {
+    let _self = this;
     this.captchaResponse = _captchaResponse;
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+      _self.isRobot = false;
+    }, error => {
+      _self.isRobot = true;
+    }));
   }
 
   ngOnInit() {
@@ -48,7 +55,10 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
       this.toastr.error('Please fill in your username.', 'Authentication');
       return;
     }
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    if (this.isRobot) {
+      this.toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
+    }
+    else {
       if (_self.username) {
         _self.isLoading = true;
         _self.subscriptions.add(_self.authService.lostPassword(_self.username).subscribe(res => {
@@ -62,10 +72,7 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
           _self.isLoading = false;
         }));
       }
-    }, error => {
-      this.toastr.error('Please, verify that you\'re not a robot.', 'Lost password');
-    }));
-
+    }
   }
 
 

@@ -25,6 +25,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
+  private isRobot = true;
 
   constructor(private as: AuthenticationService, private _router: Router,
               public cookieService: CookieService, private toastr: ToastsManager,
@@ -49,14 +50,23 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   resolved(_captchaResponse: string) {
+    let _self = this;
     this.captchaResponse = _captchaResponse;
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+      _self.isRobot = false;
+    }, error => {
+      _self.isRobot = true;
+    }));
   }
 
   signin() {
     const toastr = this.toastr;
     let _self = this;
 
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(resCaptcha => {
+    if (this.isRobot) {
+      toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
+    }
+    else {
       _self.subscriptions.add(_self.as.login(_self.username, _self.password).subscribe(res => {
 
         if (_self.rememberMe) {
@@ -72,9 +82,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
       }, error => {
         this.toastr.error('The entered credentials are incorrect.', 'Authentication');
       }));
-    }, error => {
-      toastr.error('Please, verify that you\'re not a robot.', 'Authentication');
-    }));
+    }
   }
 
   redirect(pagename: string) {

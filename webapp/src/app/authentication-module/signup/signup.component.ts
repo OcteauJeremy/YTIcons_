@@ -8,7 +8,7 @@ import {RecaptchaService} from '../../services/recaptcha.service';
 import {AnalyticsService} from '../../services/analytics.service';
 import {send} from 'q';
 import fontawesome from '@fortawesome/fontawesome';
-import { faCheck } from '@fortawesome/fontawesome-free-solid';
+import {faCheck} from '@fortawesome/fontawesome-free-solid';
 import {CardService} from '../../services/card.service';
 
 declare var $: any;
@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
   public wallet;
+  private isRobot = true;
 
   public url: string = 'assets/images/authplc.png';
 
@@ -47,7 +48,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       _self.wallet = res;
     });
 
-    this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
+    this.subscriptions.add(this.toastr.onClickToast().subscribe(toast => {
       if (toast.timeoutId) {
         clearTimeout(toast.timeoutId);
       }
@@ -64,14 +65,23 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   resolved(_captchaResponse: string) {
+    let _self = this;
     this.captchaResponse = _captchaResponse;
+    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+      _self.isRobot = false;
+    }, error => {
+      _self.isRobot = true;
+    }));
   }
 
   signup() {
     const toastr = this.toastr;
     let _self = this;
 
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    if (this.isRobot) {
+      toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
+    }
+    else {
       if (_self.wallet && !_self.cs.checkWallet(_self.wallet)) {
         _self.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
       }
@@ -93,13 +103,13 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
           _self._router.navigate(['signin']);
           _self.toastr.success('Sign up successful.', 'Sign up');
           _self.analytics.sendEvent("Authenticate", "Signup success");
+        }, error => {
+          _self.toastr.error(error.error.message, 'Sign up');
         });
       } else {
         _self.toastr.error('Please, fill all the fields.', 'Sign up');
       }
-    }, error => {
-      toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
-    }));
+    }
   }
 
   readUrl(event: any) {
