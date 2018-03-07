@@ -20,7 +20,7 @@ export class IsNotConnectedGuard implements CanActivate {
     const token = localToken || cookieToken;
     if (token) {
       return this.as.getUserByToken(token).map((res) => {
-          const redirect = !!customRedirect ? customRedirect : '/market';
+          const redirect = !!customRedirect ? customRedirect : '/';
           this.router.navigate([redirect]);
           return false;
       }).first();

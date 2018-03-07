@@ -25,7 +25,7 @@ export class AuthenticationGuard implements CanActivate {
           return true;
       }).first();
     } else {
-      const redirect = !!customRedirect ? customRedirect : '/market';
+      const redirect = !!customRedirect ? customRedirect : '/';
       this.router.navigate([redirect]);
       return false;
     }
