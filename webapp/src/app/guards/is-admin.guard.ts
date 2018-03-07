@@ -18,7 +18,7 @@ export class IsAdminGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/market']);
+    this.router.navigate(['/']);
     return false;
   }
 }
