@@ -128,7 +128,7 @@
         <p>No youtuber can reach your search criterias :(</p>
       </div>
       <div *ngFor="let card of cards">
-        <card class="col-lg-3 col-md-4 col-sm-6" [card]="card"></card>
+        <card class="col-lg-3 col-md-4 col-sm-6" [card]="card" (click)="sendEvent('Card selected', card.name)"></card>
       </div>
     </div>
 

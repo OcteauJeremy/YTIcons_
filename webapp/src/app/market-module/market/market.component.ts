@@ -127,6 +127,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.type = type._id;
     this.names.type = type.name;
     this.getCards();
+    this.analytics.sendEvent('Type selected', type.name);
   }
 
   selectNationality(nationality) {
@@ -140,6 +141,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.category = category._id;
     this.names.category = category.name;
     this.getCards();
+    this.analytics.sendEvent('Category selected', category.name);
   }
 
   selectFollower(min, max, s: string) {
@@ -147,6 +149,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.minSubscribers = min;
     this.names.subscribers = s;
     this.getCards();
+    this.analytics.sendEvent('Followers selected', s);
   }
 
   selectVideo(min, max, s: string) {
@@ -154,6 +157,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.minVideos = min;
     this.names.videos = s;
     this.getCards();
+    this.analytics.sendEvent('Videos selected', s);
   }
 
   selectSort(sort: string) {
@@ -162,6 +166,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.filters.sort = sort_array[0];
     this.filters.order = sort_array[1];
     this.getCards();
+    this.analytics.sendEvent('Sort selected', sort);
   }
 
   prevPage() {
@@ -197,7 +202,12 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.timeout = setTimeout(function (self) {
       self.filters.name = searchValue;
       self.getCards();
+      self.analytics.sendEvent('Search', searchValue);
     }, 1000, this);
+  }
+
+  sendEvent(category: string, cardName: string) {
+    this.analytics.sendEvent(category, cardName);
   }
 
   ngOnDestroy() {

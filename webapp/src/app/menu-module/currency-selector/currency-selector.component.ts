@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import fontawesome from '@fortawesome/fontawesome';
 import faEthereum from '@fortawesome/fontawesome-free-brands';
 import { faDollarSign, faEuroSign } from '@fortawesome/fontawesome-free-solid';
+import {AnalyticsService} from '../../services/analytics.service';
 
 @Component({
   selector: 'currency-selector',
@@ -17,7 +18,7 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
   public currentUser;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private currencyService: CurrencyService, private as: AuthenticationService) {
+  constructor(private currencyService: CurrencyService, private as: AuthenticationService, private analytics: AnalyticsService) {
     fontawesome.library.add(faEthereum);
     fontawesome.library.add(faDollarSign);
     fontawesome.library.add(faEuroSign);
@@ -41,6 +42,7 @@ export class CurrencySelectorComponent implements OnInit, OnDestroy {
   setCurrency(currency) {
     this.currency = currency;
     this.currencyService.setCurrency(currency);
+    this.analytics.sendEvent('Currency selected', currency);
   }
 
   ngOnDestroy() {
