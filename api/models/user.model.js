@@ -4,14 +4,13 @@ var uploadOptions   = require('../configs/multer');
 
 var UserSchema = mongoose.Schema({
     username: String,
-    email: String,
+    email: {type: String, select: false},
     password: {type: String, select: false},
     roles: [String],
     currency: String,
     avatar: String,
-    token: String,
+    token: {type: String, select: false},
     wallet: String,
-    token: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date
 }, {

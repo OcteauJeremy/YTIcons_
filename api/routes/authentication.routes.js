@@ -13,7 +13,7 @@ apiRoutes.post('/signin', function (req, res) {
     var connectionFunction = function (err, user) {
 
         if (!user) {
-            return res.status(400).send({message: "User doesn't exist."});
+            return res.status(400).send({message: "Wrong credentials."});
         }
 
         if (err) {
@@ -41,7 +41,7 @@ apiRoutes.post('/signin', function (req, res) {
                 }
             });
         } else {
-            return res.status(400).send({message: "Wrong password."});
+            return res.status(400).send({message: "Wrong credentials."});
         }
     };
 

@@ -1,6 +1,7 @@
 var User = require('../models/user.model');
 var crypto = require('crypto');
 var async = require('async');
+var smtpTransport = require('../configs/nodemailer').transporter;
 
 exports.setNewPassword = function (req, res) {
     if (!req.body.oldPassword || !req.body.newPassword || !req.params.userId) {
@@ -77,26 +78,22 @@ exports.forgotPassword = function (req, res) {
         function(token, user, done) {
             console.log('send mail to', user.email);
             done(user);
-            // var smtpTransport = nodemailer.createTransport('SMTP', {
-            //     service: 'SendGrid',
-            //     auth: {
-            //         user: '!!! YOUR SENDGRID USERNAME !!!',
-            //         pass: '!!! YOUR SENDGRID PASSWORD !!!'
-            //     }
-            // });
-            // var mailOptions = {
-            //     to: user.email,
-            //     from: 'passwordreset@demo.com',
-            //     subject: 'Node.js Password Reset',
-            //     text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            //     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            //     'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-            //     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            // };
-            // smtpTransport.sendMail(mailOptions, function(err) {
-            //     req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-            //     done(err, 'done');
-            // });
+            var mailOptions = {
+                to: user.email,
+                from: 'help@yticons.co',
+                subject: 'Node.js Password Reset',
+                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                'https://' + req.headers.host + '/lost-password/' + token + '\n\n' +
+                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function(err) {
+                if (err) {
+                    console.log('/!\\ MAIL not send to ' + user.email + ' with token: ' + user.resetPasswordToken);
+                    return res.status(400).send({message: "Impossible to send mail"});
+                }
+                done(err, user);
+            });
         }
     ], function (user) {
         console.log('Finally:', user.resetPasswordToken);

@@ -57,7 +57,6 @@ exports.create = function (req, res) {
             if (!req.file) {
                 var files = [];
 
-                console.log(__dirname + '/../ressources/avatars/default');
                 fs.readdirSync(__dirname + '/../ressources/avatars/default').forEach(function (file) {
                     if (file[0] != '.') {
                         files.push(file);

@@ -7,7 +7,7 @@ const protocol: string = "http://";
 
 export const environment = {
   production: false,
-  apiUrl: protocol + 'localhost:3000',
+  apiUrl: protocol + 'localhost:6969',
   secureSocket: protocol == "https://",
   tokenAddress: '0x10207693450fa18527f73d71d52f6c016d8353fa',
   recaptchaPublic: '6Ld_fkoUAAAAAMD2oHdp6l6Sl3lICiigExvs5KDm',

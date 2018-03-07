@@ -74,10 +74,8 @@ if (URL.secureSocket) {
         cert: fs.readFileSync('./ressources/token/ssl.crt')
     };
 
-    console.log('https Server', creditentials);
     server = require('https').createServer(creditentials, app);
 } else {
-    console.log('http');
     server = require('http').createServer(app)
 }
 
@@ -86,9 +84,9 @@ module.exports.serverExpress = server;
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
     // Load SC listeners
-    server.listen(3000, function () {
+    server.listen(6969, function () {
         require('./controllers/web3.controller');
-        console.log('YTIcons API listening on 3000')
+        console.log('YTIcons API listening on 6969')
     });
 });
 
