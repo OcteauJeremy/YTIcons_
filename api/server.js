@@ -70,8 +70,8 @@ if (URL.secureSocket) {
 
 
     var creditentials = {
-        key: fs.readFileSync('./ressources/token/cert.pem'),
-        cert: fs.readFileSync('./ressources/token/privkey.pem')
+        key: fs.readFileSync('./ressources/token/privkey.pem'),
+        cert: fs.readFileSync('./ressources/token/cert.pem')
     };
 
     server = require('https').createServer(creditentials, app);
