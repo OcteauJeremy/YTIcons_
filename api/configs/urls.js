@@ -1,7 +1,7 @@
 
 
 if (process.env.ENVIRONMENT == "prod") {
-    var protocol = "https://";
+    var protocol = "http://";
     module.exports = {
         tokenAddress: "0x0551ddc4460e09cc30bec37ef73a8b9739dc179a",
         secureSocket: protocol == "https://" ? true : false,

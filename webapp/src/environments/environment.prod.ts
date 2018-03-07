@@ -1,5 +1,5 @@
 
-const protocol: string = "https://";
+const protocol: string = "http://";
 
 export const environment = {
   production: true,
