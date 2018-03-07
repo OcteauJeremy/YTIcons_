@@ -47,7 +47,7 @@ User.findOne({
 });
 
 tokenContract.events.PriceModified({
-        fromBlock: 'latest'
+        fromBlock: 'pending'
 }, function (err, event) {
     console.log('PriceModified event');
     if (err) {
@@ -76,7 +76,7 @@ tokenContract.events.PriceModified({
 });
 
 tokenContract.events.YTIconSold({
-    fromBlock: 'latest'
+    fromBlock: 'pending'
 }, function(err, event) {
     console.log('YTIconSold event');
     if (err) {
