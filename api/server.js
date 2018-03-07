@@ -74,8 +74,10 @@ if (URL.secureSocket) {
         cert: fs.readFileSync('./ressources/token/ssl.crt')
     };
 
+    console.log('https Server', creditentials);
     server = require('https').createServer(creditentials, app);
 } else {
+    console.log('http');
     server = require('http').createServer(app)
 }
 
