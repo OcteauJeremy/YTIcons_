@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require("fs");
 const app =  module.exports.appServer = express();
 const bodyParser = require('body-parser');
 const configMongo = require('./configs/mongoDB');
@@ -64,7 +65,19 @@ app.use(function (err, req, res, next) {
     // Handle any other errors
 });
 
-var server =  require('http').createServer(app);
+var server ;
+if (URL.secureSocket) {
+
+
+    var creditentials = {
+        key: fs.readFileSync('./ressources/token/privateKey.pem'),
+        cert: fs.readFileSync('./ressources/token/ssl.crt')
+    };
+
+    server = require('https').createServer(creditentials, app);
+} else {
+    server = require('http').createServer(app)
+}
 
 module.exports.serverExpress = server;
 
