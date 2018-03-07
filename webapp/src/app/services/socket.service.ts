@@ -15,7 +15,7 @@ export class SocketService {
   constructor() { }
 
   public initSocket(): void {
-    this.socket = socketIo(SERVER_URL);
+    this.socket = socketIo(SERVER_URL, { secure: environment.secureSocket, reconnect: true });
   }
 
 
