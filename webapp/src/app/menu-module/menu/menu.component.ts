@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public currentUser = null;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private as: AuthenticationService, private router: Router, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private as: AuthenticationService, public router: Router, private el: ElementRef, private renderer: Renderer2) {
     this.subscriptions.add(this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
     }));
