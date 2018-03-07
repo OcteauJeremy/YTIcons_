@@ -39,26 +39,26 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
               <li>
-                <a routerLink="/home">
+                <a routerLink="/home" (click)="closeNavbar()">
                   <img src="assets/images/menu/icon_dark_grey_bold.png" class="logo" onmouseover="this.src='assets/images/menu/icon_blue_bold.png'" onmouseout="this.src='assets/images/menu/icon_dark_grey_bold.png'">
                 </a>
               </li>
               <li>
-                <a routerLink="/market">Market</a>
+                <a routerLink="/market" (click)="closeNavbar()">Market</a>
               </li>
               <li>
-                <a routerLink="/leaderboard">Leaderboard</a>
+                <a routerLink="/leaderboard" (click)="closeNavbar()">Leaderboard</a>
               </li>
               <li>
-                <a routerLink="/live">Live</a>
+                <a routerLink="/live" (click)="closeNavbar()">Live</a>
               </li>
               <li>
-                <a routerLink="/faq">FAQ</a>
+                <a routerLink="/faq" (click)="closeNavbar()">FAQ</a>
               </li>
-              <li *ngIf="isAdmin()">
+              <li *ngIf="isAdmin()" (click)="closeNavbar()">
                 <a routerLink="/admin">Admin</a>
               </li>
-              <li *ngIf="isAdmin()">
+              <li *ngIf="isAdmin()" (click)="closeNavbar()">
                 <a routerLink="/list-cards">List Cards</a>
               </li>
             </ul>
