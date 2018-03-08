@@ -84,9 +84,9 @@ module.exports.serverExpress = server;
 mongoose.connection.once('open', function () {
     console.log("Successfully connected to the database mongo");
     // Load SC listeners
-    server.listen(8443, function () {
+    server.listen(URL.port, function () {
         require('./controllers/web3.controller');
-        console.log('YTIcons API listening on 8443')
+        console.log('YTIcons API listening on ' + URL.port)
     });
 });
 

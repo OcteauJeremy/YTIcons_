@@ -119,7 +119,6 @@ export class MarketComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.cards = res.cards as Array<Card>;
       this.maxPages = res.pages;
-      // console.log('cards', res);
     }));
   }
 

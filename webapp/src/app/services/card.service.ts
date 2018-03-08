@@ -106,7 +106,6 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       const toastr = this.toastr;
 
-      // console.log(account);
       this._tokenContract.methods.lock(_idCard).send({
         from: account,
         gas: 4000000,
@@ -117,7 +116,6 @@ export class CardService extends ManagerService {
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s lock has failed.', 'Transaction');
-          console.log(error);
           resolve(null);
         }
       });
@@ -142,7 +140,6 @@ export class CardService extends ManagerService {
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s unlock has failed.', 'Transaction');
-          console.log(error);
           resolve(null);
         }
       });
@@ -162,13 +159,11 @@ export class CardService extends ManagerService {
         gas: 4000000,
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
-        // console.log('result', result);
         if (!error) {
           toastr.success('Your purchase has been successfully done.', 'Transaction');
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');
-          console.log(error);
           resolve(0);
         }
       });
@@ -197,7 +192,6 @@ export class CardService extends ManagerService {
             resolve(1);
           } else {
             toastr.error('Your YTIcon\'s price modification has failed.', 'Price modification');
-            console.log(error);
             resolve(0);
           }
         });
@@ -222,7 +216,6 @@ export class CardService extends ManagerService {
           resolve(1);
         } else {
           toastr.error('An error occured while creating the YTIcon "' + name + '"', 'Card creation');
-          console.log(error);
           resolve(0);
         }
       });
@@ -250,7 +243,6 @@ export class CardService extends ManagerService {
           });
         } else {
           toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
-          console.log(error);
           resolve(null);
         }
       });

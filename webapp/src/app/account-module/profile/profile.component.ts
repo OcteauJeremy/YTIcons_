@@ -89,7 +89,6 @@ export class ProfileComponent implements OnInit {
 
 
     this.cs.getAccount(true).then(function(res:string) {
-      // console.log(_self.as.currentUser.wallet, res);
       if (_self.as.currentUser.wallet != res) {
         let save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;
@@ -187,7 +186,7 @@ export class ProfileComponent implements OnInit {
             _self.refreshProfileInfo(_self.address);
           }
         },error => {
-          console.log(error);
+          this._router.navigate(['market']);
         }));
       }
     }));

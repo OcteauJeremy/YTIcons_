@@ -75,7 +75,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
           _self.cookieService.set('yticons-token', res.token);
         }
 
-        console.log(res);
+        //console.log(res);
         _self.as.setCurrentUser(res);
         _self._router.navigate(['account']);
 

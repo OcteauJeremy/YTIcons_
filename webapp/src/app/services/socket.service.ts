@@ -27,7 +27,6 @@ export class SocketService {
   }
 
   public removeListener(event: string) {
-    //console.log('removed listener : '+ event);
     this.socket.removeAllListeners(event);
   }
 }

@@ -69,7 +69,7 @@
               </div>
 
               <div class="form-group">
-                <label for="email_ad">Email Address</label>
+                <label for="email_ad">Email Address *</label>
                 <input #emailCheck="ngModel" [(ngModel)]="email" name="email" id="email_ad" type="email" class="text_field"
                        placeholder="Enter your email" required [pattern]="emailPattern">
 
@@ -86,7 +86,7 @@
               </div>
 
               <div class="form-group">
-                <label for="user_name">Username</label>
+                <label for="user_name">Username *</label>
                 <input #usernameCheck="ngModel" [(ngModel)]="username" name="username" id="user_name" type="text" class="text_field"
                        minlength="4"  maxlength="12" placeholder="Enter your username..." required>
 
@@ -106,7 +106,7 @@
               </div>
 
               <div class="form-group">
-                <label for="passworda">Password</label>
+                <label for="passworda">Password *</label>
                 <input #passworda="ngModel" [(ngModel)]="password" name="passworda" id="passworda" type="password" class="text_field"
                        minlength="6" maxlength="64" placeholder="Enter your password..." equalValidatorDirective="confirmPassword" reverse="true" required>
 
@@ -125,7 +125,7 @@
               </div>
 
               <div class="form-group">
-                <label for="con_pass">Confirm Password</label>
+                <label for="con_pass">Confirm Password *</label>
                 <input #confirmPassword="ngModel" equalValidatorDirective="passworda" [(ngModel)]="conPassword" name="confirmPassword" id="con_pass" type="password" class="text_field"
                        placeholder="Confirm password" required>
 
@@ -149,7 +149,7 @@
 
               <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
-              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit" [disabled]="!acceptTos">Register Now</button>
+              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit" [disabled]="!acceptTos || isRobot">Register Now</button>
 
               <div class="login_assist">
                 <p>Already have an account? <a (click)="redirect('signin')">Login</a></p>

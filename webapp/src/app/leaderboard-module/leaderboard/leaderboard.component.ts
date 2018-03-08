@@ -39,7 +39,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
         _self.ranking = res.ranking;
       }
     }, error => {
-      toastr.error( 'This wallet is already set on another user.', 'Leaderboard');
+      toastr.error( 'Can\'t get the current leaderboard', 'Leaderboard');
     }));
   }
 
