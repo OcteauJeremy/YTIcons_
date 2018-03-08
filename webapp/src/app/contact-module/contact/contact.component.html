@@ -99,7 +99,7 @@
                       <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
                       <div class="sub_btn">
-                        <button (click)="send()" type="button" class="btn btn--round btn--default">Send</button>
+                        <button (click)="send()" [ladda]="loadingChannel" [disabled]="isRobot" type="button" class="btn btn--round btn--default">Send</button>
                       </div>
                     </form>
                   </div>

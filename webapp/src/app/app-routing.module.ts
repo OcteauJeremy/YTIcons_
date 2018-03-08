@@ -132,6 +132,7 @@ const appRoutes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full'
   },
+  { path: '404', redirectTo: '404'},
   { path: '**', redirectTo: '/home' }
 ];
 

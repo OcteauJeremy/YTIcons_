@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public username: string;
   public password: string;
   public conPassword: string;
-  public emailPattern: string;
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   public acceptTos = false;
   private subscriptions: Subscription = new Subscription();
   public fileList: FileList = null;
@@ -32,6 +32,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public recaptchaPublic: string = environment.recaptchaPublic;
   public wallet;
   private isRobot = true;
+  private loadingChannel = false;
 
   public url: string = 'assets/images/authplc.png';
 
@@ -43,7 +44,6 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     let _self = this;
 
-    this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
     this.cs.getAccount(true).then(res => {
       _self.wallet = res;
     });
@@ -99,12 +99,15 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (_self.wallet) {
           formData.append('wallet', _self.wallet);
         }
+        this.loadingChannel = true;
         _self.as.register(formData).then(res => {
           _self._router.navigate(['signin']);
           _self.toastr.success('Sign up successful.', 'Sign up');
           _self.analytics.sendEvent("Authenticate", "Signup success");
+          this.loadingChannel = false;
         }, error => {
           _self.toastr.error(error.error.message, 'Sign up');
+          this.loadingChannel = false;
         });
       } else {
         _self.toastr.error('Please, fill all the fields.', 'Sign up');

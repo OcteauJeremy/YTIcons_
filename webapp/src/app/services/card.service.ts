@@ -116,7 +116,6 @@ export class CardService extends ManagerService {
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s lock has failed.', 'Transaction');
-          console.log(error);
           resolve(null);
         }
       });
@@ -141,7 +140,6 @@ export class CardService extends ManagerService {
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s unlock has failed.', 'Transaction');
-          console.log(error);
           resolve(null);
         }
       });
@@ -162,11 +160,10 @@ export class CardService extends ManagerService {
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          toastr.success('Your purchase has been successfully done.', 'Transaction');
+          toastr.success('Your purchase is pending on the blockchain.', 'Transaction');
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');
-          console.log(error);
           resolve(0);
         }
       });
@@ -195,7 +192,6 @@ export class CardService extends ManagerService {
             resolve(1);
           } else {
             toastr.error('Your YTIcon\'s price modification has failed.', 'Price modification');
-            console.log(error);
             resolve(0);
           }
         });
@@ -220,7 +216,6 @@ export class CardService extends ManagerService {
           resolve(1);
         } else {
           toastr.error('An error occured while creating the YTIcon "' + name + '"', 'Card creation');
-          console.log(error);
           resolve(0);
         }
       });
@@ -248,7 +243,6 @@ export class CardService extends ManagerService {
           });
         } else {
           toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
-          console.log(error);
           resolve(null);
         }
       });

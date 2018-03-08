@@ -14,7 +14,7 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "http://";
     module.exports = {
         port: "6969",
-        tokenAddress: "0x84e6c6de5b5b98bf28763d307ed1d6ec4b56d383",
+        tokenAddress: "0x0892F2fDf81462C5422Ee153D84a2CD8dFc8C722",
         secureSocket: protocol == "https://" ? true : false,
         webserver: "http://localhost:4200",
         websocket: "wss://ropsten.infura.io/ws",

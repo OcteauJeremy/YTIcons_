@@ -186,7 +186,7 @@ export class ProfileComponent implements OnInit {
             _self.refreshProfileInfo(_self.address);
           }
         },error => {
-          console.log(error);
+          this._router.navigate(['market']);
         }));
       }
     }));

@@ -23,6 +23,10 @@ export class AuthenticationGuard implements CanActivate {
     if (token) {
       return this.as.getUserByToken(token).map((res) => {
           return true;
+      }, error => {
+        const redirect = !!customRedirect ? customRedirect : '/';
+        this.router.navigate([redirect]);
+        return false;
       }).first();
     } else {
       const redirect = !!customRedirect ? customRedirect : '/';
