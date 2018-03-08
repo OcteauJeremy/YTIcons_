@@ -4,6 +4,7 @@ import { RecaptchaService } from "../../services/recaptcha.service";
 import { ToastsManager } from "ng2-toastr";
 import { Subscription } from 'rxjs/Subscription';
 import { EmailService } from '../../services/email.service';
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-faq',
@@ -47,7 +48,7 @@ export class ContactComponent implements OnInit {
     // }));
   }
 
-  send() {
+  send(myForm: NgForm) {
     const toastr = this.toastr;
     let _self = this;
 
@@ -58,10 +59,14 @@ export class ContactComponent implements OnInit {
       this.loadingChannel = true;
       if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.message) {
         this.subscriptions.add(this.emailService.sendMailContact(this.form).subscribe(res => {
+          myForm.form.markAsPristine();
+          myForm.form.markAsUntouched();
           this.loadingChannel = false;
           this.form.message = '';
           this.form.name = '';
           this.form.email = '';
+          this.form.subject = 'Subject',
+            grecaptcha.reset();
           _self.toastr.success('Your message has been successfully sent', 'Contact us');
         }, error => {
           this.loadingChannel = false;

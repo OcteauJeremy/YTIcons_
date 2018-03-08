@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
 
 const Web3 = require('web3');
 declare let require: any;
@@ -27,7 +27,7 @@ export class CardService extends ManagerService {
       const toastr = this.toastr;
 
       // Probably useless to unsubscribe since a service is never destroyed...
-      toastr.onClickToast().subscribe( toast => {
+      toastr.onClickToast().subscribe(toast => {
         if (toast.timeoutId) {
           clearTimeout(toast.timeoutId);
         }
@@ -50,25 +50,26 @@ export class CardService extends ManagerService {
   public async getAccount(display: boolean): Promise<string> {
     const toastr = this.toastr;
 
-    this._account = await new Promise((resolve, reject) => {
+    if (this._web3)
+      this._account = await new Promise((resolve, reject) => {
 
-      if (this._web3)
         this._web3.eth.getAccounts((err, accs) => {
-        if (err != null) {
-          toastr.error('There was an error while fetching your accounts.', 'Account');
-          return;
-        }
+          if (err != null) {
+            toastr.error('There was an error while fetching your accounts.', 'Account');
+            return;
+          }
 
-        if (accs.length === 0) {
-          if (display)
-            toastr.error('Please make sure your Ethereum wallet is correctly configured.', '');
-          this._account = null;
-          resolve(null);
-        }
-        resolve(accs[0]);
-      })
+          if (accs.length === 0) {
+            if (display)
+              toastr.error('Please make sure your Ethereum wallet is correctly configured.', '');
+            this._account = null;
+            resolve(null);
+          }
+          resolve(accs[0]);
+        })
     }) as string;
-
+    else
+      this._account = null;
     if (this._account)
       this._web3.eth.defaultAccount = this._account;
     return Promise.resolve(this._account);
@@ -160,7 +161,7 @@ export class CardService extends ManagerService {
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          toastr.success('Your purchase is pending on the blockchain.', 'Transaction');
+          toastr.success('Your transaction has been sent.', 'Transaction');
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');
@@ -263,6 +264,10 @@ export class CardService extends ManagerService {
       });
     }) as Promise<any>;
 
+  }
+
+  public hasMetamask() {
+    return typeof window.web3 !== 'undefined' ? true : false;
   }
 
   public setImageCard(card, cardForm) {

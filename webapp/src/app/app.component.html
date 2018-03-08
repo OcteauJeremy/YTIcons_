@@ -1,15 +1,15 @@
-<!--<div *ngIf="showPopup">
+<div *ngIf="showPopup">
   <div class="col-md-12 popup-error-metamask">
     <div class="actions-container">
       <span class="popup-text">
-        You need to install <a routerLink="/faq">Metamask</a> to use the full features of this website.
+        You need to install <a routerLink="/faq" [queryParams]="{collapse: '1'}">Metamask</a> to use the full features of this website.
+        <a routerLink="/faq" [queryParams]="{collapse: '1'}"><img src="../assets/images/metamask.png" width="24" height="24" style="margin-left: 6px"></a>
       </span>
-      <button class="btn btn--md btn--round col-md-3"(click)="showPopup = !showPopup">Got it!</button>
+      <!--<button class="btn btn&#45;&#45;md btn&#45;&#45;round col-md-3"(click)="showPopup = !showPopup">Got it!</button>-->
     </div>
-    <img src="../assets/images/metamask.png" width="70" height="70">
   </div>
-</div> -->
-<app-menu></app-menu>
+</div>
+<app-menu [showPopup]="showPopup"></app-menu>
 
 <router-outlet></router-outlet>
 

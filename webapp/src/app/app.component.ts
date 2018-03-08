@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { ToastOptions, ToastsManager } from 'ng2-toastr';
 import { SocketService } from './services/socket.service';
+import {CardService} from "./services/card.service";
 
 declare var jquery: any;
 declare var $: any;
@@ -15,9 +16,9 @@ declare var $: any;
 export class AppComponent implements OnInit, OnDestroy {
 
   private toastManager: ToastsManager;
-  public  showPopup = true;
+  public  showPopup = false;
 
-  constructor(private router: Router, private as: AuthenticationService, private toastr: ToastsManager, private vcr: ViewContainerRef,
+  constructor(private cs: CardService, private router: Router, private as: AuthenticationService, private toastr: ToastsManager, private vcr: ViewContainerRef,
               private socketService: SocketService,
               private app: ApplicationRef, private componentFactoryResolver: ComponentFactoryResolver, private ngZone: NgZone) {
     this.toastr.setRootViewContainerRef(vcr);
@@ -48,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.showPopup = !this.cs.hasMetamask();
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd) {
         $('html,body').animate({ scrollTop: 0 }, 500);

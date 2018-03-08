@@ -2,11 +2,12 @@
   display: flex;
   border-bottom: 1px solid #ececec;
   justify-content: space-around;
-  padding: 15px;
+  padding: 10px;
   background-color: #f6f7fb;
   position: fixed;
   z-index: 999;
   width: 100vw;
+  top:0;
 }
 
 .actions-container {
@@ -17,6 +18,5 @@
 }
 
 .popup-text {
-  font-weight: 700;
-  padding-bottom: 14px;
+  font-weight: 400;
 }
