@@ -391,7 +391,7 @@ exports.getCount = function (req, res) {
 
 exports.setImage = function (req, res) {
 
-    Card.findOne({
+    Card.findById({
         id: req.params.cardId
     }, function (err, card) {
         if (err || !card) {

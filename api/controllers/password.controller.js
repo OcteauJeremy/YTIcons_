@@ -2,6 +2,7 @@ var User = require('../models/user.model');
 var crypto = require('crypto');
 var async = require('async');
 var smtpTransport = require('../configs/nodemailer').transporter;
+const URL = require('../configs/urls');
 
 exports.setNewPassword = function (req, res) {
     if (!req.body.oldPassword || !req.body.newPassword || !req.params.userId) {
@@ -50,54 +51,41 @@ exports.forgotPassword = function (req, res) {
         return res.status(400).send({message: "Wrong parameters."});
     }
 
-    async.waterfall([
-        function(done) {
-            crypto.randomBytes(20, function(err, buf) {
-                var token = buf.toString('hex');
-                done(err, token);
-            });
-        },
-        function(token, done) {
-            User.findOne( {$or: [{ email: req.params.name }, { username: req.params.name}]}, function(err, user) {
-                if (!user) {
-                    return res.status(400).send({message: "User doesn't exist."});
+    crypto.randomBytes(20, function (err, buf) {
+        var token = buf.toString('hex');
+        User.findOne({$or: [{email: req.params.name}, {username: req.params.name}]}).select('email').exec(function (err, user) {
+            if (!user) {
+                return res.status(400).send({message: "User doesn't exist."});
+            }
+
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+            user.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({message: "Some error occurred while performing request."});
                 }
-
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-                user.save(function(err) {
+                var mailOptions = {
+                    to: user.email,
+                    from: 'help@yticons.co',
+                    subject: 'YTIcons Password Reset',
+                    text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    URL.webserver + '/lost-password/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                };
+                smtpTransport.sendMail(mailOptions, function (err) {
                     if (err) {
+                        console.log('/!\\ MAIL not send to ' + user.email + ' with token: ' + user.resetPasswordToken);
                         console.log(err);
-                        return res.status(400).send({message: "Some error occurred while performing request."});
+                        return res.status(400).send({message: "Impossible to send mail"});
                     }
-                    done(err, token, user);
+                    console.log('Finally:', user.resetPasswordToken);
+                    return res.status(200).send({message: 'Email successfully sent to user.'});
                 });
             });
-        },
-        function(token, user, done) {
-            console.log('send mail to', user.email);
-            done(user);
-            var mailOptions = {
-                to: user.email,
-                from: 'help@yticons.co',
-                subject: 'Node.js Password Reset',
-                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                'https://' + req.headers.host + '/lost-password/' + token + '\n\n' +
-                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function(err) {
-                if (err) {
-                    console.log('/!\\ MAIL not send to ' + user.email + ' with token: ' + user.resetPasswordToken);
-                    return res.status(400).send({message: "Impossible to send mail"});
-                }
-                done(err, user);
-            });
-        }
-    ], function (user) {
-        console.log('Finally:', user.resetPasswordToken);
-        return res.status(200).send({message: 'Email successfully sent to user.'});
+        });
     });
 };
 
