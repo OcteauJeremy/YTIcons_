@@ -28,11 +28,12 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   resolved(_captchaResponse: string) {
     let _self = this;
     this.captchaResponse = _captchaResponse;
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      _self.isRobot = false;
-    }, error => {
-      _self.isRobot = true;
-    }));
+    this.isRobot = false;
+    // this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    //   _self.isRobot = false;
+    // }, error => {
+    //   _self.isRobot = true;
+    // }));
   }
 
   ngOnInit() {
@@ -61,12 +62,10 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
     else {
       if (_self.username) {
         _self.isLoading = true;
-        _self.subscriptions.add(_self.authService.lostPassword(_self.username).subscribe(res => {
+        _self.subscriptions.add(_self.authService.lostPassword(_self.username, _self.captchaResponse).subscribe(res => {
           _self.toastr.success('An email has been sent to the email address linked to your account', 'Lost password');
-          setTimeout((router: Router) => {
-            _self._router.navigate(['market']);
-            _self.isLoading = false;
-          }, 3000);
+          _self._router.navigate(['login']);
+          _self.isLoading = false;
         }, error => {
           _self.toastr.error('We could not find you account anywhere.', 'Lost password');
           _self.isLoading = false;

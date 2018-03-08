@@ -4,9 +4,10 @@ var app = require('../server').appServer;
 var User = require('../models/user.model');
 var jwt    = require('jsonwebtoken');
 var request = require('request');
+const URL = require('../configs/urls');
 
 apiRoutes.post('/signin', function (req, res) {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.username || !req.body.password || !req.body.recaptchaRes) {
         return res.status(400).send({message: "Wrong parameters"});
     }
 
@@ -34,10 +35,20 @@ apiRoutes.post('/signin', function (req, res) {
                             console.log(err.message);
                             return res.status(400).send({message: "Some error occurred while using mongoDB."});
                         }
-                        return res.status(200).send(user.safeObj());
+                        validCaptcha(req.body.recaptchaRes, function (valid) {
+                            if (!valid) {
+                                return res.status(400).send({message: "Are you a robot?"});
+                            }
+                            return res.status(200).send(user.safeObj());
+                        });
                     });
                 } else {
-                    return res.status(200).send(user.safeObj());
+                    validCaptcha(req.body.recaptchaRes, function (valid) {
+                        if (!valid) {
+                            return res.status(400).send({message: "Are you a robot?"});
+                        }
+                        return res.status(200).send(user.safeObj());
+                    });
                 }
             });
         } else {
@@ -83,11 +94,12 @@ apiRoutes.get('/token/:token', function (req, res) {
 });
 
 apiRoutes.post('/verifyCaptcha', function (req, res) {
-    if (!req.body.secret || !req.body.response) {
+    if (!req.body.response) {
         return res.status(400).send({message: "Wrong parameters"});
     }
 
-    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + req.body.secret + "&response=" + req.body.response;
+
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + URL.recaptchaPrivate + "&response=" + req.body.response;
 
     request(verificationUrl, function(error,response,body) {
         body = JSON.parse(body);
@@ -99,5 +111,20 @@ apiRoutes.post('/verifyCaptcha', function (req, res) {
     });
 
 });
+
+
+var validCaptcha = function (token, cb) {
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + URL.recaptchaPrivate + "&response=" + token;
+
+    request(verificationUrl, function(error,response,body) {
+        body = JSON.parse(body);
+        // Success will be true or false depending upon captcha validation.
+        if (body.success !== undefined && body.success == true) {
+            cb(true);
+            return ;
+        }
+        cb(false);
+    });
+};
 
 module.exports.authRoutes = apiRoutes;

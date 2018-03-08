@@ -7,6 +7,7 @@ import { ManagerService } from './manager.service';
 import { CookieService } from 'ng2-cookies';
 import { TokenService } from './token.service';
 import {Subscription} from 'rxjs/Subscription';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService extends ManagerService {
@@ -47,8 +48,8 @@ export class AuthenticationService extends ManagerService {
 
   }
 
-  public login(_username: string, _password: string): Observable<any> {
-    return this.post('/signin', {username: _username, password: _password});
+  public login(_username: string, _password: string, _recaptchaRes: string): Observable<any> {
+    return this.post('/signin', {username: _username, password: _password, recaptchaRes: _recaptchaRes});
   }
 
   public async register(_formData: FormData): Promise<any> {
@@ -68,8 +69,8 @@ export class AuthenticationService extends ManagerService {
     return this.post('/newPassword/' + this.currentUser._id, {'oldPassword' : password, 'newPassword' : newPassword});
   }
 
-  public lostPassword(_username: string): Observable<any> {
-    return this.get('/forgotPassword/' + _username);
+  public lostPassword(_username: string, _recaptchaRes: string): Observable<any> {
+    return this.post('/forgotPassword', {username: _username, recaptchaRes: _recaptchaRes});
   }
 
   public getUserByToken(token) {

@@ -7,7 +7,7 @@ module.exports.transporterHelp = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "help@yticons.co",
-        pass: "Axbs5j99WMs9qXKE"
+        pass: "THyc8c8GVMgR4QtF"
     },
     tls: {
         rejectUnauthorized: false

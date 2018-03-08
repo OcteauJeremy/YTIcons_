@@ -67,11 +67,12 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   resolved(_captchaResponse: string) {
     let _self = this;
     this.captchaResponse = _captchaResponse;
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      _self.isRobot = false;
-    }, error => {
-      _self.isRobot = true;
-    }));
+    this.isRobot = false;
+    // this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    //   _self.isRobot = false;
+    // }, error => {
+    //   _self.isRobot = true;
+    // }));
   }
 
   signup() {
@@ -96,6 +97,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
         formData.append('email', _self.email);
         formData.append('username', _self.username);
         formData.append('password', _self.password);
+        formData.append('recaptchaRes', _self.captchaResponse);
         if (_self.wallet) {
           formData.append('wallet', _self.wallet);
         }

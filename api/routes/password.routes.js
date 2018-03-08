@@ -6,7 +6,7 @@ module.exports = function(app) {
 
     app.post('/newPassword/:userId', tokenGuard.verifyToken, passwords.setNewPassword);
 
-    app.get('/forgotPassword/:name', passwords.forgotPassword);
+    app.post('/forgotPassword', passwords.forgotPassword);
 
     app.post('/resetPassword/:token', passwords.resetPassword);
 };

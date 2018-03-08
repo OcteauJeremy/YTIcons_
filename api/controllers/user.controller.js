@@ -4,11 +4,13 @@ var Transaction     = require('../models/transaction.model');
 var uploadOptions   = require('../configs/multer');
 var app     = require('../server').appServer;
 var jwt     = require('jsonwebtoken');
+var request = require('request');
 const fs    = require('fs');
+const URL   = require('../configs/urls');
 
 
 exports.create = function (req, res) {
-    if (!req.body.username || !req.body.email || !req.body.password) {
+    if (!req.body.username || !req.body.email || !req.body.password || !req.body.recaptchaRes) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
@@ -25,9 +27,9 @@ exports.create = function (req, res) {
             if (users[idx].username == req.body.username) usernameError = true;
         }
 
-        if (emailError) return res.status(400).send({message: "Email already in user."});
+        if (emailError) return res.status(400).send({message: "Email already in use."});
 
-        if (usernameError) return res.status(400).send({message: "Username already in user."});
+        if (usernameError) return res.status(400).send({message: "Username already in use."});
 
 
         User.findOne({
@@ -70,13 +72,18 @@ exports.create = function (req, res) {
                 expiresIn: 60 * 24 * 30 * 12
             });
             user.token = token;
-            user.save(function (err) {
-                if (err) {
-                    console.log(err.message);
-                    return res.status(400).send({message: "Some error occurred while creating the User."});
-                } else {
-                    return res.status(200).send(user);
+            validCaptcha(req.body.recaptchaRes, function (valid) {
+                if (!valid) {
+                    return res.status(400).send({message: "Are you a robot?"});
                 }
+                user.save(function (err) {
+                    if (err) {
+                        console.log(err.message);
+                        return res.status(400).send({message: "Some error occurred while creating the User."});
+                    } else {
+                        return res.status(200).send(user);
+                    }
+                });
             });
         });
     });
@@ -218,5 +225,19 @@ exports.getRoot = function (req, res) {
             return res.status(400).send({message: "Could not delete users with id " + req.params.userId});
         }
         return res.status(200).send(user);
+    });
+};
+
+var validCaptcha = function (token, cb) {
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + URL.recaptchaPrivate + "&response=" + token;
+
+    request(verificationUrl, function(error,response,body) {
+        body = JSON.parse(body);
+        // Success will be true or false depending upon captcha validation.
+        if (body.success !== undefined && body.success == true) {
+            cb(true);
+            return ;
+        }
+        cb(false);
     });
 };

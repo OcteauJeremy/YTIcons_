@@ -38,11 +38,13 @@ export class ContactComponent implements OnInit {
   resolved(_captchaResponse: string) {
     let _self = this;
     this.captchaResponse = _captchaResponse;
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
-      _self.isRobot = false;
-    }, error => {
-      _self.isRobot = true;
-    }));
+    this.isRobot = false;
+    this.form.recaptchaRes = this.captchaResponse;
+    // this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    //   _self.isRobot = false;
+    // }, error => {
+    //   _self.isRobot = true;
+    // }));
   }
 
   send() {

@@ -53,11 +53,12 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   resolved(_captchaResponse: string) {
     let _self = this;
     this.captchaResponse = _captchaResponse;
-    this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
       _self.isRobot = false;
-    }, error => {
-      _self.isRobot = true;
-    }));
+    // this.subscriptions.add(this.rs.getRecapatchaResponse(this.captchaResponse).subscribe(res => {
+    //   _self.isRobot = false;
+    // }, error => {
+    //   _self.isRobot = true;
+    // }));
   }
 
   signin() {
@@ -68,7 +69,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
     else {
       this.loadingChannel = true;
-      _self.subscriptions.add(_self.as.login(_self.username, _self.password).subscribe(res => {
+      _self.subscriptions.add(_self.as.login(_self.username, _self.password, _self.captchaResponse).subscribe(res => {
 
         if (_self.rememberMe) {
           localStorage.setItem('yticons-token', res.token);
