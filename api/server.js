@@ -52,6 +52,7 @@ require('./routes/category.route')(app);
 require('./routes/youtube.route')(app);
 require('./routes/leaderboard.route')(app);
 require('./routes/password.routes')(app);
+require('./routes/email.routes')(app);
 
 // Static access
 app.use('/avatar', express.static(__dirname + '/ressources/avatars/default'));

@@ -1,7 +1,6 @@
 var User = require('../models/user.model');
 var crypto = require('crypto');
-var async = require('async');
-var smtpTransport = require('../configs/nodemailer').transporter;
+var smtpTransport = require('../configs/nodemailer').transporterHelp;
 const URL = require('../configs/urls');
 
 exports.setNewPassword = function (req, res) {
@@ -40,7 +39,6 @@ exports.setNewPassword = function (req, res) {
         } else {
             return res.status(400).send({message: "Old password doesn't match."})
         }
-
     });
 
 };

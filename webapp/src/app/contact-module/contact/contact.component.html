@@ -93,7 +93,7 @@
                       </div>
 
                       <div class="form-group">
-                        <textarea  [maxLength]="500" [(ngModel)]="form.text" name="text" cols="30" rows="10" placeholder="Your text here" required></textarea>
+                        <textarea  [maxLength]="500" [(ngModel)]="form.message" name="text" cols="30" rows="10" placeholder="Your text here" required></textarea>
                       </div>
 
                       <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>

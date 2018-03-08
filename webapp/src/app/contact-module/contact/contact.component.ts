@@ -3,6 +3,7 @@ import { environment } from "../../../environments/environment";
 import { RecaptchaService } from "../../services/recaptcha.service";
 import { ToastsManager } from "ng2-toastr";
 import { Subscription } from 'rxjs/Subscription';
+import { EmailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-faq',
@@ -19,11 +20,11 @@ export class ContactComponent implements OnInit {
     subject: 'Subject',
     name: '',
     email: '',
-    text: ''
-  }
+    message: ''
+  };
   private loadingChannel = false;
 
-  constructor(private rs: RecaptchaService,private toastr: ToastsManager) { }
+  constructor(private rs: RecaptchaService,private toastr: ToastsManager, private emailService: EmailService) { }
 
   ngOnInit() {
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
@@ -53,9 +54,17 @@ export class ContactComponent implements OnInit {
     }
     else {
       this.loadingChannel = true;
-      if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.text) {
-        _self.toastr.success('Your message has been successfully sent', 'Contact us');
-        this.loadingChannel = false;
+      if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.message) {
+        this.subscriptions.add(this.emailService.sendMailContact(this.form).subscribe(res => {
+          this.loadingChannel = false;
+          this.form.message = '';
+          this.form.name = '';
+          this.form.email = '';
+          _self.toastr.success('Your message has been successfully sent', 'Contact us');
+        }, error => {
+          this.loadingChannel = false;
+          _self.toastr.error('Mail not send.', 'Contact us');
+        }));
       } else {
         this.loadingChannel = false;
         _self.toastr.error('Please, fill all the fields.', 'Contact us');

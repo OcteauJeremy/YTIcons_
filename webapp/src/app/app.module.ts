@@ -53,6 +53,7 @@ import { RecaptchaModule } from "ng-recaptcha";
 import { RecaptchaService } from "./services/recaptcha.service";
 import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
 import {AnalyticsService} from './services/analytics.service';
+import { EmailService } from './services/email.service';
 
 export class ToastCustomOptions extends ToastOptions {
   animate = 'fade';
@@ -118,6 +119,7 @@ export class ToastCustomOptions extends ToastOptions {
     RecaptchaService,
     AnalyticsService,
     TokenService,
+    EmailService,
     {
       provide: ToastOptions,
       useClass: ToastCustomOptions
