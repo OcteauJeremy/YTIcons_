@@ -22,7 +22,7 @@ export class ContactComponent implements OnInit {
     email: '',
     message: ''
   };
-  private loadingChannel = false;
+  public loadingChannel = false;
 
   constructor(private rs: RecaptchaService,private toastr: ToastsManager, private emailService: EmailService) { }
 
