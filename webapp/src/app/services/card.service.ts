@@ -266,7 +266,7 @@ export class CardService extends ManagerService {
   }
 
   public setImageCard(card, cardForm) {
-    return this.post('/cards/images/' + card.id, cardForm);
+    return this.post('/cards/images/' + card._id, cardForm);
   }
 
   public getCountCards() {
