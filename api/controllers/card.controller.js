@@ -65,11 +65,11 @@ exports.create = function (req, res) {
 
         const options = {
             url: req.body.image,
-            dest: uploadOptions.pathYoutuberUpload + '/' + card.id + '.' + extension
+            dest: uploadOptions.pathYoutuberUpload + '/' + card._id + '.' + extension
         };
 
         download.image(options).then(function (filename, image) {
-            card.image = '/youtuber/' + card.id + '.' + extension;
+            card.image = '/youtuber/' + card._id + '.' + extension;
             saveCard(card);
 
         }).catch(function (err) {
