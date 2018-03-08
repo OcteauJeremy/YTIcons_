@@ -62,7 +62,7 @@ export class AuthenticationService extends ManagerService {
   }
 
   public setNewPassword(password: string, newPassword: string) {
-    console.log(this.currentUser._id);
+    // console.log(this.currentUser._id);
     return this.post('/newPassword/' + this.currentUser._id, {'oldPassword' : password, 'newPassword' : newPassword});
   }
 

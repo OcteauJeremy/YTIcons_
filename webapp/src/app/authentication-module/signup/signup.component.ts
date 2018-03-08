@@ -115,7 +115,6 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   readUrl(event: any) {
     this.fileList = event.target.files;
 
-    console.log(this.fileList);
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 

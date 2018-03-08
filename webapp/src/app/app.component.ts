@@ -39,7 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.socketService.initSocket();
 
     this.socketService.onEvent('live-info').subscribe((tx: any) => {
-      console.log(tx);
       if (tx) {
         this.toastManager.info((tx.to.username != '' ? tx.to.username : 'Anonymous') + ' collect a new Icon for ' +
           tx.price.toFixed(4).toString() + ' ETH', tx.card.name);
