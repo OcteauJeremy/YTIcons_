@@ -149,7 +149,7 @@
 
               <re-captcha (resolved)="resolved($event)" siteKey="{{recaptchaPublic}}"></re-captcha>
 
-              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit" [disabled]="!acceptTos || isRobot">Register Now</button>
+              <button (click)="signup()" class="btn btn--md btn--round register_btn" type="submit" [ladda]="loadingChannel" [disabled]="!acceptTos || isRobot">Register Now</button>
 
               <div class="login_assist">
                 <p>Already have an account? <a (click)="redirect('signin')">Login</a></p>

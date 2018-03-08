@@ -26,6 +26,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
   private isRobot = true;
+  private loadingChannel = false;
 
   constructor(private as: AuthenticationService, private _router: Router,
               public cookieService: CookieService, private toastr: ToastsManager,
@@ -62,11 +63,11 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   signin() {
     const toastr = this.toastr;
     let _self = this;
-
     if (this.isRobot) {
       toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
     }
     else {
+      this.loadingChannel = true;
       _self.subscriptions.add(_self.as.login(_self.username, _self.password).subscribe(res => {
 
         if (_self.rememberMe) {
@@ -78,9 +79,10 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
         //console.log(res);
         _self.as.setCurrentUser(res);
         _self._router.navigate(['account']);
-
+        this.loadingChannel = false;
       }, error => {
         this.toastr.error('The entered credentials are incorrect.', 'Authentication');
+        this.loadingChannel = false;
       }));
     }
   }

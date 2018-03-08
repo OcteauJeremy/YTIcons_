@@ -5,6 +5,7 @@ import { ContactComponent } from './contact/contact.component';
 import {RecaptchaModule} from "ng-recaptcha";
 import {FormsModule} from "@angular/forms";
 import {DirectivesModule} from "../directives/directives.module";
+import { LaddaModule } from 'angular2-ladda';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import {DirectivesModule} from "../directives/directives.module";
     RouterModule,
     RecaptchaModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    LaddaModule
   ],
   declarations: [ContactComponent]
 })

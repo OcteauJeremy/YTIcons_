@@ -21,6 +21,8 @@ export class ContactComponent implements OnInit {
     email: '',
     text: ''
   }
+  private loadingChannel = false;
+
   constructor(private rs: RecaptchaService,private toastr: ToastsManager) { }
 
   ngOnInit() {
@@ -50,9 +52,12 @@ export class ContactComponent implements OnInit {
       toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
     }
     else {
+      this.loadingChannel = true;
       if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.text) {
-
+        _self.toastr.success('Your message has been successfully sent', 'Contact us');
+        this.loadingChannel = false;
       } else {
+        this.loadingChannel = false;
         _self.toastr.error('Please, fill all the fields.', 'Contact us');
       }
     }

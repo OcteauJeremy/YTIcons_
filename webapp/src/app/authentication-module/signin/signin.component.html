@@ -48,7 +48,7 @@
                 </div>
               </div>
 
-              <button class="btn btn--md btn--round" [disabled]="isRobot" type="submit" (click)="signin()">Login Now</button>
+              <button class="btn btn--md btn--round" [ladda]="loadingChannel" [disabled]="isRobot" type="submit" (click)="signin()">Login Now</button>
 
               <div class="login_assist">
                 <p class="recover">Lost your <a routerLink="/lost-password">password</a>?</p>
