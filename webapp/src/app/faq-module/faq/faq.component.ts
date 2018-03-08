@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Params} from "@angular/router";
+
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-faq',
@@ -7,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      $('#collapse' + params['collapse']).collapse('show');
+    });
   }
 
 }

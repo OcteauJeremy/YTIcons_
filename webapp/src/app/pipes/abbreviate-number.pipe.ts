@@ -26,7 +26,7 @@ export class AbbreviateNumberPipe implements PipeTransform {
       var size = Math.pow(10, (i + 1) * 3);
 
       if (size <= number) {
-        number = Math.round(number * decPlaces / size) / decPlaces;
+        number = Math.floor(number * decPlaces / size) / decPlaces;
 
         if ((number === 1000) && (i < this.units.length - 1)) {
           number = 1;

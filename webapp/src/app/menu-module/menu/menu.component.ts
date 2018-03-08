@@ -1,8 +1,9 @@
-import {Component, ElementRef, HostListener, OnDestroy, OnInit, Renderer, Renderer2} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer, Renderer2} from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Renderer3 } from '@angular/core/src/render3/renderer';
+import {Card} from "../../models/Card";
 
 @Component({
   selector: 'app-menu',
@@ -11,6 +12,7 @@ import { Renderer3 } from '@angular/core/src/render3/renderer';
 })
 export class MenuComponent implements OnInit, OnDestroy {
 
+  @Input("showPopup") showPopup: boolean;
   public currentUser = null;
   private subscriptions: Subscription = new Subscription();
 

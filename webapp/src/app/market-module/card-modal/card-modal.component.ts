@@ -44,7 +44,8 @@ export class CardModalComponent implements OnInit, OnDestroy {
       price = card.price;
     }
     this.cs.purchaseCard(card.id, price).then(function(res) {
-      // console.log(res);
+    }, error => {
+      this.toastr.error('You need to install MetaMask to be able to trade cards.', 'Purchase card');
     });
   }
 
