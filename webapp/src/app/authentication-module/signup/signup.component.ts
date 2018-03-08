@@ -31,8 +31,8 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
   public wallet;
-  private isRobot = true;
-  private loadingChannel = false;
+  public isRobot = true;
+  public loadingChannel = false;
 
   public url: string = 'assets/images/authplc.png';
 

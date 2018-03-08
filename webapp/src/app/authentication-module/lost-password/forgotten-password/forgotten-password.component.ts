@@ -20,7 +20,7 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
   private subscriptions: Subscription = new Subscription();
-  private isRobot = true;
+  public isRobot = true;
 
   constructor(private _router: Router, private toastr: ToastsManager, private rs: RecaptchaService, private authService: AuthenticationService) {
   }

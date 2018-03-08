@@ -14,7 +14,7 @@ export class ContactComponent implements OnInit {
   private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
-  private isRobot = true;
+  public isRobot = true;
   public form: any = {
     subject: 'Subject',
     name: '',
