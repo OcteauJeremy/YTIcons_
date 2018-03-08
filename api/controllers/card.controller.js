@@ -63,13 +63,14 @@ exports.create = function (req, res) {
 
         var extension = splitUrl[splitUrl.length - 1].split('.')[1];
 
+        const timestamp = Date.now();
         const options = {
             url: req.body.image,
-            dest: uploadOptions.pathYoutuberUpload + '/' + card._id + '.' + extension
+            dest: uploadOptions.pathYoutuberUpload + '/' + timestamp  + '.' + extension
         };
 
         download.image(options).then(function (filename, image) {
-            card.image = '/youtuber/' + card._id + '.' + extension;
+            card.image = '/youtuber/' + timestamp + '.' + extension;
             saveCard(card);
 
         }).catch(function (err) {
@@ -320,7 +321,6 @@ exports.update = function (req, res) {
                 return res.status(200).send(card);
             });
         };
-
 
         var web3 = require('./web3.controller').web3;
 
