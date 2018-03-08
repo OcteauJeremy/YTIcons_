@@ -1,4 +1,22 @@
 .popup-error-metamask {
   display: flex;
   border-bottom: 1px solid #ececec;
+  justify-content: space-around;
+  padding: 15px;
+  background-color: #f6f7fb;
+  position: fixed;
+  z-index: 999;
+  width: 100vw;
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.popup-text {
+  font-weight: 700;
+  padding-bottom: 14px;
 }

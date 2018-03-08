@@ -13,19 +13,27 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-var corsOptions = {
-    origin: URL.webserver,
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
-app.use(compression());
+// var corsOptions = {
+//     origin: URL.webserver,
+//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+// app.use(cors(corsOptions));
+// app.use( function(req, res, next){
+//     res.header("Access-Control-Allow-Origin", URL.webserver);
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
-app.use( function(req, res, next){
-    res.header("Access-Control-Allow-Origin", URL.webserver);
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept. x-access-token");
     next();
 });
+
+
+app.use(compression());
 
 mongoose.connection.on('error', function () {
     console.log('Could not connect to the database. Exiting now...');
@@ -68,8 +76,6 @@ app.use(function (err, req, res, next) {
 
 var server ;
 if (URL.secureSocket) {
-
-
     var creditentials = {
         key: fs.readFileSync('./ressources/token/privkey.pem'),
         cert: fs.readFileSync('./ressources/token/cert.pem')

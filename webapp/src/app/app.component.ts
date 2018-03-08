@@ -15,6 +15,7 @@ declare var $: any;
 export class AppComponent implements OnInit, OnDestroy {
 
   private toastManager: ToastsManager;
+  public  showPopup = true;
 
   constructor(private router: Router, private as: AuthenticationService, private toastr: ToastsManager, private vcr: ViewContainerRef,
               private socketService: SocketService,

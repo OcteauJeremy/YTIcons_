@@ -9,7 +9,7 @@ export const environment = {
   production: false,
   apiUrl: protocol + 'localhost:6969',
   secureSocket: protocol == "https://",
-  tokenAddress: '0x5491d7FefDb905C05d614C0dc9E1754287096fC0',
+  tokenAddress: '0x635c9c48ce2ff9058a4f22040a3381f8855fc34c',
   recaptchaPublic: '6Ld_fkoUAAAAAMD2oHdp6l6Sl3lICiigExvs5KDm',
   recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M'
 };
