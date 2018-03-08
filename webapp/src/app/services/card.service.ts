@@ -160,7 +160,7 @@ export class CardService extends ManagerService {
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          toastr.success('Your purchase has been successfully done.', 'Transaction');
+          toastr.success('Your purchase is pending on the blockchain.', 'Transaction');
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');

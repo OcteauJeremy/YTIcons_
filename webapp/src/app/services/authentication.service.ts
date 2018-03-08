@@ -29,6 +29,8 @@ export class AuthenticationService extends ManagerService {
         this.currentUser = res;
         this.tokenService.currentUser = this.currentUser;
         this.currentUserChange.next(this.currentUser);
+      }, error => {
+        localStorage.removeItem('yticons-token');
       });
     } else {
       this.currentUser = null;
