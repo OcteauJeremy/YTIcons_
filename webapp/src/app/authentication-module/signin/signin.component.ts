@@ -25,8 +25,8 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
   private subscriptions: Subscription = new Subscription();
   private captchaResponse: string = null;
   public recaptchaPublic: string = environment.recaptchaPublic;
-  private isRobot = true;
-  private loadingChannel = false;
+  public isRobot = true;
+  public loadingChannel = false;
 
   constructor(private as: AuthenticationService, private _router: Router,
               public cookieService: CookieService, private toastr: ToastsManager,
