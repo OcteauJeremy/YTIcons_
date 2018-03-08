@@ -24,7 +24,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   public username: string;
   public password: string;
   public conPassword: string;
-  public emailPattern: string;
+  public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   public acceptTos = false;
   private subscriptions: Subscription = new Subscription();
   public fileList: FileList = null;
@@ -44,7 +44,6 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     let _self = this;
 
-    this.emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
     this.cs.getAccount(true).then(res => {
       _self.wallet = res;
     });
