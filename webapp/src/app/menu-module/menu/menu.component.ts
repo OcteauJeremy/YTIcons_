@@ -14,6 +14,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Input("showPopup") showPopup: boolean;
   public currentUser = null;
+  public hidden = true;
   private subscriptions: Subscription = new Subscription();
 
   constructor(private as: AuthenticationService, public router: Router, private el: ElementRef, private renderer: Renderer2) {
@@ -29,6 +30,9 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   isAuthenticated() {
     this.currentUser = this.as.currentUser;
+    setTimeout(_ => {
+      this.hidden = false;
+    }, 200);
     return this.currentUser ? true : false;
   }
 
