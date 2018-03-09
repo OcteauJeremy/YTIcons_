@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewContainerRef, ViewChild, ElementRef} from '@angular/core';
 import {Card} from "../../models/Card";
 import {CardService} from "../../services/card.service";
 import {AuthenticationService} from "../../services/authentication.service";
@@ -13,6 +13,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class CardModalComponent implements OnInit, OnDestroy {
 
   @Input("card") card: Card;
+  @ViewChild('cardModalCloseButton') cardModalCloseButton: ElementRef;
 
   public currentUser: any;
   public acceptTos = false;
@@ -43,6 +44,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
     if (price < card.price) {
       price = card.price;
     }
+    this.cardModalCloseButton.nativeElement.click();
     this.cs.purchaseCard(card.id, price).then(function(res) {
     }, error => {
       this.toastr.error('You need to install MetaMask to be able to trade cards.', 'Purchase card');
