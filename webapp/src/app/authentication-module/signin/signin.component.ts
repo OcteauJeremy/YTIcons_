@@ -80,7 +80,7 @@ export class SigninComponent implements OnInit, OnDestroy, AfterViewChecked {
         //console.log(res);
         _self.as.setCurrentUser(res);
         _self._router.navigate(['account']);
-        this.loadingChannel = false;
+        // this.loadingChannel = false;
       }, error => {
         this.toastr.error('The entered credentials are incorrect.', 'Authentication');
         this.loadingChannel = false;
