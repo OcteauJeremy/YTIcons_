@@ -43,7 +43,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
 
   purchaseCard(card: Card, price: number) {
     if (price < card.price) {
-      price = card.price;
+      price = this.roundPipe.transform(card.price);
     }
     this.cardModalCloseButton.nativeElement.click();
     this.cs.purchaseCard(card.id, price).then(function(res) {
