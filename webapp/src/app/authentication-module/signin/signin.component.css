@@ -11,3 +11,15 @@
 .custom_checkbox label .label_text {
   margin-left: 7px;
 }
+
+.logs_button {
+  background: #0674ec;
+  color: #fff;
+  padding: 0 17px;
+  display: inline-block;
+  line-height: 34px;
+  border-radius: 21px;
+  font-weight: 500;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}

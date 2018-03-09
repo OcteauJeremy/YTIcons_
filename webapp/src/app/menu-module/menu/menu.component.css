@@ -27,6 +27,10 @@
   transition: 0.3s;
 }
 
+.signup {
+  margin-left: 10px;
+}
+
 .navbar-toggle {
   padding: 9px 0;
 }
