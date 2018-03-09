@@ -12,7 +12,7 @@ var createLeaderboard = function (req, res, wallet) {
     function next(promise) {
         promise.then(function(doc) {
             if (doc) {
-                if (doc.username != "Root") {
+                if (doc.username != "YTIcons") {
                     if (wallet && doc.wallet == wallet) {
                         idWalletUser = doc._id;
                     }
