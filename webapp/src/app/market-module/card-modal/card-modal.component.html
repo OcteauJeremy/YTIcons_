@@ -121,7 +121,6 @@
             <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
             <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
           </div>
-
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
                  placeholder="Enter a price in ETH" [value]="card.price | number: '1.2-4'"required>
         </div>
