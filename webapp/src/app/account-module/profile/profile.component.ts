@@ -24,6 +24,8 @@ export class ProfileComponent implements OnInit {
   private subscriptions: Subscription = new Subscription();
   public address: string = null;
   public userProfile: any;
+  public isLoading: boolean = true;
+  public loadingChannel = false;
 
   public form = {
     password: '',
@@ -79,8 +81,11 @@ export class ProfileComponent implements OnInit {
           }
         }
         _self.cardNumber = _self.cardsUser.length;
+        _self.isLoading = false;
       }));
     }
+    else
+      this.isLoading = false;
   }
 
   refreshWallet() {
@@ -120,11 +125,14 @@ export class ProfileComponent implements OnInit {
       formData.append('currency', _self.as.currentUser.currency);
       formData.append('password', _self.as.currentUser.password);
 
+      this.loadingChannel = true;
       _self.subscriptions.add(_self.us.modifyUserFormData(formData, _self.as.currentUser).subscribe(res => {
         _self.as.setCurrentUser(res);
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
+        this.loadingChannel = false;
       }, error => {
         this.toastr.error('Your picture\'s size is too large, please try with a smaller one.', 'Edit avatar');
+        this.loadingChannel = false;
       }));
     }
 

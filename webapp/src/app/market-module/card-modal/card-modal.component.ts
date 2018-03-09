@@ -4,6 +4,7 @@ import {CardService} from "../../services/card.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ToastsManager} from "ng2-toastr";
 import {Subscription} from 'rxjs/Subscription';
+import {RoundPipe} from "../../pipes/round.pipe";
 
 @Component({
   selector: 'app-card-modal',
@@ -20,7 +21,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
   public newLineTag = "<br />";
   private subscriptions: Subscription = new Subscription();
 
-  constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
+  constructor(private roundPipe: RoundPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
       this.acceptTos = true;
@@ -55,7 +56,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
       this.acceptTos = true;
     }
 
-    this.newPrice = parseFloat(this.card.price.toFixed(4));
+    this.newPrice = this.roundPipe.transform(this.card.price);
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {

@@ -14,7 +14,10 @@
   </div><!-- end /.container -->
 </section>
 
-<section class="author-profile-area">
+<div class="empty-market" *ngIf="isLoading == true">
+  <div class="spinner-rect" style="margin: 100px auto"></div>
+</div>
+<section *ngIf="isLoading == false" class="author-profile-area">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6">
@@ -31,7 +34,7 @@
               <label *ngIf="!address" for="cover_photo" class="upload_btn">
                 <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
                        id="cover_photo">
-                <span class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
+                <span [ladda]="loadingChannel" class="btn btn--sm btn--round" aria-hidden="true">Change avatar</span>
               </label>
               <span *ngIf="!address" data-toggle="modal" data-target="#editPassword" class="btn btn--sm btn--round"
                     aria-hidden="true">Edit password</span>

@@ -10,6 +10,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { PriceChartComponent } from './price-chart/price-chart.component';
 import { CardModalComponent } from './card-modal/card-modal.component';
 import { ManagerService } from '../services/manager.service';
+import {RoundPipe} from "../pipes/round.pipe";
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { ManagerService } from '../services/manager.service';
     CardModalComponent
   ],
   providers: [
-    ManagerService
+    ManagerService,
+    RoundPipe
   ]
 })
 export class MarketModule { }

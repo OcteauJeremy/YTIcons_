@@ -44,6 +44,9 @@
 
         <div class="row">
           <div class="col-md-12">
+            <div class="empty-market" *ngIf="isLoading == true">
+              <div class="spinner-rect"></div>
+            </div>
             <div class="user_area">
               <ul>
                 <li *ngFor="let rank of leaderboard; let i = index" [ngClass]="[i == 0 ? 'first-leaderboard' : '',i == 1 ? 'second-leaderboard' : '',i == 2 ? 'third-leaderboard' : '', i > 2 ? 'default' : '' ]">
