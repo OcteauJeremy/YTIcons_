@@ -94,7 +94,6 @@ export class AdminComponent implements OnInit {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
-      this.formData.append('image', '');
     });
 
     nationalityService.getNationalities().subscribe(res => {
@@ -234,7 +233,8 @@ export class AdminComponent implements OnInit {
     }
 
     if (this.fileYoutuber) {
-      this.formData.set('image', this.fileYoutuber);
+      this.formData.append('image', this.fileYoutuber, this.fileYoutuber.name);
+      this.cardOriginYoutuber.image = "";
       this.cardYoutuber.image = "";
     }
 
@@ -250,7 +250,6 @@ export class AdminComponent implements OnInit {
     this.createLoading = true;
     var createCardSC = function (self) {
       self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
-        console.log('Created card evolutive', cardYT);
         if (self.fileYoutuber) {
           self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
         }
@@ -264,7 +263,6 @@ export class AdminComponent implements OnInit {
           self.cardOriginYoutuber.isHidden = isHidden;
           self.cardOriginYoutuber.isLocked = isLocked;
           self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
-            console.log('Created card origin', cardOrigin);
             self.createLoading = false;
             if (self.fileYoutuber) {
               self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
@@ -272,6 +270,7 @@ export class AdminComponent implements OnInit {
             }
           });
         } else {
+          self.formData = new FormData();
           self.createLoading = false;
         }
       });
@@ -308,9 +307,6 @@ export class AdminComponent implements OnInit {
     } else {
       createCardSC(this);
     }
-
-
-
   }
 
   changeInputCategory() {

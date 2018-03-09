@@ -4,11 +4,11 @@
 }
 
 .about_block {
-  padding: 20px 0px 20px 0px;
+  padding: 30px 0px 30px 0px;
 }
 
 .home {
-  padding: 130px 0px;
+  padding: 160px 0px;
 }
 
 .hook {
@@ -48,15 +48,19 @@
   width:100%;
 }
 
+.cards_block {
+  padding: 10px 0px 10px 0px;
+}
+
 .cards_block, .about_block, .content_block1 {
   min-height: 0px;
 }
 
 .content_block1 {
-  padding: 10px 0px 10px 0px;
+  padding: 30px 0px 30px 0px;
 }
 
-.about_block, .cards_block {
+.about_block, .content_block1 {
   background-color: #f6f7fb;
 }
 
@@ -67,6 +71,9 @@
   padding: 36px 0;
 }
 
+.content_area {
+  text-align: center;
+}
 
 .about_block .content_area .content_area--title .highlight,
 .content_block1 .content_area .content_area--title .highlight,
@@ -94,7 +101,7 @@
 }
 
 .home-text {
-  text-align: justify;
+  text-align: center;
 }
 
 @media (max-width: 767px) {

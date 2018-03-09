@@ -58,7 +58,7 @@ exports.create = function (req, res) {
         });
     };
 
-    if (req.body.image != "") {
+    if (req.body.image && req.body.image != "") {
         var splitUrl = req.body.image.split('/');
 
         var extension = splitUrl[splitUrl.length - 1].split('.')[1];
@@ -390,10 +390,11 @@ exports.getCount = function (req, res) {
 };
 
 exports.setImage = function (req, res) {
+    if (!req.file) {
+        return res.status(400).send({message: "Wrong parameters."});
+    }
 
-    Card.findById({
-        id: req.params.cardId
-    }, function (err, card) {
+    Card.findById(req.params.cardId, function (err, card) {
         if (err || !card) {
             return res.status(400).send({message: "Could not get card by id."});
         }
