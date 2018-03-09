@@ -135,11 +135,6 @@ a {
   background-size: contain;
 }
 
-.card-250k {
-  background: url('../images/cards_background/speciale_250k.png');
-  background-size: contain;
-}
-
 .card-500k {
   background: url('../images/cards_background/speciale_500k.png');
   background-size: contain;
@@ -147,6 +142,11 @@ a {
 
 .card-1m {
   background: url('../images/cards_background/speciale_1M.png');
+  background-size: contain;
+}
+
+.card-5m {
+  background: url('../images/cards_background/speciale_5M.png');
   background-size: contain;
 }
 
