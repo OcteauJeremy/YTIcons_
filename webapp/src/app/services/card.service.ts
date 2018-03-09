@@ -75,14 +75,6 @@ export class CardService extends ManagerService {
     return Promise.resolve(this._account);
   }
 
-  // public async refreshWallet() {
-  //   let _self = this;
-  //   this.getAccount().then(function(res: string) {
-  //     console.log(res);
-  //     _self.http.post('http://localhost:3000/users/' + _self.as.currentUser.wallet, {wallet: res});
-  //   });
-  // }
-
   public async getCardNumberByAddress(account: string): Promise<number> {
 
     return new Promise((resolve, reject) => {
@@ -239,6 +231,7 @@ export class CardService extends ManagerService {
 
         if (!error) {
           card.tx = result;
+          console.log('result', result);
           self.createCard(card).subscribe(res => {
             resolve(res);
           });

@@ -41,3 +41,20 @@
   justify-content: space-around;
   margin-bottom: 24px;
 }
+#ch2 {
+  display: block;
+  margin: 0;
+}
+
+.custom_checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.custom_checkbox label .label_text {
+  margin-left: 7px;
+}
+
+.loader-buttons {
+  margin-top: 10px;
+}

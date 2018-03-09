@@ -8,77 +8,61 @@ exports.create = function (req, res) {
     var card = new Card();
 
     card.fromBody(req.body);
-    card.isHidden = true;
 
     var web3 = require('./web3.controller').web3;
 
-    var saveCard = function (card) {
-        card.id = -1;
-        card.save(function (err, card) {
-            if (err) {
-                console.log(err.message);
-                return res.status(400).send({message: "Some error occurred while creating the Card."});
-            }
+    function checkTx(tx, card) {
+        web3.eth.getTransactionReceipt(tx).then(function (resTx) {
+            if (resTx) {
+                if (resTx.status == 0) {
+                    return res.status(400).send({message: 'Error during the ethereum transaction.'});
+                } else {
 
-            function checkTx(tx, card) {
-                web3.eth.getTransactionReceipt(tx).then(function (resTx) {
-                    if (resTx) {
-                        if (req.body.isHidden == true) {
-                            card.isHidden = true;
-                        } else if (req.body.isHidden == false) {
-                            card.isHidden = false
-                        } else {
-                            card.isHidden = true;
-                        }
+                    function saveCard(card) {
+                        Card.count().exec(function (err, nb) {
+                            if (err) {
+                                return res.status(400).send({message: "Could not reach our database."});
+                            }
+                            console.log('nb', nb);
+                            card.id = nb;
+                            card.save(function (err, result) {
+                                return res.status(200).send(card);
+                            });
+                        });
 
-                        if (resTx.status == 0) {
-                            card.delete(function (err) {
-                                return res.status(400).send({message: 'Error during the ethereum transatcion.'});
-                            });
-                        } else {
-                            Card.count(function (err, count) {
-                                card.id = count - 1;
-                                card.save(function (err, result) {
-                                    return res.status(200).send(card);
-                                });
-                            });
-                        }
-                        //clearTimeout(lastTimeout);
-                    } else {
-                        setTimeout(checkTx, 1000, tx, card);
                     }
-                });
-            }
 
-            if (req.body.tx) {
-                setTimeout(checkTx, 1000, req.body.tx, card);
+                    if (req.body.image && req.body.image != "") {
+                        var splitUrl = req.body.image.split('/');
+
+                        var extension = splitUrl[splitUrl.length - 1].split('.')[1];
+
+                        const timestamp = Date.now();
+                        const options = {
+                            url: req.body.image,
+                            dest: uploadOptions.pathYoutuberUpload + '/' + timestamp + '.' + extension
+                        };
+
+                        download.image(options).then(function (filename, image) {
+                            card.image = '/youtuber/' + timestamp + '.' + extension;
+                            saveCard(card);
+
+                        }).catch(function (err) {
+                            throw err
+                        });
+                    } else {
+                        saveCard(card);
+                    }
+                }
+                //clearTimeout(lastTimeout);
             } else {
-                return res.status(200).send(card);
+                setTimeout(checkTx, 1000, tx, card);
             }
         });
-    };
-
-    if (req.body.image && req.body.image != "") {
-        var splitUrl = req.body.image.split('/');
-
-        var extension = splitUrl[splitUrl.length - 1].split('.')[1];
-
-        const timestamp = Date.now();
-        const options = {
-            url: req.body.image,
-            dest: uploadOptions.pathYoutuberUpload + '/' + timestamp  + '.' + extension
-        };
-
-        download.image(options).then(function (filename, image) {
-            card.image = '/youtuber/' + timestamp + '.' + extension;
-            saveCard(card);
-
-        }).catch(function (err) {
-            throw err
-        });
-    } else {
-        saveCard(card);
     }
+
+    setTimeout(checkTx, 1000, req.body.tx, card);
+
 };
 
 exports.findAll = function (req, res) {

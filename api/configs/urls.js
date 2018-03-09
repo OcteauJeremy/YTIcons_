@@ -16,7 +16,7 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "http://";
     module.exports = {
         port: "6969",
-        tokenAddress: "0x4b88986fdb5f026d05f1b149bebbbb0c76060794",
+        tokenAddress: "0xe22553fbcbe65063ea7587d4be2a515078fb288d",
         secureSocket: protocol == "https://" ? true : false,
         webserver: "http://localhost:4200",
         // websocket: "wss://socket.etherscan.io/wshandler",

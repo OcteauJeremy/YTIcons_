@@ -277,14 +277,21 @@
       <div class="col-md-12">
         <div class="dashboard_title_area">
           <div class="dashboard__title admin_validation">
-            <div class="">
-              <input type="checkbox" id="opt1" class="" name="mail_rating_reminder" [checked] [(ngModel)]="createOrigin" checked>
-              <label for="opt1">
-                <span class="shadow_checkbox"></span>
-                <span class="radio_title">Create Origin</span>
-              </label>
+            <div class="form-group">
+              <div class="custom_checkbox">
+                <input type="checkbox" id="ch2" (change)="createOrigin = !createOrigin" [checked]="createOrigin">
+                <label for="ch2"><span class="label_text label_checkbox">Create origin</span></label>
+              </div>
             </div>
-            <button type="submit" class="btn btn--round btn--md" [ladda]="createLoading" (click)="createCard()">Create card</button>
+            <button type="submit" class="btn btn--round btn--md" [ladda]="evolutiveLoading || originLoading" (click)="createCard()">Create card</button>
+          </div>
+          <div class="dashboard__title admin_validation loader-buttons">
+            <div *ngIf="evolutiveLoading">
+              <button type="submit" class="btn btn--round btn--md" [ladda]="evolutiveLoading">Card evolutive</button>
+            </div>
+            <div *ngIf="originLoading">
+              <button type="submit" class="btn btn--round btn--md" [ladda]="originLoading">Card origin</button>
+            </div>
           </div>
         </div>
       </div>

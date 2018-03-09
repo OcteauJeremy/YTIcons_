@@ -26,6 +26,8 @@ export class AdminComponent implements OnInit {
   public  createOrigin = true;
   public  loadingChannel = false;
   public  createLoading = false;
+  public  evolutiveLoading = false;
+  public  originLoading = false;
   public  formData = new FormData();
   public  responseYoutube = {};
   public  selectInputs = {
@@ -249,31 +251,33 @@ export class AdminComponent implements OnInit {
 
     this.createLoading = true;
     var createCardSC = function (self) {
+      self.evolutiveLoading = true;
       self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
+        self.evolutiveLoading = false;
         if (self.fileYoutuber) {
           self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
         }
-
-        if (self.createOrigin) {
-          var isHidden = self.cardOriginYoutuber.isHidden;
-          var isLocked = self.cardOriginYoutuber.isLocked;
-
-          self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
-          self.cardOriginYoutuber.type = self.getOriginType();
-          self.cardOriginYoutuber.isHidden = isHidden;
-          self.cardOriginYoutuber.isLocked = isLocked;
-          self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
-            self.createLoading = false;
-            if (self.fileYoutuber) {
-              self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
-              });
-            }
-          });
-        } else {
-          self.formData = new FormData();
-          self.createLoading = false;
-        }
       });
+
+      if (self.createOrigin) {
+        var isHidden = self.cardOriginYoutuber.isHidden;
+        var isLocked = self.cardOriginYoutuber.isLocked;
+
+        self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
+        self.cardOriginYoutuber.type = self.getOriginType();
+        self.cardOriginYoutuber.isHidden = isHidden;
+        self.cardOriginYoutuber.isLocked = isLocked;
+        self.originLoading = true;
+        self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
+          self.originLoading = false;
+          if (self.fileYoutuber) {
+            self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
+            });
+          }
+        });
+      } else {
+        self.formData = new FormData();
+      }
     };
 
     this.cardYoutuber.owner = this.rootUser;
