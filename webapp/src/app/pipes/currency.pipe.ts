@@ -3,6 +3,7 @@ import { RealvalueService } from '../services/realvalue.service';
 import { CurrencyService } from '../services/currency.service';
 import { Subscription } from 'rxjs/Subscription';
 import { AuthenticationService } from '../services/authentication.service';
+import {RoundPipe} from "./round.pipe";
 
 @Pipe({
   name: 'currency',
@@ -12,7 +13,7 @@ export class CurrencyPipe implements PipeTransform, OnDestroy {
   public  currentCurrency;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private currencyService: CurrencyService, private realvalueService: RealvalueService, private as:AuthenticationService) {
+  constructor(private roundPipe: RoundPipe, private currencyService: CurrencyService, private realvalueService: RealvalueService, private as:AuthenticationService) {
     this.subscriptions.add(this.currencyService.currencyPipeChange.subscribe((currency) => {
       this.currentCurrency = currency;
     }));
@@ -35,7 +36,7 @@ export class CurrencyPipe implements PipeTransform, OnDestroy {
   }
 
   precisionRoundEth(num) {
-    return num.toFixed(4);
+    return this.roundPipe.transform(num);
   }
 
   precisionRound(num) {

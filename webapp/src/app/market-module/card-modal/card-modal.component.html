@@ -90,7 +90,7 @@
       <div class="modal-footer">
         <button *ngIf="card?.owner?._id == currentUser?._id"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Change price</button>
         <button *ngIf="card?.owner?._id != currentUser?._id"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Buy</button>
-        <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+        <button class="btn btn--round modal_close" data-dismiss="modal" #cardModalCloseButton>Close</button>
       </div>
     </div>
   </div>
@@ -119,10 +119,10 @@
               the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
             <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
             <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
-            <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
+            <p>Actual price : {{card.price | round}} ETH</p>
           </div>
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
-                 placeholder="Enter a price in ETH" [value]="card.price | number: '1.2-4'"required>
+                 placeholder="Enter a price in ETH" [value]="card.price | round"required>
         </div>
       </div><!-- end /.modal-body -->
       <div class="modal-footer-buy">

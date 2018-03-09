@@ -42,8 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socketService.onEvent('live-info').subscribe((tx: any) => {
       if (tx) {
-        // New Purchase
-        // Jeremy collects Squeezie for
         this.toastManager.info((tx.to.username != '' ? tx.to.username : 'Anonymous') + ' collects ' + tx.card.name +  ' for ' +
           tx.price.toFixed(4).toString() + ' ETH');
       }

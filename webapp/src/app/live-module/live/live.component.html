@@ -35,7 +35,7 @@
               <a data-toggle="modal" [attr.data-target]="'#modal-' + tr?.card?.id" style="color: #705fd2;font-weight: 500;">{{tr?.card?.name}}</a>
               from
               <a class="bold" [routerLink]="'/account/' + tr?.from?.wallet">{{tr?.from?.username ? tr?.from?.username : 'Anonymous'}}</a> at
-              <span>{{tr?.price | number: '1.2-4'}} ETH</span><span> - {{tr?.createdAt | timeBetweenLive}} ago</span>
+              <span>{{tr?.price | round}} ETH</span><span> - {{tr?.createdAt | timeBetweenLive}} ago</span>
               <app-card-modal *ngIf="tr?.card" [card]="tr?.card"></app-card-modal>
             </div>
           </div><!-- end /.job_detail_module -->

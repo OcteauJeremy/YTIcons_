@@ -1,9 +1,10 @@
-import {Component, Input, OnDestroy, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewContainerRef, ViewChild, ElementRef} from '@angular/core';
 import {Card} from "../../models/Card";
 import {CardService} from "../../services/card.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ToastsManager} from "ng2-toastr";
 import {Subscription} from 'rxjs/Subscription';
+import {RoundPipe} from "../../pipes/round.pipe";
 
 @Component({
   selector: 'app-card-modal',
@@ -13,6 +14,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class CardModalComponent implements OnInit, OnDestroy {
 
   @Input("card") card: Card;
+  @ViewChild('cardModalCloseButton') cardModalCloseButton: ElementRef;
 
   public currentUser: any;
   public acceptTos = false;
@@ -20,7 +22,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
   public newLineTag = "<br />";
   private subscriptions: Subscription = new Subscription();
 
-  constructor(public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
+  constructor(private roundPipe: RoundPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
       this.acceptTos = true;
@@ -43,6 +45,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
     if (price < card.price) {
       price = card.price;
     }
+    this.cardModalCloseButton.nativeElement.click();
     this.cs.purchaseCard(card.id, price).then(function(res) {
     }, error => {
       this.toastr.error('You need to install MetaMask to be able to trade cards.', 'Purchase card');
@@ -55,7 +58,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
       this.acceptTos = true;
     }
 
-    this.newPrice = parseFloat(this.card.price.toFixed(4));
+    this.newPrice = this.roundPipe.transform(this.card.price);
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {

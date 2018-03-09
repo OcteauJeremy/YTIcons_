@@ -17,3 +17,8 @@ label {
   display: flex;
   justify-content: space-between;
 }
+
+label span, .ladda-label {
+  font-weight: 700!important;
+  color: #ffffff!important;
+}

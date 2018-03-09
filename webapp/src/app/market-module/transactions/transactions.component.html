@@ -13,7 +13,7 @@
       <tbody>
       <tr *ngFor="let tx of transactions">
         <td><a (click)="redirectToUser(tx)" target="_blank" data-dismiss="modal">{{tx?.to?.username == '' ? 'Anonymous' : tx?.to?.username}}</a></td>
-        <td class="bold">{{tx.price.toFixed(4)}}</td>
+        <td class="bold">{{tx.price | round}}</td>
         <td>{{tx.createdAt | date: 'MMM d, y, HH:mm'}}</td>
       </tr>
 

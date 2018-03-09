@@ -5,13 +5,15 @@ import { SettingsComponent } from './settings/settings.component';
 import {MarketModule} from "../market-module/market.module";
 import {FormsModule} from "@angular/forms";
 import {DirectivesModule} from "../directives/directives.module";
+import {LaddaModule} from "angular2-ladda";
 
 @NgModule({
   imports: [
     CommonModule,
     MarketModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    LaddaModule
   ],
   declarations: [
   ProfileComponent,

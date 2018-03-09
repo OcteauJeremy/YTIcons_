@@ -20,6 +20,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   public  ranking;
   private subscriptions: Subscription = new Subscription();
   public currentUser: any;
+  public isLoading: boolean = true;
 
   ngOnInit() {
     let _self = this;
@@ -37,9 +38,11 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
       if (res != null) {
         _self.leaderboard = res.leaderboard;
         _self.ranking = res.ranking;
+        _self.isLoading = false;
       }
     }, error => {
       toastr.error( 'Can\'t get the current leaderboard', 'Leaderboard');
+      _self.isLoading = false;
     }));
   }
 
