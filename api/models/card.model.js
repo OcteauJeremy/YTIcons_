@@ -17,6 +17,7 @@ var CardSchema = mongoose.Schema({
     citation: String,
     price: Number,
     maxPrice: Number,
+    minPrice: Number,
     isLocked: Boolean,
     isHidden: Boolean,
     isVerified: Boolean,

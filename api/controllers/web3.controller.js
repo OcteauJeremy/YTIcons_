@@ -104,6 +104,7 @@ tokenContract.events.YTIconSold({
 
             card.price = web3.utils.fromWei(newPrice);
             card.maxPrice = card.price;
+            card.minPrice = tx.price;
 
             tx.save(function (err, nTx) {
                  if (err) {
