@@ -114,6 +114,8 @@
           <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
           <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
           <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
+          <p *ngIf="card?.owner?._id == currentUser?._id">Min price : {{card.minPrice | number: '1.2-4'}} ETH</p>
+          <p *ngIf="card?.owner?._id == currentUser?._id">Max price : {{card.maxPrice | number: '1.2-4'}} ETH</p>
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
                  placeholder="Enter new price in ETH" [value]="card.price | number: '1.2-4'"required>
         </div>

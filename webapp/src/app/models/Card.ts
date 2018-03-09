@@ -15,6 +15,8 @@ export class Card {
   // public  promo: Promo;
   public  type: Type;
   public  price: number;
+  public  minPrice: number;
+  public  maxPrice: number;
   public  owner;
   public  nbTransactions: any;
   public  nbVideos: any;
