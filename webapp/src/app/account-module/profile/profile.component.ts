@@ -105,15 +105,15 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  refreshAvatar(event:any) {
-    let fileList = event.target.files;
-    let _self = this;
+  refreshAvatar(event: any) {
+    const fileList = event.target.files;
+    const _self = this;
 
     if (fileList && fileList.length > 0) {
 
-      let formData: FormData = new FormData();
-      let file: File = fileList[0];
-      formData.append('avatar',file);
+      const formData: FormData = new FormData();
+      const file: File = fileList[0];
+      formData.append('avatar', file);
       formData.append('username', _self.as.currentUser.username);
       formData.append('email', _self.as.currentUser.email);
       formData.append('wallet', _self.as.currentUser.wallet);
@@ -123,6 +123,8 @@ export class ProfileComponent implements OnInit {
       _self.subscriptions.add(_self.us.modifyUserFormData(formData, _self.as.currentUser).subscribe(res => {
         _self.as.setCurrentUser(res);
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
+      }, error => {
+        this.toastr.error('Your picture\'s size is too large, please try with a smaller one.', 'Edit avatar');
       }));
     }
 
@@ -134,7 +136,7 @@ export class ProfileComponent implements OnInit {
     const _self = this;
 
     if (this.form.conPassword !== this.form.newPassword) {
-      toastr.error('New password must match', 'Edit password');
+      toastr.error('Your passwords must match', 'Edit password');
     }
     else if (this.form.password != '' && this.form.conPassword != ''  && this.form.newPassword != '' ) {
       this.subscriptions.add(this.as.setNewPassword(this.form.password, this.form.conPassword).subscribe(res => {
