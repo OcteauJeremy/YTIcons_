@@ -30,9 +30,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   isAuthenticated() {
     this.currentUser = this.as.currentUser;
-    setTimeout(_ => {
-      this.hidden = false;
-    }, 200);
+    if (this.hidden) {
+      setTimeout(_ => {
+        this.hidden = false;
+      }, 200);
+    }
     return this.currentUser ? true : false;
   }
 
