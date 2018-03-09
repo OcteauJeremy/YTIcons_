@@ -231,11 +231,11 @@ exports.updateWallet = function (req, res) {
 
                 Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
                     txs.forEach(function (tx) {
-                        if (tx.from.toString() == req.currentUser._id.toString()) {
+                        if (tx.from.toString() == userTmp._id.toString()) {
                             tx.from = req.currentUser._id;
                         }
 
-                        if (tx.to.toString() == req.currentUser._id.toString()) {
+                        if (tx.to.toString() == userTmp._id.toString()) {
                             tx.to = req.currentUser._id;
                         }
 
