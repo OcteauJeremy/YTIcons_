@@ -161,7 +161,7 @@ export class CardService extends ManagerService {
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
-          toastr.success('Your transaction has been sent.', 'Transaction');
+          toastr.success('Your purchase is now pending on the Blockchain.', 'Transaction');
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');
@@ -179,7 +179,7 @@ export class CardService extends ManagerService {
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
       if (account != _walletCard) {
-        toastr.error('The wallet on Metamask is not the same as the card holder', 'Price modification');
+        toastr.error('You can only change the YTIcon\'s price if you are the card holder', 'Price modification');
         resolve(0);
       }
       else {
@@ -189,7 +189,7 @@ export class CardService extends ManagerService {
           value: 0
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
-            toastr.success('The price of your YTIcon has been successfully modified.', 'Price modification');
+            toastr.success('The price modification of your YTIcon is now pending on the Blockchain.', 'Price modification');
             resolve(1);
           } else {
             toastr.error('Your YTIcon\'s price modification has failed.', 'Price modification');

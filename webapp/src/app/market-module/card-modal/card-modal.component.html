@@ -104,18 +104,26 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
           aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="">Bid for {{card.name}}</h3>
+        <h3 *ngIf="card?.owner?._id == currentUser?._id" class="modal-title">Set a new price for {{card.name}}</h3>
+        <h3 *ngIf="card?.owner?._id != currentUser?._id" class="modal-title">Bid for {{card.name}}</h3>
       </div>
 
       <div class="modal-body">
         <div class="col-md-12 col-sm-12 col-xs-12 justify">
-          <p>During busy periods, it is possible that many users attempt to get the YTIcon you desire. As transactions on the Blockchain take time to be validated,
-            the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
-          <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
-          <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
-          <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
+          <div *ngIf="card?.owner?._id == currentUser?._id">
+            <p>As transactions on the Blockchain take time to be validated, it is possible that users attempted to buy your YTIcon before its price modification.</p>
+            <p>If it has been bought before your adjustment, then your request will not be taken into account.</p>
+          </div>
+          <div *ngIf="card?.owner?._id != currentUser?._id">
+            <p>During busy periods, it is possible that many users attempt to get the YTIcon you desire. As transactions on the Blockchain take time to be validated,
+              the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
+            <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
+            <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
+            <p>Actual price : {{card.price | number: '1.2-4'}} ETH</p>
+          </div>
+
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
-                 placeholder="Enter new price in ETH" [value]="card.price | number: '1.2-4'"required>
+                 placeholder="Enter a price in ETH" [value]="card.price | number: '1.2-4'"required>
         </div>
       </div><!-- end /.modal-body -->
       <div class="modal-footer-buy">
