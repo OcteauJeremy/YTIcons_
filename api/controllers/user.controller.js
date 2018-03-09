@@ -10,7 +10,8 @@ const URL   = require('../configs/urls');
 
 
 exports.create = function (req, res) {
-    if (!req.body.username || !req.body.email || !req.body.password || !req.body.recaptchaRes) {
+    if (!req.body.username || !req.body.email || !req.body.password || !req.body.recaptchaRes ||
+        req.body.username.length < 4 || req.body.password.length < 6) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
@@ -124,7 +125,7 @@ exports.findByWallet = function (req, res) {
 
 exports.update = function (req, res) {
 
-    if (req.currentUser.id != req.params.userId && req.currentUser.roles.indexOf('admin') == -1) {
+    if (req.currentUser._id != req.params.userId && req.currentUser.roles.indexOf('admin') == -1) {
         return res.status(403).send({ auth: false, message: 'Non authorized.' });
     }
 
@@ -195,16 +196,67 @@ exports.update = function (req, res) {
                                tx.save();
                             });
                        });
-                       userTmp.remove();
+                       console.log(userTmp);
+                       userTmp.remove(function (err) {
+                           console.log('REMOOOOOOOOOVED', err);
+                       });
                        //userTmp.delete();
                    }
                 });
             }
-
             user.wallet = req.body.wallet;
             modifiedUser(user);
         });
     });
+};
+
+exports.updateWallet = function (req, res) {
+    if (req.currentUser._id != req.body.userId && req.currentUser.roles.indexOf('admin') == -1) {
+        return res.status(403).send({ auth: false, message: 'Non authorized.' });
+    }
+
+    if (!req.body.wallet) {
+        return res.status(400).send({message: "Wrong parameters."});
+    }
+
+    User.find({wallet: req.body.wallet}, function (err, fUsers) {
+        fUsers.forEach(function (userTmp) {
+            if (userTmp.username == '') {
+                Card.find({owner: userTmp._id}, function (err, cards) {
+                    cards.forEach(function (card) {
+                        card.owner = req.currentUser._id;
+                        card.save();
+                    });
+                });
+
+                Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
+                    txs.forEach(function (tx) {
+                        if (tx.from.toString() == req.currentUser._id.toString()) {
+                            tx.from = req.currentUser._id;
+                        }
+
+                        if (tx.to.toString() == req.currentUser._id.toString()) {
+                            tx.to = req.currentUser._id;
+                        }
+
+                        tx.save();
+                    });
+                });
+                userTmp.remove(function (err) {});
+            } else {
+                return res.status(400).send({message: "An account already use this wallet"});
+            }
+        });
+
+        req.currentUser.wallet = req.body.wallet;
+        req.currentUser.save(function (err) {
+            if (err) {
+                return res.status(400).send({message: "Could not update Wallet."});
+            }
+            return res.status(200).send(req.currentUser);
+        });
+    });
+
 };
 
 exports.delete = function (req, res) {

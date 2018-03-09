@@ -31,4 +31,8 @@ export class UserService extends ManagerService {
     return this.get('/users/root');
   }
 
+  updateWallet(user) {
+    return this.post('/users/wallet', {userId: user._id, wallet: user.wallet});
+  }
+
 }

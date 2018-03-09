@@ -30,9 +30,9 @@ User.findOne({
 
     if (!user) {
         var user = new User();
-        user.username = 'Root';
+        user.username = 'YTIcons';
         user.password = user.generateHash('HBstk5AaASChsy6V');
-        user.email = 'root@yticons.com';
+        user.email = 'yticons@yticons.com';
         user.wallet = '0x0000000000000000000000000000000000000000';
         user.avatar = user.avatar = uploadOptions.pathAvatarUrl + '/anonymous.jpg';
 
@@ -41,7 +41,7 @@ User.findOne({
                 console.log(err);
                 return ;
             }
-            console.log('User Root created')
+            console.log('User YTIcons created')
         })
     }
 });

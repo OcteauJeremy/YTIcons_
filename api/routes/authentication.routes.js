@@ -22,7 +22,6 @@ apiRoutes.post('/signin', function (req, res) {
             return res.status(400).send({message: "Some error occurred while using mongoDB."});
         }
 
-        //TODO: GENERATE TOKEN
         if (user.validPassword(req.body.password)) {
             jwt.verify(user.token, app.get('superSecret'), function(err, decoded) {
                 if (err) {

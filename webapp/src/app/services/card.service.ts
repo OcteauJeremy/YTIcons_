@@ -240,7 +240,7 @@ export class CardService extends ManagerService {
         if (!error) {
           card.tx = result;
           self.createCard(card).subscribe(res => {
-            resolve(card);
+            resolve(res);
           });
         } else {
           toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');

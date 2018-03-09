@@ -92,7 +92,7 @@ export class ProfileComponent implements OnInit {
       if (_self.as.currentUser.wallet != res) {
         let save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;
-        _self.subscriptions.add(_self.us.modifyUser(_self.as.currentUser).subscribe(res => {
+        _self.subscriptions.add(_self.us.updateWallet(_self.as.currentUser).subscribe(res => {
           if (res != null) {
             _self.as.setCurrentUser(res);
             _self.refreshProfileInfo(_self.as.currentUser.wallet);
