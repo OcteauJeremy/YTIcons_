@@ -16,7 +16,7 @@ li {
 }
 
 .row-terminal {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .caret-terminal {
@@ -34,7 +34,9 @@ li {
 
 .spinner {
   width: 20px;
+  margin-top: -10px;
   height: 20px;
+  margin-bottom: 16px;
   background-color: #2680ee;
 
   border-radius: 100%;
