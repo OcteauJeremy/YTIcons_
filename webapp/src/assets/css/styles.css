@@ -254,7 +254,7 @@ a {
   }
 }
 
-label span, .ladda-label {
+.ladda-label {
   font-weight: 700!important;
   color: #ffffff!important;
 }
