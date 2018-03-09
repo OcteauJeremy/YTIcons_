@@ -69,7 +69,7 @@ app.use('/youtuber', express.static(__dirname + '/ressources/youtuber/images'));
 
 app.use(function (err, req, res, next) {
     if (err.code === 'LIMIT_FILE_SIZE') {
-        return res.status(400).send({message: 'File is too big' });
+        return res.status(400).send({message: 'The file you tried to upload is too big.' });
     }
     // Handle any other errors
 });

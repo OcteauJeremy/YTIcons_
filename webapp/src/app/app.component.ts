@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
       maxShown: 3,
       messageClass: '',
       titleClass: '',
-      toastLife: 3000
+      toastLife: 4000
     };
     this.toastManager = new ToastsManager(this.componentFactoryResolver, this.ngZone, this.app, options);
     this.toastManager.setRootViewContainerRef(vcr);
@@ -42,8 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.socketService.onEvent('live-info').subscribe((tx: any) => {
       if (tx) {
-        this.toastManager.info((tx.to.username != '' ? tx.to.username : 'Anonymous') + ' collect a new Icon for ' +
-          tx.price.toFixed(4).toString() + ' ETH', tx.card.name);
+        this.toastManager.info((tx.to.username != '' ? tx.to.username : 'Anonymous') + ' collects ' + tx.card.name +  ' for ' +
+          tx.price.toFixed(4).toString() + ' ETH');
       }
     });
   }
