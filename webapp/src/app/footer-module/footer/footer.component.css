@@ -10,3 +10,37 @@
 .info__logo {
   max-width: 110px;
 }
+
+.social.social--color--filled {
+  width: 100%;
+}
+
+.social.social--color--filled ul {
+  float: left;
+}
+
+.hidden-resp {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .footer-menu {
+    text-align: left;
+  }
+
+  h4 {
+    font-size: 19px;
+  }
+
+  .yticons-compl-infos {
+    display: none;
+  }
+
+  .hidden-resp {
+    display: block;
+  }
+
+  .footer-menu {
+    margin-bottom: 0px;
+  }
+}
