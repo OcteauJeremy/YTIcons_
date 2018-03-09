@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 
 module.exports.transporterHelp = nodemailer.createTransport({
-    host: '212.47.252.22',
-    // host: 'postfixadmin.yticons.co',
+    // host: '212.47.252.22',
+    host: 'mail.yticons.co',
     port: 587,
     secure: false,
     auth: {
@@ -15,8 +15,8 @@ module.exports.transporterHelp = nodemailer.createTransport({
 });
 
 module.exports.transporterContact = nodemailer.createTransport({
-    host: '212.47.252.22',
-    // host: 'postfixadmin.yticons.co',
+    // host: '212.47.252.22',
+    host: 'mail.yticons.co',
     port: 587,
     secure: false,
     auth: {

@@ -13,8 +13,16 @@ var io = require('socket.io').listen(server);
 
 var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
 
+web3.eth.currentProvider.on('end', function (res) {
+   console.log('--- Dropped by Infura ---');
+   web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
+   web3.eth.net.getId().then(function (id) {
+       console.log('- Blockchain ID -->', id);
+   });
+});
+
 web3.eth.net.getId().then(function (id) {
-    console.log('ID network chain', id);
+    console.log('- Blockchain ID -->', id);
 });
 
 var tokenContract = new web3.eth.Contract(tokenAbi, URL.tokenAddress);
@@ -187,15 +195,23 @@ var populateCard = function (mongooseObj) {
     return mongooseObj;
 };
 
+// // maintain connection
+// const subscription = web3.eth.subscribe('newBlockHeaders', function(error, blockHeader) {
+//     if (error) return console.error(error);
+//
+//     // console.log('Successfully subscribed!', blockHeader);
+// }).on('data', function(blockHeader) {
+//     console.log('data nbh: ', blockHeader);
+// });
 
-// maintain connection
-const subscription = web3.eth.subscribe('newBlockHeaders', function(error, blockHeader) {
-    if (error) return console.error(error);
+// const subscription = web3.eth.subscribe('pendingTransactions', function(error, blockHeader) {
+//     if (error) return console.error(error);
+//     // console.log('Successfully subscribed!', blockHeader);
+// }).on('data', function(blockHeader) {
+//     // console.log('data ptx: ', blockHeader);
+// });
 
-    //console.log('Successfully subscribed!', blockHeader);
-}).on('data', function(blockHeader) {
-    // console.log('data: ', blockHeader);
-});
+
 
 io.on('connection', function(socket){
     socket.on('disconnect', function(){
