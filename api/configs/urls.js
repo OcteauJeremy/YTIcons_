@@ -20,7 +20,7 @@ if (process.env.ENVIRONMENT == "prod") {
         secureSocket: protocol == "https://" ? true : false,
         webserver: "http://localhost:4200",
         // websocket: "wss://socket.etherscan.io/wshandler",
-        websocket: "wss://ropsten.infura.io/ws",
+        websocket: "ws://127.0.0.1:8546",
         mongodb: "mongodb://jeremy:yticons2018LB@ds241658.mlab.com:41658/yticons",
         recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M'
     };
