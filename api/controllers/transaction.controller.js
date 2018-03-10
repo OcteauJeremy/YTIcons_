@@ -85,6 +85,23 @@ exports.findOne = function (req, res) {
     });
 };
 
+exports.listenTx = function (req, res) {
+    function checkTx(txHash, card) {
+        web3.eth.getTransactionReceipt(txHash).then(function (resTx) {
+            if (resTx) {
+                if (resTx.status == 0) {
+                    return res.status(400).send({message: 'Error during the ethereum transaction.'});
+                } else {
+                    return res.status(200).send({message: 'Transaction successfull.'});
+                }
+            } else {
+                setTimeout(checkTx, 2000, txHash);
+            }
+        });
+    }
+    setTimeout(checkTx, 2000, req.params.txHash);
+};
+
 var populateItem = function (findObj) {
     findObj.populate("from").populate("to").populate({
         path: "card",

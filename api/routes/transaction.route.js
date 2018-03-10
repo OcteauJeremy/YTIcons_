@@ -9,5 +9,7 @@ module.exports = function(app) {
 
     app.get('/transactions/last', transactions.getLastTransactions);
 
+    app.get('/transactions/listen/:txHash', transactions.listenTx);
+
     //app.get('/transactions/:transactionId', transactions.findOne);
 };
