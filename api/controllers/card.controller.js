@@ -13,6 +13,7 @@ exports.create = function (req, res) {
 
     function checkTx(tx, card) {
         web3.eth.getTransactionReceipt(tx).then(function (resTx) {
+            console.log(resTx);
             if (resTx) {
                 if (resTx.status == 0) {
                     return res.status(400).send({message: 'Error during the ethereum transaction.'});

@@ -4,7 +4,7 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "https://";
     module.exports = {
         port: "8443",
-        tokenAddress: "0x6b60b0d656b176719cd72bc0a731dd373083cb23",
+        tokenAddress: "0xe3b3dae73d124f82023ee125f9089d30ed449e36",
         secureSocket: protocol == "https://" ? true : false,
         webserver: protocol + "yticons.co",
         // websocket: "wss://socket.etherscan.io/wshandler",
@@ -16,7 +16,7 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "http://";
     module.exports = {
         port: "6969",
-        tokenAddress: "0x2e4d56fbb6e3dfaa4108b5a7ba298b847ad514b8",
+        tokenAddress: "0x09753c642d924be1238e83ca81c86c19b774f1d0",
         secureSocket: protocol == "https://" ? true : false,
         webserver: "http://localhost:4200",
         // websocket: "wss://socket.etherscan.io/wshandler",
