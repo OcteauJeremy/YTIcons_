@@ -207,18 +207,19 @@ var populateCard = function (mongooseObj) {
 // maintain connection
 // const subscription = web3.eth.subscribe('newBlockHeaders', function(error, blockHeader) {
 //     if (error) return console.error(error);
-//
+//     // console.log(blockHeader.transactionsRoot);
 //     // console.log('Successfully subscribed!', blockHeader);
 // }).on('data', function(blockHeader) {
-//     console.log('data nbh: ', blockHeader);
+//     // console.log(blockHeader);
+//     // console.log('data nbh: ', blockHeader);
 // });
 
-const subscription = web3.eth.subscribe('pendingTransactions', function(error, blockHeader) {
-    if (error) return console.error(error);
-    // console.log('Successfully subscribed!', blockHeader);
-}).on('data', function(blockHeader) {
-    // console.log('data ptx: ', blockHeader);
-});
+// const subscription = web3.eth.subscribe('pendingTransactions', function(error, blockHeader) {
+//     if (error) return console.error(error);
+// // console.log('Successfully subscribed!', blockHeader);
+// }).on('data', function(blockHeader) {
+//     console.log('data ptx: ', new Date().toISOString(), blockHeader);
+// });
 
 
 
@@ -226,5 +227,3 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
     });
 });
-
-

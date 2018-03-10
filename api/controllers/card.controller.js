@@ -12,6 +12,9 @@ exports.create = function (req, res) {
     var web3 = require('./web3.controller').web3;
 
     function checkTx(tx, card) {
+        var subscription = web3.eth.subscribe("newBlockHeaders", function () {
+
+        });
         web3.eth.getTransactionReceipt(tx).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {
@@ -465,4 +468,3 @@ var populateItem = function (findObj, req) {
     });
     return findObj;
 };
-
