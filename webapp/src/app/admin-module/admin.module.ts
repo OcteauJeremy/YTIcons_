@@ -6,13 +6,15 @@ import { MarketModule } from '../market-module/market.module';
 import { LaddaModule } from 'angular2-ladda';
 import { ListCardsComponent } from './list-cards/list-cards.component';
 import { ManagerService } from '../services/manager.service';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MarketModule,
-    LaddaModule
+    LaddaModule,
+    PipesModule
   ],
   declarations: [AdminComponent, ListCardsComponent],
   providers: [
