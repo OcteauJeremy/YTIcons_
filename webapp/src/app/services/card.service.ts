@@ -223,7 +223,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       let self = this;
 
-      this._tokenContract.methods.createCard(card.name, card.price, card.ownerWallet, card.beneficiaryWallet, card.isLocked).send({
+      this._tokenContract.methods.createCard(card.name, this._web3.utils.toWei(card.price.toString(), 'ether'), card.ownerWallet, card.beneficiaryWallet, card.isLocked).send({
         from: account,
         gas: 4000000,
         value: 0
