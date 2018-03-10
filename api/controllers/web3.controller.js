@@ -27,14 +27,6 @@ web3.eth.net.getId().then(function (id) {
 
 var tokenContract = new web3.eth.Contract(tokenAbi, URL.tokenAddress);
 
-tokenContract.events.allEvents(function (err, event) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log(event);
-});
-
 // Create User Root
 User.findOne({
     wallet: '0x0000000000000000000000000000000000000000'
@@ -191,7 +183,6 @@ tokenContract.events.YTIconSold({
     });
 });
 
-
 var populateCard = function (mongooseObj) {
     mongooseObj.populate('type').populate('category').populate('owner').populate('nationality').populate({
         path: 'transactions',
@@ -213,15 +204,6 @@ var populateCard = function (mongooseObj) {
 //     // console.log(blockHeader);
 //     // console.log('data nbh: ', blockHeader);
 // });
-
-// const subscription = web3.eth.subscribe('pendingTransactions', function(error, blockHeader) {
-//     if (error) return console.error(error);
-// // console.log('Successfully subscribed!', blockHeader);
-// }).on('data', function(blockHeader) {
-//     console.log('data ptx: ', new Date().toISOString(), blockHeader);
-// });
-
-
 
 io.on('connection', function(socket){
     socket.on('disconnect', function(){
