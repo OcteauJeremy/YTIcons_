@@ -52,7 +52,7 @@ exports.forgotPassword = function (req, res) {
 
     crypto.randomBytes(20, function (err, buf) {
         var token = buf.toString('hex');
-        User.findOne({$or: [{email: req.body.username}, {username: req.body.username}]}).select('email').exec(function (err, user) {
+        User.findOne({$or: [{email: req.body.username}, {username_lower: req.body.username.toLowerCase()}]}).select('email').exec(function (err, user) {
             if (!user) {
                 return res.status(400).send({message: "User doesn't exist."});
             }

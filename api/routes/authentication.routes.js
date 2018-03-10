@@ -12,7 +12,6 @@ apiRoutes.post('/signin', function (req, res) {
     }
 
     var connectionFunction = function (err, user) {
-
         if (!user) {
             return res.status(400).send({message: "Wrong credentials."});
         }
@@ -61,8 +60,8 @@ apiRoutes.post('/signin', function (req, res) {
         }).select('_id password username email roles currency avatar wallet token createdAt updatedAt').exec(connectionFunction);
     } else {
         User.findOne({
-            username: req.body.username
-        }).select('_id password username email roles currency avatar wallet token createdAt updatedAt').exec(connectionFunction);
+            username_lower: req.body.username.toLowerCase()
+        }).select('_id password username_lower username email roles currency avatar wallet token createdAt updatedAt').exec(connectionFunction);
     }
 });
 

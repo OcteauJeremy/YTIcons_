@@ -15,7 +15,7 @@ exports.create = function (req, res) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
-    User.find({ $or: [ {username: req.body.username}, {email: req.body.email}]}).select('email').exec(function (err, users) {
+    User.find({ $or: [ {username_lower: req.body.username.toLowerCase()}, {email: req.body.email}]}).select('email').exec(function (err, users) {
         if (err) {
             return res.status(400).send({message: "Error during mongoDB transaction."});
         }
@@ -25,7 +25,7 @@ exports.create = function (req, res) {
         for (var idx = 0; idx < users.length; idx++) {
             if (users[idx].email == req.body.email) emailError = true;
 
-            if (users[idx].username == req.body.username) usernameError = true;
+            if (users[idx].username_lower == req.body.username.toLowerCase()) usernameError = true;
         }
 
         if (emailError) return res.status(400).send({message: "Email already in use."});
@@ -54,6 +54,7 @@ exports.create = function (req, res) {
             }
 
             user.username = req.body.username;
+            user.username_lower = user.username.toLowerCase();
             user.email = req.body.email;
             user.password = user.generateHash(req.body.password);
 

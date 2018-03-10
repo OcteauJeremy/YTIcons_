@@ -4,6 +4,7 @@ var uploadOptions   = require('../configs/multer');
 
 var UserSchema = mongoose.Schema({
     username: String,
+    username_lower: String,
     email: {type: String, select: false},
     password: {type: String, select: false},
     roles: [String],
@@ -44,6 +45,7 @@ UserSchema.methods.validPassword = function (password) {
 
 UserSchema.methods.initValues = function() {
     this.username = "";
+    this.username_lower = "";
     this.email = "";
     this.password = "";
     this.roles = ["user"];

@@ -39,6 +39,7 @@ User.findOne({
     if (!user) {
         var user = new User();
         user.username = 'YTIcons';
+        user.username_lower = user.username.toLowerCase();
         user.password = user.generateHash('HBstk5AaASChsy6V');
         user.email = 'yticons@yticons.com';
         user.wallet = '0x0000000000000000000000000000000000000000';
