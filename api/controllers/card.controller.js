@@ -19,17 +19,48 @@ exports.create = function (req, res) {
                 } else {
 
                     function saveCard(card) {
+                        if (req.body.beneficiaryWallet) {
+                            card.beneficiaryWallet = req.body.beneficiaryWallet;
+                        }
+
                         Card.count().exec(function (err, nb) {
                             if (err) {
                                 return res.status(400).send({message: "Could not reach our database."});
                             }
-                            console.log('nb', nb);
                             card.id = nb;
                             card.save(function (err, result) {
                                 return res.status(200).send(card);
                             });
                         });
 
+                    }
+
+                    function linkOwner(card) {
+                        if (req.body.ownerWallet && req.body.ownerWallet != "") {
+                            User.findOne({wallet: req.body.ownerWallet}).exec(function (err, user) {
+                                if (err) {
+                                    return res.status(400).send({message: "Could not reach our database."});
+                                }
+                                if (user) {
+                                    card.owner = user;
+                                    saveCard(card);
+                                } else {
+                                    user = new User();
+
+                                    user.initValues();
+                                    user.wallet = req.body.ownerWallet;
+                                    user.save(function (err, nUser) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        card.owner = nUser;
+                                        saveCard(card);
+                                    })
+                                }
+                            });
+                        } else {
+                            saveCard(card);
+                        }
                     }
 
                     if (req.body.image && req.body.image != "") {
@@ -45,13 +76,13 @@ exports.create = function (req, res) {
 
                         download.image(options).then(function (filename, image) {
                             card.image = '/youtuber/' + timestamp + '.' + extension;
-                            saveCard(card);
+                            linkOwner(card);
 
                         }).catch(function (err) {
                             throw err
                         });
                     } else {
-                        saveCard(card);
+                        linkOwner(card);
                     }
                 }
                 //clearTimeout(lastTimeout);

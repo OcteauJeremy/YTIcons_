@@ -223,7 +223,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       let self = this;
 
-      this._tokenContract.methods.createCard(card.name, card.price, null, null, card.isLocked).send({
+      this._tokenContract.methods.createCard(card.name, card.price, card.ownerWallet, card.beneficiaryWallet, card.isLocked).send({
         from: account,
         gas: 4000000,
         value: 0
@@ -231,12 +231,14 @@ export class CardService extends ManagerService {
 
         if (!error) {
           card.tx = result;
-          console.log('result', result);
           self.createCard(card).subscribe(res => {
             resolve(res);
+          }, error => {
+            toastr.error('Transaction failed.');
+            resolve(null);
           });
         } else {
-          toastr.success('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
+          toastr.error('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
           resolve(null);
         }
       });

@@ -58,6 +58,8 @@ export class AdminComponent implements OnInit {
     citation: "",
     price: 0.001,
     owner: null,
+    ownerWallet: null,
+    beneficiaryWallet: null,
     type: {
       name: "origin",
       css: "card-origin"
@@ -81,6 +83,8 @@ export class AdminComponent implements OnInit {
     citation: "",
     price: 0.001,
     owner: null,
+    ownerWallet: null,
+    beneficiaryWallet: null,
     type: {
       name: "origin",
       css: "card-origin"
@@ -111,6 +115,8 @@ export class AdminComponent implements OnInit {
       this.cardYoutuber.owner = this.rootUser;
       this.cardOriginYoutuber.owner = this.rootUser;
     });
+
+    this.formData.append('image', '');
   }
 
   ngOnInit() {
@@ -235,7 +241,7 @@ export class AdminComponent implements OnInit {
     }
 
     if (this.fileYoutuber) {
-      this.formData.append('image', this.fileYoutuber, this.fileYoutuber.name);
+      this.formData.set('image', this.fileYoutuber, this.fileYoutuber.name);
       this.cardOriginYoutuber.image = "";
       this.cardYoutuber.image = "";
     }
@@ -254,30 +260,35 @@ export class AdminComponent implements OnInit {
       self.evolutiveLoading = true;
       self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
         self.evolutiveLoading = false;
-        if (self.fileYoutuber) {
+        if (cardYT && self.fileYoutuber) {
           self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
         }
       });
 
       if (self.createOrigin) {
-        var isHidden = self.cardOriginYoutuber.isHidden;
-        var isLocked = self.cardOriginYoutuber.isLocked;
+        const isHidden = self.cardOriginYoutuber.isHidden;
+        const isLocked = self.cardOriginYoutuber.isLocked;
+        const ownerWallet = self.cardOriginYoutuber.ownerWallet;
+        const beneficiaryWallet = self.cardOriginYoutuber.beneficiaryWallet;
 
         self.cardOriginYoutuber = JSON.parse(JSON.stringify(self.cardYoutuber));
         self.cardOriginYoutuber.type = self.getOriginType();
+
         self.cardOriginYoutuber.isHidden = isHidden;
         self.cardOriginYoutuber.isLocked = isLocked;
+        self.cardOriginYoutuber.ownerWallet = ownerWallet;
+        self.cardOriginYoutuber.beneficiaryWallet = beneficiaryWallet;
+
         self.originLoading = true;
         self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
           self.originLoading = false;
-          if (self.fileYoutuber) {
+          if (cardOrigin && self.fileYoutuber) {
             self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
             });
           }
         });
-      } else {
-        self.formData = new FormData();
       }
+
     };
 
     this.cardYoutuber.owner = this.rootUser;

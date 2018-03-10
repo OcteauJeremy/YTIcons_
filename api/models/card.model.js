@@ -17,6 +17,7 @@ var CardSchema = mongoose.Schema({
     citation: String,
     price: Number,
     maxPrice: Number,
+    beneficiaryWallet: String,
     minPrice: Number,
     isLocked: Boolean,
     isHidden: Boolean,
@@ -48,6 +49,7 @@ CardSchema.methods.fromBody = function(body) {
     this.owner = body.owner;
     this.isHidden = body.isHidden;
     this.isLocked = body.isLocked;
+    this.beneficiaryWallet = body.beneficiaryWallet;
     if (body.transactions) {
         this.transactions = body.transactions;
     } else {
