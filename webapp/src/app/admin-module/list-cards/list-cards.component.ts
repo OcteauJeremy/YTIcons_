@@ -251,6 +251,15 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     // }
   }
 
+  changeInputCategory() {
+    this.selectInputs.nameCategory = this.selectedCard.category.name;
+  }
+
+  changeInputCountry() {
+    this.selectInputs.nameCountry = this.selectedCard.nationality.name;
+    this.selectInputs.codeCountry = this.selectedCard.nationality.code;
+  }
+
   selectCard(card) {
     this.selectedCard = card;
     console.log(card);

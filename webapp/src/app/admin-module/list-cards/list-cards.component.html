@@ -246,7 +246,7 @@
                             <div class="form-group">
                               <label for="country">Nationalities:</label>
                               <div class="select-wrap select-wrap2" id="wrapCountry">
-                                <select [(ngModel)]="selectedCard.nationality"  (change)="triggerSave(selectedCard)" name="country" id="country" class="text_field">
+                                <select [(ngModel)]="selectedCard.nationality"  (change)="changeInputCountry(); triggerSave(selectedCard)" name="country" id="country" class="text_field">
                                   <option *ngFor="let nat of nationalities" [ngValue]="nat">{{nat.name}}</option>
                                 </select>
                                 <span class="lnr lnr-chevron-down"></span>
@@ -273,7 +273,7 @@
                             <div class="form-group">
                               <label for="category">Category:</label>
                               <div class="select-wrap select-wrap2" id="wrapCategory">
-                                <select [(ngModel)]="selectedCard.category" (change)="triggerSave(selectedCard)" name="category" id="category" class="text_field">
+                                <select [(ngModel)]="selectedCard.category" (change)="changeInputCategory(); triggerSave(selectedCard)" name="category" id="category" class="text_field">
                                   <option *ngFor="let cat of categories" [ngValue]="cat">{{cat.name}}</option>
                                 </select>
                                 <span class="lnr lnr-chevron-down"></span>
