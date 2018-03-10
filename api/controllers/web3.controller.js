@@ -13,13 +13,13 @@ var io = require('socket.io').listen(server);
 
 var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
 
-web3.eth.currentProvider.on('end', function (res) {
-   console.log('--- Dropped by Infura ---');
-   web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
-   web3.eth.net.getId().then(function (id) {
-       console.log('- Blockchain ID -->', id);
-   });
-});
+// web3.eth.currentProvider.on('end', function (res) {
+//    console.log('--- Dropped by Infura ---');
+//    web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
+//    web3.eth.net.getId().then(function (id) {
+//        console.log('- Blockchain ID -->', id);
+//    });
+// });
 
 web3.eth.net.getId().then(function (id) {
     console.log('- Blockchain ID -->', id);
