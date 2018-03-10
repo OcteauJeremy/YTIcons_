@@ -262,7 +262,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
 
   selectCard(card) {
     this.selectedCard = card;
-    console.log(card);
+    // console.log(card);
   }
 
 
