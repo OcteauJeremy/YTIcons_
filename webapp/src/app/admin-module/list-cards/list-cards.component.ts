@@ -19,7 +19,13 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   public nationalities = [];
   public categories = [];
   public isLoading = false;
+  public  selectInputs = {
+    codeCountry: "",
+    nameCountry: "",
+    nameCategory: ""
+  };
 
+  private selectedCard: any = null;
   private subscriptions: Subscription = new Subscription();
   public maxPages = 0;
 
@@ -217,7 +223,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
             return ;
           }
           card.tx = resultat;
-          modifyCard(card)
+          modifyCard(card);
         });
       }
     } else {
@@ -233,15 +239,30 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   }
 
   triggerSave(card) {
-    if (card.isHidden != card.copy.isHidden || card.isLocked != card.copy.isLocked ||
-      card.type._id != card.copy.type._id) {
-      card.modified = true;
-    }
+    card.modified = true;
+    // if (card.isHidden != card.copy.isHidden || card.isLocked != card.copy.isLocked ||
+    //   card.type._id != card.copy.type._id) {
+    //   card.modified = true;
+    // }
+    //
+    // if (card.isHidden == card.copy.isHidden && card.isLocked == card.copy.isLocked &&
+    //   card.type._id == card.copy.type._id) {
+    //   card.modified = false;
+    // }
+  }
 
-    if (card.isHidden == card.copy.isHidden && card.isLocked == card.copy.isLocked &&
-      card.type._id == card.copy.type._id) {
-      card.modified = false;
-    }
+  changeInputCategory() {
+    this.selectInputs.nameCategory = this.selectedCard.category.name;
+  }
+
+  changeInputCountry() {
+    this.selectInputs.nameCountry = this.selectedCard.nationality.name;
+    this.selectInputs.codeCountry = this.selectedCard.nationality.code;
+  }
+
+  selectCard(card) {
+    this.selectedCard = card;
+    console.log(card);
   }
 
 

@@ -1,5 +1,5 @@
 <div style="perspective:2000px;perspective-origin: bottom;"  [ngClass]="{locked: card.isLocked}">
-  <div *ngIf="card" [id]="card._id"[ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : ''] " [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
+  <div *ngIf="card" [id]="card._id"[ngClass]="[card.isLocked ? 'cardUILocked' : 'cardUI', 'card', card.type ? card.type.css : '']" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
 
     <div class="card-title">
       <h4>{{card.name}}
@@ -40,10 +40,10 @@
     </div>
   </div>
   <div class="product-purchase">
-    <div class="price_love" [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
+    <div class="price_love" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked || !modal ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
       <span id="{{'card-price-' + card.id}}">{{card.price | currency  }}</span>
     </div>
-    <div class="sell" [attr.data-toggle]="card.isLocked ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
+    <div class="sell" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked || !modal ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
   </div>
 
 </div>
