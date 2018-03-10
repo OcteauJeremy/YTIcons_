@@ -142,6 +142,9 @@
 .card_picture {
   width:140px;
   height: 207px;
+}
+
+.card_picture:hover {
   -webkit-transition: background 400ms linear;
   -moz-transition: background 400ms linear;
   -o-transition: background 400ms linear;
