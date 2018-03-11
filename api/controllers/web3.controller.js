@@ -89,10 +89,8 @@ var queueEvents = {};
 tokenContract.events.YTIconSold({
     fromBlock: 'pending'
 }, function(err, event) {
-    if (err) {
-        console.log(err);
-        return ;
-    }
+    console.log('cb -->', event.returnValues.tokenId);
+}).on('data', function(event){
     var res = event.returnValues;
 
     console.log('YTIconSold event', event.returnValues);
@@ -108,6 +106,13 @@ tokenContract.events.YTIconSold({
             }
 
             var createTx = function (user, card, newPrice) {
+
+                function launchNextEvent(cardId) {
+                    queueEvents[cardId].shift();
+                    if (queueEvents[cardId].length > 0) {
+                        launchEvent(cardId);
+                    }
+                }
                 var tx = new Transaction();
 
                 tx.from = card.owner;
@@ -116,7 +121,7 @@ tokenContract.events.YTIconSold({
 
                 if (tx.from._id.toString() == tx.to._id.toString()) {
                     console.log('/!\\  DOUBLE EVENT /!\\');
-                    queueEvents[cardId].shift();
+                    launchNextEvent(cardId);
                     console.log('queueEvents', queueEvents[cardId]);
                     return ;
                 }
@@ -132,7 +137,7 @@ tokenContract.events.YTIconSold({
                 tx.save(function (err, nTx) {
                     if (err) {
                         console.log(err);
-                        queueEvents[cardId].shift();
+                        launchNextEvent(cardId);
                         return ;
                     }
                     card.owner = user;
@@ -141,7 +146,7 @@ tokenContract.events.YTIconSold({
                     card.save(function (err, nCard) {
                         if (err) {
                             console.log(err);
-                            queueEvents[cardId].shift();
+                            launchNextEvent(cardId);
                             return ;
                         }
                         nTx.populate({
@@ -164,11 +169,7 @@ tokenContract.events.YTIconSold({
                             nTx.populate("from'", function (err) {
                                 nTx.populate("to", function (err) {
 
-                                    queueEvents[cardId].shift();
-                                    if (queueEvents[cardId].length > 0) {
-                                        console.log('Launch event next');
-                                        launchEvent(cardId);
-                                    }
+                                    launchNextEvent(cardId);
                                     io.emit('tx-card', nCard._id);
                                     io.emit('live-info', nTx);
                                     console.log('Transaction terminated. ID card', nCard._id);
@@ -184,7 +185,7 @@ tokenContract.events.YTIconSold({
             }, function (err, user) {
                 if (err) {
                     console.log(err);
-                    queueEvents[cardId].shift();
+                    launchNextEvent(cardId);
                     return ;
                 }
 
@@ -198,7 +199,7 @@ tokenContract.events.YTIconSold({
                     user.save(function (err, nUser) {
                         if (err) {
                             console.log(err);
-                            queueEvents[cardId].shift();
+                            launchNextEvent(cardId);
                             return ;
                         }
                         createTx(nUser, card, event.newPrice);
@@ -223,8 +224,11 @@ tokenContract.events.YTIconSold({
         console.log("Event on pause");
     }
 
-
-
+}).on('changed', function(event){
+    console.log('Changed -->', event);
+    // remove event from local database
+}).on('error', function (event) {
+   console.log('Error -->', event);
 });
 
 var populateCard = function (mongooseObj) {
