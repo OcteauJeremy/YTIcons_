@@ -6,11 +6,12 @@
   </div>
   <div class="list-tx">
     <div *ngFor="let tx of txList" class="row">
-      <span class="col-md-9 tx-link">
-        <a class="col-md-10" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
-          {{tx}}
-        </a>
-      </span>
+      <a class="col-md-9 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
+        {{tx}}
+      </a>
+      <div class="col-md-3 pull-right">
+        <i class="fas fa-times"></i>
+      </div>
     </div>
   </div>
 </div>

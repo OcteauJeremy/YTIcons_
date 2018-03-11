@@ -84,109 +84,143 @@ tokenContract.events.PriceModified({
     })
 });
 
+var queueEvents = {};
+
 tokenContract.events.YTIconSold({
     fromBlock: 'pending'
 }, function(err, event) {
-    console.log('YTIconSold event', event.returnValues);
     if (err) {
         console.log(err);
         return ;
     }
     var res = event.returnValues;
 
-    populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
-        if (err) {
-            console.log(err);
-            return ;
-        }
+    console.log('YTIconSold event', event.returnValues);
 
-        var createTx = function (user, card, newPrice) {
-            var tx = new Transaction();
+    function launchEvent(cardId) {
+        var event = queueEvents[cardId][0];
 
-
-            tx.from = card.owner;
-            tx.price = card.price;
-            tx.to = user;
-
-            if (tx.from._id.toString() == tx.to._id.toString()) {
-                console.log('/!\\  DOUBLE EVENT /!\\', res);
-                return ;
-            }
-
-                var tmpCard = JSON.parse(JSON.stringify(card));
-            tmpCard.transactions = [];
-            tx.card = tmpCard;
-
-            card.price = web3.utils.fromWei(newPrice);
-            card.maxPrice = card.price;
-            card.minPrice = tx.price;
-
-            tx.save(function (err, nTx) {
-                 if (err) {
-                     console.log(err);
-                     return ;
-                }
-                card.owner = user;
-                ++card.nbTransactions;
-                card.transactions.push(tx);
-                card.save(function (err, nCard) {
-                    if (err) {
-                        console.log(err);
-                        return ;
-                    }
-                    nTx.populate({
-                        path: 'card',
-                        populate: [{
-                            path: "type"
-                        }, {
-                            path: "transactions",
-                            populate: [{
-                                path: "to"
-                            }, {
-                                path: "from"
-                            }]
-                        }, {
-                            path: "owner"
-                        }, {
-                            path: "nationality"
-                        }]
-                    }, function (err) {
-                        nTx.populate("from'", function (err) {
-                            nTx.populate("to", function (err) {
-                                io.emit('tx-card', nCard._id);
-                                io.emit('live-info', nTx);
-                                console.log('Transaction terminated. ID card', nCard._id);
-                           })
-                        });
-                    });
-                })
-            });
-        };
-
-        User.findOne({
-            wallet: res.newOwner
-        }, function (err, user) {
+        populateCard(Card.findOne({id: event.tokenId})).exec(function (err, card) {
             if (err) {
                 console.log(err);
+                queueEvents[cardId].shift();
                 return ;
             }
 
-            if (user) {
-                createTx(user, card, res.newPrice);
-            } else {
-                var user = new User();
+            var createTx = function (user, card, newPrice) {
+                var tx = new Transaction();
 
-                user.initValues();
-                user.wallet = res.newOwner;
-                user.save(function (err, nUser) {
+                tx.from = card.owner;
+                tx.price = card.price;
+                tx.to = user;
+
+                if (tx.from._id.toString() == tx.to._id.toString()) {
+                    console.log('/!\\  DOUBLE EVENT /!\\', event);
+                    queueEvents[cardId].shift();
+                    return ;
+                }
+
+                var tmpCard = JSON.parse(JSON.stringify(card));
+                tmpCard.transactions = [];
+                tx.card = tmpCard;
+
+                card.price = web3.utils.fromWei(newPrice);
+                card.maxPrice = card.price;
+                card.minPrice = tx.price;
+
+                tx.save(function (err, nTx) {
                     if (err) {
                         console.log(err);
+                        queueEvents[cardId].shift();
+                        return ;
                     }
-                    createTx(nUser, card, res.newPrice);
-                })
-            }
+                    card.owner = user;
+                    ++card.nbTransactions;
+                    card.transactions.push(tx);
+                    card.save(function (err, nCard) {
+                        if (err) {
+                            console.log(err);
+                            queueEvents[cardId].shift();
+                            return ;
+                        }
+                        nTx.populate({
+                            path: 'card',
+                            populate: [{
+                                path: "type"
+                            }, {
+                                path: "transactions",
+                                populate: [{
+                                    path: "to"
+                                }, {
+                                    path: "from"
+                                }]
+                            }, {
+                                path: "owner"
+                            }, {
+                                path: "nationality"
+                            }]
+                        }, function (err) {
+                            nTx.populate("from'", function (err) {
+                                nTx.populate("to", function (err) {
+                                    queueEvents[cardId].shift();
+                                    if (queueEvents[cardId].length > 0) {
+                                        launchEvent(cardId);
+                                    }
+                                    io.emit('tx-card', nCard._id);
+                                    io.emit('live-info', nTx);
+                                    console.log('Transaction terminated. ID card', nCard._id);
+                                })
+                            });
+                        });
+                    })
+                });
+            };
+
+            User.findOne({
+                wallet: event.newOwner
+            }, function (err, user) {
+                if (err) {
+                    console.log(err);
+                    queueEvents[cardId].shift();
+                    return ;
+                }
+
+                if (user) {
+                    createTx(user, card, event.newPrice);
+                } else {
+                    var user = new User();
+
+                    user.initValues();
+                    user.wallet = event.newOwner;
+                    user.save(function (err, nUser) {
+                        if (err) {
+                            console.log(err);
+                            queueEvents[cardId].shift();
+                            return ;
+                        }
+                        createTx(nUser, card, event.newPrice);
+                    })
+                }
+            });
         });
-    });
+    }
+
+    if (!queueEvents[res.tokenId]) {
+        console.log("Create queue for -->", res.tokenId);
+        queueEvents[res.tokenId] = [];
+    }
+
+    queueEvents[res.tokenId].push(res);
+
+    if (queueEvents[res.tokenId].length == 1) {
+        console.log("Only this event, launch it");
+        launchEvent(res.tokenId);
+    } else {
+        console.log("Event on pause");
+    }
+
+
+
 });
 
 var populateCard = function (mongooseObj) {
