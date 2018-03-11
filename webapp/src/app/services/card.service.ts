@@ -19,6 +19,7 @@ export class CardService extends ManagerService {
   private _tokenContract: any;
   private _self;
   private _tokenContractAddress = environment.tokenAddress;
+  private networkId = 3;
 
   constructor(http: HttpClient, private toastr: ToastsManager, private txService: TransactionService) {
     super(http);
@@ -36,7 +37,7 @@ export class CardService extends ManagerService {
       });
 
       this._web3.eth.net.getId().then(function (id) {
-        if (id !== 3) {
+        if (id !== this.networkId) {
           toastr.warning('You are not connected to the right network on MetaMask.', 'Network');
         }
       });
@@ -269,6 +270,10 @@ export class CardService extends ManagerService {
 
   public hasMetamask() {
     return typeof window.web3 !== 'undefined' ? true : false;
+  }
+
+  public getNetwork() {
+    return this._web3.eth.net.getId();
   }
 
   public setImageCard(card, cardForm) {
