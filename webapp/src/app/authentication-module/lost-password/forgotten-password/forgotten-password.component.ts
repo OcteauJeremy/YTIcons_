@@ -69,6 +69,7 @@ export class ForgottenPasswordComponent implements OnInit, OnDestroy, AfterViewC
         }, error => {
           _self.toastr.error('We could not find you account anywhere.', 'Lost password');
           _self.isLoading = false;
+          grecaptcha.reset();
         }));
       }
     }
