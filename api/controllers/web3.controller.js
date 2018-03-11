@@ -115,8 +115,9 @@ tokenContract.events.YTIconSold({
                 tx.to = user;
 
                 if (tx.from._id.toString() == tx.to._id.toString()) {
-                    console.log('/!\\  DOUBLE EVENT /!\\', event);
+                    console.log('/!\\  DOUBLE EVENT /!\\');
                     queueEvents[cardId].shift();
+                    console.log('queueEvents', queueEvents[cardId]);
                     return ;
                 }
 
@@ -162,8 +163,10 @@ tokenContract.events.YTIconSold({
                         }, function (err) {
                             nTx.populate("from'", function (err) {
                                 nTx.populate("to", function (err) {
+
                                     queueEvents[cardId].shift();
                                     if (queueEvents[cardId].length > 0) {
+                                        console.log('Launch event next');
                                         launchEvent(cardId);
                                     }
                                     io.emit('tx-card', nCard._id);
@@ -212,6 +215,7 @@ tokenContract.events.YTIconSold({
 
     queueEvents[res.tokenId].push(res);
 
+    console.log('queueEvents choosing what to do', queueEvents[res.tokenId]);
     if (queueEvents[res.tokenId].length == 1) {
         console.log("Only this event, launch it");
         launchEvent(res.tokenId);
