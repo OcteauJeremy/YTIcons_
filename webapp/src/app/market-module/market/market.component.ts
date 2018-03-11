@@ -89,8 +89,10 @@ export class MarketComponent implements OnInit, OnDestroy {
         for (let card of this.cards) {
           if (card._id == cardId) {
             this.cards[idx] = newCard;
-            if (document.getElementsByClassName('modal-backdrop')[0])
+            if (document.getElementsByClassName('modal-backdrop')[0]) {
+              $('body').removeClass('modal-open');
               document.getElementsByClassName('modal-backdrop')[0].remove();
+            }
             break ;
           }
           ++idx;
