@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class TransactionService extends ManagerService{
 
-  public  txList = [];
+  public  txList = {};
   public  txListChange: Subject<any> = new Subject<any>();
 
   constructor(http: HttpClient) {
@@ -18,15 +18,16 @@ export class TransactionService extends ManagerService{
   }
 
   addTx(txHash) {
-    this.txList.push(txHash);
+    this.txList[txHash] = {
+      isFinished: false,
+      state: false
+    };
     this.txListChange.next(this.txList);
   }
 
   removeTx(txHash) {
-    const idx = this.txList.indexOf(txHash);
-    if (idx > -1) {
-      this.txList.splice(idx, 1);
-    }
+    delete this.txList[txHash];
+
     this.txListChange.next(this.txList);
   }
 

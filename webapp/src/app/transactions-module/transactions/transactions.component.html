@@ -5,12 +5,12 @@
     </div>
   </div>
   <div class="list-tx">
-    <div *ngFor="let tx of txList" class="row">
-      <a class="col-md-9 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
-        {{tx}}
+    <div *ngFor="let entry of txList | keys" class="row">
+      <a class="col-md-9 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{entry.key}}">
+        {{entry.key}}
       </a>
       <div class="col-md-3 pull-right">
-        <i class="fas fa-times"></i>
+        <a (click)="txService.removeTx(entry.key)"><i class="fas fa-times"></i></a>
       </div>
     </div>
   </div>

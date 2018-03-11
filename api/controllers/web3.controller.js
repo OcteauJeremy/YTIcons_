@@ -88,8 +88,6 @@ var queueEvents = {};
 
 tokenContract.events.YTIconSold({
     fromBlock: 'pending'
-}, function(err, event) {
-    console.log('cb -->', event.returnValues.tokenId);
 }).on('data', function(event){
     var res = event.returnValues;
 
@@ -97,34 +95,37 @@ tokenContract.events.YTIconSold({
 
     function launchEvent(cardId) {
         var event = queueEvents[cardId][0];
+        var eventValues = event.returnValues;
 
-        populateCard(Card.findOne({id: event.tokenId})).exec(function (err, card) {
+        function launchNextEvent(cardId) {
+            console.log('Shifting queue of ', cardId);
+            queueEvents[cardId].shift();
+            if (queueEvents[cardId].length > 0) {
+                console.log('Event in the queue', queueEvents[cardId][0].returnValues);
+                launchEvent(cardId);
+            }
+        }
+
+        populateCard(Card.findOne({id: eventValues.tokenId})).exec(function (err, card) {
             if (err) {
                 console.log(err);
-                queueEvents[cardId].shift();
+                launchNextEvent(cardId);
                 return ;
             }
 
             var createTx = function (user, card, newPrice) {
-
-                function launchNextEvent(cardId) {
-                    queueEvents[cardId].shift();
-                    if (queueEvents[cardId].length > 0) {
-                        launchEvent(cardId);
-                    }
-                }
                 var tx = new Transaction();
 
                 tx.from = card.owner;
                 tx.price = card.price;
                 tx.to = user;
+                tx.hash = event.transactionHash;
 
-                if (tx.from._id.toString() == tx.to._id.toString()) {
-                    console.log('/!\\  DOUBLE EVENT /!\\');
-                    launchNextEvent(cardId);
-                    console.log('queueEvents', queueEvents[cardId]);
-                    return ;
-                }
+                // if (tx.from._id.toString() == tx.to._id.toString()) {
+                //     console.log('/!\\  DOUBLE EVENT /!\\');
+                //     launchNextEvent(cardId);
+                //     return ;
+                // }
 
                 var tmpCard = JSON.parse(JSON.stringify(card));
                 tmpCard.transactions = [];
@@ -168,7 +169,6 @@ tokenContract.events.YTIconSold({
                         }, function (err) {
                             nTx.populate("from'", function (err) {
                                 nTx.populate("to", function (err) {
-
                                     launchNextEvent(cardId);
                                     io.emit('tx-card', nCard._id);
                                     io.emit('live-info', nTx);
@@ -181,7 +181,7 @@ tokenContract.events.YTIconSold({
             };
 
             User.findOne({
-                wallet: event.newOwner
+                wallet: eventValues.newOwner
             }, function (err, user) {
                 if (err) {
                     console.log(err);
@@ -190,19 +190,19 @@ tokenContract.events.YTIconSold({
                 }
 
                 if (user) {
-                    createTx(user, card, event.newPrice);
+                    createTx(user, card, eventValues.newPrice);
                 } else {
                     var user = new User();
 
                     user.initValues();
-                    user.wallet = event.newOwner;
+                    user.wallet = eventValues.newOwner;
                     user.save(function (err, nUser) {
                         if (err) {
                             console.log(err);
                             launchNextEvent(cardId);
                             return ;
                         }
-                        createTx(nUser, card, event.newPrice);
+                        createTx(nUser, card, eventValues.newPrice);
                     })
                 }
             });
@@ -214,9 +214,9 @@ tokenContract.events.YTIconSold({
         queueEvents[res.tokenId] = [];
     }
 
-    queueEvents[res.tokenId].push(res);
+    queueEvents[res.tokenId].push(event);
 
-    console.log('queueEvents choosing what to do', queueEvents[res.tokenId]);
+    console.log('queueEvents choosing what to do', queueEvents[res.tokenId].length);
     if (queueEvents[res.tokenId].length == 1) {
         console.log("Only this event, launch it");
         launchEvent(res.tokenId);
@@ -226,7 +226,6 @@ tokenContract.events.YTIconSold({
 
 }).on('changed', function(event){
     console.log('Changed -->', event);
-    // remove event from local database
 }).on('error', function (event) {
    console.log('Error -->', event);
 });

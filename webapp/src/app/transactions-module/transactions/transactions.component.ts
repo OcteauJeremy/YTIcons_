@@ -9,12 +9,14 @@ import { TransactionService } from '../../services/transaction.service';
 export class TransactionsComponent implements OnInit {
 
   public  isOpen = false;
-  public  txList = [];
+  public  txList = {};
 
   constructor(public txService: TransactionService) {
 
     this.txService.txListChange.subscribe(res => {
+      // console.log('res', res);
       this.txList = res;
+      // console.log('txList', this.txList);
     });
   }
 
