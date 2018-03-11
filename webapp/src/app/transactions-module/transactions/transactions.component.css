@@ -26,3 +26,12 @@
   display: flex;
   flex-direction: column;
 }
+
+.delete-tx-icon {
+  cursor: pointer;
+}
+
+.icons-container {
+  display: flex;
+  justify-content: space-around;
+}

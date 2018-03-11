@@ -1,24 +1,35 @@
-<div *ngIf="isOpen" style="width: 200px">
-  <div class="row">
-    <div class="col-md-offset-11 cold-md-1" (click)="isOpen = !isOpen">
-      <i class="fas fa-chevron-down"></i>
+<div *ngIf="txHashList.length > 0">
+  <div *ngIf="isOpen" style="width: 200px">
+    <div class="row">
+      <div class="col-md-offset-11 cold-md-1" (click)="isOpen = !isOpen">
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </div>
-  </div>
-  <div class="list-tx">
-    <div *ngFor="let entry of txList | keys" class="row">
-      <a class="col-md-9 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{entry.key}}">
-        {{entry.key}}
-      </a>
-      <div class="col-md-3 pull-right">
-        <a (click)="txService.removeTx(entry.key)"><i class="fas fa-times"></i></a>
+    <div class="list-tx">
+      <div *ngFor="let tx of txHashList" class="row">
+        <a class="col-md-8 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
+          {{tx}}
+        </a>
+        <div *ngIf="txList[tx].isFinished" class="col-md-4 icons-container">
+          <div *ngIf="txList[tx].success" style="color: darkgreen">
+            <i class="fas fa-check"></i>
+          </div>
+          <div *ngIf="!txList[tx].success" style="color: darkred">
+            <i class="fas fa-times"></i>
+          </div>
+          <div (click)="txService.removeTx(tx)" class="delete-tx-icon"><i class="fas fa-trash-alt"></i></div>
+        </div>
+        <div *ngIf="!txList[tx].isFinished">
+          <i class="fas fa-spinner fa-spin"></i>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="!isOpen" class="tx-menu-close" (click)="isOpen = !isOpen">
-  <div class="tx-menu-item">
-    <i class="fas fa-exchange-alt" style="margin-right: 4px;"></i>
-    <span>Transactions</span>
+  <div *ngIf="!isOpen" class="tx-menu-close" (click)="isOpen = !isOpen">
+    <div class="tx-menu-item">
+      <i class="fas fa-exchange-alt" style="margin-right: 4px;"></i>
+      <span>Transactions - {{txHashList.length}}</span>
+    </div>
   </div>
 </div>

@@ -137,7 +137,7 @@ tokenContract.events.YTIconSold({
 
                 tx.save(function (err, nTx) {
                     if (err) {
-                        console.log(err);
+                        console.log(err.message);
                         launchNextEvent(cardId);
                         return ;
                     }
