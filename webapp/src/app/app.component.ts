@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private toastManager: ToastsManager;
   public  showPopup = false;
+  public  badNetwork = false;
 
   constructor(private cs: CardService, private router: Router, private as: AuthenticationService, private toastr: ToastsManager, private vcr: ViewContainerRef,
               private socketService: SocketService,
@@ -49,7 +50,19 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    let _self = this;
+
     this.showPopup = !this.cs.hasMetamask();
+
+    if (!this.showPopup) {
+      this.cs.getNetwork().then(function (id) {
+        if (id !== 3) {
+          _self.showPopup = true;
+          _self.badNetwork = true;
+        }
+      });
+    }
+
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd) {
         $('html,body').animate({ scrollTop: 0 }, 500);

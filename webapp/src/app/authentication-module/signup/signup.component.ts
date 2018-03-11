@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     let _self = this;
 
-    this.cs.getAccount(true).then(res => {
+    this.cs.getAccount(false).then(res => {
       _self.wallet = res;
     });
 
