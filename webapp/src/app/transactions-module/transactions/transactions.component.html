@@ -1,0 +1,13 @@
+<div *ngIf="isOpen" >
+  <div class="row">
+    <div></div>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</div>
+
+<div *ngIf="!isOpen" class="tx-menu-close" (click)="isOpen = !isOpen">
+  <div class="tx-menu-item">
+    <i class="fas fa-exchange-alt" style="margin-right: 4px;"></i>
+    <span>Transactions</span>
+  </div>
+</div>
