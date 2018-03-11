@@ -88,8 +88,8 @@
         </div>
       </div><!-- end /.modal-body -->
       <div class="modal-footer">
-        <button *ngIf="card?.owner?._id == currentUser?._id"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Change price</button>
-        <button *ngIf="card?.owner?._id != currentUser?._id"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Buy</button>
+        <button *ngIf="card?.owner?.wallet == currentWallet"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Change price</button>
+        <button *ngIf="card?.owner?.wallet != currentWallet"  data-toggle="modal" [attr.data-target]="'#modal-' + card.id + '-changePrice'" class="btn btn--round btn--default">Buy</button>
         <button class="btn btn--round modal_close" data-dismiss="modal" #cardModalCloseButton>Close</button>
       </div>
     </div>
@@ -113,6 +113,7 @@
           <div *ngIf="card?.owner?._id == currentUser?._id">
             <p>As transactions on the Blockchain take time to be validated, it is possible that users attempted to buy your YTIcon before its price modification.</p>
             <p>If it has been bought before your adjustment, then your request will not be taken into account.</p>
+            <p><b>Min price</b>: {{card?.minPrice  | round}} ETH <b>Max price</b>: {{card?.maxPrice | round}} ETH</p>
           </div>
           <div *ngIf="card?.owner?._id != currentUser?._id">
             <p>During busy periods, it is possible that many users attempt to get the YTIcon you desire. As transactions on the Blockchain take time to be validated,

@@ -21,6 +21,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
   public newPrice: number = 0;
   public newLineTag = "<br />";
   private subscriptions: Subscription = new Subscription();
+  private currentWallet: string;
 
   constructor(private roundPipe: RoundPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.as.currentUserChange.subscribe((user) => {
@@ -54,9 +55,12 @@ export class CardModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentUser = this.as.currentUser;
+    this.cs.getAccount(false).then(res => {this.currentWallet = res});
+
     if (this.currentUser) {
       this.acceptTos = true;
     }
+
 
     this.newPrice = this.roundPipe.transform(this.card.price);
 

@@ -44,10 +44,6 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit() {
     let _self = this;
 
-    this.cs.getAccount(false).then(res => {
-      _self.wallet = res;
-    });
-
     this.subscriptions.add(this.toastr.onClickToast().subscribe(toast => {
       if (toast.timeoutId) {
         clearTimeout(toast.timeoutId);
@@ -83,37 +79,37 @@ export class SignupComponent implements OnInit, OnDestroy, AfterViewChecked {
       toastr.error('Please, verify that you\'re not a robot.', 'Sign up');
     }
     else {
-      if (_self.wallet && !_self.cs.checkWallet(_self.wallet)) {
-        _self.toastr.error('Please, enter a valid Ethereum address', 'Sign up');
-      }
-      else if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword) {
+      this.cs.getAccount(false).then(res => {
+        _self.wallet = res;
+        if (_self.email && _self.username && _self.password && _self.conPassword && _self.password == _self.conPassword) {
 
-        let formData: FormData = new FormData();
-        if (_self.fileList && _self.fileList.length > 0) {
-          let file: File = _self.fileList[0];
-          formData.append('avatar', file);
-        }
+          let formData: FormData = new FormData();
+          if (_self.fileList && _self.fileList.length > 0) {
+            let file: File = _self.fileList[0];
+            formData.append('avatar', file);
+          }
 
-        formData.append('email', _self.email);
-        formData.append('username', _self.username);
-        formData.append('password', _self.password);
-        formData.append('recaptchaRes', _self.captchaResponse);
-        if (_self.wallet) {
-          formData.append('wallet', _self.wallet);
+          formData.append('email', _self.email);
+          formData.append('username', _self.username);
+          formData.append('password', _self.password);
+          formData.append('recaptchaRes', _self.captchaResponse);
+          if (_self.wallet) {
+            formData.append('wallet', _self.wallet);
+          }
+          this.loadingChannel = true;
+          _self.as.register(formData).then(res => {
+            _self._router.navigate(['signin']);
+            _self.toastr.success('Sign up successful.', 'Sign up');
+            _self.analytics.sendEvent("Authenticate", "Signup success");
+            this.loadingChannel = false;
+          }, error => {
+            _self.toastr.error(error.error.message, 'Sign up');
+            this.loadingChannel = false;
+          });
+        } else {
+          _self.toastr.error('Please, fill all the fields.', 'Sign up');
         }
-        this.loadingChannel = true;
-        _self.as.register(formData).then(res => {
-          _self._router.navigate(['signin']);
-          _self.toastr.success('Sign up successful.', 'Sign up');
-          _self.analytics.sendEvent("Authenticate", "Signup success");
-          this.loadingChannel = false;
-        }, error => {
-          _self.toastr.error(error.error.message, 'Sign up');
-          this.loadingChannel = false;
-        });
-      } else {
-        _self.toastr.error('Please, fill all the fields.', 'Sign up');
-      }
+      });
     }
   }
 

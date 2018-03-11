@@ -14,12 +14,11 @@ const tokenAbi = require('./token/tokenContract.json');
 @Injectable()
 export class CardService extends ManagerService {
 
-  private _account: string = null;
+  public _account: string = null;
   private _web3;
   private _tokenContract: any;
   private _self;
   private _tokenContractAddress = environment.tokenAddress;
-  private networkId = 3;
 
   constructor(http: HttpClient, private toastr: ToastsManager, private txService: TransactionService) {
     super(http);
@@ -37,7 +36,7 @@ export class CardService extends ManagerService {
       });
 
       this._web3.eth.net.getId().then(function (id) {
-        if (id !== this.networkId) {
+        if (id !== 3) {
           toastr.warning('You are not connected to the right network on MetaMask.', 'Network');
         }
       });
