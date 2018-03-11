@@ -16,3 +16,11 @@
   align-items: center;
 }
 
+.tx-link {
+  text-overflow: ellipsis;
+}
+
+.list-tx {
+  display: flex;
+  flex-direction: column;
+}

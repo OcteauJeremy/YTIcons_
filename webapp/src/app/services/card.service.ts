@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
 import {environment} from '../../environments/environment';
+import { TransactionService } from './transaction.service';
 
 const Web3 = require('web3');
 declare let require: any;
@@ -19,7 +20,7 @@ export class CardService extends ManagerService {
   private _self;
   private _tokenContractAddress = environment.tokenAddress;
 
-  constructor(http: HttpClient, private toastr: ToastsManager) {
+  constructor(http: HttpClient, private toastr: ToastsManager, private txService: TransactionService) {
     super(http);
     if (typeof window.web3 !== 'undefined') {
       this._web3 = new Web3(window.web3.currentProvider);
@@ -148,6 +149,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       const toastr = this.toastr;
 
+      var _self = this;
       this._tokenContract.methods.purchase(_idCard).send({
         from: account,
         gas: 4000000,
@@ -155,6 +157,7 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
           toastr.success('Your purchase is now pending on the Blockchain.', 'Transaction');
+          _self.txService.addTx(result);
           resolve(1);
         } else {
           toastr.error('Your purchase has been rejected.', 'Transaction');
@@ -176,6 +179,7 @@ export class CardService extends ManagerService {
         resolve(0);
       }
       else {
+        var _self = this;
         this._tokenContract.methods.setPrice(_idCard, this._web3.utils.toWei(_price.toString(), 'ether')).send({
           from: account,
           gas: 4000000,
@@ -183,6 +187,7 @@ export class CardService extends ManagerService {
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
             toastr.success('The price modification of your YTIcon is now pending on the Blockchain.', 'Price modification');
+            _self.txService.addTx(result);
             resolve(1);
           } else {
             toastr.error('Your YTIcon\'s price modification has failed.', 'Price modification');

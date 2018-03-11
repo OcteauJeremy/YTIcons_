@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'transactions-live',
@@ -7,11 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionsComponent implements OnInit {
 
-  public isOpen = false;
+  public  isOpen = false;
+  public  txList = [];
 
-  constructor() { }
+  constructor(public txService: TransactionService) {
+
+    this.txService.txListChange.subscribe(res => {
+      this.txList = res;
+    });
+  }
 
   ngOnInit() {
+    this.txList = this.txService.txList;
   }
 
 }

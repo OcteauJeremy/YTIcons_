@@ -103,11 +103,17 @@ tokenContract.events.YTIconSold({
         var createTx = function (user, card, newPrice) {
             var tx = new Transaction();
 
+
             tx.from = card.owner;
             tx.price = card.price;
             tx.to = user;
 
-            var tmpCard = JSON.parse(JSON.stringify(card));
+            if (tx.from._id.toString() == tx.to._id.toString()) {
+                console.log('/!\\  DOUBLE EVENT /!\\', res);
+                return ;
+            }
+
+                var tmpCard = JSON.parse(JSON.stringify(card));
             tmpCard.transactions = [];
             tx.card = tmpCard;
 

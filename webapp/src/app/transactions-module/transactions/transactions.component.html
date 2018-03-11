@@ -1,7 +1,17 @@
-<div *ngIf="isOpen" >
+<div *ngIf="isOpen" style="width: 200px">
   <div class="row">
-    <div></div>
-    <i class="fas fa-chevron-down"></i>
+    <div class="col-md-offset-11 cold-md-1" (click)="isOpen = !isOpen">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <div class="list-tx">
+    <div *ngFor="let tx of txList" class="row">
+      <span class="col-md-9 tx-link">
+        <a class="col-md-10" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
+          {{tx}}
+        </a>
+      </span>
+    </div>
   </div>
 </div>
 
