@@ -143,6 +143,7 @@ export class CardService extends ManagerService {
 
     let account = await this.getAccount(true);
 
+    console.log("ID purchase:", _idCard, _price);
     return new Promise((resolve, reject) => {
       const _web3 = this._web3;
       const toastr = this.toastr;

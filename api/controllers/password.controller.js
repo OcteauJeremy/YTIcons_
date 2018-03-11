@@ -84,8 +84,8 @@ exports.forgotPassword = function (req, res) {
                             console.log(err);
                             return res.status(400).send({message: "Impossible to send mail"});
                         }
-                        console.log('Finally:', user.resetPasswordToken);
-                        return res.status(200).send({message: 'Email successfully sent to user.'});
+                        // console.log('Finally:', user.resetPasswordToken);
+                        return res.status(200).send({message: 'Email successfully sent.'});
                     });
                 });
             });

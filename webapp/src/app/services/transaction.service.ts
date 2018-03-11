@@ -10,7 +10,7 @@ export class TransactionService extends ManagerService{
   }
 
   listenTx(txHash) {
-    return this.get('/transactions/listen/' + txHash);
+    return this.get('/transactions-module/listen/' + txHash);
   }
 
 }

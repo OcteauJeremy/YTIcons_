@@ -9,7 +9,7 @@ exports.create = function (req, res) {
 
     tx.save(function (err, txRes) {
         if (err) {
-            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+            return res.status(400).send({message: "Some error occurred while retrieving transactions-module."});
         }
 
         txRes.populate("from", function (err) {
@@ -30,7 +30,7 @@ exports.create = function (req, res) {
 
                     txRes.save(function (err, txFinal) {
                         if (err) {
-                            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+                            return res.status(400).send({message: "Some error occurred while retrieving transactions-module."});
                         }
                         txFinal.populate("transactions", function (err) {
                             txFinal.card.nbTransactions = txFinal.card.transactions.length;
@@ -53,7 +53,7 @@ exports.findAll = function (req, res) {
 
     populateItem(findObj).exec(function (err, txs) {
         if (err) {
-            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+            return res.status(400).send({message: "Some error occurred while retrieving transactions-module."});
         }
         return res.status(200).send(txs);
     });
@@ -68,7 +68,7 @@ exports.getLastTransactions = function (req, res) {
 
     populateItem(findObj).limit(limitNb).exec(function (err, txs) {
         if (err) {
-            return res.status(400).send({message: "Some error occurred while retrieving transactions."});
+            return res.status(400).send({message: "Some error occurred while retrieving transactions-module."});
         }
         return res.status(200).send(txs);
     });

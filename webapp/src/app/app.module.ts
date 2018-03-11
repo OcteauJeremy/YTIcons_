@@ -54,6 +54,7 @@ import { RecaptchaService } from "./services/recaptcha.service";
 import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
 import {AnalyticsService} from './services/analytics.service';
 import { EmailService } from './services/email.service';
+import { TransactionsModule } from './transactions-module/transactions.module';
 
 export class ToastCustomOptions extends ToastOptions {
   animate = 'fade';
@@ -96,7 +97,8 @@ export class ToastCustomOptions extends ToastOptions {
     ToastModule.forRoot(),
     BrowserAnimationsModule,
     VerifyIconModule,
-    RecaptchaModule.forRoot()
+    RecaptchaModule.forRoot(),
+    TransactionsModule
   ],
   providers: [
     RealvalueService,

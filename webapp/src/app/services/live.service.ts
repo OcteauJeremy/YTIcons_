@@ -11,7 +11,7 @@ export class LiveService extends ManagerService {
   }
 
   getLastTransactions() {
-    return this.get('/transactions/last');
+    return this.get('/transactions-module/last');
   }
 
 }
