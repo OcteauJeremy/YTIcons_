@@ -58,8 +58,8 @@
               <li  (click)="selectFollower(100000,250000, '100K - 250K')"><a>100K - 250K <span *ngIf="filters.minSubscribers == 100000 && filters.maxSubscribers == 250000"><i class="fas fa-check"></i></span></a></li>
               <li  (click)="selectFollower(250000,500000, '250K - 500K')"><a>250K - 500K <span *ngIf="filters.minSubscribers == 250000 && filters.maxSubscribers == 500000"><i class="fas fa-check"></i></span></a></li>
               <li  (click)="selectFollower(500000,1000000, '500K - 1M')"><a>500K - 1M <span *ngIf="filters.minSubscribers == 500000 && filters.maxSubscribers == 1000000"><i class="fas fa-check"></i></span></a></li>
-              <li  (click)="selectFollower(1000000,50000000, '1M - 5M')"><a>1M - 5M <span *ngIf="filters.minSubscribers == 1000000 && filters.maxSubscribers == 50000000"><i class="fas fa-check"></i></span></a></li>
-              <li  (click)="selectFollower(50000000,100000000, '5M - 10M')"><a>5M - 10M <span *ngIf="filters.minSubscribers == 50000000 && filters.maxSubscribers == 100000000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(1000000,5000000, '1M - 5M')"><a>1M - 5M <span *ngIf="filters.minSubscribers == 1000000 && filters.maxSubscribers == 50000000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(5000000,10000000, '5M - 10M')"><a>5M - 10M <span *ngIf="filters.minSubscribers == 50000000 && filters.maxSubscribers == 100000000"><i class="fas fa-check"></i></span></a></li>
               <li  (click)="selectFollower(10000000,null, 'More than 10M')"><a>More than 10M <span *ngIf="filters.minSubscribers == 10000000 && !filters.maxSubscribers"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>

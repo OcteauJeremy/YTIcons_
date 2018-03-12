@@ -4,6 +4,7 @@ import {ManagerService} from './manager.service';
 import {ToastsManager} from 'ng2-toastr';
 import {environment} from '../../environments/environment';
 import { TransactionService } from './transaction.service';
+import {Observable} from 'rxjs/Rx';
 
 const Web3 = require('web3');
 declare let require: any;
@@ -24,8 +25,13 @@ export class CardService extends ManagerService {
     super(http);
     if (typeof window.web3 !== 'undefined') {
       this._web3 = new Web3(window.web3.currentProvider);
+
       const web3 = this._web3;
       const toastr = this.toastr;
+
+      Observable.interval(2000).subscribe(x => {
+        this._web3.eth.getAccounts((error, accounts) => {this._account = accounts[0];console.log(this._account);});
+      });
 
       // Probably useless to unsubscribe since a service is never destroyed...
       toastr.onClickToast().subscribe(toast => {

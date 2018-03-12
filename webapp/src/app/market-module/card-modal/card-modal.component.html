@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
           aria-hidden="true">&times;</span></button>
         <h3 class="modal-title" id="rating_modal">{{card.name}}</h3>
-        <p>Own by <a [routerLink]="['/account', card?.owner?.wallet]" data-dismiss="modal">{{card?.owner?.username == '' ? 'Anonymous' : card?.owner?.username}}</a></p>
+        <p>Own by <a [routerLink]="['/account', card?.owner?.wallet ? '' : '']" data-dismiss="modal">{{card?.owner?.username == '' ? 'Anonymous' : card?.owner?.username}}</a></p>
       </div>
 
       <div class="modal-body">
@@ -110,12 +110,12 @@
 
       <div class="modal-body">
         <div class="col-md-12 col-sm-12 col-xs-12 justify">
-          <div *ngIf="card?.owner?._id == currentUser?._id">
+          <div *ngIf="card?.owner?.wallet == currentWallet">
             <p>As transactions on the Blockchain take time to be validated, it is possible that users attempted to buy your YTIcon before its price modification.</p>
             <p>If it has been bought before your adjustment, then your request will not be taken into account.</p>
             <p><b>Min price</b>: {{card?.minPrice  | round}} ETH <b>Max price</b>: {{card?.maxPrice | round}} ETH</p>
           </div>
-          <div *ngIf="card?.owner?._id != currentUser?._id">
+          <div *ngIf="card?.owner?.wallet != currentWallet">
             <p>During busy periods, it is possible that many users attempt to get the YTIcon you desire. As transactions on the Blockchain take time to be validated,
               the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
             <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
@@ -136,8 +136,8 @@
           </div>
         </div>
         <div class="buttons-container">
-          <button *ngIf="card?.owner?._id == currentUser?._id" (click)="changePriceCard(card.id, card.owner.wallet)" data-dismiss="modal" type="button" class="btn btn--round btn--default">Submit</button>
-          <button *ngIf="card?.owner?._id != currentUser?._id" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default" [disabled]="!acceptTos">Buy</button>
+          <button *ngIf="card?.owner?.wallet == currentWallet" (click)="changePriceCard(card.id, card.owner.wallet)" data-dismiss="modal" type="button" class="btn btn--round btn--default">Submit</button>
+          <button *ngIf="card?.owner?.wallet != currentWallet" (click)="purchaseCard(card, newPrice)" data-dismiss="modal" class="btn btn--round btn--default" [disabled]="!acceptTos">Buy</button>
           <button class="btn btn--round modal_close" data-dismiss="modal" #buyModalCloseButton>Close</button>
         </div>
       </div>
