@@ -1,34 +1,25 @@
-<div class="transactions-live-container">
-  <div *ngIf="isOpen">
-    <div class="row">
-      <div class="col-md-12 transactions-live-title" (click)="isOpen = !isOpen">
-        <i class="fas fa-paper-plane"></i>
-        Transactions open
-      </div>
-    </div>
-    <div class="list-tx">
-      <div *ngFor="let tx of txHashList" class="row">
-        <div class="col-md1">
-          <div [ngClass]="['circle-status', tx.isFinished ? '' : 'cirlce-orange', tx.isFinished && tx.success ? '' : 'cirlce-green', tx.isFinished && !tx.success ? '' : 'cirlce-red']">
-        </div>
-
-        </div>
-        <a class="col-md-8 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
-          {{tx}}
-        </a>
-
-        <div *ngIf="txList[tx].isFinished" class="col-md-3 icons-container">
-          <div (click)="txService.removeTx(tx)" class="delete-tx-icon"><i class="fas fa-trash-alt"></i></div>
-        </div>
-
-      </div>
-    </div>
+<div class="transactions-live-container" *ngIf="txHashList.length">
+  <div class="transactions-live-title" (click)="isOpen = !isOpen">
+    <i class="fas fa-paper-plane"></i>
+    Transactions
   </div>
-
-  <div *ngIf="!isOpen" class="tx-menu-close col-md-2" (click)="isOpen = !isOpen">
-    <div class="tx-menu-item">
-      <i class="fas fa-paper-plane"></i>
-      <span style="margin-left: 10px">Transactions</span>
+  <div *ngIf="isOpen">
+    <div *ngFor="let tx of txHashList" class="transaction-row">
+      <div [ngClass]="{'container-status':true,'circle-orange': !txList[tx].isFinished ? true : false,'circle-green': txList[tx].isFinished && txList[tx].success ? true : false,
+          'circle-red':txList[tx].isFinished && !txList[tx].success ? true : false}">
+        <i class="fas fa-circle"></i>
+      </div>
+      <div class="container-hash">
+        <a target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">{{tx}}</a>
+      </div>
+      <div class="container-remove">
+        <a *ngIf="txList[tx].isFinished" (click)="txService.removeTx(tx)">
+          <i class="fas fa-minus"></i>
+        </a>
+      </div>
+      <div class="container-share">
+        <a target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}"><i class="fas fa-link"></i></a>
+      </div>
     </div>
   </div>
 </div>
