@@ -21,8 +21,8 @@ export class CardModalComponent implements OnInit, OnDestroy {
   public acceptTos = false;
   public newPrice: number = 0;
   public newLineTag = "<br />";
+  public currentWallet: string;
   private subscriptions: Subscription = new Subscription();
-  private currentWallet: string;
 
   constructor(private roundPipe: RoundPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.as.currentUserChange.subscribe((user) => {
