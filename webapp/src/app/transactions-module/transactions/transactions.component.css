@@ -1,15 +1,17 @@
 .transactions-live-container {
   position: fixed;
   bottom: 0;
-  right: 15%;
+  right: 10%;
   z-index: 999;
+  font-weight: 500;
+}
+
+.transactions-live-title {
+  cursor: pointer;
   background-color: #0674ec;
   color: white;
+  padding: 15px 10px;
   border-radius: 10px 10px 0 0;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 8px;
-  padding-bottom: 4px;
 }
 
 .tx-menu-close {
@@ -51,21 +53,55 @@
   justify-content: space-around;
 }
 
-.circle-status {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  line-height: 30px;
-}
-
 .circle-orange {
-  background: darkorange;
+  color: #ffb000;
 }
 
-.dark-red {
-  background: darkred;
+.circle-red {
+  color: #f84541;
 }
 
-.dark-green {
-  background: darkgreen;
+.circle-green {
+  color: #01ae2c;
+}
+
+.transaction-row {
+  background: #f5f5f5;
+  display:flex;
+  padding:20px 0px 0px;
+  max-width: 400px;
+}
+
+.container-status, .container-share {
+  flex: 1;
+}
+
+.container-status {
+  padding-left: 20px;
+}
+
+.container-remove {
+  flex:1;
+  text-align: right;
+  border-bottom: 1px solid #dedede;
+}
+
+.container-share {
+  text-align:right;
+  color:#555756;
+  padding-right: 20px;
+  border-bottom: 1px solid #dedede;
+}
+
+.container-share a, .container-hash a, .container-remove a{
+  color:#555756!important;
+}
+
+.container-hash {
+  flex:9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dedede;
 }

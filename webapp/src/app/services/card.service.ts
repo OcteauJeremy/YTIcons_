@@ -167,6 +167,29 @@ export class CardService extends ManagerService {
     }) as Promise<any>;
   }
 
+  public async changeBeneficiary(_idCard: number, _walletBenef: string): Promise<any> {
+
+    let account = await this.getAccount(true);
+    const toastr = this.toastr;
+
+    return new Promise((resolve, reject) => {
+      const _web3 = this._web3;
+
+        var _self = this;
+        this._tokenContract.methods.setBeneficiaryAddress(_idCard, _walletBenef).send({
+          from: account,
+          gas: 4000000,
+          value: 0
+        }, function (error, result) { //get callback from function which is your transaction key
+          if (!error) {
+            resolve(1);
+          } else {
+            resolve(0);
+          }
+        });
+    }) as Promise<any>;
+  }
+
   public async changePriceCard(_idCard: number, _price: number, _walletCard: string): Promise<any> {
 
     let account = await this.getAccount(true);

@@ -17,6 +17,24 @@
     "constant": false,
     "inputs": [
       {
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "name": "beneficiaryAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setBeneficiaryAddress",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
         "name": "_to",
         "type": "address"
       },
@@ -342,24 +360,6 @@
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "cardName",
-        "type": "string"
-      },
-      {
-        "name": "beneficiaryAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setBeneficiaryAddress",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

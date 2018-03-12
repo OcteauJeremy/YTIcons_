@@ -308,6 +308,53 @@
                       </div>
                     </div>
 
+                    <div class="col-md-12">
+                      <div class="information_module">
+                        <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse" id="price-card">
+                          <h4>Type<span class="lnr lnr-chevron-down"></span></h4>
+                        </a>
+
+                        <div class="information__set toggle_module collapse" id="collapseType">
+                          <div class="information_wrapper form--fields">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="type">Type:</label>
+                                  <div class="select-wrap select-wrap2">
+                                    <select [(ngModel)]="selectedCard.type" name="type" id="type" class="text_field">
+                                      <option *ngFor="let type of types" [ngValue]="type">{{type.name}}</option>
+                                    </select>
+                                    <span class="lnr lnr-chevron-down"></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div><!-- end /.information_wrapper -->
+                        </div><!-- end /.information__set -->
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="information_module">
+                        <a class="toggle_title" href="#collapseType" role="button" data-toggle="collapse" id="price-card">
+                          <h4>Beneficiary<span class="lnr lnr-chevron-down"></span></h4>
+                        </a>
+
+                        <div class="information__set toggle_module collapse" id="collapseType">
+                          <div class="information_wrapper form--fields">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                  <label for="type">Beneficiary wallet:</label>
+                                  <input name="cardBenificiary" type="text" id="cardBenificiary" class="text_field" placeholder="Card Beneficiary"
+                                         [(ngModel)]="selectedCard.beneficiaryWallet" (change)="triggerSave(selectedCard)">
+                                </div>
+                              </div>
+                            </div>
+                          </div><!-- end /.information_wrapper -->
+                        </div><!-- end /.information__set -->
+                      </div>
+                    </div>
                   </div>
 
                   <div class="right-side">
