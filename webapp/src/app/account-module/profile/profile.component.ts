@@ -73,6 +73,7 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.as.currentUser;
 
     this.cardsUser = [];
+    this.isLoading = true;
     if (wallet) {
       this.subscriptions.add(this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
 
@@ -138,7 +139,7 @@ export class ProfileComponent implements OnInit {
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
         this.loadingChannel = false;
       }, error => {
-        this.toastr.error('Your picture\'s size is too large, please try with a smaller one.', 'Edit avatar');
+        this.toastr.error(error.message, 'Edit avatar');
         this.loadingChannel = false;
       }));
     }

@@ -71,6 +71,10 @@ app.use(function (err, req, res, next) {
     if (err.code === 'LIMIT_FILE_SIZE') {
         return res.status(400).send({message: 'The file you tried to upload is too big.' });
     }
+
+    if (err.code === 'ERROR_TYPE_IMAGE') {
+        return res.status(400).send({message: err.message });
+    }
     // Handle any other errors
 });
 

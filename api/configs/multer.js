@@ -24,6 +24,15 @@ var storageYoutuber = multer.diskStorage({
 module.exports = {
     multerAvatar: multer({
         storage: storageAvatar,
+        fileFilter: function (req, file, cb) {
+            console.log(file.originalname);
+            if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+                var err = new Error('Your picture\'s size is too large, please try with a smaller one.');
+                err.code = 'ERROR_TYPE_IMAGE';
+                return cb(err);
+            }
+            cb(null, true);
+        },
         limits: {
             fileSize: 1024 * 512
         }

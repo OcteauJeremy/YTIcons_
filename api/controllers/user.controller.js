@@ -125,7 +125,6 @@ exports.findByWallet = function (req, res) {
 };
 
 exports.update = function (req, res) {
-
     if (req.currentUser._id != req.params.userId && req.currentUser.roles.indexOf('admin') == -1) {
         return res.status(403).send({ auth: false, message: 'Non authorized.' });
     }
@@ -217,36 +216,58 @@ exports.updateWallet = function (req, res) {
         return res.status(400).send({message: "Wrong parameters."});
     }
 
+    function transferUser(oldUser, newUser) {
+        Card.find({owner: oldUser._id}, function (err, cards) {
+            cards.forEach(function (card) {
+                card.owner = newUser._id;
+                card.save();
+            });
+        });
+
+        Transaction.find({$or: [{from: oldUser._id}, {to: oldUser._id}]}, function (err, txs) {
+            txs.forEach(function (tx) {
+                if (tx.from.toString() == oldUser._id.toString()) {
+                    tx.from = newUser._id;
+                }
+
+                if (tx.to.toString() == oldUser._id.toString()) {
+                    tx.to = newUser._id;
+                }
+                tx.save();
+            });
+        });
+    }
+
     User.find({wallet: req.body.wallet}, function (err, fUsers) {
         for (var i = 0; i < fUsers.length; i++) {
-            if (fUsers[i].username == '') {
-                Card.find({owner: fUsers[i]._id}, function (err, cards) {
-                    cards.forEach(function (card) {
-                        card.owner = req.currentUser._id;
-                        card.save();
-                    });
-                });
-
-                Transaction.find({$or: [{from: fUsers[i]._id}, {to: fUsers[i]._id}]}, function (err, txs) {
-                    txs.forEach(function (tx) {
-                        if (tx.from.toString() == fUsers[i]._id.toString()) {
-                            tx.from = req.currentUser._id;
-                        }
-
-                        if (tx.to.toString() == fUsers[i]._id.toString()) {
-                            tx.to = req.currentUser._id;
-                        }
-                        tx.save();
-                    });
-                });
-                fUsers[i].remove(function (err) {
+            var cfUser = fUsers[i];
+            if (cfUser.username == '') {
+                transferUser(cfUser, req.currentUser);
+                cfUser.remove(function (err) {
                 });
             } else {
                 return res.status(400).send({message: "An account already use this wallet"});
             }
         }
+        req.currentUser.wallet = req.body.wallet;
+        req.currentUser.save(function (err) {
+            if (err) {
+                return res.status(400).send({message: "Could not update Wallet."});
+            }
+            return res.status(200).send(req.currentUser);
+        });
+        var user = new User();
 
-        console.log('ah bon ?');
+        user.initValues();
+        user.wallet = req.currentUser.wallet;
+
+        user.save(function (err, nUser) {
+            if (err) {
+                return res.status(400).send({message: "Could not update Wallet."});
+            }
+
+        });
+
 
         req.currentUser.wallet = req.body.wallet;
         req.currentUser.save(function (err) {

@@ -5,7 +5,8 @@ var TypeSchema = mongoose.Schema({
     name: String,
     css: String,
     minSubscribers: Number,
-    maxSubscribers: Number
+    maxSubscribers: Number,
+    rarity: Number
 }, {
   timestamps: true
 });
