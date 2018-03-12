@@ -196,25 +196,28 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   saveCard(card) {
 
     card.isSaving = true;
+    var _self = this;
+
     var modifyCard = (card) => {
-      this.subscriptions.add(this.cardService.modifyCard(card).subscribe( res => {
-        card = this.initCopyCard(card);
-        this.toastr.success('Card ' + card.name + ' has been modified', 'Card');
+      _self.subscriptions.add(_self.cardService.modifyCard(card).subscribe( res => {
+        card = _self.initCopyCard(card);
+        _self.toastr.success('Card ' + card.name + ' has been modified', 'Card');
       }, error => {
-        card = this.initCopyCard(card);
-        this.toastr.warning('Error during the transaction', 'Network');
+        card = _self.initCopyCard(card);
+        _self.toastr.warning('Error during the transaction', 'Network');
       }));
     };
 
     function manageBeneficiary(card) {
       if (card.beneficiaryWallet != card.copy.beneficiaryWallet) {
-        this.subscriptions.add(this.cardService.changeBeneficiary(card.id, card.beneficiaryWallet).then(resultat => {
+        _self.cardService.changeBeneficiary(card.id, card.beneficiaryWallet).then(resultat => {
           if (!resultat) {
-            this.toastr.warning('Error during the transaction', 'Network');
+            _self.toastr.warning('Error during the transaction', 'Network');
+            card.tx = resultat;
             return ;
           }
           modifyCard(card);
-        }));
+        });
       } else {
         modifyCard(card);
       }
@@ -224,18 +227,20 @@ export class ListCardsComponent implements OnInit, OnDestroy {
     function manageLock(card) {
       if (card.isLocked != card.copy.isLocked) {
         if (card.isLocked) {
-          this.cardService.lockCard(card.id).then((resultat) => {
+          _self.cardService.lockCard(card.id).then((resultat) => {
             if (!resultat) {
-              card = this.initCopyCard(card);
+              _self.toastr.warning('Error during the transaction', 'Network');
+              card = _self.initCopyCard(card);
               return ;
             }
             card.tx = resultat;
             manageBeneficiary(card)
           });
         } else {
-          this.cardService.unlockCard(card.id).then((resultat) => {
+          _self.cardService.unlockCard(card.id).then((resultat) => {
             if (!resultat) {
-              card = this.initCopyCard(card);
+              _self.toastr.warning('Error during the transaction', 'Network');
+              card = _self.initCopyCard(card);
               return ;
             }
             card.tx = resultat;

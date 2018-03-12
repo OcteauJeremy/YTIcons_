@@ -197,11 +197,8 @@ exports.update = function (req, res) {
                                tx.save();
                             });
                        });
-                       console.log(userTmp);
                        userTmp.remove(function (err) {
-                           console.log('REMOOOOOOOOOVED', err);
                        });
-                       //userTmp.delete();
                    }
                 });
             }
