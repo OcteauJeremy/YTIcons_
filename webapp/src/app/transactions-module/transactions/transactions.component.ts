@@ -8,7 +8,8 @@ import { TransactionService } from '../../services/transaction.service';
 })
 export class TransactionsComponent implements OnInit {
 
-  public  isOpen = false;
+
+  public  isOpen = true;
   public  txList = {};
   public  txHashList = [];
 
