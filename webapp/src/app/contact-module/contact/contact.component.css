@@ -6,6 +6,9 @@
   padding: 0px 0 40px;
 }
 
+.contact_form input {
+  color: #000000 !important;
+}
 .form-control {
   border-radius: 2px;
   -webkit-appearance: none;
@@ -15,5 +18,13 @@
   border: 1px solid #e7e7e7;
   padding: 0 20px;
   font-size: 16px;
-  color: #757575;
+  color: #000000;
+}
+
+.hint-text {
+  color: #757575 !important;
+}
+
+.form-group {
+  font-size: 16px;
 }
