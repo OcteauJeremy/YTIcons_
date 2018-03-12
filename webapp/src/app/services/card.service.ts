@@ -30,7 +30,7 @@ export class CardService extends ManagerService {
       const toastr = this.toastr;
 
       Observable.interval(2000).subscribe(x => {
-        this._web3.eth.getAccounts((error, accounts) => {this._account = accounts[0];console.log(this._account);});
+        this._web3.eth.getAccounts((error, accounts) => {this._account = accounts[0];});
       });
 
       // Probably useless to unsubscribe since a service is never destroyed...
