@@ -2,16 +2,22 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
+        <div class="breadcrumb">
+          <ul>
+            <li><a routerLink="/home">Home</a></li>
+            <li class="active"><a routerLink="/account">Profile</a></li>
+          </ul>
+        </div>
         <h1 *ngIf="address" class="page-title"><a class="address" target="_blank"
                                                   href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
         </h1>
         <h1 *ngIf="!address" class="page-title">
           <a class="address" target="_blank" href="https://ropsten.etherscan.io/address/{{currentUser.wallet}}">{{currentUser?.wallet}}</a>
-          <a (click)="refreshWallet()"><i class="fas fa-sync" aria-hidden="true"></i></a></h1>
-
-      </div><!-- end /.col-md-12 -->
-    </div><!-- end /.row -->
-  </div><!-- end /.container -->
+          <a *ngIf="!isSyncronising" (click)="refreshWallet()">Syncronise MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet']" aria-hidden="true"></i></a>
+          <a *ngIf="isSyncronising" (click)="refreshWallet()">Syncronise MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet', 'fa-spin']" aria-hidden="true"></i></a></h1>
+      </div>
+    </div>
+  </div>
 </section>
 
 <div class="empty-market" *ngIf="isLoading == true">
@@ -24,7 +30,6 @@
         <aside class="sidebar sidebar_author">
           <div class="author-card sidebar-card">
             <div class="author-infos">
-
               <div class="author_avatar">
                 <div class="profile-avatar" *ngIf="!address"
                      [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>

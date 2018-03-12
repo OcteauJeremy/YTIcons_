@@ -2,10 +2,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CardService } from '../../services/card.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Card } from "../../models/Card";
-import { Subscription } from "rxjs/Subscription";
-import { UserService } from "../../services/user.service";
-import {ManagerService } from "../../services/manager.service";
+import { Card } from '../../models/Card';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from '../../services/user.service';
+import {ManagerService } from '../../services/manager.service';
 import { SocketService } from '../../services/socket.service';
 import fontawesome from '@fortawesome/fontawesome';
 import { faSync } from '@fortawesome/fontawesome-free-solid';
@@ -18,20 +18,21 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class ProfileComponent implements OnInit {
 
-  public cardNumber: number = 0;
+  public cardNumber = 0;
   public cardsUser: Array<Card> = [];
   public currentUser: any;
   private subscriptions: Subscription = new Subscription();
   public address: string = null;
   public userProfile: any;
-  public isLoading: boolean = true;
+  public isLoading = true;
+  public isSyncronising = false;
   public loadingChannel = false;
 
   public form = {
     password: '',
     newPassword: '',
     conPassword: ''
-  }
+  };
 
   conPassword: string;
   password: string;
@@ -42,17 +43,17 @@ export class ProfileComponent implements OnInit {
 
      fontawesome.library.add(faSync);
 
-     let _self = this;
+     const _self = this;
 
      this.socketService.initSocket();
 
      this.subscriptions.add(this.socketService.onEvent('tx-card').subscribe((cardId: any) => {
-       for (let c of this.cardsUser) {
+       for (const c of this.cardsUser) {
          if (c._id == cardId) {
            this.cardsUser = [];
            this.cs.getCardsByWallet(this.address == null ? this.currentUser.wallet : this.address).subscribe(cardsUser => {
 
-             for (var card of cardsUser) {
+             for (const card of cardsUser) {
                if (card) {
                  _self.cardsUser.push(card as Card);
                  document.getElementsByClassName('modal-backdrop')[0].remove();
@@ -67,7 +68,7 @@ export class ProfileComponent implements OnInit {
   }
 
   refreshProfileInfo(wallet: string) {
-    let _self = this;
+    const _self = this;
 
     this.currentUser = this.as.currentUser;
 
@@ -75,7 +76,7 @@ export class ProfileComponent implements OnInit {
     if (wallet) {
       this.subscriptions.add(this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
 
-        for (var card of cardsUser) {
+        for (const card of cardsUser) {
           if (card) {
             _self.cardsUser.push(card as Card);
           }
@@ -83,29 +84,35 @@ export class ProfileComponent implements OnInit {
         _self.cardNumber = _self.cardsUser.length;
         _self.isLoading = false;
       }));
-    }
-    else
+    } else {
       this.isLoading = false;
+    }
   }
 
   refreshWallet() {
-    let _self = this;
+    const _self = this;
     const toastr = this.toastr;
 
-
-    this.cs.getAccount(true).then(function(res:string) {
+    this.isSyncronising = true;
+    this.cs.getAccount(true).then(function(res: string) {
       if (_self.as.currentUser.wallet != res) {
-        let save = _self.as.currentUser.wallet;
+        const save = _self.as.currentUser.wallet;
         _self.as.currentUser.wallet = res;
         _self.subscriptions.add(_self.us.updateWallet(_self.as.currentUser).subscribe(res => {
           if (res != null) {
             _self.as.setCurrentUser(res);
             _self.refreshProfileInfo(_self.as.currentUser.wallet);
+            _self.isSyncronising = false;
+            toastr.success('Your wallet has been syncronised.', 'Wallet refresh');
           }
         }, error => {
           _self.as.currentUser.wallet = save;
+          _self.isSyncronising = false;
           toastr.error('This wallet is already set on another user.', 'Wallet refresh');
         }));
+      } else {
+        toastr.info('Your wallet is already syncronised with MetaMask.', 'Wallet refresh');
+        _self.isSyncronising = false;
       }
     });
   }
@@ -145,8 +152,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.form.conPassword !== this.form.newPassword) {
       toastr.error('Your passwords must match', 'Edit password');
-    }
-    else if (this.form.password != '' && this.form.conPassword != ''  && this.form.newPassword != '' ) {
+    } else if (this.form.password != '' && this.form.conPassword != ''  && this.form.newPassword != '' ) {
       this.subscriptions.add(this.as.setNewPassword(this.form.password, this.form.conPassword).subscribe(res => {
           toastr.success(res.message, 'Edit password');
           _self.form.password = '';
@@ -158,14 +164,13 @@ export class ProfileComponent implements OnInit {
           toastr.error(error.error.message, 'Edit password');
         }
       ));
-    }
-    else {
+    } else {
       toastr.error('All fields are required', 'Edit password');
     }
   }
 
   ngOnInit() {
-    let _self = this;
+    const _self = this;
     this.currentUser = this.as.currentUser;
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
@@ -184,18 +189,15 @@ export class ProfileComponent implements OnInit {
 
       if (this.address == null) {
         this.refreshProfileInfo(this.as.currentUser.wallet);
-      }
-
-      else {
+      } else {
         this.subscriptions.add(this.us.getUserByWallet(this.address).subscribe(res => {
           if (res == null) {
             this._router.navigate(['market']);
-          }
-          else {
+          } else {
             _self.userProfile = res;
             _self.refreshProfileInfo(_self.address);
           }
-        },error => {
+        }, error => {
           this._router.navigate(['market']);
         }));
       }
