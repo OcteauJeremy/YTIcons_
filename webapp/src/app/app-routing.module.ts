@@ -11,7 +11,6 @@ import { PrivacyPolicyComponent } from "./privacypolicy-module/privacypolicy/pri
 import { LegalComponent } from "./legal-module/legal/legal.component";
 import { AdminComponent } from './admin-module/admin/admin.component';
 import { ContactComponent } from './contact-module/contact/contact.component';
-import { BountyProgramComponent } from './bountyprogram-module/bountyprogram/bountyprogram.component';
 import { OperationComponent } from './operation-module/operation/operation.component';
 import { IsAdminGuard } from './guards/is-admin.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
@@ -69,10 +68,6 @@ const appRoutes: Routes = [
   {
     path: 'operation',
     component: OperationComponent,
-  },
-  {
-    path: 'bountyprogram',
-    component: BountyProgramComponent,
   },
   {
     path: 'signin',

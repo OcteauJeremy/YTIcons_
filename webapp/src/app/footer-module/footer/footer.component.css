@@ -2,6 +2,10 @@
   text-align: right;
 }
 
+.flex {
+  display: flex;
+}
+
 .section--padding {
   padding-top: 70px;
   padding-bottom: 70px;
