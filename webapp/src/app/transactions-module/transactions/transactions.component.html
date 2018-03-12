@@ -1,35 +1,34 @@
-<div *ngIf="txHashList.length > 0">
-  <div *ngIf="isOpen" style="width: 200px">
+<div class="transactions-live-container">
+  <div *ngIf="isOpen">
     <div class="row">
-      <div class="col-md-offset-11 cold-md-1" (click)="isOpen = !isOpen">
-        <i class="fas fa-chevron-down"></i>
+      <div class="col-md-12 transactions-live-title" (click)="isOpen = !isOpen">
+        <i class="fas fa-paper-plane"></i>
+        Transactions open
       </div>
     </div>
     <div class="list-tx">
       <div *ngFor="let tx of txHashList" class="row">
+        <div class="col-md1">
+          <div [ngClass]="['circle-status', tx.isFinished ? '' : 'cirlce-orange', tx.isFinished && tx.success ? '' : 'cirlce-green', tx.isFinished && !tx.success ? '' : 'cirlce-red']">
+        </div>
+
+        </div>
         <a class="col-md-8 tx-link" target="_blank" href="https://ropsten.etherscan.io/tx/{{tx}}">
           {{tx}}
         </a>
-        <div *ngIf="txList[tx].isFinished" class="col-md-4 icons-container">
-          <div *ngIf="txList[tx].success" style="color: darkgreen">
-            <i class="fas fa-check"></i>
-          </div>
-          <div *ngIf="!txList[tx].success" style="color: darkred">
-            <i class="fas fa-times"></i>
-          </div>
+
+        <div *ngIf="txList[tx].isFinished" class="col-md-3 icons-container">
           <div (click)="txService.removeTx(tx)" class="delete-tx-icon"><i class="fas fa-trash-alt"></i></div>
         </div>
-        <div *ngIf="!txList[tx].isFinished">
-          <i class="fas fa-spinner fa-spin"></i>
-        </div>
+
       </div>
     </div>
   </div>
 
-  <div *ngIf="!isOpen" class="tx-menu-close" (click)="isOpen = !isOpen">
+  <div *ngIf="!isOpen" class="tx-menu-close col-md-2" (click)="isOpen = !isOpen">
     <div class="tx-menu-item">
-      <i class="fas fa-exchange-alt" style="margin-right: 4px;"></i>
-      <span>Transactions - {{txHashList.length}}</span>
+      <i class="fas fa-paper-plane"></i>
+      <span style="margin-left: 10px">Transactions</span>
     </div>
   </div>
 </div>

@@ -15,14 +15,12 @@ export class TransactionsComponent implements OnInit {
   constructor(public txService: TransactionService) {
 
     this.txService.txListChange.subscribe(res => {
-      // console.log('res', res);
 
       this.txList = res;
       this.txHashList = [];
       for (var key of Object.keys(this.txList)) {
         this.txHashList.push(key);
       }
-      console.log('txList', this.txList);
     });
   }
 

@@ -31,7 +31,6 @@ import { CurrencyService } from './services/currency.service';
 import { AdminModule } from './admin-module/admin.module';
 import { YoutubeService } from './services/youtube.service';
 import { ContactModule } from './contact-module/contact.module';
-import { BountyProgramModule } from './bountyprogram-module/bountyprogram.module';
 import { OperationModule } from './operation-module/operation.module';
 import { DirectivesModule } from "./directives/directives.module";
 import { CookieService } from 'ng2-cookies';
@@ -89,7 +88,6 @@ export class ToastCustomOptions extends ToastOptions {
     AdminModule,
     NgbModule.forRoot(),
     ContactModule,
-    BountyProgramModule,
     OperationModule,
     DirectivesModule,
     LiveModule,
