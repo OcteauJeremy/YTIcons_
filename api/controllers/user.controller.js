@@ -238,43 +238,69 @@ exports.updateWallet = function (req, res) {
         });
     }
 
-    User.find({wallet: req.body.wallet}, function (err, fUsers) {
-        for (var i = 0; i < fUsers.length; i++) {
-            var cfUser = fUsers[i];
-            if (cfUser.username == '') {
-                transferUser(cfUser, req.currentUser);
-                cfUser.remove(function (err) {
+    var txsListCurrentUser = [];
+    var cardsListCurrentUser = [];
+    function loadDatasUser(cb) {
+        Card.find({owner: req.currentUser._id}).exec(function (err, cards) {
+            cardsListCurrentUser = cards;
+            Transaction.find({$or: [{from: req.currentUser._id}, {to: req.currentUser._id}]}, function (err, txs) {
+                txsListCurrentUser = txs;
+                cb()
+            })
+        });
+    }
+
+    loadDatasUser(function () {
+        User.find({wallet: req.body.wallet}, function (err, fUsers) {
+            for (var i = 0; i < fUsers.length; i++) {
+                var cfUser = fUsers[i];
+                if (cfUser.username == '') {
+                    transferUser(cfUser, req.currentUser);
+                    cfUser.remove(function (err) {
+                    });
+                } else {
+                    return res.status(400).send({message: "An account already use this wallet"});
+                }
+            }
+
+            var user = new User();
+
+            user.initValues();
+            user.wallet = req.currentUser.wallet;
+
+            user.save(function (err, nUser) {
+                if (err) {
+                    return res.status(400).send({message: "Could not update Wallet."});
+                }
+
+                for (var i = 0; i < cardsListCurrentUser.length; i++) {
+                    Card.findById(cardsListCurrentUser[i]._id, function (err, cardTmp) {
+                        cardTmp.owner = nUser._id;
+                        cardTmp.save(function () {});
+                    });
+                }
+
+                for (var i = 0; i < txsListCurrentUser.length; i++) {
+                    Transaction.findById(txsListCurrentUser[i]._id, function (err, txTmp) {
+                        if (txTmp.from.toString() == req.currentUser._id.toString()) {
+                            txTmp.from = nUser._id;
+                        }
+
+                        if (txTmp.to.toString() == req.currentUser._id.toString()) {
+                            txTmp.to = nUser._id;
+                        }
+                        txTmp.save(function () {});
+                    });
+                }
+
+                req.currentUser.wallet = req.body.wallet;
+                req.currentUser.save(function (err) {
+                    if (err) {
+                        return res.status(400).send({message: "Could not update Wallet."});
+                    }
+                    return res.status(200).send(req.currentUser);
                 });
-            } else {
-                return res.status(400).send({message: "An account already use this wallet"});
-            }
-        }
-        req.currentUser.wallet = req.body.wallet;
-        req.currentUser.save(function (err) {
-            if (err) {
-                return res.status(400).send({message: "Could not update Wallet."});
-            }
-            return res.status(200).send(req.currentUser);
-        });
-        var user = new User();
-
-        user.initValues();
-        user.wallet = req.currentUser.wallet;
-
-        user.save(function (err, nUser) {
-            if (err) {
-                return res.status(400).send({message: "Could not update Wallet."});
-            }
-
-        });
-
-
-        req.currentUser.wallet = req.body.wallet;
-        req.currentUser.save(function (err) {
-            if (err) {
-                return res.status(400).send({message: "Could not update Wallet."});
-            }
-            return res.status(200).send(req.currentUser);
+            });
         });
     });
 
