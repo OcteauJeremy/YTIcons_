@@ -182,9 +182,9 @@ export class CardService extends ManagerService {
           value: 0
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
-            resolve(1);
+            resolve(result);
           } else {
-            resolve(0);
+            resolve(null);
           }
         });
     }) as Promise<any>;

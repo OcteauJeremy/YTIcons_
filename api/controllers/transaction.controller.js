@@ -92,10 +92,8 @@ exports.listenTx = function (req, res) {
         web3.eth.getTransactionReceipt(txHash).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {
-                    console.log('status 400');
                     return res.status(400).send({message: 'Error during the ethereum transaction.'});
                 } else {
-                    console.log('status 200');
                     return res.status(200).send({message: 'Transaction successfull.'});
                 }
             } else {
