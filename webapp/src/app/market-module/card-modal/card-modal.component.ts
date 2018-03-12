@@ -40,6 +40,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
     if (this.newPrice != 0 ) {
       this.cs.changePriceCard(idCard, this.newPrice, _wallet).then(function (res) {
         _self.newPrice = _self.roundPipe.transform(_self.card.price);
+        _self.cardModalCloseButton.nativeElement.click();
       });
     } else {
       _self.newPrice = _self.roundPipe.transform(_self.card.price);
