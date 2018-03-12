@@ -158,21 +158,26 @@
 }
 
 #card_picture_1 {
-  background: url('../../../assets/images/home/fill_model_0.png');
   background: url('../../../assets/images/home/empty_model_0.png');
   background-size: cover;
 }
 
+#card_picture_1:before {
+  background: url('../../../assets/images/home/fill_model_0.png');
+}
+
 #card_picture_1:hover {
-  background: transparent;
   background: url('../../../assets/images/home/fill_model_0.png');
   background-size: cover;
 }
 
 #card_picture_2 {
-  background: url('../../../assets/images/home/fill_model_1.png');
   background: url('../../../assets/images/home/empty_model_1.png');
   background-size: cover;
+}
+
+#card_picture_2:before {
+  background: url('../../../assets/images/home/fill_model_1.png');
 }
 
 #card_picture_2:hover {
@@ -181,9 +186,12 @@
 }
 
 #card_picture_3 {
-  background: url('../../../assets/images/home/fill_model_2.png');
   background: url('../../../assets/images/home/empty_model_2.png');
   background-size: cover;
+}
+
+#card_picture_3:before {
+  background: url('../../../assets/images/home/fill_model_2.png');
 }
 
 #card_picture_3:hover {
