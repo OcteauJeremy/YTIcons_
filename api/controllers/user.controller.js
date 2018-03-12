@@ -218,33 +218,35 @@ exports.updateWallet = function (req, res) {
     }
 
     User.find({wallet: req.body.wallet}, function (err, fUsers) {
-        fUsers.forEach(function (userTmp) {
-            if (userTmp.username == '') {
-                Card.find({owner: userTmp._id}, function (err, cards) {
+        for (var i = 0; i < fUsers.length; i++) {
+            if (fUsers[i].username == '') {
+                Card.find({owner: fUsers[i]._id}, function (err, cards) {
                     cards.forEach(function (card) {
                         card.owner = req.currentUser._id;
                         card.save();
                     });
                 });
 
-                Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
+                Transaction.find({$or: [{from: fUsers[i]._id}, {to: fUsers[i]._id}]}, function (err, txs) {
                     txs.forEach(function (tx) {
-                        if (tx.from.toString() == userTmp._id.toString()) {
+                        if (tx.from.toString() == fUsers[i]._id.toString()) {
                             tx.from = req.currentUser._id;
                         }
 
-                        if (tx.to.toString() == userTmp._id.toString()) {
+                        if (tx.to.toString() == fUsers[i]._id.toString()) {
                             tx.to = req.currentUser._id;
                         }
-
                         tx.save();
                     });
                 });
-                userTmp.remove(function (err) {});
+                fUsers[i].remove(function (err) {
+                });
             } else {
                 return res.status(400).send({message: "An account already use this wallet"});
             }
-        });
+        }
+
+        console.log('ah bon ?');
 
         req.currentUser.wallet = req.body.wallet;
         req.currentUser.save(function (err) {

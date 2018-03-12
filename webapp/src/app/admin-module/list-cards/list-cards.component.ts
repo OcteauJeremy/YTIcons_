@@ -223,7 +223,6 @@ export class ListCardsComponent implements OnInit, OnDestroy {
       }
     }
 
-
     function manageLock(card) {
       if (card.isLocked != card.copy.isLocked) {
         if (card.isLocked) {
