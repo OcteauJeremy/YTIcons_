@@ -1,3 +1,17 @@
+.transactions-live-container {
+  position: fixed;
+  bottom: 0;
+  right: 15%;
+  z-index: 999;
+  background-color: #0674ec;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+
 .tx-menu-close {
   box-sizing: border-box;
   display: inline-flex;
@@ -25,6 +39,7 @@
 .list-tx {
   display: flex;
   flex-direction: column;
+  background-color: white;
 }
 
 .delete-tx-icon {
@@ -34,4 +49,23 @@
 .icons-container {
   display: flex;
   justify-content: space-around;
+}
+
+.circle-status {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  line-height: 30px;
+}
+
+.circle-orange {
+  background: darkorange;
+}
+
+.dark-red {
+  background: darkred;
+}
+
+.dark-green {
+  background: darkgreen;
 }

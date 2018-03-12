@@ -23,14 +23,12 @@ export class TransactionService extends ManagerService{
       success: false
     };
     this.listenTx(txHash).subscribe(res => {
-      console.log(txHash, '--> success');
       if (this.txList[txHash]) {
         this.txList[txHash].isFinished = true;
         this.txList[txHash].success = true;
       }
       this.txListChange.next(this.txList);
     }, err => {
-      console.log(txHash, '--> error');
       if (this.txList[txHash]) {
         this.txList[txHash].isFinished = true;
         this.txList[txHash].success = false;
