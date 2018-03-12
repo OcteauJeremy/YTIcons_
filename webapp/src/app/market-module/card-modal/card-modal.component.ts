@@ -15,6 +15,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
 
   @Input("card") card: Card;
   @ViewChild('cardModalCloseButton') cardModalCloseButton: ElementRef;
+  @ViewChild('buyModalCloseButton') buyModalCloseButton: ElementRef;
 
   public currentUser: any;
   public acceptTos = false;
@@ -47,6 +48,10 @@ export class CardModalComponent implements OnInit, OnDestroy {
       price = this.roundPipe.transform(card.price);
     }
     this.cardModalCloseButton.nativeElement.click();
+    this.buyModalCloseButton.nativeElement.click();
+    if (!this.currentUser) {
+      this.acceptTos = false;
+    }
     this.cs.purchaseCard(card.id, price).then(function(res) {
     }, error => {
       this.toastr.error('You need to install MetaMask to be able to trade cards.', 'Purchase card');
@@ -73,6 +78,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.acceptTos = false;
     this.subscriptions.unsubscribe();
   }
 
