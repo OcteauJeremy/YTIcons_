@@ -6,6 +6,7 @@ import {MarketModule} from "../market-module/market.module";
 import {FormsModule} from "@angular/forms";
 import {DirectivesModule} from "../directives/directives.module";
 import {LaddaModule} from "angular2-ladda";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {LaddaModule} from "angular2-ladda";
     MarketModule,
     FormsModule,
     DirectivesModule,
-    LaddaModule
+    LaddaModule,
+    RouterModule,
   ],
   declarations: [
   ProfileComponent,
