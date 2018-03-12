@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {ToastsManager} from "ng2-toastr";
 import {Subscription} from 'rxjs/Subscription';
 import {RoundPipe} from "../../pipes/round.pipe";
+import {Observable} from "rxjs/Rx";
 
 @Component({
   selector: 'app-card-modal',
@@ -34,16 +35,20 @@ export class CardModalComponent implements OnInit, OnDestroy {
   }
 
   changePriceCard(idCard: number, _wallet: string) {
+    let _self = this;
+
     if (this.newPrice != 0 ) {
       this.cs.changePriceCard(idCard, this.newPrice, _wallet).then(function (res) {
-        // console.log(res);
+        _self.newPrice = _self.roundPipe.transform(_self.card.price);
       });
     } else {
+      _self.newPrice = _self.roundPipe.transform(_self.card.price);
       this.toastr.error('The price must be greater than 0.', 'Price modification');
     }
   }
 
   purchaseCard(card: Card, price: number) {
+    let _self = this;
     if (price < card.price) {
       price = this.roundPipe.transform(card.price);
     }
@@ -53,15 +58,21 @@ export class CardModalComponent implements OnInit, OnDestroy {
       this.acceptTos = false;
     }
     this.cs.purchaseCard(card.id, price).then(function(res) {
+      _self.newPrice = _self.roundPipe.transform(_self.card.price);
     }, error => {
+      _self.newPrice = _self.roundPipe.transform(_self.card.price);
       this.toastr.error('You need to install MetaMask to be able to trade cards.', 'Purchase card');
     });
   }
 
   ngOnInit() {
     this.currentUser = this.as.currentUser;
-    this.cs.getAccount(false).then(res => {this.currentWallet = res});
+    Observable.interval(2000).subscribe(x => {
+      this.currentWallet = this.cs._account;
+    });
 
+
+    console.log(this.currentWallet);
     if (this.currentUser) {
       this.acceptTos = true;
     }
