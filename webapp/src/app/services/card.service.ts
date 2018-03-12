@@ -100,6 +100,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       const toastr = this.toastr;
 
+      var _self = this;
       this._tokenContract.methods.lock(_idCard).send({
         from: account,
         gas: 4000000,
@@ -107,6 +108,7 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
           toastr.success('Your lock has been successfully done.', 'Lock');
+          _self.txService.addTx(result);
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s lock has failed.', 'Transaction');
@@ -124,6 +126,7 @@ export class CardService extends ManagerService {
       const _web3 = this._web3;
       const toastr = this.toastr;
 
+      var _self = this;
       this._tokenContract.methods.unlock(_idCard).send({
         from: account,
         gas: 4000000,
@@ -131,6 +134,7 @@ export class CardService extends ManagerService {
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
           toastr.success('Your unlock has been successfully done.', 'Transaction');
+          _self.txService.addTx(result);
           resolve(result);
         } else {
           toastr.error('The YTIcon\'s unlock has failed.', 'Transaction');
@@ -183,6 +187,7 @@ export class CardService extends ManagerService {
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
             resolve(result);
+            _self.txService.addTx(result);
           } else {
             resolve(null);
           }
@@ -260,6 +265,7 @@ export class CardService extends ManagerService {
 
         if (!error) {
           card.tx = result;
+          self.txService.addTx(result);
           self.createCard(card).subscribe(res => {
             resolve(res);
           }, error => {

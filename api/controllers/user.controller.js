@@ -15,7 +15,7 @@ exports.create = function (req, res) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
-    User.find({ $or: [ {username_lower: req.body.username.toLowerCase()}, {email: req.body.email}]}).select('email').exec(function (err, users) {
+    User.find({ $or: [ {username_lower: req.body.username.toLowerCase()}, {email: req.body.email}]}).select('email username username_lower').exec(function (err, users) {
         if (err) {
             return res.status(400).send({message: "Error during mongoDB transaction."});
         }
