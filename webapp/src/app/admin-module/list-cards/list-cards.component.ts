@@ -19,7 +19,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   public nationalities = [];
   public categories = [];
   public isLoading = false;
-  public  selectInputs = {
+  public selectInputs = {
     codeCountry: "",
     nameCountry: "",
     nameCategory: ""
@@ -206,29 +206,48 @@ export class ListCardsComponent implements OnInit, OnDestroy {
       }));
     };
 
-    if (card.isLocked != card.copy.isLocked) {
-      if (card.isLocked) {
-        this.cardService.lockCard(card.id).then((resultat) => {
+    function manageBeneficiary(card) {
+      if (card.beneficiaryWallet != card.copy.beneficiaryWallet) {
+        this.subscriptions.add(this.cardService.changeBeneficiary(card.id, card.beneficiaryWallet).then(resultat => {
           if (!resultat) {
-              card = this.initCopyCard(card);
-              return ;
-          }
-          card.tx = resultat;
-          modifyCard(card)
-        });
-      } else {
-        this.cardService.unlockCard(card.id).then((resultat) => {
-          if (!resultat) {
-            card = this.initCopyCard(card);
+            this.toastr.warning('Error during the transaction', 'Network');
             return ;
           }
-          card.tx = resultat;
           modifyCard(card);
-        });
+        }));
+      } else {
+        modifyCard(card);
       }
-    } else {
-      modifyCard(card);
     }
+
+
+    function manageLock(card) {
+      if (card.isLocked != card.copy.isLocked) {
+        if (card.isLocked) {
+          this.cardService.lockCard(card.id).then((resultat) => {
+            if (!resultat) {
+              card = this.initCopyCard(card);
+              return ;
+            }
+            card.tx = resultat;
+            manageBeneficiary(card)
+          });
+        } else {
+          this.cardService.unlockCard(card.id).then((resultat) => {
+            if (!resultat) {
+              card = this.initCopyCard(card);
+              return ;
+            }
+            card.tx = resultat;
+            manageBeneficiary(card);
+          });
+        }
+      } else {
+        manageBeneficiary(card);
+      }
+    }
+
+    manageLock(card);
   }
 
   initCopyCard(card) {
