@@ -13,8 +13,8 @@
         </h1>
         <h1 *ngIf="!address" class="page-title">
           <a class="address" target="_blank" href="https://ropsten.etherscan.io/address/{{currentUser.wallet}}">{{currentUser?.wallet}}</a>
-          <a *ngIf="!isSyncronising" (click)="refreshWallet()">Syncronise MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet']" aria-hidden="true"></i></a>
-          <a *ngIf="isSyncronising" (click)="refreshWallet()">Syncronise MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet', 'fa-spin']" aria-hidden="true"></i></a></h1>
+          <a *ngIf="!isSyncronising" (click)="refreshWallet()">Synchronize MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet']" aria-hidden="true"></i></a>
+          <a *ngIf="isSyncronising" (click)="refreshWallet()">Synchronize MetaMask wallet<i [ngClass]="['fas', 'fa-sync', 'syncronise-wallet', 'fa-spin']" aria-hidden="true"></i></a></h1>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
   <div class="spinner-rect" style="margin: 100px auto"></div>
 </div>
 <section *ngIf="isLoading == false" class="author-profile-area">
-  <div class="container">git
+  <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6">
         <aside class="sidebar sidebar_author">
