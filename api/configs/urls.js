@@ -4,7 +4,7 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "https://";
     module.exports = {
         port: "8443",
-        tokenAddress: "0x07642384ee19bbf3e316f92bdc7ad7f049f64286",
+        tokenAddress: "0x1F090C3E1CF41B83855870abA44dcbb323436aBF",
         secureSocket: protocol == "https://" ? true : false,
         webserver: protocol + "yticons.co",
         // websocket: "wss://ropsten.infura.io/ws",
