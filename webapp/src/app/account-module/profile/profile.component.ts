@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit {
 
     this.cardsUser = [];
     this.isLoading = true;
+
     if (wallet) {
       this.subscriptions.add(this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
 

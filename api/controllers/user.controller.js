@@ -1,12 +1,12 @@
-var User    = require('../models/user.model');
-var Card    = require('../models/card.model');
-var Transaction     = require('../models/transaction.model');
-var uploadOptions   = require('../configs/multer');
-var app     = require('../server').appServer;
-var jwt     = require('jsonwebtoken');
+var User = require('../models/user.model');
+var Card = require('../models/card.model');
+var Transaction = require('../models/transaction.model');
+var uploadOptions = require('../configs/multer');
+var app = require('../server').appServer;
+var jwt = require('jsonwebtoken');
 var request = require('request');
-const fs    = require('fs');
-const URL   = require('../configs/urls');
+const fs = require('fs');
+const URL = require('../configs/urls');
 
 
 exports.create = function (req, res) {
@@ -15,7 +15,7 @@ exports.create = function (req, res) {
         return res.status(400).send({message: "User can not be empty"});
     }
 
-    User.find({ $or: [ {username_lower: req.body.username.toLowerCase()}, {email: req.body.email}]}).select('email username username_lower').exec(function (err, users) {
+    User.find({$or: [{username_lower: req.body.username.toLowerCase()}, {email: req.body.email}]}).select('email username username_lower').exec(function (err, users) {
         if (err) {
             return res.status(400).send({message: "Error during mongoDB transaction."});
         }
@@ -126,7 +126,7 @@ exports.findByWallet = function (req, res) {
 
 exports.update = function (req, res) {
     if (req.currentUser._id != req.params.userId && req.currentUser.roles.indexOf('admin') == -1) {
-        return res.status(403).send({ auth: false, message: 'Non authorized.' });
+        return res.status(403).send({auth: false, message: 'Non authorized.'});
     }
 
     var modifiedUser = function (user) {
@@ -141,7 +141,8 @@ exports.update = function (req, res) {
             var fileName = tmp[tmp.length - 1];
 
             if (fileName.indexOf('default') < 0) {
-                fs.unlink(__dirname + '/../ressources/avatars/user/' + fileName, function () {});
+                fs.unlink(__dirname + '/../ressources/avatars/user/' + fileName, function () {
+                });
             }
             user.avatar = uploadOptions.pathAvatarUrl + '/' + req.file.filename;
         }
@@ -175,30 +176,30 @@ exports.update = function (req, res) {
 
             if (fUser.length > 0) {
                 fUser.forEach(function (userTmp) {
-                   if (userTmp.username == '' && userTmp.email == '') {
-                       Card.find({owner: userTmp._id}, function (err, cards) {
+                    if (userTmp.username == '' && userTmp.email == '') {
+                        Card.find({owner: userTmp._id}, function (err, cards) {
                             cards.forEach(function (card) {
                                 card.owner = user._id;
                                 card.save();
                             });
-                       });
+                        });
 
-                       Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
+                        Transaction.find({$or: [{from: userTmp._id}, {to: userTmp._id}]}, function (err, txs) {
                             txs.forEach(function (tx) {
-                               if (tx.from.toString() == userTmp._id.toString()) {
-                                   tx.from = user._id;
-                               }
+                                if (tx.from.toString() == userTmp._id.toString()) {
+                                    tx.from = user._id;
+                                }
 
-                               if (tx.to.toString() == userTmp._id.toString()) {
-                                   tx.to = user._id;
-                               }
+                                if (tx.to.toString() == userTmp._id.toString()) {
+                                    tx.to = user._id;
+                                }
 
-                               tx.save();
+                                tx.save();
                             });
-                       });
-                       userTmp.remove(function (err) {
-                       });
-                   }
+                        });
+                        userTmp.remove(function (err) {
+                        });
+                    }
                 });
             }
             user.wallet = req.body.wallet;
@@ -209,7 +210,7 @@ exports.update = function (req, res) {
 
 exports.updateWallet = function (req, res) {
     if (req.currentUser._id != req.body.userId && req.currentUser.roles.indexOf('admin') == -1) {
-        return res.status(403).send({ auth: false, message: 'Non authorized.' });
+        return res.status(403).send({auth: false, message: 'Non authorized.'});
     }
 
     if (!req.body.wallet) {
@@ -217,6 +218,7 @@ exports.updateWallet = function (req, res) {
     }
 
     function transferUser(oldUser, newUser) {
+
         Card.find({owner: oldUser._id}, function (err, cards) {
             cards.forEach(function (card) {
                 card.owner = newUser._id;
@@ -240,6 +242,7 @@ exports.updateWallet = function (req, res) {
 
     var txsListCurrentUser = [];
     var cardsListCurrentUser = [];
+
     function loadDatasUser(cb) {
         Card.find({owner: req.currentUser._id}).exec(function (err, cards) {
             cardsListCurrentUser = cards;
@@ -250,19 +253,16 @@ exports.updateWallet = function (req, res) {
         });
     }
 
-    loadDatasUser(function () {
-        User.find({wallet: req.body.wallet}, function (err, fUsers) {
-            for (var i = 0; i < fUsers.length; i++) {
-                var cfUser = fUsers[i];
-                if (cfUser.username == '') {
-                    transferUser(cfUser, req.currentUser);
-                    cfUser.remove(function (err) {
-                    });
-                } else {
-                    return res.status(400).send({message: "An account already use this wallet"});
-                }
+    User.find({wallet: req.body.wallet}, function (err, fUsers) {
+        if (err) {
+            return res.status(400).send({message: "Could not delete users with id " + req.params.userId});
+        }
+        for (var i = 0; i < fUsers.length; i++) {
+            if (fUsers[i].username != '' && fUsers[i]._id != req.currentUser._id) {
+                return res.status(400).send({message: "An account already use this wallet"});
             }
-
+        }
+        loadDatasUser(function () {
             var user = new User();
 
             user.initValues();
@@ -276,7 +276,8 @@ exports.updateWallet = function (req, res) {
                 for (var i = 0; i < cardsListCurrentUser.length; i++) {
                     Card.findById(cardsListCurrentUser[i]._id, function (err, cardTmp) {
                         cardTmp.owner = nUser._id;
-                        cardTmp.save(function () {});
+                        cardTmp.save(function () {
+                        });
                     });
                 }
 
@@ -289,7 +290,8 @@ exports.updateWallet = function (req, res) {
                         if (txTmp.to.toString() == req.currentUser._id.toString()) {
                             txTmp.to = nUser._id;
                         }
-                        txTmp.save(function () {});
+                        txTmp.save(function () {
+                        });
                     });
                 }
 
@@ -298,11 +300,22 @@ exports.updateWallet = function (req, res) {
                     if (err) {
                         return res.status(400).send({message: "Could not update Wallet."});
                     }
+                    for (var i = 0; i < fUsers.length; i++) {
+                        var cfUser = fUsers[i];
+                        if (cfUser.username == '') {
+                            transferUser(cfUser, req.currentUser);
+                            cfUser.remove(function (err) {
+                            });
+                        }
+                    }
                     return res.status(200).send(req.currentUser);
                 });
+
             });
         });
+
     });
+
 
 };
 
@@ -330,12 +343,12 @@ exports.getRoot = function (req, res) {
 var validCaptcha = function (token, cb) {
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + URL.recaptchaPrivate + "&response=" + token;
 
-    request(verificationUrl, function(error,response,body) {
+    request(verificationUrl, function (error, response, body) {
         body = JSON.parse(body);
         // Success will be true or false depending upon captcha validation.
         if (body.success !== undefined && body.success == true) {
             cb(true);
-            return ;
+            return;
         }
         cb(false);
     });

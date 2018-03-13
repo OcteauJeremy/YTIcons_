@@ -72,8 +72,6 @@ export class CardModalComponent implements OnInit, OnDestroy {
       this.currentWallet = this.cs._account;
     });
 
-
-    console.log(this.currentWallet);
     if (this.currentUser) {
       this.acceptTos = true;
     }
