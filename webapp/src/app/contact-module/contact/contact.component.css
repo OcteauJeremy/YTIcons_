@@ -29,3 +29,7 @@
 .form-control[ng-reflect-model="Subject"] {
   color: #757575;
 }
+
+.contact_form input {
+  color: #000000 !important;
+}
