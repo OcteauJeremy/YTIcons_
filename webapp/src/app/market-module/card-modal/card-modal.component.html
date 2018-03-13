@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
           aria-hidden="true">&times;</span></button>
         <h3 class="modal-title" id="rating_modal">{{card.name}}</h3>
-        <p>Own by <a [routerLink]="['/account', card?.owner?.wallet ? '' : '']" data-dismiss="modal">{{card?.owner?.username == '' ? 'Anonymous' : card?.owner?.username}}</a></p>
+        <p>Own by <a [routerLink]="['/account', card?.owner?.wallet ? card?.owner?.wallet : '']" data-dismiss="modal">{{card?.owner?.username == '' ? 'Anonymous' : card?.owner?.username}}</a></p>
       </div>
 
       <div class="modal-body">
