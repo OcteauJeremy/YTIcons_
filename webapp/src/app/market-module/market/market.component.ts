@@ -71,9 +71,9 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.subscribtions.add(this.typeService.getTypes().subscribe(res => {
       this.types = res;
       this.types.sort((a,b) => {
-          if (a.minSubscribers < b.minSubscribers)
+          if (a.rarity < b.rarity)
             return -1;
-          if (a.minSubscribers > b.minSubscribers)
+          if (a.rarity > b.rarity)
             return 1;
           return 0;
         }
