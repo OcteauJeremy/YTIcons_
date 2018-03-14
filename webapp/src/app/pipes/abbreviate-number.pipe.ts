@@ -22,7 +22,6 @@ export class AbbreviateNumberPipe implements PipeTransform {
     var numberOrigin = number;
 
     for (var i = this.units.length - 1; i >= 0; i--) {
-
       var size = Math.pow(10, (i + 1) * 3);
 
       if (size <= number) {
@@ -34,8 +33,8 @@ export class AbbreviateNumberPipe implements PipeTransform {
         }
 
         var numberStr = number.toString();
-
         var splitNumber = numberStr.split('.');
+
         if (splitNumber.length > 1) {
           if (splitNumber[0].length == 3) {
             numberStr = splitNumber[0];
@@ -46,11 +45,9 @@ export class AbbreviateNumberPipe implements PipeTransform {
         }
 
         number += this.units[i];
-
         break
       }
     }
-
     return number;
   }
 

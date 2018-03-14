@@ -244,6 +244,8 @@ var constructQuery = function (req, res, isAdmin) {
         keyObj = req.query.sort;
     }
 
+    var keyObj = 'price';
+
     var order = 'desc';
     if (req.query.order) {
         order = req.query.order;

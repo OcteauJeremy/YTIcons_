@@ -74,6 +74,7 @@ export class ProfileComponent implements OnInit {
 
     this.cardsUser = [];
     this.isLoading = true;
+
     if (wallet) {
       this.subscriptions.add(this.cs.getCardsByWallet(wallet).subscribe(cardsUser => {
 
@@ -183,6 +184,10 @@ export class ProfileComponent implements OnInit {
 
     this.subscriptions.add(this.route.params.subscribe(params => {
       this.address = params['address'];
+
+      if (this.as.currentUser && this.as.currentUser.wallet == this.address) {
+        this._router.navigate(['/account']);
+      }
 
       /*if (this.address == null && this.as.currentUser == null) {
         this._router.navigate(['login']);

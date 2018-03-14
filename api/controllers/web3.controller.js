@@ -1,6 +1,8 @@
 var Web3 = require('web3');
 const tokenAbi = require('../ressources/token/tokenContract.json');
 const URL = require('../configs/urls');
+var smtpTransport = require('../configs/nodemailer').transporterNoReply;
+var Email = require('email-templates');
 
 var server = require('../server').serverExpress;
 
@@ -131,11 +133,20 @@ tokenContract.events.YTIconSold({
                 tmpCard.transactions = [];
                 tx.card = tmpCard;
 
-                card.price = web3.utils.fromWei(newPrice);
-                card.maxPrice = card.price;
-                card.minPrice = tx.price;
-
                 tx.save(function (err, nTx) {
+                    console.log('card', card);
+                    if (card.owner && card.owner.email != '') {
+                        sendMailSold(card.owner.email, card)
+                    }
+
+                    if (user.email && user.email != '') {
+                        sendMailBuy(user.email, card, web3.utils.fromWei(newPrice));
+                    }
+
+                    card.price = web3.utils.fromWei(newPrice);
+                    card.maxPrice = card.price;
+                    card.minPrice = tx.price;
+
                     if (err) {
                         console.log(err.message);
                         launchNextEvent(cardId);
@@ -182,7 +193,7 @@ tokenContract.events.YTIconSold({
 
             User.findOne({
                 wallet: eventValues.newOwner
-            }, function (err, user) {
+            }, '_id email', function (err, user) {
                 if (err) {
                     console.log(err);
                     launchNextEvent(cardId);
@@ -231,7 +242,7 @@ tokenContract.events.YTIconSold({
 });
 
 var populateCard = function (mongooseObj) {
-    mongooseObj.populate('type').populate('category').populate('owner').populate('nationality').populate({
+    mongooseObj.populate('type').populate('category').populate('owner', '_id username username_lower wallet email').populate('nationality').populate({
         path: 'transactions',
         populate: [{
             path: 'from'
@@ -242,15 +253,181 @@ var populateCard = function (mongooseObj) {
     return mongooseObj;
 };
 
-// maintain connection
-// const subscription = web3.eth.subscribe('newBlockHeaders', function(error, blockHeader) {
-//     if (error) return console.error(error);
-//     // console.log(blockHeader.transactionsRoot);
-//     // console.log('Successfully subscribed!', blockHeader);
-// }).on('data', function(blockHeader) {
-//     // console.log(blockHeader);
-//     // console.log('data nbh: ', blockHeader);
-// });
+
+var sendMailBuy = function (email, card, newPrice) {
+    console.log('sendMail Buy', email, card.name, newPrice);
+
+    const emailSender = new Email({
+        message: {
+            to: email,
+            from: 'no-reply@yticons.co'
+            // subject: 'You new YTIcon'
+        },
+        // uncomment below to send emails in development/test env:
+        send: true,
+        transport: smtpTransport,
+        views: {
+            options: {
+                extension: 'ejs'
+            }
+        }
+    });
+
+    emailSender
+        .send({
+            template: '../templates/buy',
+            locals: {
+                card: card,
+                newPrice: roundEth(newPrice).toString(),
+                urlServer: URL.webserver,
+                sinceDate: sinceDateTransform(new Date(card.createdAt)),
+                views: abbreviateNumber(card.nbViews),
+                subscribers: abbreviateNumber(card.nbSubscribers),
+                videos: abbreviateNumber(card.nbVideos)
+            }
+        })
+        .then(function(res) {
+            console.log('Email successfully send to ', email);
+        })
+        .catch(function (err) {
+            console.log('Error sending mail to ', email);
+            console.log(err);
+        });
+};
+
+var sendMailSold = function (email, card) {
+    console.log('sendMail Sold', email, card.name);
+
+    const emailSender = new Email({
+        message: {
+            to: email,
+            from: 'no-reply@yticons.co'
+            // subject: 'You new YTIcon'
+        },
+        // uncomment below to send emails in development/test env:
+        send: true,
+        transport: smtpTransport,
+        views: {
+            options: {
+                extension: 'ejs'
+            }
+        }
+    });
+
+    emailSender
+        .send({
+            template: '../templates/sold',
+            locals: {
+                card: card,
+                price: roundEth(card.price)
+            }
+        })
+        .then(function(res) {
+            console.log('Email successfully send to ', email);
+        })
+        .catch(function (err) {
+            console.log('Error sending mail to ', email);
+            console.log(err);
+        });
+};
+
+var sinceDateTransform = function (date1) {
+    var date2 = new Date();
+    if (date1) {
+        var diff = Math.abs(date1.getTime() - date2.getTime());
+
+        var diffMonths = date2.getMonth() - date1.getMonth();
+        var diffDays = date2.getDate() - date1.getDate();
+        var diffWeeks = Math.floor(diffDays / 7);
+        var diffYears = date2.getFullYear() - date1.getFullYear();
+        var diffHours = date2.getHours() - date1.getHours();
+
+        diffMonths += 12* diffYears;
+
+        if (diffHours >= 0 && !diffDays && !diffWeeks && !diffMonths && !diffYears) {
+            return diffHours + 'H';
+        }
+        if (diffWeeks > 0 && !diffMonths && !diffYears) {
+            return diffWeeks + 'W';
+        }
+        if (diffMonths > 0 && !diffYears) {
+            return diffMonths + 'M';
+        }
+        else if (diffYears > 0) {
+            return diffYears + 'Y';
+        }
+        return diffDays + 'D';
+    }
+    return 0;
+}
+
+var roundEth = function (value) {
+    var type = 'ceil';
+    var exp = -4;
+
+    if (typeof exp === 'undefined' || +exp === 0) {
+        return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // Si value n'est pas un nombre
+    // ou si l'exposant n'est pas entier
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+        return NaN;
+    }
+    // Décalage
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    // Re "calage"
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+};
+
+var abbreviateNumber = function (value) {
+    function abbreviate(number, decPlaces) {
+        decPlaces = Math.pow(10, decPlaces);
+        var numberOrigin = number;
+
+        for (var i = this.units.length - 1; i >= 0; i--) {
+
+            var size = Math.pow(10, (i + 1) * 3);
+
+            if (size <= number) {
+                number = Math.floor(number * decPlaces / size) / decPlaces;
+
+                if ((number === 1000) && (i < this.units.length - 1)) {
+                    number = 1;
+                    i++
+                }
+
+                var numberStr = number.toString();
+
+                var splitNumber = numberStr.split('.');
+                if (splitNumber.length > 1) {
+                    if (splitNumber[0].length == 3) {
+                        numberStr = splitNumber[0];
+                    } else {
+                        numberStr = splitNumber[0] + '.' + splitNumber[1].charAt(0);
+                    }
+                    number = parseFloat(numberStr);
+                }
+
+                number += this.units[i];
+
+                break
+            }
+        }
+
+        return number;
+    }
+
+    var isNegative = value < 0;
+
+    var abbreviatedNumber;
+    abbreviatedNumber = abbreviate(Math.abs(value), 1);
+
+    return isNegative ? '-' + abbreviatedNumber : abbreviatedNumber;
+};
 
 io.on('connection', function(socket){
     socket.on('disconnect', function(){

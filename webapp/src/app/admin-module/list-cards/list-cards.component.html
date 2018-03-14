@@ -27,54 +27,55 @@
       <div class="col-md-12">
         <div class="filter-bar">
           <div class="filter__option filter--dropdown">
-            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.type ? names.type : 'Type'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="type" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.type ? (names.type | capitalize) : 'Type'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectType('')"><a>All <i *ngIf="!filters.type" class="fa fa-check"></i></a></li>
-              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name}} <i *ngIf="filters.type == type._id" class="fa fa-check"></i></a></li>
+              <li (click)="selectType('')"><a>All <span *ngIf="!filters.type"><i class="fas fa-check"></i></span></a></li>
+              <li *ngFor="let type of types" (click)="selectType(type)"><a>{{type.name | capitalize}} <span *ngIf="filters.type == type._id"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.nationality ? names.nationality : 'Nationality'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="nationality" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.nationality ? (names.nationality | capitalize) : 'Nationality'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectNationality('')"><a>All <i *ngIf="!filters.nationality" class="fa fa-check"></i></a></li>
-              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality.name}} <i *ngIf="filters.nationality == nationality._id" class="fa fa-check"></i></a></li>
+              <li (click)="selectNationality('')"><a>All <span *ngIf="!filters.nationality"><i class="fas fa-check"></i></span></a></li>
+              <li *ngFor="let nationality of nationalities" (click)="selectNationality(nationality)"><a>{{nationality.name | capitalize}} <span *ngIf="filters.nationality == nationality._id"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
-            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.category ? names.category : 'Channel Category'}}<span class="lnr lnr-chevron-down"></span></a>
+            <a href="#" id="category" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.category ? (names.category | capitalize) : 'Channel Category'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectCategory('')"><a>All <i *ngIf="!filters.category" class="fa fa-check"></i></a></li>
-              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category.name}} <i *ngIf="filters.category == category._id" class="fa fa-check"></i></a></li>
+              <li (click)="selectCategory('')"><a>All <span *ngIf="!filters.category"><i class="fas fa-check"></i></span></a></li>
+              <li *ngFor="let category of categories" (click)="selectCategory(category)"><a>{{category.name | capitalize}} <span *ngIf="filters.category == category._id"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="follower" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.subscribers ? names.subscribers + ' followers' : 'Followers'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectFollower('', null, null)"><a>All <i *ngIf="!filters.minSubscribers && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(0,50000, '0 - 50K')"><a>0 - 50K <i *ngIf="filters.minSubscribers == 0 && filters.maxSubscribers == 50000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(50000,100000, '50K - 100K')"><a>50K - 100K <i *ngIf="filters.minSubscribers == 50000 && filters.maxSubscribers == 100000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(100000,500000, '100K - 500K')"><a>100K - 500K <i *ngIf="filters.minSubscribers == 100000 && filters.maxSubscribers == 500000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(500000,1000000, '500K - 1M')"><a>500K - 1M <i *ngIf="filters.minSubscribers == 500000 && filters.maxSubscribers == 1000000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(1000000,10000000, '1M - 10M')"><a>1M - 10M <i *ngIf="filters.minSubscribers == 1000000 && filters.maxSubscribers == 10000000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectFollower(10000000,null, 'More than 10M')"><a>More than 10M <i *ngIf="filters.minSubscribers == 10000000 && !filters.maxSubscribers" class="fa fa-check"></i></a></li>
+              <li (click)="selectFollower('', null, null)"><a>All <span *ngIf="!filters.minSubscribers && !filters.maxSubscribers"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(0,100000, '0 - 100K')"><a>0 - 100K <span *ngIf="filters.minSubscribers == 0 && filters.maxSubscribers == 100000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(100000,250000, '100K - 250K')"><a>100K - 250K <span *ngIf="filters.minSubscribers == 100000 && filters.maxSubscribers == 250000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(250000,500000, '250K - 500K')"><a>250K - 500K <span *ngIf="filters.minSubscribers == 250000 && filters.maxSubscribers == 500000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(500000,1000000, '500K - 1M')"><a>500K - 1M <span *ngIf="filters.minSubscribers == 500000 && filters.maxSubscribers == 1000000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(1000000,5000000, '1M - 5M')"><a>1M - 5M <span *ngIf="filters.minSubscribers == 1000000 && filters.maxSubscribers == 50000000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(5000000,10000000, '5M - 10M')"><a>5M - 10M <span *ngIf="filters.minSubscribers == 50000000 && filters.maxSubscribers == 100000000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectFollower(10000000,null, 'More than 10M')"><a>More than 10M <span *ngIf="filters.minSubscribers == 10000000 && !filters.maxSubscribers"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>
 
           <div class="filter__option filter--dropdown">
             <a href="#" id="video" class="dropdown-trigger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{names.videos ? names.videos + ' videos' : 'Videos'}}<span class="lnr lnr-chevron-down"></span></a>
             <ul  class="dropdown dropdown-menu">
-              <li (click)="selectVideo('', null, null)"><a>All <i *ngIf="!filters.minVideos && !filters.maxVideos" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(0,100, '0 - 100')"><a>0 - 100 <i *ngIf="filters.minVideos == 0 && filters.maxVideos == 100" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(100,200, '100 - 200')"><a>100 - 200 <i *ngIf="filters.minVideos == 100 && filters.maxVideos == 200" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(200,500,'200 - 500')"><a>200 - 500 <i *ngIf="filters.minVideos == 200 && filters.maxVideos == 500" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(500,1000,'500 - 1K')"><a>500 - 1 000 <i *ngIf="filters.minVideos == 500 && filters.maxVideos == 1000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(1000,5000,'1K - 5K')"><a>1 000 - 5 000 <i *ngIf="filters.minVideos == 1000 && filters.maxVideos == 5000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(5000,10000,'5K - 10K')"><a>5 000 - 10 000 <i *ngIf="filters.minVideos == 5000 && filters.maxVideos == 10000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(10000,50000,'10K - 50K')"><a>10 000 - 50 000 <i *ngIf="filters.minVideos == 10000 && filters.maxVideos == 50000" class="fa fa-check"></i></a></li>
-              <li  (click)="selectVideo(50000,null,'More than 50K')"><a>More than 50 000 <i *ngIf="filters.minVideos == 50000 && !filters.maxVideos" class="fa fa-check"></i></a></li>
+              <li (click)="selectVideo('', null, null)"><a>All <span *ngIf="!filters.minVideos && !filters.maxVideos"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(0,100, '0 - 100')"><a>0 - 100 <span *ngIf="filters.minVideos == 0 && filters.maxVideos == 100"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(100,200, '100 - 200')"><a>100 - 200 <span *ngIf="filters.minVideos == 100 && filters.maxVideos == 200"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(200,500,'200 - 500')"><a>200 - 500 <span *ngIf="filters.minVideos == 200 && filters.maxVideos == 500"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(500,1000,'500 - 1K')"><a>500 - 1 000 <span *ngIf="filters.minVideos == 500 && filters.maxVideos == 1000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(1000,5000,'1K - 5K')"><a>1 000 - 5 000 <span *ngIf="filters.minVideos == 1000 && filters.maxVideos == 5000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(5000,10000,'5K - 10K')"><a>5 000 - 10 000 <span *ngIf="filters.minVideos == 5000 && filters.maxVideos == 10000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(10000,50000,'10K - 50K')"><a>10 000 - 50 000 <span *ngIf="filters.minVideos == 10000 && filters.maxVideos == 50000"><i class="fas fa-check"></i></span></a></li>
+              <li  (click)="selectVideo(50000,null,'More than 50K')"><a>More than 50 000 <span *ngIf="filters.minVideos == 50000 && !filters.maxVideos"><i class="fas fa-check"></i></span></a></li>
             </ul>
           </div>
 
@@ -98,8 +99,8 @@
                 <option value="createdAt_asc">Oldest</option>
                 <option value="price_desc">Price : High to low</option>
                 <option value="price_asc">Price : Low to High</option>
-                <option value="nbSubscribers_desc">Rarety : High to low</option>
-                <option value="nbSubscribers_asc">Rarety : Low to High</option>
+                <!--<option value="rarity_desc">Rarity : High to low</option>-->
+                <!--<option value="rarity_asc">Rarity : Low to High</option>-->
                 <option value="nbVideos_desc">Video number : High to low</option>
                 <option value="nbVideos_asc">Video number : Low to High</option>
                 <option value="nbTransactions_desc">Transaction number : High to low</option>
