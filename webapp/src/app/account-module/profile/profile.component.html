@@ -161,8 +161,8 @@
       </div><!-- end /.modal-body -->
 
       <div class="modal-footer">
-        <button (click)="editPassword()" data-dismiss="modal" class="btn btn--round btn--default">Submit</button>
-        <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+        <button (click)="editPassword()" data-dismiss="modal" class="btn btn--round btn--default" [ladda]="isRequesting">Submit</button>
+        <button class="btn btn--round modal_close" data-dismiss="modal" #newPasswordCloseButton>Close</button>
       </div>
     </div>
   </div>

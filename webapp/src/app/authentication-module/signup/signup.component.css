@@ -60,3 +60,10 @@ label span {
   text-transform: none;
 }
 
+.ladda-button:hover, .ladda-button:focus {
+  background-color: #0674ec;
+}
+
+.ladda-button[disabled]:hover {
+  background-color: #999 !important;
+}

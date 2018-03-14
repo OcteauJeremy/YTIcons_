@@ -1,5 +1,5 @@
-import {ActivatedRoute, Router} from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CardService } from '../../services/card.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Card } from '../../models/Card';
@@ -18,6 +18,8 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class ProfileComponent implements OnInit {
 
+  @ViewChild('newPasswordCloseButton') newPasswordCloseButton: ElementRef;
+
   public cardNumber = 0;
   public cardsUser: Array<Card> = [];
   public currentUser: any;
@@ -27,6 +29,7 @@ export class ProfileComponent implements OnInit {
   public isLoading = true;
   public isSyncronising = false;
   public loadingChannel = false;
+  public isRequesting = false;
 
   public form = {
     password: '',
@@ -151,23 +154,28 @@ export class ProfileComponent implements OnInit {
 
     const toastr = this.toastr;
     const _self = this;
+    this.isRequesting = true;
 
     if (this.form.conPassword !== this.form.newPassword) {
       toastr.error('Your passwords must match', 'Edit password');
+      this.isRequesting = false;
     } else if (this.form.password != '' && this.form.conPassword != ''  && this.form.newPassword != '' ) {
       this.subscriptions.add(this.as.setNewPassword(this.form.password, this.form.conPassword).subscribe(res => {
+          this.newPasswordCloseButton.nativeElement.click();
+          this.isRequesting = false;
           toastr.success(res.message, 'Edit password');
           _self.form.password = '';
           _self.form.conPassword = '';
           _self.form.newPassword = '';
-
         },
         error => {
           toastr.error(error.error.message, 'Edit password');
+          this.isRequesting = false;
         }
       ));
     } else {
       toastr.error('All fields are required', 'Edit password');
+      this.isRequesting = false;
     }
   }
 

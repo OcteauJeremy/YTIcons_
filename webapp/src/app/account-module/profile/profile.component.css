@@ -36,3 +36,7 @@ label span, .ladda-label {
 .modal .modal_close {
   line-height: 50px;
 }
+
+.ladda-button:hover, .ladda-button:focus {
+  background-color: #0674ec;
+}
