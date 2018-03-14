@@ -57,7 +57,7 @@ export class ContactComponent implements OnInit {
     }
     else {
       this.loadingChannel = true;
-      if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.message) {
+      if (_self.form.name && _self.form.subject && _self.form.subject != 'Subject' && _self.form.email && _self.form.message && /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/.test(_self.form.email)) {
         this.subscriptions.add(this.emailService.sendMailContact(this.form).subscribe(res => {
           myForm.form.markAsPristine();
           myForm.form.markAsUntouched();
