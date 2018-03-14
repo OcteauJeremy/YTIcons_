@@ -87,14 +87,15 @@ exports.findOne = function (req, res) {
 
 exports.listenTx = function (req, res) {
     var web3 = require('./web3.controller').web3;
+    var io = require('./web3.controller').io;
 
     function checkTx(txHash, card) {
         web3.eth.getTransactionReceipt(txHash).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {
-                    return res.status(400).send({message: 'Error during the ethereum transaction.'});
+                    io.emit(txHash, false);
                 } else {
-                    return res.status(200).send({message: 'Transaction successfull.'});
+                    io.emit(txHash, true);
                 }
             } else {
                 setTimeout(checkTx, 2000, txHash);
@@ -102,6 +103,7 @@ exports.listenTx = function (req, res) {
         });
     }
     setTimeout(checkTx, 2000, req.params.txHash);
+    return res.status(200).send({message: 'Transaction listened.'});
 };
 
 var populateItem = function (findObj) {

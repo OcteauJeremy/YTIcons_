@@ -11,7 +11,7 @@ var Card = require('../models/card.model');
 var Transaction = require('../models/transaction.model');
 var uploadOptions   = require('../configs/multer');
 
-var io = require('socket.io').listen(server);
+var io = module.exports.io = require('socket.io').listen(server);
 
 var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
 
