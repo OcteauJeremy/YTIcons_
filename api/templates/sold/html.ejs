@@ -253,10 +253,44 @@
             font-family: SF, sans-serif;
             width: 213px;
             height: 322px;
-            background: url('https://yticons.co/assets/images/cards_background/bronze.png');
             background-size: contain;
             color: white;
             position: relative;
+        }
+
+        .card-bronze {
+            background: url('https://yticons.co/assets/images/cards_background/bronze.png');
+            background-size: contain;
+        }
+
+        .card-silver {
+            background: url('https://yticons.co/assets/images/cards_background/silver.png');
+            background-size: contain;
+        }
+
+        .card-gold {
+            background: url('https://yticons.co/assets/images/cards_background/gold.png');
+            background-size: contain;
+        }
+
+        .card-500k {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_500k.png');
+            background-size: contain;
+        }
+
+        .card-1m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_1M.png');
+            background-size: contain;
+        }
+
+        .card-5m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_5M.png');
+            background-size: contain;
+        }
+
+        .card-10m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_10M.png');
+            background-size: contain;
         }
 
         .card .product__thumbnail {
@@ -370,6 +404,41 @@
                                     <td>
                                         <p>Hey hey hey,</p>
                                         <p>Your <%= card.name %> YTIcon has been sold for <%= price %> ETH. <br><br> You lost a card but the YTIcons's world is yours.<br> Feel free to check our marketplace clicking just below.</p>
+                                        <div class="cardUI card <%= card.type.css %>">
+                                            <div class="card-title">
+                                                <h4><%= card.name %></h4>
+                                            </div>
+
+                                            <div class="card-img">
+                                                <div class="content-img" style="background-image: url(<%= urlServer%><%= card.image %>)"></div>
+                                            </div>
+
+                                            <div class="footer-card">
+                                                <div class="card-line">
+                                                    <div>
+                                                        <span class="label-footer label-vids">VIDS</span>
+                                                        <span class="value-footer"><b><%= videos %></b></span>
+                                                    </div>
+
+                                                    <div>
+                                                        <span class="value-footer value-folw"><b><%= subscribers %></b></span>
+                                                        <span class="label-footer">FOLW</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-line">
+                                                    <div>
+                                                        <span class="label-footer label-view">VIEW</span>
+                                                        <span class="value-footer"><b><%= views %></b></span>
+                                                    </div>
+
+                                                    <div>
+                                                        <span class="value-footer value-card"><b><%= sinceDate %></b></span>
+                                                        <span class="label-footer">CARD</span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                                             <tbody>
                                             <tr>

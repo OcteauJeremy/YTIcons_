@@ -279,7 +279,7 @@ var sendMailBuy = function (email, card, newPrice) {
             locals: {
                 card: card,
                 newPrice: roundEth(newPrice).toString(),
-                urlServer: URL.webserver,
+                urlServer: URL.webserver + ':' + URL.port,
                 sinceDate: sinceDateTransform(new Date(card.createdAt)),
                 views: abbreviateNumber(card.nbViews),
                 subscribers: abbreviateNumber(card.nbSubscribers),
@@ -319,7 +319,12 @@ var sendMailSold = function (email, card) {
             template: '../templates/sold',
             locals: {
                 card: card,
-                price: roundEth(card.price)
+                price: roundEth(card.price),
+                urlServer: URL.webserver + ':' + URL.port,
+                sinceDate: sinceDateTransform(new Date(card.createdAt)),
+                views: abbreviateNumber(card.nbViews),
+                subscribers: abbreviateNumber(card.nbSubscribers),
+                videos: abbreviateNumber(card.nbVideos)
             }
         })
         .then(function(res) {
@@ -384,25 +389,26 @@ var roundEth = function (value) {
 };
 
 var abbreviateNumber = function (value) {
+    var units = ['K', 'M', 'B', 'T'];
     function abbreviate(number, decPlaces) {
         decPlaces = Math.pow(10, decPlaces);
         var numberOrigin = number;
 
-        for (var i = this.units.length - 1; i >= 0; i--) {
+        for (var i = units.length - 1; i >= 0; i--) {
 
             var size = Math.pow(10, (i + 1) * 3);
 
             if (size <= number) {
                 number = Math.floor(number * decPlaces / size) / decPlaces;
 
-                if ((number === 1000) && (i < this.units.length - 1)) {
+                if ((number === 1000) && (i < units.length - 1)) {
                     number = 1;
                     i++
                 }
 
                 var numberStr = number.toString();
-
                 var splitNumber = numberStr.split('.');
+
                 if (splitNumber.length > 1) {
                     if (splitNumber[0].length == 3) {
                         numberStr = splitNumber[0];
@@ -411,13 +417,10 @@ var abbreviateNumber = function (value) {
                     }
                     number = parseFloat(numberStr);
                 }
-
-                number += this.units[i];
-
+                number += units[i];
                 break
             }
         }
-
         return number;
     }
 
