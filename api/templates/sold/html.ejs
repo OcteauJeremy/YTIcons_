@@ -5,7 +5,7 @@
     <title>Simple Transactional Email</title>
     <style>
         /* -------------------------------------
-        GLOBAL RESETS
+            GLOBAL RESETS
         ------------------------------------- */
         img {
             border: none;
@@ -31,7 +31,7 @@
             font-size: 14px;
             vertical-align: top; }
         /* -------------------------------------
-        BODY & CONTAINER
+            BODY & CONTAINER
         ------------------------------------- */
         .body {
             background-color: #f6f6f6;
@@ -52,7 +52,7 @@
             max-width: 580px;
             padding: 10px; }
         /* -------------------------------------
-        HEADER, FOOTER, MAIN
+            HEADER, FOOTER, MAIN
         ------------------------------------- */
         .main {
             background: #ffffff;
@@ -78,7 +78,7 @@
             font-size: 12px;
             text-align: center; }
         /* -------------------------------------
-        TYPOGRAPHY
+            TYPOGRAPHY
         ------------------------------------- */
         h1,
         h2,
@@ -112,7 +112,7 @@
             color: #3498db;
             text-decoration: underline; }
         /* -------------------------------------
-        BUTTONS
+            BUTTONS
         ------------------------------------- */
         .btn {
             box-sizing: border-box;
@@ -146,7 +146,7 @@
             border-color: #3498db;
             color: #ffffff; }
         /* -------------------------------------
-        OTHER STYLES THAT MIGHT BE USEFUL
+            OTHER STYLES THAT MIGHT BE USEFUL
         ------------------------------------- */
         .last {
             margin-bottom: 0; }
@@ -182,7 +182,7 @@
             border-bottom: 1px solid #f6f6f6;
             Margin: 20px 0; }
         /* -------------------------------------
-        RESPONSIVE AND MOBILE FRIENDLY STYLES
+            RESPONSIVE AND MOBILE FRIENDLY STYLES
         ------------------------------------- */
         @media only screen and (max-width: 620px) {
             table[class=body] h1 {
@@ -216,7 +216,7 @@
                 max-width: 100% !important;
                 width: auto !important; }}
         /* -------------------------------------
-        PRESERVE THESE STYLES IN THE HEAD
+            PRESERVE THESE STYLES IN THE HEAD
         ------------------------------------- */
         @media all {
             .ExternalClass {
@@ -258,41 +258,6 @@
             position: relative;
         }
 
-        .card-bronze {
-            background: url('https://yticons.co/assets/images/cards_background/bronze.png');
-            background-size: contain;
-        }
-
-        .card-silver {
-            background: url('https://yticons.co/assets/images/cards_background/silver.png');
-            background-size: contain;
-        }
-
-        .card-gold {
-            background: url('https://yticons.co/assets/images/cards_background/gold.png');
-            background-size: contain;
-        }
-
-        .card-500k {
-            background: url('https://yticons.co/assets/images/cards_background/speciale_500k.png');
-            background-size: contain;
-        }
-
-        .card-1m {
-            background: url('https://yticons.co/assets/images/cards_background/speciale_1M.png');
-            background-size: contain;
-        }
-
-        .card-5m {
-            background: url('https://yticons.co/assets/images/cards_background/speciale_5M.png');
-            background-size: contain;
-        }
-
-        .card-10m {
-            background: url('https://yticons.co/assets/images/cards_background/speciale_10M.png');
-            background-size: contain;
-        }
-
         .card .product__thumbnail {
             position: initial!important;
         }
@@ -328,8 +293,48 @@
             height: 127.5px;
             border-radius: 50%;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: auto;
         }
 
+        .card-bronze {
+            background: url('https://yticons.co/assets/images/cards_background/bronze.png');
+            background-size: contain;
+        }
+
+        .card-silver {
+            background: url('https://yticons.co/assets/images/cards_background/silver.png');
+            background-size: contain;
+        }
+
+        .card-gold {
+            background: url('https://yticons.co/assets/images/cards_background/gold.png');
+            background-size: contain;
+        }
+
+        .card-500k {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_500k.png');
+            background-size: contain;
+        }
+
+        .card-1m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_1M.png');
+            background-size: contain;
+        }
+
+        .card-5m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_5M.png');
+            background-size: contain;
+        }
+
+        .card-10m {
+            background: url('https://yticons.co/assets/images/cards_background/speciale_10M.png');
+            background-size: contain;
+        }
+
+        .card-origin {
+            background: url('https://yticons.co/assets/images/cards_background/origin.png');
+            background-size: contain;
+        }
 
         .card .card-title {
             height: 85px;
@@ -339,7 +344,7 @@
             font-family: SFSemiBold, sans-serif;
             font-weight: 600;
             color: white;
-            display: flex;
+            text-align:center;
             justify-content: center;
             align-items: center;
             padding-top: 26px;
@@ -348,7 +353,6 @@
         }
 
         .card .card-img {
-            display: flex;
             justify-content: center;
             align-items: center;
         }
@@ -377,8 +381,6 @@
         }
 
         .card .footer-card .card-line {
-            display: flex;
-            flex-flow: row nowrap;
             justify-content: space-between;
             color: #201f1c;
         }
@@ -393,7 +395,7 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+                <span class="preheader">Your <%= card.name %> YTIcon has been sold for <%= price %> ETH !</span>
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->
@@ -403,7 +405,7 @@
                                 <tr>
                                     <td>
                                         <p>Hey hey hey,</p>
-                                        <p>Your <%= card.name %> YTIcon has been sold for <%= price %> ETH. <br><br> You lost a card but the YTIcons's world is yours.<br> Feel free to check our marketplace clicking just below.</p>
+                                        <p>Your <%= card.name %> YTIcon has been sold for <%= price %> ETH !<br><br> You lost a card but the YTIcons's world is yours.<br> Feel free to check our marketplace clicking just below.</p>
                                         <div class="cardUI card <%= card.type.css %>">
                                             <div class="card-title">
                                                 <h4><%= card.name %></h4>
@@ -415,23 +417,23 @@
 
                                             <div class="footer-card">
                                                 <div class="card-line">
-                                                    <div>
+                                                    <div style="display:inline-block;">
                                                         <span class="label-footer label-vids">VIDS</span>
                                                         <span class="value-footer"><b><%= videos %></b></span>
                                                     </div>
 
-                                                    <div>
+                                                    <div style="display:inline-block;float:right;">
                                                         <span class="value-footer value-folw"><b><%= subscribers %></b></span>
                                                         <span class="label-footer">FOLW</span>
                                                     </div>
                                                 </div>
                                                 <div class="card-line">
-                                                    <div>
+                                                    <div style="display:inline-block;">
                                                         <span class="label-footer label-view">VIEW</span>
                                                         <span class="value-footer"><b><%= views %></b></span>
                                                     </div>
 
-                                                    <div>
+                                                    <div style="display:inline-block;float:right;">
                                                         <span class="value-footer value-card"><b><%= sinceDate %></b></span>
                                                         <span class="label-footer">CARD</span>
                                                     </div>
@@ -439,7 +441,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                                        <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="margin-top: 20px;">
                                             <tbody>
                                             <tr>
                                                 <td align="left">
