@@ -134,7 +134,6 @@ tokenContract.events.YTIconSold({
                 tx.card = tmpCard;
 
                 tx.save(function (err, nTx) {
-                    console.log('card', card);
                     if (card.owner && card.owner.email != '') {
                         sendMailSold(card.owner.email, card)
                     }
