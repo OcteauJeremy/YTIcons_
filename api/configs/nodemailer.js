@@ -24,3 +24,14 @@ module.exports.transporterContact = nodemailer.createTransport({
         pass: "yLK-AMu-9ty-rZ9"
     }
 });
+
+module.exports.transporterNoReply = nodemailer.createTransport({
+    // host: '212.47.252.22',
+    host: serverMailUrl,
+    port: portSmtp,
+    secure: false,
+    auth: {
+        user: "no-reply@yticons.co",
+        pass: "pfK-Xs8-t5r-faf"
+    }
+});
