@@ -3,7 +3,7 @@
     <i class="fas fa-paper-plane title-header"></i>
     Transactions
   </div>
-  <div *ngIf="isOpen">
+  <div class="container-transactions" *ngIf="isOpen">
     <div *ngFor="let tx of txHashList" class="transaction-row">
       <div [ngClass]="{'container-status':true,'circle-orange': !txList[tx].isFinished ? true : false,'circle-green': txList[tx].isFinished && txList[tx].success ? true : false,
           'circle-red':txList[tx].isFinished && !txList[tx].success ? true : false}">

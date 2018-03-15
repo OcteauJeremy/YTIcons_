@@ -69,7 +69,9 @@
           </div>
           <div class="section">
             <p>Description</p>
-            <span *ngFor="let paragraph of card.description.split('\n')">{{ paragraph.length > 0 ? paragraph : '\n' }} </span>
+            <div class="desc-card">
+              <span *ngFor="let paragraph of card.description.split('\n')">{{ paragraph.length > 0 ? paragraph : '\n' }} </span>
+            </div>
           </div>
           <!--<div class="section">
             <p>Citation</p>

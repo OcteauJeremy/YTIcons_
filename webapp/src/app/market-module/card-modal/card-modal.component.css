@@ -130,3 +130,8 @@ transactions {
 .modal_close {
   min-width: 150px !important;
 }
+
+.desc-card {
+max-height: 150px;
+overflow-y: scroll;
+}
