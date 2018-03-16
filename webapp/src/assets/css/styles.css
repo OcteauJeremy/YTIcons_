@@ -249,10 +249,10 @@ a {
   }
 
   .popup-error-metamask {
-    display:none!important;
+    text-align: center;
   }
   .mainmenu {
-    margin-top:0!important;
+    margin-top:66px!important;
   }
   .container {
     padding-left: 0!important;
