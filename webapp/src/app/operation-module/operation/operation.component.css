@@ -70,3 +70,7 @@
 .operation-detail-module .operation-content .content_list li {
   padding-left: 20px;
 }
+
+.container {
+  padding: 0!important;;
+}
