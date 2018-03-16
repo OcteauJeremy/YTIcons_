@@ -65,7 +65,6 @@ apiRoutes.post('/signin', function (req, res) {
     }
 });
 
-
 apiRoutes.get('/token/:token', function (req, res) {
     if (!req.params.token) {
         return res.status(400).send({message: "Wrong parameters"});

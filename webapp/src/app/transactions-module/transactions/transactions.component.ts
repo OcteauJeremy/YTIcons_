@@ -31,5 +31,4 @@ export class TransactionsComponent implements OnInit {
       this.txHashList.push(key);
     }
   }
-
 }

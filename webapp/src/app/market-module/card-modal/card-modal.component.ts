@@ -76,7 +76,6 @@ export class CardModalComponent implements OnInit, OnDestroy {
       this.acceptTos = true;
     }
 
-
     this.newPrice = this.roundPipe.transform(this.card.price);
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {

@@ -113,6 +113,9 @@ var populateItem = function (findObj) {
             path: "type"
         }, {
             path: "transactions",
+            options: {
+                sort: {'createdAt': 'desc'}
+            },
             populate: [{
                 path: "to"
             }, {

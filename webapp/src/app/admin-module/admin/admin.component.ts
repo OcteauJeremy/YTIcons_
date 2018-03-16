@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import {CardService} from "../../services/card.service";
 import { CategoryService } from '../../services/category.service';
 import { UserService } from '../../services/user.service';
+import { SocketService } from '../../services/socket.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -96,7 +97,7 @@ export class AdminComponent implements OnInit {
   constructor(private youtubeService: YoutubeService, private typeService: TypeService,
               private nationalityService: NationalityService, private http: HttpClient,
               private categoryService: CategoryService,private cs: CardService,
-              private userService: UserService) {
+              private userService: UserService, private socketService: SocketService) {
     typeService.getTypes().subscribe(res => {
       this.types = res;
       this.attributeType();
@@ -258,12 +259,30 @@ export class AdminComponent implements OnInit {
     this.createLoading = true;
     var createCardSC = function (self) {
       self.evolutiveLoading = true;
-      self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
-        self.evolutiveLoading = false;
-        if (cardYT && self.fileYoutuber) {
-          self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
+
+      self.cs.createCardSC(self.cardYoutuber).then(function(txHash) {
+        if (txHash == null) {
+          self.evolutiveLoading = false;
+          return ;
         }
+
+        var socketCreateEvolutive = self.socketService.onEvent("create-" + txHash).subscribe(cardYT => {
+          self.socketService.removeListener("create-" + txHash);
+
+          self.evolutiveLoading = false;
+          if (cardYT && self.fileYoutuber) {
+            self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
+          }
+          socketCreateEvolutive.unsubscribe();
+        });
       });
+
+      // self.cs.createCardSC(self.cardYoutuber).then(function(cardYT) {
+      //   self.evolutiveLoading = false;
+      //   if (cardYT && self.fileYoutuber) {
+      //     self.cs.setImageCard(cardYT, self.formData).subscribe(function () {});
+      //   }
+      // });
 
       if (self.createOrigin) {
         const isHidden = self.cardOriginYoutuber.isHidden;
@@ -280,13 +299,28 @@ export class AdminComponent implements OnInit {
         self.cardOriginYoutuber.beneficiaryWallet = beneficiaryWallet;
 
         self.originLoading = true;
-        self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
-          self.originLoading = false;
-          if (cardOrigin && self.fileYoutuber) {
-            self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
-            });
+        self.cs.createCardSC(self.cardOriginYoutuber).then(function(txHash) {
+          if (txHash == null) {
+            self.originLoading = false;
+            return ;
           }
+
+          var socketCreateOrigin = self.socketService.onEvent("create-" + txHash).subscribe(cardOrigin => {
+            self.socketService.removeListener("create-" + txHash);
+            self.originLoading = false;
+            if (cardOrigin && self.fileYoutuber) {
+              self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {});
+            }
+            socketCreateOrigin.unsubscribe();
+          });
         });
+        // self.cs.createCardSC(self.cardOriginYoutuber).then(function(cardOrigin) {
+        //   self.originLoading = false;
+        //   if (cardOrigin && self.fileYoutuber) {
+        //     self.cs.setImageCard(cardOrigin, self.formData).subscribe(function () {
+        //     });
+        //   }
+        // });
       }
 
     };

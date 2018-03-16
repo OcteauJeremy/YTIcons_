@@ -1,5 +1,4 @@
-const URL = require('./urls')
-
+const URL = require('./urls');
 
 module.exports = {
   'secret': 'ceciestuntestpourunesecretsession',

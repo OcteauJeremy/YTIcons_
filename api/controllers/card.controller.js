@@ -10,14 +10,15 @@ exports.create = function (req, res) {
     card.fromBody(req.body);
 
     var web3 = require('./web3.controller').web3;
+    var io = require('./web3.controller').io;
 
     function checkTx(tx, card) {
         web3.eth.getTransactionReceipt(tx).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {
-                    return res.status(400).send({message: 'Error during the ethereum transaction.'});
+                    io.emit("create-" + tx, null);
+                    return ;
                 } else {
-
                     function saveCard(card) {
                         if (req.body.beneficiaryWallet) {
                             card.beneficiaryWallet = req.body.beneficiaryWallet;
@@ -25,11 +26,13 @@ exports.create = function (req, res) {
 
                         Card.count().exec(function (err, nb) {
                             if (err) {
-                                return res.status(400).send({message: "Could not reach our database."});
+                                console.log(err);
+                                return ;
                             }
                             card.id = nb;
                             card.save(function (err, result) {
-                                return res.status(200).send(card);
+                                io.emit("create-" + tx, result);
+                                return ;
                             });
                         });
 
@@ -92,6 +95,7 @@ exports.create = function (req, res) {
         });
     }
     setTimeout(checkTx, 2000, req.body.tx, card);
+    return res.status(200).send({message: "Transaction send to the blockchain."})
 };
 
 exports.findAll = function (req, res) {
@@ -256,7 +260,6 @@ var constructQuery = function (req, res, isAdmin) {
     findObj.sort(tmp);
 
     var doingSearch = function (req, res, findObj) {
-        //console.log('doingSearch', paramSearch);
         populateItem(findObj)
             .skip((pageOpt.perPage * pageOpt.page) - pageOpt.perPage)
             .limit(pageOpt.perPage)

@@ -35,6 +35,7 @@ export class TransactionService extends ManagerService{
           this.txList[txHash].isFinished = true;
           this.txList[txHash].success = false;
         }
+        this.socketService.removeListener(txHash);
         socketSub.unsubscribe();
         this.txListChange.next(this.txList);
       }

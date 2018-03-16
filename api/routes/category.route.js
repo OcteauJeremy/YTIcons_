@@ -7,5 +7,4 @@ module.exports = function(app) {
     app.get('/categories', categories.findAll);
 
     app.post('/categories', tokenGuard.verifyToken, tokenGuard.isAdmin, categories.create);
-
 };

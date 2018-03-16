@@ -271,13 +271,13 @@ export class CardService extends ManagerService {
 
         if (!error) {
           card.tx = result;
-          self.txService.addTx(result);
-          self.createCard(card).subscribe(res => {
-            resolve(res);
-          }, error => {
-            toastr.error('Transaction failed.');
-            resolve(null);
+          self.createCard(card).subscribe(nCard => {
+            self.toastr.success('Transaction send to the blockchain.', 'Card creation');
+          }, err => {
+            self.toastr.error('An error occured during the creation of the card.', 'Card creation');
           });
+          self.txService.addTx(result);
+          resolve(result);
         } else {
           toastr.error('An error occured while creating the YTIcon "' + card.name + '"', 'Card creation');
           resolve(null);

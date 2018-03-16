@@ -32,7 +32,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-
 app.use(compression());
 
 mongoose.connection.on('error', function () {

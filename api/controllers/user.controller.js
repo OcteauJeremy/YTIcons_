@@ -290,9 +290,12 @@ exports.updateWallet = function (req, res) {
                         if (txTmp.to.toString() == req.currentUser._id.toString()) {
                             txTmp.to = nUser._id;
                         }
-                        txTmp.save(function () {
-                        });
+                        txTmp.save(function () {});
                     });
+                }
+
+                if (user.wallet == null || (user.wallet == "" && user.username == "")) {
+                    nUser.remove(function () {});
                 }
 
                 req.currentUser.wallet = req.body.wallet;
@@ -304,8 +307,7 @@ exports.updateWallet = function (req, res) {
                         var cfUser = fUsers[i];
                         if (cfUser.username == '') {
                             transferUser(cfUser, req.currentUser);
-                            cfUser.remove(function (err) {
-                            });
+                            cfUser.remove(function (err) {});
                         }
                     }
                     return res.status(200).send(req.currentUser);
