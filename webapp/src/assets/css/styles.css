@@ -247,6 +247,21 @@ a {
     transform-origin: 0 0;
     -webkit-transform-origin: 0 0;
   }
+
+  .popup-error-metamask {
+    text-align: center;
+  }
+  .mainmenu {
+    margin-top:66px!important;
+  }
+  .container {
+    padding-left: 0!important;
+    padding-right: 0!important;
+  }
+
+  .contact_form--wrapper {
+    padding: 0px 15px 40px!important;
+  }
 }
 
 .ladda-label {
