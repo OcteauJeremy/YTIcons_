@@ -15,7 +15,7 @@ export class AuthenticationService extends ManagerService {
   private address: string;
   public  currentUserChange: Subject<any> = new Subject<any>();
   public  currentUser;
-
+  public  tokenIsChecked = false;
 
   constructor(http: HttpClient, private cs: CardService, public cookieService: CookieService,
               private tokenService: TokenService) {
@@ -30,13 +30,16 @@ export class AuthenticationService extends ManagerService {
         this.currentUser = res;
         this.tokenService.currentUser = this.currentUser;
         this.currentUserChange.next(this.currentUser);
+        this.tokenIsChecked = true;
       }, error => {
         localStorage.removeItem('yticons-token');
+        this.tokenIsChecked = true;
       });
     } else {
       this.currentUser = null;
       this.tokenService.currentUser = this.currentUser;
       this.currentUserChange.next(this.currentUser);
+      this.tokenIsChecked = true;
     }
 
     this.tokenService.tokenChange.subscribe((res) => {
@@ -87,6 +90,9 @@ export class AuthenticationService extends ManagerService {
     return this.currentUser;
   }
 
+  public getTokenState() {
+    return this.tokenIsChecked;
+  }
   public resetPassword(newPassword: string, token: string) {
     return this.post('/resetPassword/' + token, {'password': newPassword});
   }

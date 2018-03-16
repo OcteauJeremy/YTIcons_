@@ -14,7 +14,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Input("showPopup") showPopup: boolean;
   public currentUser = null;
-  public hidden = true;
   private subscriptions: Subscription = new Subscription();
 
   constructor(private as: AuthenticationService, public router: Router, private el: ElementRef, private renderer: Renderer2) {
@@ -24,18 +23,19 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.currentUser = this.as.currentUser;
   }
 
+
+
   ngOnInit() {
-    this.isAuthenticated();
+    // this.isAuthenticated();
+  }
+
+  getTokenState() {
+    return this.as.getTokenState();
   }
 
   isAuthenticated() {
-    this.currentUser = this.as.currentUser;
-    if (this.hidden) {
-      setTimeout(_ => {
-        this.hidden = false;
-      }, 200);
-    }
-    return this.currentUser ? true : false;
+      this.currentUser = this.as.getLocalUser();
+      return this.currentUser ? true : false;
   }
 
   isAdmin() {
