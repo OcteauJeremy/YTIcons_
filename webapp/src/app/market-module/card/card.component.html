@@ -43,7 +43,10 @@
     <div class="price_love" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked || !modal ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
       <span id="{{'card-price-' + card.id}}">{{card.price | currency  }}</span>
     </div>
-    <div class="sell" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked || !modal ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id"><p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p></div>
+    <div class="sell" [ngStyle]="{'cursor': !modal ? 'default' : ''}" [attr.data-toggle]="card.isLocked || !modal ? '' : 'modal'" [attr.data-target]="'#modal-' + card.id">
+      <p class="nektooltip"><span *ngIf="card.owner.wallet == currentWallet" class="lnr lnr-diamond diamond"></span><span class="nektooltiptext">You'r the owner</span></p>
+      <p><span class="lnr lnr-cart"></span><span>{{card.nbTransactions}}</span></p>
+    </div>
   </div>
 
 </div>

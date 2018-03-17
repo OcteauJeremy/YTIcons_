@@ -4,6 +4,7 @@ import {CardService} from "../../services/card.service";
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import {Observable} from '../../../../node_modules/rxjs';
 
 @Component({
   selector: 'card',
@@ -21,6 +22,7 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscriptions: Subscription = new Subscription();
 
   public obj: any;
+  public currentWallet: string;
 
   constructor(private authenticationService: AuthenticationService, public cs: CardService,
               private router: Router) {
@@ -50,6 +52,9 @@ export class CardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngOnInit() {
+    Observable.interval(2000).subscribe(x => {
+      this.currentWallet = this.cs._account;
+    });
 
   }
 
