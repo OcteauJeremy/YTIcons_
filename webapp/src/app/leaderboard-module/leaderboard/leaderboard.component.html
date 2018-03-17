@@ -12,8 +12,10 @@
             <li class="active"><a routerLink="/leaderboard">Leaderboard</a></li>
           </ul>
         </div>
-        <h1 class="page-title">Leaderboard</h1>
-        <a class="rules-info"><i class="fa fa-question-circle"></i></a>
+        <div style="display:flex;justify-content: space-between;">
+          <h1 class="page-title">Leaderboard</h1>
+          <a class="rules-info" data-toggle="modal" data-target="#modal-rules"><i class="fa fa-question-circle"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -124,3 +126,23 @@
 <!--================================
     END AUTHOR AREA
 =================================-->
+
+<div class="modal fade" id="modal-rules" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="padding:15px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+      </div>
+
+      <div class="modal-body text-center">
+          <img style="width:75%" src="assets/images/yticons_leaderboard_rules.jpg"/>
+      </div><!-- end /.modal-body -->
+      <div class="modal-footer-buy">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
