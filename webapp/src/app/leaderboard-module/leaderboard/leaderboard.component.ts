@@ -4,6 +4,8 @@ import { LeaderboardService } from "../../services/leaderboard.service";
 import { Subscription } from "rxjs/Subscription";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ToastsManager } from 'ng2-toastr';
+import {CardService} from "../../services/card.service";
+import {RoundPipe} from "../../pipes/round.pipe";
 
 @Component({
   selector: 'app-leaderboard',
@@ -12,7 +14,7 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class LeaderboardComponent implements OnInit, OnDestroy {
 
-  constructor(private ms: ManagerService,private ls: LeaderboardService, private as: AuthenticationService, private toastr: ToastsManager) {
+  constructor(private roundPipe: RoundPipe, private ms: ManagerService,private ls: LeaderboardService, private as: AuthenticationService, private toastr: ToastsManager,private cs: CardService) {
 
   }
 
@@ -21,11 +23,24 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public currentUser: any;
   public isLoading: boolean = true;
+  public utilityFund: number;
 
   ngOnInit() {
     let _self = this;
     this.currentUser = this.as.currentUser;
     const toastr = this.toastr;
+
+    this.cs.getUtilityFund().then(res => {
+      _self.utilityFund = parseInt(res);
+    });
+
+    _self.cs.getSmartContractFund().then(res => {
+      _self.utilityFund += parseInt(res);
+      _self.utilityFund = this.roundPipe.transform(this.cs.getFromWei(_self.utilityFund.toString()));
+    });
+
+
+    // _self.cs.getFromWei(_self.utilityFund + res)
 
     this.subscriptions.add(toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {

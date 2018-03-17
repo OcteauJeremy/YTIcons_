@@ -353,4 +353,16 @@ export class CardService extends ManagerService {
   public checkWallet(wallet: string) {
     return this._web3.utils.isAddress(wallet);
   }
+
+  public getUtilityFund() {
+    return this._web3.eth.getBalance('0x5Afb729AE2789c9E1635dC0d84B303936a5bbe0D');
+  }
+
+  public getSmartContractFund() {
+    return this._web3.eth.getBalance(this._tokenContractAddress);
+  }
+
+  public getFromWei(nb: string) {
+    return this._web3.utils.fromWei(nb);
+  }
 }

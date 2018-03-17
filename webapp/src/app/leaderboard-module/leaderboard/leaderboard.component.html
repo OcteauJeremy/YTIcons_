@@ -27,21 +27,21 @@
         <div class="row" *ngIf="true">
           <div class="col-md-4 col-sm-4">
             <div class="author-info mcolorbg4">
-              <p>Special card + 25% (x ETH)</p>
+              <p>Special card + 25% ({{utilityFund * 25 / 100 | round}} ETH)</p>
               <h3>1st</h3>
             </div>
           </div><!-- end /.col-md-4 -->
 
           <div class="col-md-4 col-sm-4">
             <div class="author-info pcolorbg">
-              <p>15% (x ETH)</p>
+              <p>15% ({{utilityFund * 15 / 100 | round}} ETH)</p>
               <h3>2nd</h3>
             </div>
           </div><!-- end /.col-md-4 -->
 
           <div class="col-md-4 col-sm-4">
             <div class="author-info scolorbg">
-              <p>10% (x ETH)</p>
+              <p>10% ({{utilityFund * 10 / 100 | round}} ETH)</p>
               <h3>3rd</h3>
             </div>
           </div><!-- end /.col-md-4 -->
