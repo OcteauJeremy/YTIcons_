@@ -161,6 +161,7 @@ export class AdminComponent implements OnInit {
         self.cardOriginYoutuber.isLocked = isLocked;
         self.cardOriginYoutuber.isHidden = isHidden;
       });
+      this.fileYoutuber = false;
       this.loadingChannel = false;
     });
   }

@@ -90,6 +90,7 @@ exports.listenTx = function (req, res) {
     var io = require('./web3.controller').io;
 
     function checkTx(txHash, card) {
+        // console.log(txHash);
         web3.eth.getTransactionReceipt(txHash).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {

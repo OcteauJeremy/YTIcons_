@@ -303,10 +303,16 @@ var constructQuery = function (req, res, isAdmin) {
 };
 
 exports.getByQuery = function (req, res) {
+    if (req.query.page < 0) {
+        return res.status(400).send({message: "Could not retrieve page " + req.query.page});
+    }
     constructQuery(req, res, false);
 };
 
 exports.getByQueryAdmin = function (req, res) {
+    if (req.query.page < 0) {
+        return res.status(400).send({message: "Could not retrieve page " + req.query.page});
+    }
     constructQuery(req, res, true);
 };
 
