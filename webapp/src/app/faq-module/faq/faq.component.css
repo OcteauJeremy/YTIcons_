@@ -2,6 +2,14 @@ iframe {
   width: 50%;
 }
 
+ul + p {
+  margin-top: 10px;
+}
+
+.panel-body {
+  text-align: justify;
+}
+
 @media (max-width: 767px) {
   iframe {
     width: 100%;
