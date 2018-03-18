@@ -135,23 +135,23 @@ a {
   background-size: contain;
 }
 
-.card-500k {
-  background: url('../images/cards_background/speciale_500k.png');
+.card-amber {
+  background: url('../images/cards_background/amber.png');
   background-size: contain;
 }
 
-.card-1m {
-  background: url('../images/cards_background/speciale_1M.png');
+.card-sapphire {
+  background: url('../images/cards_background/sapphire.png');
   background-size: contain;
 }
 
-.card-5m {
-  background: url('../images/cards_background/speciale_5M.png');
+.card-emerald {
+  background: url('../images/cards_background/bronze.png');
   background-size: contain;
 }
 
-.card-10m {
-  background: url('../images/cards_background/speciale_10M.png');
+.card-ruby {
+  background: url('../images/cards_background/bronze.png');
   background-size: contain;
 }
 
@@ -208,11 +208,11 @@ a {
   font-size: 14px;
 }
 
-.card-10m .footer-card {
+.card-ruby .footer-card {
   background: #140002;
 }
 
-.card-10m .footer-card .card-line {
+.card-ruby .footer-card .card-line {
   color: #FF0089 !important;
 }
 
