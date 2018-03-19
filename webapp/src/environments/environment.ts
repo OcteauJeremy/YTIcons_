@@ -9,6 +9,6 @@ export const environment = {
   production: false,
   apiUrl: protocol + 'localhost:6969',
   secureSocket: protocol == "https://",
-  tokenAddress: '0x3c9da596be8c651e867c7be80193600385f9620e',
+  tokenAddress: '0x76E8eb08c07A8974856aD17d13621a83310A4f53',
   recaptchaPublic: '6Ld_fkoUAAAAAMD2oHdp6l6Sl3lICiigExvs5KDm'
 };

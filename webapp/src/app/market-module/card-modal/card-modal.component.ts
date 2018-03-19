@@ -86,6 +86,17 @@ export class CardModalComponent implements OnInit, OnDestroy {
     }));
   }
 
+  nextPrice(currentPrice) {
+    if (currentPrice < 0.05) {
+      return currentPrice * (200 / 92)
+    } else if (currentPrice < 0.5) {
+      return currentPrice * (150 / 92)
+    } else if (currentPrice < 1) {
+      return currentPrice * (125 / 92)
+    }
+    return currentPrice * (115 / 92)
+  }
+
   ngOnDestroy() {
     this.acceptTos = false;
     this.subscriptions.unsubscribe();

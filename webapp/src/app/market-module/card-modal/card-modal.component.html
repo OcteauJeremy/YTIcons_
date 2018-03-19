@@ -122,7 +122,8 @@
               the displayed price may not be up to date. To optimize your chances to purchase this card, we suggest you to put a higher price.</p>
             <p>Our Smart Contract is made to give the payment excess back, therefore if you bid higher than the current price, the difference will be refunded immediately.</p>
             <p>Finally, if someone else outbid you, you will be refunded immediately.</p>
-            <p>Current price : {{card.price | round}} ETH</p>
+            <p>Current price : <span style="font-weight: 700;">{{card.price | round}}</span> ETH</p>
+            <p *ngIf="card?.owner?.wallet != currentWallet">Next price : <span style="font-weight: 700;">{{nextPrice(card.price) | round}}</span> ETH</p>
           </div>
           <input step=".001" [(ngModel)]="newPrice" name="newPrice" id="newPrice" type="number" class="text_field"
                  placeholder="Enter a price in ETH" [value]="card.price | round" required>

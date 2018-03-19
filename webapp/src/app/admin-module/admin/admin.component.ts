@@ -343,6 +343,8 @@ export class AdminComponent implements OnInit {
             this.cardYoutuber.category = res;
             createCardSC(this);
           });
+        } else {
+          createCardSC(this);
         }
       });
 
