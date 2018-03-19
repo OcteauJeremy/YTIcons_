@@ -129,6 +129,10 @@
         "type": "address"
       },
       {
+        "name": "beneficiary",
+        "type": "address"
+      },
+      {
         "name": "isVerified",
         "type": "bool"
       }
