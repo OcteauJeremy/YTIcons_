@@ -3,6 +3,10 @@
   align-items: center;
 }
 
+.modal-header {
+  border-bottom: 0px solid #e5e5e5;
+}
+
 .ellipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
