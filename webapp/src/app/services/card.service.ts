@@ -355,14 +355,14 @@ export class CardService extends ManagerService {
   }
 
   public getUtilityFund() {
-    return this._web3.eth.getBalance('0x5Afb729AE2789c9E1635dC0d84B303936a5bbe0D');
+    return this._web3 ? this._web3.eth.getBalance('0x5Afb729AE2789c9E1635dC0d84B303936a5bbe0D') : new Promise<string>((resolve, reject) => {});
   }
 
   public getSmartContractFund() {
-    return this._web3.eth.getBalance(this._tokenContractAddress);
+    return this._web3 ? this._web3.eth.getBalance(this._tokenContractAddress) : new Promise<string>((resolve, reject) => {});
   }
 
   public getFromWei(nb: string) {
-    return this._web3.utils.fromWei(nb);
+    return this._web3 ? this._web3.utils.fromWei(nb)  : new Promise<string>((resolve, reject) => {});
   }
 }
