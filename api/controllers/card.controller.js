@@ -94,11 +94,11 @@ exports.create = function (req, res) {
                 }
                 //clearTimeout(lastTimeout);
             } else {
-                setTimeout(checkTx, 2000, tx, card);
+                setTimeout(checkTx, 1000, tx, card);
             }
         });
     }
-    setTimeout(checkTx, 2000, req.body.tx, card);
+    setTimeout(checkTx, 1000, req.body.tx, card);
     return res.status(200).send({message: "Transaction send to the blockchain."})
 };
 

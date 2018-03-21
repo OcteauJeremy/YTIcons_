@@ -103,7 +103,7 @@ exports.listenTx = function (req, res) {
             }
         });
     }
-    setTimeout(checkTx, 2000, req.params.txHash);
+    setTimeout(checkTx, 1000, req.params.txHash);
     return res.status(200).send({message: 'Transaction listened.'});
 };
 
