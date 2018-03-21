@@ -29,18 +29,27 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     let _self = this;
     this.currentUser = this.as.currentUser;
     const toastr = this.toastr;
+    let utilityTmp: number = 0;
 
     this.cs.getUtilityFund().then(res => {
-      _self.utilityFund = parseInt(res);
+      utilityTmp = parseInt(res);
+      return utilityTmp;
+
+    }).then( res => {
+      _self.cs.getSmartContractFund().then(res => {
+        utilityTmp += parseInt(res);
+        _self.utilityFund = this.roundPipe.transform(this.cs.getFromWei(utilityTmp.toString()));
+        return utilityTmp;
+      });
+      return utilityTmp;
     });
 
-    _self.cs.getSmartContractFund().then(res => {
-      _self.utilityFund += parseInt(res);
-      _self.utilityFund = this.roundPipe.transform(this.cs.getFromWei(_self.utilityFund.toString()));
-    });
+    // _self.cs.getSmartContractFund().then(res => {
+    //   _self.utilityFund += parseInt(res);
+    //   _self.utilityFund = this.roundPipe.transform(this.cs.getFromWei(_self.utilityFund.toString()));
+    // });
 
 
-    // _self.cs.getFromWei(_self.utilityFund + res)
 
     this.subscriptions.add(toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {
