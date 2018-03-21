@@ -42,7 +42,7 @@ export class CardService extends ManagerService {
       });
 
       this._web3.eth.net.getId().then(function (id) {
-        if (id !== 3) {
+        if (id !== 1) {
           toastr.warning('You are not connected to the right network on MetaMask.', 'Network');
         }
       });

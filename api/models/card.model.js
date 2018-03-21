@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var autoIncrement = require('mongoose-auto-increment');
 
 var CardSchema = mongoose.Schema({
     id: Number,
@@ -56,5 +57,7 @@ CardSchema.methods.fromBody = function(body) {
         this.transactions = [];
     }
 };
+
+CardSchema.plugin(autoIncrement.plugin, { model: 'Card', field: 'id' });
 
 module.exports = mongoose.model('Card', CardSchema);

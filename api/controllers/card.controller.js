@@ -23,18 +23,22 @@ exports.create = function (req, res) {
                         if (req.body.beneficiaryWallet) {
                             card.beneficiaryWallet = req.body.beneficiaryWallet;
                         }
-
-                        Card.count().exec(function (err, nb) {
-                            if (err) {
-                                console.log(err);
-                                return ;
-                            }
-                            card.id = nb;
-                            card.save(function (err, result) {
-                                io.emit("create-" + tx, result);
-                                return ;
-                            });
+                        card.save(function (err, result) {
+                            io.emit("create-" + tx, result);
+                            return ;
                         });
+
+                        // Card.count().exec(function (err, nb) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         return ;
+                        //     }
+                        //     card.id = nb;
+                        //     card.save(function (err, result) {
+                        //         io.emit("create-" + tx, result);
+                        //         return ;
+                        //     });
+                        // });
 
                     }
 
