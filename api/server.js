@@ -42,7 +42,7 @@ mongoose.connection.on('error', function () {
     process.exit();
 });
 
-var testConnection = mongoose.connect(configMongo.url);
+mongoose.connect(configMongo.url);
 
 app.set('superSecret', configMongo.secret);
 
