@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (!this.showPopup) {
       this.cs.getNetwork().then(function (id) {
-        if (id !== 3) {
+        if (id !== 1) {
           _self.showPopup = true;
           _self.badNetwork = true;
         }

@@ -143,6 +143,7 @@ export class ProfileComponent implements OnInit {
         _self.refreshProfileInfo(_self.as.currentUser.wallet);
         this.loadingChannel = false;
       }, error => {
+        console.log('error', error);
         this.toastr.error(error.message, 'Edit avatar');
         this.loadingChannel = false;
       }));

@@ -8,6 +8,9 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
 const compression = require('compression');
+const autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize(mongoose.connection);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -40,6 +43,7 @@ mongoose.connection.on('error', function () {
 });
 
 mongoose.connect(configMongo.url);
+
 app.set('superSecret', configMongo.secret);
 
 var directoryRoutes = "./routes/";
@@ -77,7 +81,7 @@ app.use(function (err, req, res, next) {
     // Handle any other errors
 });
 
-var server ;
+var server;
 if (URL.secureSocket) {
     var creditentials = {
         key: fs.readFileSync('./ressources/token/privkey.pem'),

@@ -23,18 +23,22 @@ exports.create = function (req, res) {
                         if (req.body.beneficiaryWallet) {
                             card.beneficiaryWallet = req.body.beneficiaryWallet;
                         }
-
-                        Card.count().exec(function (err, nb) {
-                            if (err) {
-                                console.log(err);
-                                return ;
-                            }
-                            card.id = nb;
-                            card.save(function (err, result) {
-                                io.emit("create-" + tx, result);
-                                return ;
-                            });
+                        card.save(function (err, result) {
+                            io.emit("create-" + tx, result);
+                            return ;
                         });
+
+                        // Card.count().exec(function (err, nb) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         return ;
+                        //     }
+                        //     card.id = nb;
+                        //     card.save(function (err, result) {
+                        //         io.emit("create-" + tx, result);
+                        //         return ;
+                        //     });
+                        // });
 
                     }
 
@@ -90,11 +94,11 @@ exports.create = function (req, res) {
                 }
                 //clearTimeout(lastTimeout);
             } else {
-                setTimeout(checkTx, 2000, tx, card);
+                setTimeout(checkTx, 1000, tx, card);
             }
         });
     }
-    setTimeout(checkTx, 2000, req.body.tx, card);
+    setTimeout(checkTx, 1000, req.body.tx, card);
     return res.status(200).send({message: "Transaction send to the blockchain."})
 };
 
