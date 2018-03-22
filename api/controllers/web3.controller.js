@@ -58,6 +58,7 @@ User.findOne({
 });
 
 tokenContract.events.PriceModified({
+        fromBlock: 'pending'
 }, function (err, event) {
     console.log('PriceModified event', event.returnValues);
     if (err) {
@@ -88,6 +89,7 @@ tokenContract.events.PriceModified({
 var queueEvents = {};
 
 tokenContract.events.YTIconSold({
+    fromBlock: 'pending'
 }).on('data', function(event){
     var res = event.returnValues;
 

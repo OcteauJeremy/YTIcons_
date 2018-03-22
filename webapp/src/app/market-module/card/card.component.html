@@ -3,8 +3,11 @@
 
     <div class="card-title">
       <h4>{{card.name}}
-        <img *ngIf="!card?.isLocked && card?.isVerified" style="margin-left:6px;width:12px;margin-top:auto;margin-bottom: 4px;" src="assets/images/verified_icon.png">
-        <img *ngIf="card?.isLocked" style="margin-left:6px;width:13px;margin-top:auto;margin-bottom: 3px;" src="assets/images/lock_icon.png">
+        <img *ngIf="card.type.name == 'origin' && !card?.isLocked && card?.isVerified" style="margin-left:6px;width:12px;margin-top:auto;margin-bottom: 4px;" src="assets/images/verified_icon_dark.png">
+        <img *ngIf="card.type.name == 'origin' && card?.isLocked" style="margin-left:6px;width:13px;margin-top:auto;margin-bottom: 3px;" src="assets/images/lock_icon_dark.png">
+
+        <img *ngIf="card.type.name != 'origin' && card?.isLocked" style="margin-left:6px;width:13px;margin-top:auto;margin-bottom: 3px;" src="assets/images/lock_icon.png">
+        <img *ngIf="card.type.name != 'origin' && !card?.isLocked && card?.isVerified" style="margin-left:6px;width:12px;margin-top:auto;margin-bottom: 4px;" src="assets/images/verified_icon.png">
       </h4>
     </div>
 
