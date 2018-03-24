@@ -257,7 +257,7 @@ export class ListCardsComponent implements OnInit, OnDestroy {
   initCopyCard(card) {
     card.isSaving = false;
     card.modified = false;
-    card = JSON.parse(JSON.stringify(card.copy));
+    card.copy = JSON.parse(JSON.stringify(card));
     return card;
   }
 
