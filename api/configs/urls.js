@@ -10,7 +10,8 @@ if (process.env.ENVIRONMENT == "prod") {
         // websocket: "wss://ropsten.infura.io/ws",
         websocket: "ws://yticons-parity:8546",
         mongodb: "mongodb://yticons:nVusaLU6rc3thMWuQ4x8uzbdNS7LPwNqmSVzawdqZ56KJDdMP4TyFmZ6tBMB3SjT@yticons-mongo:27017/yticons",
-        recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M'
+        recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M',
+        nbBlockSC:
     };
 } else {
     var protocol = "http://";

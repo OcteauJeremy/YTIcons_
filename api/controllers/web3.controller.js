@@ -87,9 +87,12 @@ var getPastEventsModify = function () {
                 }
                 modifyPrice(eventTmp.returnValues, eventTmp);
             });
-            fromBlockPriceModified = events[events.length - 1].blockNumber;
-            setTimeout(getPastEventsModify, 500);
         }
+        if (events.length > 0) {
+            fromBlockPriceModified = events[events.length - 1].blockNumber;
+        }
+
+        setTimeout(getPastEventsModify, 500);
     });
 };
 
@@ -135,10 +138,13 @@ var getPastEventsSold = function () {
     tokenContract.getPastEvents('YTIconSold', {
         fromBlock: fromBlockSold
     }, function (error, events) {
+
         for (var i = 0; i < events.length; i++) {
           soldYTIcon(events[i].returnValues, events[i]);
         }
-        fromBlockSold = events[events.length - 1].blockNumber;
+        if (events.length > 0) {
+            fromBlockSold = events[events.length - 1].blockNumber;
+        }
         setTimeout(getPastEventsSold, 500);
     });
 };
