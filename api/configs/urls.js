@@ -11,7 +11,7 @@ if (process.env.ENVIRONMENT == "prod") {
         websocket: "ws://yticons-parity:8546",
         mongodb: "mongodb://yticons:nVusaLU6rc3thMWuQ4x8uzbdNS7LPwNqmSVzawdqZ56KJDdMP4TyFmZ6tBMB3SjT@yticons-mongo:27017/yticons",
         recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M',
-        nbBlockSC:
+        blockSC: 5305504
     };
 } else {
     var protocol = "http://";
@@ -24,7 +24,8 @@ if (process.env.ENVIRONMENT == "prod") {
         websocket: "ws://localhost:8546",
         mongodb: "mongodb://jeremy:yticons2018LB@ds241658.mlab.com:41658/yticons",
         // mongodb: "mongodb://localhost:27017/yticons",
-        recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M'
+        recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M',
+        blockSC: 2902347
     };
 }
 
