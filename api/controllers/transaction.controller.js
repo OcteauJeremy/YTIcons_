@@ -5,7 +5,7 @@ exports.create = function (req, res) {
 
     tx.fromBody(req.body);
 
-    var saveObj = tx.save();
+    // var saveObj = tx.save();
 
     tx.save(function (err, txRes) {
         if (err) {
@@ -90,7 +90,6 @@ exports.listenTx = function (req, res) {
     var io = require('./web3.controller').io;
 
     function checkTx(txHash, card) {
-        // console.log(txHash);
         web3.eth.getTransactionReceipt(txHash).then(function (resTx) {
             if (resTx) {
                 if (resTx.status == 0) {
@@ -99,11 +98,12 @@ exports.listenTx = function (req, res) {
                     io.emit(txHash, true);
                 }
             } else {
-                setTimeout(checkTx, 2000, txHash);
+                setTimeout(checkTx, 500, txHash);
             }
         });
     }
-    setTimeout(checkTx, 1000, req.params.txHash);
+    setTimeout(checkTx, 10, req.params.txHash);
+
     return res.status(200).send({message: 'Transaction listened.'});
 };
 
