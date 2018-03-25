@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {ToastsManager} from "ng2-toastr";
 import {Subscription} from 'rxjs/Subscription';
 import {RoundPipe} from "../../pipes/round.pipe";
+import {RoundDownPipe} from "../../pipes/round-down.pipe";
 import {Observable} from "rxjs/Rx";
 
 @Component({
@@ -21,11 +22,12 @@ export class CardModalComponent implements OnInit, OnDestroy {
   public currentUser: any;
   public acceptTos = false;
   public newPrice: number = 0;
+  public newPriceChange: number = 0;
   public newLineTag = "<br />";
   public currentWallet: string;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private roundPipe: RoundPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
+  constructor(private roundPipe: RoundPipe,private roundDownPipe: RoundDownPipe, public cs: CardService, private as: AuthenticationService, private toastr: ToastsManager,vcr: ViewContainerRef) {
     this.as.currentUserChange.subscribe((user) => {
       this.currentUser = user;
       this.acceptTos = true;
@@ -37,13 +39,16 @@ export class CardModalComponent implements OnInit, OnDestroy {
   changePriceCard(idCard: number, _wallet: string) {
     let _self = this;
 
-    if (this.newPrice != 0 ) {
-      this.cs.changePriceCard(idCard, this.newPrice, _wallet).then(function (res) {
-        _self.newPrice = _self.roundPipe.transform(_self.card.price);
+    if (this.newPriceChange != 0 ) {
+      this.cardModalCloseButton.nativeElement.click();
+      this.buyModalCloseButton.nativeElement.click();
+
+      this.cs.changePriceCard(idCard, this.newPriceChange, _wallet).then(function (res) {
+        _self.newPriceChange = _self.roundDownPipe.transform(_self.card.price);
         _self.cardModalCloseButton.nativeElement.click();
       });
     } else {
-      _self.newPrice = _self.roundPipe.transform(_self.card.price);
+      _self.newPriceChange = _self.roundDownPipe.transform(_self.card.price);
       this.toastr.error('The price must be greater than 0.', 'Price modification');
     }
   }
@@ -77,6 +82,7 @@ export class CardModalComponent implements OnInit, OnDestroy {
     }
 
     this.newPrice = this.roundPipe.transform(this.card.price);
+    this.newPriceChange = this.roundDownPipe.transform(this.card.price);
 
     this.subscriptions.add(this.toastr.onClickToast().subscribe( toast => {
       if (toast.timeoutId) {

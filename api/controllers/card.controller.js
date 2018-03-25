@@ -15,7 +15,9 @@ exports.create = function (req, res) {
     function checkTx(tx, card) {
         web3.eth.getTransactionReceipt(tx).then(function (resTx) {
             if (resTx) {
-                if (resTx.status == 0) {
+                console.log("OK");
+              console.log(resTx);
+              if (resTx.status == 0) {
                     io.emit("create-" + tx, null);
                     return ;
                 } else {

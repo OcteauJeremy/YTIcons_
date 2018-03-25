@@ -9,6 +9,7 @@ import { FrenchNumberPipe } from './french-number.pipe';
 import { TimeBetweenLivePipe } from './time-between-live.pipe';
 import { RoundPipe } from './round.pipe';
 import { KeysPipe } from './keys.pipe';
+import { RoundDownPipe } from './round-down.pipe';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { KeysPipe } from './keys.pipe';
     FrenchNumberPipe,
     TimeBetweenLivePipe,
     RoundPipe,
-    KeysPipe
+    KeysPipe,
+    RoundDownPipe
   ],
   exports: [
     CurrencyPipe,
@@ -33,10 +35,12 @@ import { KeysPipe } from './keys.pipe';
     FrenchNumberPipe,
     TimeBetweenLivePipe,
     RoundPipe,
-    KeysPipe
+    KeysPipe,
+    RoundDownPipe
   ],
   providers: [
-    RoundPipe
+    RoundPipe,
+    RoundDownPipe
   ]
 })
 export class PipesModule { }
