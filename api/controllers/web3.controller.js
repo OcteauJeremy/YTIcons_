@@ -142,7 +142,6 @@ var getPastEventsSold = function () {
     tokenContract.getPastEvents('YTIconSold', {
         fromBlock: fromBlockSold
     }, function (error, events) {
-        console.log('getPastEventsSold', fromBlockSold);
 
         for (var i = 0; i < events.length; i++) {
           soldYTIcon(events[i].returnValues, events[i]);
