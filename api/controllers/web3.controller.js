@@ -74,6 +74,7 @@ tokenContract.events.PriceModified({
 var fromBlockPriceModified = URL.blockSC;
 
 var getPastEventsModify = function () {
+    console
     tokenContract.getPastEvents('PriceModified', {
         fromBlock: fromBlockPriceModified
     }, function (error, events) {
