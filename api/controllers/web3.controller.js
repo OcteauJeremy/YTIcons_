@@ -77,6 +77,7 @@ var getPastEventsModify = function () {
     tokenContract.getPastEvents('PriceModified', {
         fromBlock: fromBlockPriceModified
     }, function (error, events) {
+        console.log('getPastEventsModify', fromBlockPriceModified);
         for (var i = 0; i < events.length; i++) {
             // var eventTmp = events[i];
             // PriceModifiedEvent.find({
@@ -115,6 +116,7 @@ var modifyPrice = function (res, event) {
                 return ;
             }
             card.price = web3.utils.fromWei(res.newPrice);
+            console.log('event modifyPrice', event);
             card.save(function (err, nCard) {
                 if (err) {
                     console.log(err.message);
@@ -142,7 +144,7 @@ var getPastEventsSold = function () {
     tokenContract.getPastEvents('YTIconSold', {
         fromBlock: fromBlockSold
     }, function (error, events) {
-
+        console.log('getPastEventsSold', fromBlockSold);
         for (var i = 0; i < events.length; i++) {
           soldYTIcon(events[i].returnValues, events[i]);
         }
@@ -193,6 +195,7 @@ var soldYTIcon = function (res, event) {
                         launchNextEvent(cardId);
                         return ;
                     }
+                    console.log('event soldYTIcon', event);
 
                     if (card.owner && card.owner.email != '') {
                         sendMailSold(card.owner.email, card)
