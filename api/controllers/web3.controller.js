@@ -7,6 +7,7 @@ var Email = require('email-templates');
 var server = require('../server').serverExpress;
 
 var User = require('../models/user.model');
+var PriceModifiedEvent = require('../models/priceModifiedEvent.model');
 var Card = require('../models/card.model');
 var Transaction = require('../models/transaction.model');
 var uploadOptions   = require('../configs/multer');
@@ -57,6 +58,7 @@ User.findOne({
     }
 });
 
+// --- PriceModified Event ---
 tokenContract.events.PriceModified({
         fromBlock: '2898958'
 }, function (err, event) {
@@ -66,8 +68,35 @@ tokenContract.events.PriceModified({
         return ;
     }
 
-    var res = event.returnValues;
+    //modifyPrice(event.returnValues, event);
+});
 
+var fromBlockPriceModified = URL.blockSC;
+
+var getPastEventsModify = function () {
+    tokenContract.getPastEvents('PriceModified', {
+        fromBlock: fromBlockPriceModified
+    }, function (error, events) {
+        for (var i = 0; i < events.length; i++) {
+            var eventTmp = events[i];
+            PriceModifiedEvent.find({
+                hash: eventTmp.transactionHash
+            }, function (err, res) {
+                if (res.length > 0) {
+                    return ;
+                }
+                modifyPrice(eventTmp.returnValues, eventTmp);
+            });
+        }
+        if (events.length > 0) {
+            fromBlockPriceModified = events[events.length - 1].blockNumber;
+        }
+
+        setTimeout(getPastEventsModify, 500);
+    });
+};
+
+var modifyPrice = function (res, event) {
     populateCard(Card.findOne({id: res.tokenId})).exec(function (err, card) {
         if (err) {
             console.log(err);
@@ -80,30 +109,57 @@ tokenContract.events.PriceModified({
                 console.log(err);
                 return ;
             }
+
+            var newPriceModified = new PriceModifiedEvent();
+
+            newPriceModified.hash = event.transactionHash;
+            newPriceModified.newPrice = web3.utils.fromWei(res.newPrice);
+            newPriceModified.tokenId = res.tokenId;
+
+            newPriceModified.save(function (err, res) {});
+
             io.emit('tx-card', card._id);
             console.log('Price modified. ID card', card._id);
         });
     })
-});
+};
 
-var queueEvents = {};
-
+// --- YTIconSold Event ---
 tokenContract.events.YTIconSold({
     fromBlock: '2898958'
 }).on('data', function(event){
-    var res = event.returnValues;
-
     console.log('YTIconSold event', event.returnValues);
 
+   // soldYTIcon(event.returnValues, event);
+});
+
+var fromBlockSold = URL.blockSC;
+var getPastEventsSold = function () {
+    tokenContract.getPastEvents('YTIconSold', {
+        fromBlock: fromBlockSold
+    }, function (error, events) {
+
+        for (var i = 0; i < events.length; i++) {
+          soldYTIcon(events[i].returnValues, events[i]);
+        }
+        if (events.length > 0) {
+            fromBlockSold = events[events.length - 1].blockNumber;
+        }
+        setTimeout(getPastEventsSold, 500);
+    });
+};
+
+var queueEvents = {};
+var soldYTIcon = function (res, event) {
     function launchEvent(cardId) {
         var event = queueEvents[cardId][0];
         var eventValues = event.returnValues;
 
         function launchNextEvent(cardId) {
-            console.log('Shifting queue of ', cardId);
+           // console.log('Shifting queue of ', cardId);
             queueEvents[cardId].shift();
             if (queueEvents[cardId].length > 0) {
-                console.log('Event in the queue', queueEvents[cardId][0].returnValues);
+                // console.log('Event in the queue', queueEvents[cardId][0].returnValues);
                 launchEvent(cardId);
             }
         }
@@ -123,17 +179,17 @@ tokenContract.events.YTIconSold({
                 tx.to = user;
                 tx.hash = event.transactionHash;
 
-                // if (tx.from._id.toString() == tx.to._id.toString()) {
-                //     console.log('/!\\  DOUBLE EVENT /!\\');
-                //     launchNextEvent(cardId);
-                //     return ;
-                // }
-
                 var tmpCard = JSON.parse(JSON.stringify(card));
                 tmpCard.transactions = [];
                 tx.card = tmpCard;
 
                 tx.save(function (err, nTx) {
+                    if (err) {
+                        // console.log(err.message);
+                        launchNextEvent(cardId);
+                        return ;
+                    }
+
                     if (card.owner && card.owner.email != '') {
                         sendMailSold(card.owner.email, card)
                     }
@@ -146,11 +202,6 @@ tokenContract.events.YTIconSold({
                     card.maxPrice = card.price;
                     card.minPrice = tx.price;
 
-                    if (err) {
-                        console.log(err.message);
-                        launchNextEvent(cardId);
-                        return ;
-                    }
                     card.owner = user;
                     ++card.nbTransactions;
                     card.transactions.push(tx);
@@ -220,25 +271,20 @@ tokenContract.events.YTIconSold({
     }
 
     if (!queueEvents[res.tokenId]) {
-        console.log("Create queue for -->", res.tokenId);
+        // console.log("Create queue for -->", res.tokenId);
         queueEvents[res.tokenId] = [];
     }
 
     queueEvents[res.tokenId].push(event);
 
-    console.log('queueEvents choosing what to do', queueEvents[res.tokenId].length);
+    // console.log('queueEvents choosing what to do', queueEvents[res.tokenId].length);
     if (queueEvents[res.tokenId].length == 1) {
-        console.log("Only this event, launch it");
+        // console.log("Only this event, launch it");
         launchEvent(res.tokenId);
     } else {
-        console.log("Event on pause");
+        // console.log("Event on pause");
     }
-
-}).on('changed', function(event){
-    console.log('Changed -->', event);
-}).on('error', function (event) {
-   console.log('Error -->', event);
-});
+};
 
 var populateCard = function (mongooseObj) {
     mongooseObj.populate('type').populate('category').populate('owner', '_id username username_lower wallet email').populate('nationality').populate({
@@ -251,7 +297,6 @@ var populateCard = function (mongooseObj) {
     });
     return mongooseObj;
 };
-
 
 var sendMailBuy = function (email, card, newPrice) {
     console.log('sendMail Buy', email, card.name, newPrice);
@@ -435,3 +480,16 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
     });
 });
+
+
+function launchEventCron() {
+    var executed = false;
+
+    if (!executed) {
+        setTimeout(getPastEventsModify, 10);
+        setTimeout(getPastEventsSold, 10);
+        executed = true;
+    }
+}
+
+launchEventCron();
