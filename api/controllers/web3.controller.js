@@ -79,15 +79,17 @@ var getPastEventsModify = function () {
         fromBlock: fromBlockPriceModified
     }, function (error, events) {
         for (var i = 0; i < events.length; i++) {
-            var eventTmp = events[i];
-            PriceModifiedEvent.find({
-                hash: eventTmp.transactionHash
-            }, function (err, res) {
-                if (res.length > 0) {
-                    return ;
-                }
-                modifyPrice(eventTmp.returnValues, eventTmp);
-            });
+            // var eventTmp = events[i];
+            // PriceModifiedEvent.find({
+            //     hash: eventTmp.transactionHash
+            // }, function (err, res) {
+            //     if (res.length > 0) {
+            //         return ;
+            //     }
+            //     console.log(eventTmp);
+            //     modifyPrice(eventTmp.returnValues, eventTmp);
+            // });
+            modifyPrice(events[i].returnValues, events[i]);
         }
         if (events.length > 0) {
             fromBlockPriceModified = events[events.length - 1].blockNumber;
@@ -103,24 +105,26 @@ var modifyPrice = function (res, event) {
             console.log(err);
             return ;
         }
+        var newPriceModified = new PriceModifiedEvent();
 
-        card.price = web3.utils.fromWei(res.newPrice);
-        card.save(function (err, nCard) {
+        newPriceModified.hash = event.transactionHash;
+        newPriceModified.newPrice = web3.utils.fromWei(res.newPrice);
+        newPriceModified.tokenId = res.tokenId;
+
+        newPriceModified.save(function (err, newRes) {
             if (err) {
-                console.log(err);
                 return ;
             }
+            card.price = web3.utils.fromWei(res.newPrice);
+            card.save(function (err, nCard) {
+                if (err) {
+                    console.log(err.message);
+                    return ;
+                }
 
-            var newPriceModified = new PriceModifiedEvent();
-
-            newPriceModified.hash = event.transactionHash;
-            newPriceModified.newPrice = web3.utils.fromWei(res.newPrice);
-            newPriceModified.tokenId = res.tokenId;
-
-            newPriceModified.save(function (err, res) {});
-
-            io.emit('tx-card', card._id);
-            console.log('Price modified. ID card', card._id);
+                io.emit('tx-card', card._id);
+                console.log('Price modified. ID card', card._id);
+            });
         });
     })
 };
