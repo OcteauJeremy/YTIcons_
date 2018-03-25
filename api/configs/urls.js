@@ -1,5 +1,4 @@
 
-
 if (process.env.ENVIRONMENT == "prod") {
     var protocol = "https://";
     module.exports = {
