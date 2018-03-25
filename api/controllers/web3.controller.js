@@ -74,7 +74,7 @@ tokenContract.events.PriceModified({
 var fromBlockPriceModified = URL.blockSC;
 
 var getPastEventsModify = function () {
-    console
+    console.log('getPastEventsModify', fromBlockPriceModified);
     tokenContract.getPastEvents('PriceModified', {
         fromBlock: fromBlockPriceModified
     }, function (error, events) {
@@ -136,6 +136,7 @@ tokenContract.events.YTIconSold({
 
 var fromBlockSold = URL.blockSC;
 var getPastEventsSold = function () {
+    console.log('getPastEventsSold', fromBlockSold);
     tokenContract.getPastEvents('YTIconSold', {
         fromBlock: fromBlockSold
     }, function (error, events) {
