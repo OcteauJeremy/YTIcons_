@@ -77,6 +77,10 @@ var getPastEventsModify = function () {
     tokenContract.getPastEvents('PriceModified', {
         fromBlock: fromBlockPriceModified
     }, function (error, events) {
+        if (!events) {
+            return ;
+        }
+
         console.log('getPastEventsModify', fromBlockPriceModified);
         for (var i = 0; i < events.length; i++) {
             // var eventTmp = events[i];
@@ -144,6 +148,10 @@ var getPastEventsSold = function () {
     tokenContract.getPastEvents('YTIconSold', {
         fromBlock: fromBlockSold
     }, function (error, events) {
+        if (!events) {
+            return ;
+        }
+
         console.log('getPastEventsSold', fromBlockSold);
         for (var i = 0; i < events.length; i++) {
           soldYTIcon(events[i].returnValues, events[i]);
