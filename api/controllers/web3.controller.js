@@ -16,13 +16,10 @@ var io = module.exports.io = require('socket.io').listen(server);
 
 var web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
 
-// web3.eth.currentProvider.on('end', function (res) {
-//    console.log('--- Dropped by Infura ---');
-//    web3 = module.exports.web3 = new Web3(new Web3.providers.WebsocketProvider(URL.websocket));
-//    web3.eth.net.getId().then(function (id) {
-//        console.log('- Blockchain ID -->', id);
-//    });
-// });
+web3.eth.currentProvider.on('end', function (res) {
+   console.log('--- Dropped Connection from Parity ---');
+   process.exit();
+});
 
 web3.eth.net.getId().then(function (id) {
     console.log('- Blockchain ID -->', id);
@@ -81,7 +78,7 @@ var getPastEventsModify = function () {
             return ;
         }
 
-        console.log('getPastEventsModify', fromBlockPriceModified);
+        // console.log('getPastEventsModify', fromBlockPriceModified);
         for (var i = 0; i < events.length; i++) {
             // var eventTmp = events[i];
             // PriceModifiedEvent.find({
@@ -120,7 +117,7 @@ var modifyPrice = function (res, event) {
                 return ;
             }
             card.price = web3.utils.fromWei(res.newPrice);
-            console.log('event modifyPrice', event);
+            console.log('Event modifyPrice', res);
             card.save(function (err, nCard) {
                 if (err) {
                     console.log(err.message);
@@ -138,7 +135,7 @@ var modifyPrice = function (res, event) {
 tokenContract.events.YTIconSold({
     fromBlock: '2898958'
 }).on('data', function(event){
-    console.log('YTIconSold event', event.returnValues);
+    // console.log('YTIconSold event', event.returnValues);
 
    // soldYTIcon(event.returnValues, event);
 });
@@ -152,7 +149,7 @@ var getPastEventsSold = function () {
             return ;
         }
 
-        console.log('getPastEventsSold', fromBlockSold);
+        // console.log('getPastEventsSold', fromBlockSold);
         for (var i = 0; i < events.length; i++) {
           soldYTIcon(events[i].returnValues, events[i]);
         }
@@ -203,7 +200,7 @@ var soldYTIcon = function (res, event) {
                         launchNextEvent(cardId);
                         return ;
                     }
-                    console.log('event soldYTIcon', event);
+                    console.log('Event soldYTIcon', eventValues);
 
                     if (card.owner && card.owner.email != '') {
                         sendMailSold(card.owner.email, card)

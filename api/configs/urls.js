@@ -1,4 +1,5 @@
 
+
 if (process.env.ENVIRONMENT == "prod") {
     var protocol = "https://";
     module.exports = {
@@ -21,7 +22,7 @@ if (process.env.ENVIRONMENT == "prod") {
         webserver: "http://localhost:4200",
         // websocket: "wss://ropsten.infura.io/ws",
         websocket: "ws://localhost:8546",
-        mongodb: "mongodb://localhost:27017/yticons",
+        mongodb: "mongodb://jeremy:yticons2018LB@ds241658.mlab.com:41658/yticons",
         recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M',
         blockSC: 2909279
     };
