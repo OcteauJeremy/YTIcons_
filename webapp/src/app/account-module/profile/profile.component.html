@@ -32,9 +32,9 @@
             <div class="author-infos">
               <div class="author_avatar">
                 <div class="profile-avatar" *ngIf="!address"
-                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser.avatar + ')'}"></div>
+                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + currentUser?.avatar + ')'}"></div>
                 <div class="profile-avatar" *ngIf="address && userProfile"
-                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile.avatar + ')'}"></div>
+                     [ngStyle]="{'background-image': 'url(' + ms.baseUrl + userProfile?.avatar + ')'}"></div>
               </div>
               <label *ngIf="!address" for="cover_photo" class="upload_btn">
                 <input style="display: none" (change)="refreshAvatar($event)" type="file" type="file"
@@ -46,7 +46,7 @@
 
               <div class="author">
                 <h4 *ngIf="address">{{userProfile?.username ? userProfile.username : 'Anonymous'}}</h4>
-                <h4 *ngIf="!address">{{currentUser.username}}</h4>
+                <h4 *ngIf="!address">{{currentUser?.username}}</h4>
                 <p *ngIf="address">Signed Up: {{userProfile ? (userProfile.createdAt | date:'MM/dd/yyyy') :
                   'Unknown'}}</p>
                 <p *ngIf="!address">Signed Up: {{currentUser?.createdAt | date:'MM/dd/yyyy'}}</p>
