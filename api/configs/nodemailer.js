@@ -10,7 +10,7 @@ module.exports.transporterHelp = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "help@yticons.co",
-        pass: "jZC:X2%Lmt38WpRT&qp4(U@gBv]2PjS!}B*6$Ly6W:'*}CF:9[:t~:`\\r4^sfY3E\n"
+        pass: "jZC:X2%Lmt38WpRT&qp4(U@gBv]2PjS!}B*6$Ly6W:'*}CF:9[:t~:`\\r4^sfY3E"
     }
 });
 
