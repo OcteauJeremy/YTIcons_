@@ -97,7 +97,7 @@ export class ToastCustomOptions extends ToastOptions {
     BrowserAnimationsModule,
     VerifyIconModule,
     RecaptchaModule.forRoot(),
-    TransactionsModule
+    TransactionsModule,
   ],
   providers: [
     RealvalueService,
