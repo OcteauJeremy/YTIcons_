@@ -10,7 +10,7 @@ module.exports.transporterHelp = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "help@yticons.co",
-        pass: "vfK-UE8-a5y-faf"
+        pass: "jZC:X2%Lmt38WpRT&qp4(U@gBv]2PjS!}B*6$Ly6W:'*}CF:9[:t~:`\\r4^sfY3E\n"
     }
 });
 
@@ -21,7 +21,7 @@ module.exports.transporterContact = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "contact@yticons.co",
-        pass: "yLK-AMu-9ty-rZ9"
+        pass: "ktV##RkS%?'3=3n)@!Aa=/;@Kr2pqny<?4A8xUxS&8:4a;YGDayjT3s47a?h.\"Rb"
     }
 });
 
@@ -32,6 +32,6 @@ module.exports.transporterNoReply = nodemailer.createTransport({
     secure: false,
     auth: {
         user: "no-reply@yticons.co",
-        pass: "pfK-Xs8-t5r-faf"
+        pass: ".r[pr<p}z\\+qg4v$^KC%Zs#5,3N-4Y/XNxQ?$~\\#n+eyK3=ZAQQ~WJn6'93TaW@("
     }
 });
