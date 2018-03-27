@@ -135,3 +135,7 @@ transactions {
 max-height: 150px;
 overflow-y: scroll;
 }
+
+.desc-card span {
+  float:left;
+}

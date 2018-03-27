@@ -28,18 +28,18 @@ export class TimeBetweenLivePipe implements PipeTransform {
         return diffMinutes + 'm';
       }
       if (diffHours >= 0 && !diffDays && !diffWeeks && !diffMonths && !diffYears) {
-        return diffHours + 'H';
+        return diffHours + 'h';
       }
       if (diffWeeks > 0 && !diffMonths && !diffYears) {
-        return diffWeeks + 'W';
+        return diffWeeks + 'w';
       }
       if (diffMonths > 0 && !diffYears) {
-        return diffMonths + 'M';
+        return diffMonths + 'mo';
       }
       else if (diffYears > 0) {
-        return diffYears + 'Y';
+        return diffYears + 'y';
       }
-      return diffDays + 'D';
+      return diffDays + 'd';
     }
     return 0;
   }
