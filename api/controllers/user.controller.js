@@ -131,7 +131,7 @@ exports.update = function (req, res) {
 
     var modifiedUser = function (user) {
         for (var key in req.body) {
-            if (user[key] && key != "password" && key != "username" && key != "token" && key != "resetPasswordToken") {
+            if (user[key] && user.canModify(key)) {
                 user[key] = req.body[key];
             }
         }
@@ -197,8 +197,7 @@ exports.update = function (req, res) {
                                 tx.save();
                             });
                         });
-                        userTmp.remove(function (err) {
-                        });
+                        userTmp.remove(function (err) {});
                     }
                 });
             }
@@ -215,6 +214,11 @@ exports.updateWallet = function (req, res) {
 
     if (!req.body.wallet) {
         return res.status(400).send({message: "Wrong parameters."});
+    }
+
+    var web3 = require('./web3.controller').web3;
+    if (!web3.utils.isAddress(req.body.wallet)) {
+        return res.status(400).send({message: "Your wallet doesn't exist."});
     }
 
     function transferUser(oldUser, newUser) {

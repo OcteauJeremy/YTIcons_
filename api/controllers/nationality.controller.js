@@ -12,11 +12,26 @@ exports.findAll = function (req, res) {
 
 exports.create = function (req, res) {
 
-    var net = new Nationality();
-    net.code = req.body.code.toUpperCase();
-    net.name = req.body.name.toLowerCase();
+    Nationality.findOne({code: req.body.code.toUpperCase(), name: req.body.name.toLowerCase()}, function (err, foundNat) {
+        if (err) {
+            console.log(err.message);
+            return res.status(400).send({message: "Some error occurred while creating nationality."});
+        }
 
-    net.save(function (err, nation) {
-        return res.status(200).send(nation);
+        if (foundNat) {
+            return res.status(200).send(foundNat);
+        }
+        var net = new Nationality();
+        net.code = req.body.code.toUpperCase();
+        net.name = req.body.name.toLowerCase();
+
+        net.save(function (err, nation) {
+            if (err) {
+                console.log(err.message);
+                return res.status(400).send({message: "Some error occurred while creating nationality."});
+            }
+
+            return res.status(200).send(nation);
+        });
     });
 };

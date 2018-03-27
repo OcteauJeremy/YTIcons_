@@ -34,6 +34,13 @@ UserSchema.methods.safeObj = function () {
   return obj;
 };
 
+UserSchema.methods.canModify = function (key) {
+    var nonAuthorizedAttributes = ["password", "username", "username_lower", "token", "resetPasswordToken", "roles", "resetPasswordExpires", "wallet"];
+
+    return nonAuthorizedAttributes.indexOf(key) == -1;
+
+};
+
 UserSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };

@@ -163,6 +163,9 @@ export class AdminComponent implements OnInit {
       });
       this.fileYoutuber = false;
       this.loadingChannel = false;
+    }, err => {
+        console.log("Channel doesn't exist, flemme de faire un toaster <3 ");
+        this.loadingChannel = false;
     });
   }
 

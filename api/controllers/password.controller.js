@@ -84,7 +84,6 @@ exports.forgotPassword = function (req, res) {
                             console.log(err);
                             return res.status(400).send({message: "Impossible to send mail"});
                         }
-                        // console.log('Finally:', user.resetPasswordToken);
                         return res.status(200).send({message: 'Email successfully sent.'});
                     });
                 });
@@ -103,6 +102,11 @@ exports.resetPassword = function(req, res) {
     }
 
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}}).exec(function(err, user) {
+        if (err) {
+            console.log(err.message);
+            return res.status(400).send({message: "Some error occurred while performing request."});
+        }
+
         if (!user) {
             return res.status(400).send({message: "Token doesn't exist."});
         }
@@ -113,7 +117,7 @@ exports.resetPassword = function(req, res) {
 
         user.save(function(err) {
             if (err) {
-                console.log(err);
+                console.log(err.message);
                 return res.status(400).send({message: "Some error occurred while performing request."});
             }
             return res.status(200).send({message: "Password has been changed."});
