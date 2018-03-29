@@ -251,13 +251,17 @@ a {
   .popup-error-metamask {
     text-align: center;
   }
-  .mainmenu {
-    margin-top:66px!important;
+  .youtube_search {
+    padding-left: 15px!important;
+    padding-right: 15px!important;
   }
-  .container {
-    padding-left: 0!important;
-    padding-right: 0!important;
-  }
+  /*.mainmenu {*/
+    /*margin-top:66px!important;*/
+  /*}*/
+  /*.container {*/
+    /*padding-left: 0!important;*/
+    /*padding-right: 0!important;*/
+  /*}*/
 
   .contact_form--wrapper {
     padding: 0px 15px 40px!important;

@@ -32,3 +32,9 @@
   background: #0674ec;
   color: #fff;
 }
+
+@media (max-width: 576px) {
+  .currency-selector {
+    display: none!important;
+  }
+}

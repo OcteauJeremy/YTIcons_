@@ -132,3 +132,8 @@ transactions {
 
 /**** EFFECT ****/
 
+@media (max-width: 576px) {
+  .nektooltiptext {
+    display: none!important;
+  }
+}

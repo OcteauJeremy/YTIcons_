@@ -139,3 +139,14 @@ overflow-y: scroll;
 .desc-card span {
   float:left;
 }
+
+/** RESPONSIVE **/
+
+@media (max-width: 576px) {
+  .modal .btn--default {
+    min-width: 100px!important;
+  }
+  .modal-body {
+    padding: 30px 15px!important;
+  }
+}
