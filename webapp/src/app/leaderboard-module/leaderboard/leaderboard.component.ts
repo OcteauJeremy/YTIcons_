@@ -37,7 +37,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
 
     }).then( res => {
       _self.cs.getSmartContractFund().then(res => {
-        utilityTmp += parseInt(res);
+        utilityTmp += parseInt(res) / 5;
         _self.utilityFund = this.roundPipe.transform(this.cs.getFromWei(utilityTmp.toString()));
         return utilityTmp;
       });
