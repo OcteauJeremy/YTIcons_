@@ -20,7 +20,8 @@ import { ListCardsComponent } from './admin-module/list-cards/list-cards.compone
 import { VerifyIconComponent } from './verifyicon-module/verifyicon/verifyicon.component';
 import { ForgottenPasswordComponent } from './authentication-module/lost-password/forgotten-password/forgotten-password.component';
 import { IsNotConnectedGuard } from './guards/is-not-connected.guard';
-import {SetPasswordComponent} from "./authentication-module/lost-password/set-password/set-password.component";
+import { SetPasswordComponent } from "./authentication-module/lost-password/set-password/set-password.component";
+import { BountyProgramComponent } from './bountyprogram-module/bountyprogram/bountyprogram.component';
 
 const appRoutes: Routes = [
   {
@@ -114,6 +115,10 @@ const appRoutes: Routes = [
   {
     path: 'verify',
     component: VerifyIconComponent,
+  },
+  {
+    path: 'bounty-program',
+    component: BountyProgramComponent,
   },
   {
     path: 'lost-password',
