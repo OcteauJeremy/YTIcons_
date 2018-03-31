@@ -55,6 +55,7 @@ import {AnalyticsService} from './services/analytics.service';
 import { EmailService } from './services/email.service';
 import { TransactionsModule } from './transactions-module/transactions.module';
 import { TransactionService } from './services/transaction.service';
+import {BountyProgramModule} from './bountyprogram-module/bountyprogram.module';
 
 export class ToastCustomOptions extends ToastOptions {
   animate = 'fade';
@@ -98,6 +99,7 @@ export class ToastCustomOptions extends ToastOptions {
     VerifyIconModule,
     RecaptchaModule.forRoot(),
     TransactionsModule,
+    BountyProgramModule
   ],
   providers: [
     RealvalueService,
