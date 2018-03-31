@@ -174,4 +174,31 @@
   }
 }
 
+.author-info {
+  margin-bottom: 35px;
+}
 
+.container-white {
+  background: white;
+  padding: 20px 40px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 35px;
+  text-align: center;
+  color:#555555;
+}
+
+.container-white p {
+  font-size: 18px;
+  margin-bottom: 0;
+}
+
+.container-white p b{
+  font-size: 19px;
+}
+
+#clockdiv {
+  color:#555555;
+  font-size: 18px;
+}
