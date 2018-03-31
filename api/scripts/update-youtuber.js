@@ -1,11 +1,14 @@
-var Type = require('../models/type.model');
-var Card = require('../models/card.model');
 const mongoose = require('mongoose');
 const configMongo = require('../configs/mongoDB');
+const autoIncrement = require('mongoose-auto-increment');
 var youtube = require('../configs/youtube');
 var google = require('googleapis');
 var service = google.youtube('v3');
 
+autoIncrement.initialize(mongoose.connection);
+
+var Type = require('../models/type.model');
+var Card = require('../models/card.model');
 
 function updateYoutubers(types) {
     const   cursor = Card.find().cursor();
