@@ -101,6 +101,7 @@
           <div class="filter__option filter--select">
             <div class="select-wrap">
               <select (change)="selectSort($event.target.value)" name="price">
+                <option value="updatedAt_desc">Last Transaction</option>
                 <option value="createdAt_desc">Newest</option>
                 <option value="createdAt_asc">Oldest</option>
                 <option value="price_desc">Price : High to low</option>
