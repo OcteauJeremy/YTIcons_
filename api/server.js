@@ -37,8 +37,8 @@ app.use(function(req, res, next) {
 
 app.use(compression());
 
-mongoose.connection.on('error', function () {
-    console.log('Could not connect to the database. Exiting now...');
+mongoose.connection.on('error', function (err) {
+    console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
 

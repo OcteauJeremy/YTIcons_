@@ -150,7 +150,7 @@ exports.findBySmartId = function (req, res) {
 var constructQuery = function (req, res, isAdmin) {
     var pageOpt = {
         page: req.query.page ? req.query.page : 1,
-        perPage: 5
+        perPage: 20
     };
 
     var paramSearch = {

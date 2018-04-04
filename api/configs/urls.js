@@ -17,12 +17,13 @@ if (process.env.ENVIRONMENT == "prod") {
     var protocol = "http://";
     module.exports = {
         port: "6969",
-        tokenAddress: "0x3792e84969a8cae3954accb7090383e68dac8c37",
+        tokenAddress: "0x10E3EB6B91b53f7b4265565F6D332Bc73E320b60",
         secureSocket: protocol == "https://" ? true : false,
         webserver: "http://localhost:4200",
         // websocket: "wss://ropsten.infura.io/ws",
         websocket: "ws://localhost:8546",
-        mongodb: "mongodb://localhost:27017/yticons",
+        // mongodb: "mongodb://localhost:27017/yticons",
+        mongodb: "mongodb://jeremy:yticons2018LB@ds241658.mlab.com:41658/yticons",
         recaptchaPrivate: '6Ld_fkoUAAAAAG89zvHX8vV5wVWK8S_8O1GDCa4M',
         blockSC: 2909279
     };
