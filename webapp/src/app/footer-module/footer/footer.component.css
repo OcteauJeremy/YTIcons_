@@ -57,3 +57,17 @@
 .info-icon {
   margin-top: -3px;
 }
+
+.info__logo {
+  max-width: 245px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info__logo img {
+  height: 35px;
+}
+
+info--text {
+  max-width: 245px;
+}

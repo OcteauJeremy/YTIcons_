@@ -109,7 +109,6 @@ export class CardService extends ManagerService {
       var _self = this;
       this._tokenContract.methods.lock(_idCard).send({
         from: account,
-        gasPrice: 4000000000,
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
@@ -135,7 +134,6 @@ export class CardService extends ManagerService {
       var _self = this;
       this._tokenContract.methods.unlock(_idCard).send({
         from: account,
-        gasPrice: 4000000000,
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
@@ -162,7 +160,6 @@ export class CardService extends ManagerService {
       var _self = this;
       this._tokenContract.methods.purchase(_idCard).send({
         from: account,
-        gasPrice: 4000000000,
         value: this._web3.utils.toWei(_price.toString(), 'ether')
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
@@ -188,7 +185,6 @@ export class CardService extends ManagerService {
         var _self = this;
         this._tokenContract.methods.setBeneficiaryAddress(_idCard, _walletBenef).send({
           from: account,
-          gasPrice: 4000000000,
           value: 0
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
@@ -216,7 +212,6 @@ export class CardService extends ManagerService {
         var _self = this;
         this._tokenContract.methods.setPrice(_idCard, this._web3.utils.toWei(_price.toString(), 'ether')).send({
           from: account,
-          gasPrice: 4000000000,
           value: 0
         }, function (error, result) { //get callback from function which is your transaction key
           if (!error) {
@@ -241,7 +236,6 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.createCardFromName(name).send({
         from: account,
-        gasPrice: 4000000000,
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
         if (!error) {
@@ -265,7 +259,6 @@ export class CardService extends ManagerService {
 
       this._tokenContract.methods.createCard(card.name, this._web3.utils.toWei(card.price.toString(), 'ether'), card.ownerWallet, card.beneficiaryWallet, card.isLocked).send({
         from: account,
-        gasPrice: 4000000000,
         value: 0
       }, function (error, result) { //get callback from function which is your transaction key
 

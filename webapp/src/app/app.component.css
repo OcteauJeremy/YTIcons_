@@ -20,3 +20,20 @@
 .popup-text {
   font-weight: 400;
 }
+
+.responsive {
+  display: none;
+}
+
+.no-responsive {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .no-responsive {
+    display: none;
+  }
+  .responsive {
+    display: block;
+  }
+}
