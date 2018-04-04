@@ -150,7 +150,7 @@ exports.findBySmartId = function (req, res) {
 var constructQuery = function (req, res, isAdmin) {
     var pageOpt = {
         page: req.query.page ? req.query.page : 1,
-        perPage: 20
+        perPage: 5
     };
 
     var paramSearch = {
@@ -287,7 +287,7 @@ var constructQuery = function (req, res, isAdmin) {
                 populateItem(countObj).exec(function (err, count) {
                     return res.status(200).send({
                         cards: cards,
-                        current: pageOpt.page,
+                        current: parseInt(pageOpt.page),
                         pages: Math.ceil(count / pageOpt.perPage)
                     });
                 });
