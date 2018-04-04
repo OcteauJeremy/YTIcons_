@@ -69,9 +69,21 @@
   padding: 0;
 }
 
+.showPopup {
+  margin-top: 45px;
+}
+
+.mainmenu {
+  background: white;
+}
+
 @media (max-width: 767px) {
   .navbar-toggle {
     margin-right: auto;
+  }
+
+  .showPopup {
+    margin-top: 65px;
   }
 }
 
@@ -86,3 +98,4 @@
     display: initial;
   }
 }
+

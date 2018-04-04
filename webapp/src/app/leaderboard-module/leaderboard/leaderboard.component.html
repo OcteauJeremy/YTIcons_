@@ -29,21 +29,21 @@
         <div class="row" *ngIf="true">
           <div class="col-md-4 col-sm-4">
             <div class="author-info mcolorbg4">
-              <p>Special card + 25% <span *ngIf="utilityFund">({{utilityFund * 25 / 100 | round}} ETH)</span></p>
+              <p>Two YTIcons (2 x 0.5 ETH)<span *ngIf="utilityFund"> + {{utilityFund * 25 / 100 | round}} ETH</span></p>
               <h3>1st</h3>
             </div>
           </div><!-- end /.col-md-4 -->
 
           <div class="col-md-4 col-sm-4">
             <div class="author-info pcolorbg">
-              <p>15% <span *ngIf="utilityFund">({{utilityFund * 15 / 100 | round}} ETH)</span></p>
+              <p>One YTIcon (0.5 ETH)<span *ngIf="utilityFund"> + {{utilityFund * 15 / 100 | round}} ETH</span></p>
               <h3>2nd</h3>
             </div>
           </div><!-- end /.col-md-4 -->
 
           <div class="col-md-4 col-sm-4">
             <div class="author-info scolorbg">
-              <p>10% <span *ngIf="utilityFund">({{utilityFund * 10 / 100 | round}} ETH)</span></p>
+              <p>One YTIcon (0.25 ETH)<span *ngIf="utilityFund"> + {{utilityFund * 10 / 100 | round}} ETH</span></p>
               <h3>3rd</h3>
             </div>
           </div><!-- end /.col-md-4 -->
@@ -77,8 +77,8 @@
             </div>
             <div class="user_area">
               <ul>
-                <li *ngFor="let rank of leaderboard; let i = index" [ngClass]="[i == 0 ? 'first-leaderboard' : '',i == 1 ? 'second-leaderboard' : '',i == 2 ? 'third-leaderboard' : '', i > 2 ? 'default' : '' ]" [routerLink]="['/account', rank.user?.wallet]">
-                  <div class="user_single">
+                <li *ngFor="let rank of leaderboard; let i = index" [ngClass]="[i == 0 ? 'first-leaderboard' : '',i == 1 ? 'second-leaderboard' : '',i == 2 ? 'third-leaderboard' : '', i > 2 ? 'default' : '' ]">
+                  <div *ngIf="!rank.user.wallet" class="user_single">
                     <div class="user__status user__rank" [ngClass]="['user__status','user__rank', i == 0 ? 'first' : '',i == 1 ? 'second' : '',i == 2 ? 'third' : '', i > 2 ? 'default' : '' ]">
                       <div *ngIf="rank?.user?._id == currentUser?._id" class="star_user">
                         <img src="assets/images/star.png" [ngStyle]="{'width': '30px', 'max-width': '30px'}">
@@ -90,7 +90,30 @@
                         <div class="leaderboard-profile-avatar" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + rank?.user?.avatar + ')'}" alt=""></div>
                       </div>
                       <div class="user_informations ellipsis">
-                        <a *ngIf="!rank.user.wallet">{{rank.user.username}}</a>
+                        <div *ngIf="!rank.user.wallet" class="without_wallet_username">{{rank.user.username}}</div>
+                        <a *ngIf="rank.user.wallet" [routerLink]="['/account', rank.user?.wallet]">{{rank.user.username ? rank.user.username : rank.user.wallet}}</a>
+                        <p *ngIf="rank.user.username">Member since: {{rank.user.createdAt | date:'MMMM yyyy'}}</p>
+                      </div>
+                    </div>
+                    <div class="user_stats">
+                      <p>{{rank.score.nbSubscribers | frenchNumber}} Followers</p>
+                      <p>{{rank.score.nbCards}} Cards</p>
+                      <p>{{rank.score.nbViews | frenchNumber}} Views</p>
+                    </div>
+                  </div>
+                  <div *ngIf="rank.user.wallet" class="user_single" [routerLink]="['/account', rank.user?.wallet]">
+                    <div class="user__status user__rank" [ngClass]="['user__status','user__rank', i == 0 ? 'first' : '',i == 1 ? 'second' : '',i == 2 ? 'third' : '', i > 2 ? 'default' : '' ]">
+                      <div *ngIf="rank?.user?._id == currentUser?._id" class="star_user">
+                        <img src="assets/images/star.png" [ngStyle]="{'width': '30px', 'max-width': '30px'}">
+                      </div>
+                      <p>{{i + 1}}</p>
+                    </div>
+                    <div class="user_desc">
+                      <div class="user_avatar">
+                        <div class="leaderboard-profile-avatar" [ngStyle]="{'background-image': 'url(' + ms.baseUrl + rank?.user?.avatar + ')'}" alt=""></div>
+                      </div>
+                      <div class="user_informations ellipsis">
+                        <div *ngIf="!rank.user.wallet" class="without_wallet_username">{{rank.user.username}}</div>
                         <a *ngIf="rank.user.wallet" [routerLink]="['/account', rank.user?.wallet]">{{rank.user.username ? rank.user.username : rank.user.wallet}}</a>
                         <p *ngIf="rank.user.username">Member since: {{rank.user.createdAt | date:'MMMM yyyy'}}</p>
                       </div>

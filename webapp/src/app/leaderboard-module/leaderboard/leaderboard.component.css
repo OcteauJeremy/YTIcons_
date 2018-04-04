@@ -202,3 +202,12 @@
   color:#555555;
   font-size: 18px;
 }
+
+.without_wallet_username {
+  font-size: 18px;
+  line-height: 26px;
+  color: #000;
+  font-weight: 500;
+  display: inline-block;
+  padding-bottom: 10px;
+}
