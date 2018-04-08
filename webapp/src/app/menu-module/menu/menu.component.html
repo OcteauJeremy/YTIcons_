@@ -14,9 +14,9 @@
             <span class="lnr lnr-menu"></span>
           </button>
 
-          <div *ngIf="router.url == '/market' || router.url == '/account'" class="hidden-lg hidden-md hidden-sm">
-            <currency-selector></currency-selector>
-          </div>
+          <!--<div *ngIf="router.url == '/market' || router.url == '/account'" class="hidden-lg hidden-md hidden-sm">-->
+            <!--<currency-selector></currency-selector>-->
+          <!--</div>-->
 
           <div *ngIf="getTokenState() && !isAuthenticated()" class="logs_container hidden-lg hidden-md hidden-sm" [ngClass]="{'margin-left': router.url == '/market' || router.url == '/account'}">
             <div class="logs_wrap">
