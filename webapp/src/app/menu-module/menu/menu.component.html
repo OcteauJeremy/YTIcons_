@@ -65,9 +65,9 @@
             </ul>
           </div><!-- /.navbar-collapse -->
 
-          <div *ngIf="router.url == '/market' || router.url == '/account' " class="hidden-xs">
-            <currency-selector></currency-selector>
-          </div>
+          <!--<div *ngIf="router.url == '/market' || router.url == '/account' " class="hidden-xs">-->
+            <!--<currency-selector></currency-selector>-->
+          <!--</div>-->
 
           <!-- start logs -->
           <div *ngIf="getTokenState() && !isAuthenticated()" class="logs_container hidden-xs" [ngClass]="{'margin-left': router.url == '/market' || router.url == '/account'}">
