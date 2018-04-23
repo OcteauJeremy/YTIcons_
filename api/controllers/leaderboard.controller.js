@@ -27,14 +27,17 @@ var createLeaderboard = function (req, res, wallet) {
                         if (err) {
                             return res.status(400).send({message: "Error during the transaction."});
                         }
-
+                        ldboard[doc._id].nbCards = 0;
                         for (var i = 0; i < cards.length; i++) {
                             var card = cards[i];
-                            ldboard[card.owner].nbSubscribers += card.nbSubscribers;
-                            ldboard[card.owner].nbViews += card.nbViews;
+
+                            if (!card.isHidden) {
+                                ldboard[card.owner].nbSubscribers += card.nbSubscribers;
+                                ldboard[card.owner].nbViews += card.nbViews;
+                                ++(ldboard[doc._id].nbCards);
+                            }
                         }
 
-                        ldboard[doc._id].nbCards = cards.length;
 
                         if (cursor.next) {
                             next(cursor.next());

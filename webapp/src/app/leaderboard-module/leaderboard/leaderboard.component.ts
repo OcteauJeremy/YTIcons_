@@ -112,8 +112,8 @@ export class LeaderboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngAfterViewInit() {
-    let deadline = new Date(Date.UTC(2018, 3, 15, 11, 59, 59));
-    this.initializeClock('clockdiv', deadline);
+    // let deadline = new Date(Date.UTC(2018, 3, 15, 11, 59, 59));
+    // this.initializeClock('clockdiv', deadline);
   }
 
   ngOnDestroy() {
