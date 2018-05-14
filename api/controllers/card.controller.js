@@ -14,14 +14,15 @@ exports.create = function (req, res) {
 
     function checkTx(tx, card) {
         web3.eth.getTransactionReceipt(tx).then(function (resTx) {
+            console.log(resTx);
             if (resTx) {
-                console.log("OK");
-              console.log(resTx);
-              if (resTx.status == 0) {
+                console.log("-- OK --");
+                if (resTx.status == 0) {
                     io.emit("create-" + tx, null);
                     return ;
                 } else {
                     function saveCard(card) {
+                        console.log('Saving card', card);
                         if (req.body.beneficiaryWallet) {
                             card.beneficiaryWallet = req.body.beneficiaryWallet;
                         }
